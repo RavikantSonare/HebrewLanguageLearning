@@ -1,0 +1,139 @@
+﻿@model HebrewLanguageLearning_Admin.Models.HLL_StudentsInfoModel
+@using HebrewLanguageLearning_Admin.GenericClasses
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Create", "StudentsInfo", FormMethod.Post, new { enctype = "multipart/form-data", @id = "studendInfoCreate" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="page-content-inner ">
+        <br>
+        <h2>Add Student</h2>
+        <div action="#" role="form">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h6 class="panel-title"><i class="icon-user"></i>Add Student</h6></div>
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Student First Name:</label>
+                                @Html.EditorFor(model => model.FName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.FName, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Student Last Name:</label>
+                                @Html.EditorFor(model => model.LName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Student User Name:</label>
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Password Name:</label>
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>City:</label>
+                                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>State:</label>
+                                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Country:</label>
+                                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Email Address:</label>
+                                @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Purpose for Learning Hebrew:</label>
+
+                                @Html.DropDownListFor(x => x.fk_PurposeforLearningHebrew, SI._PurposeforLearningHebrewList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.fk_PurposeforLearningHebrew, "", new { @class = "text_danger" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Previous Hebrew Studies</label>
+                                @Html.EditorFor(model => model.PreviousHebrewStudies, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PreviousHebrewStudies, "", new { @class = "text-danger" })
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Select User Image:</label>
+                                <div class="controls imgParent">
+                                    @Html.TextBoxFor(p => p.Imagefile, null, new { data_val = "false", type = "file", @class = "input-file", name = "file", id = "fileToUpload" })
+                                    <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
+                                    @Html.ValidationMessageFor(n => n.ImgUrl, null, new { @class = "text_danger" })
+                                    <div class="col-md-2" id="output"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                @*<div class="uploader" id="uniform-report-screenshot"><input type="file" class="styled form-control" id="report-screenshot"><span class="filename" style="user-select: none;">No file selected</span><span class="action" style="user-select: none;">Choose File</span></div>
+                                    <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>*@
+                            </div>
+                            @*<div class="col-md-6">
+                                    <label>User Image</label>
+                                    <div class="uploader" id="uniform-report-screenshot"><input type="file" class="styled form-control" id="report-screenshot"><span class="filename" style="user-select: none;">No file selected</span><span class="action" style="user-select: none;">Choose File</span></div>
+                                    <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+                                </div>*@
+
+                        </div>
+                    </div>
+
+                    <div class="form-actions text-right">
+                        <input type="reset" value="Cancel" class="btn btn-danger">
+                        <input type="submit" value="Submit report" class="btn btn-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

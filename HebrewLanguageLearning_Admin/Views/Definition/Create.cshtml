@@ -1,0 +1,71 @@
+﻿@model HebrewLanguageLearning_Admin.Models.HLL_DefinitionModels
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="page-content-inner ">
+        <br>
+        <h2>Definition</h2>
+        <div action="#" role="form">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h6 class="panel-title"><i class="icon-pencil3"></i>Add Definition</h6></div>
+                <div class="panel-body">
+
+
+
+                    <div class="form-group">
+                        <label>Enter Definition:</label>
+                        @Html.TextAreaFor(model => model.Title, new { @class = "elastic form-control", style = "height: 100px;" })
+                        @Html.ValidationMessageFor(model => model.DefinitionId, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-actions text-right">
+                        <input type="reset" value="Cancel" class="btn btn-danger">
+                        <input type="submit" value="Save Definition" class="btn btn-primary">
+                    </div>
+
+                </div>
+                <hr>
+                <ul class="info-blocks">
+                    <li class="bg-primary">
+                        <div class="top-info">
+                            <a href="#">Add new Pictures</a>
+                            <small>Pictures management</small>
+                        </div>
+                        <a href="@Url.Action("Create", "Pictures")"><i class="icon-image"></i></a>
+                        <span class="bottom-info bg-danger">5 Pictures</span>
+                    </li>
+                    <li class="bg-info">
+                        <div class="top-info">
+                            <a href="#">Semantic Domain</a>
+                            <small>Semantic Domain history</small>
+                        </div>
+                        <a href="@Url.Action("Create", "SemanticDomain")"><i class="icon-bookmark"></i></a>
+                        <span class="bottom-info bg-primary">5 new Semantic Domain</span>
+                    </li>
+                    <li class="bg-danger">
+                        <div class="top-info">
+                            <a href="#">Example </a>
+                            <small>visits, users, orders stats</small>
+                        </div>
+                        <a href="@Url.Action("Create", "Example")"><i class="icon-joomla"></i></a>
+                        <span class="bottom-info bg-primary">2 new Example</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

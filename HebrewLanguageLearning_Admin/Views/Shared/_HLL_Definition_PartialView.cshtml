@@ -1,0 +1,286 @@
+﻿@model HebrewLanguageLearning_Admin.Models.HLL_DefinitionModels
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title"><i class="icon-paragraph-justify2"></i> Language Learning Definition</h4>
+        </div>
+        <!-- Form inside modal -->
+        <form action="#" role="form">
+            <div class="modal-body with-padding">
+                <div class="block-inner text-info">
+                    <h6 class="heading-hr">
+                        @Html.HiddenFor(model => model.DefinitionId, new { @id = "PopUp_DefinitionId" })
+                        @Html.DisplayFor(model => model.Title)
+                        <small id="errorMessage" class="display-block text-danger"> </small>
+                    </h6>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Picture Name:</label>
+                            @Html.EditorFor(model => model.PictureTitle, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PictureTitle, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Select Picture:</label>
+                            <div class="controls imgParent">
+                                @Html.TextBoxFor(p => p.Imagefile, null, new { data_val = "false", type = "file", @class = "input-file", name = "fileUpload", id = "fileUpload" })
+                                <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
+                                @Html.ValidationMessageFor(n => n.Imagefile, null, new { @class = "text_danger" })
+                                <div class="col-md-2" style="margin-left:100px!important" id="output"></div>
+                            </div>
+                            @*<div class="uploader" id="uniform-report-screenshot"><input type="file" class="styled form-control" id="report-screenshot"><span class="filename" style="user-select: none;">No file selected</span><span class="action" style="user-select: none;">Choose File</span></div>
+                                <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>*@
+                        </div>
+
+                        <div class="col-md-3">
+                            <input type="button" value="+ Add" onclick="addNewImage()" class="btn btn-info pull-right">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <table>
+                        <tbody id="ImageList">
+                            @foreach (var item in Model.PictureList)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Title
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Semantic Domains</label>
+                            <input type="text" placeholder="Semantic Domains" class="form-control" id="txtSemanticDomains">
+                        </div>
+                        <div class="col-sm-6">
+                            <br />
+
+                            <input type="button" value="+ Add Semantic Domains" onclick="addNewSemanticDomains()" class="btn btn-info">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <table>
+                        <tbody id="SemanticList">
+                            @foreach (var item in Model.SemanticDomainsList)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Title
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Examples</label>
+                            <input type="text" placeholder="Examples" class="form-control" id="txtExamples">
+                        </div>
+                        <div class="col-sm-6">
+                            <br />
+
+                            <input type="button" value="+ Add Examples" onclick="addNewExamples()" class="btn btn-info">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <table>
+                        <tbody id="ExamplesList">
+                            @foreach (var item in Model.ExampleList)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Title
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                <button type="button" onclick="SaveFromData(1)" class="btn btn-primary">Save and Exit</button>
+                <button type="button" onclick="SaveFromDataAndNext()" class="btn btn-success">Save and Go to Next Def</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var Image_List = [], SemanticDomains_List = [], Examples_List = [];
+
+
+    addNewImage = function () {
+
+        debugger;
+
+
+        $('#errorMessage').text("");
+        var PictureTitle = $('#PictureTitle').val();
+        var ImageSrcData = $('.imgcont').children('img').attr("src");
+
+        if (PictureTitle == "" || typeof PictureTitle == 'undefined') {
+            $('#errorMessage').text("Please enter Image Title");
+        } else
+
+            if (ImageSrcData == "" || typeof ImageSrcData == 'undefined') { $('#errorMessage').text("Please Upload Image file"); } else {
+                Image_List.push({ Title: PictureTitle, ImageData: ImageSrcData });
+                $('#PictureTitle').val("");
+                $('#output').empty();
+                $('#ImageList').append("<tr><td>" + PictureTitle + "</tr></td>");
+            }
+    };
+    addNewSemanticDomains = function () {
+        debugger;
+        $('#errorMessage').text("");
+        var SemanticDomains = $('#txtSemanticDomains').val();
+
+        if (SemanticDomains == "" || typeof SemanticDomains == 'undefined') {
+            $('#errorMessage').text("Please enter Semantic Domains Title");
+        } else {
+
+            SemanticDomains_List.push({ Title: SemanticDomains });
+            $('#txtSemanticDomains').val("");
+
+            $('#SemanticList').append("<tr><td>" + SemanticDomains + "</tr></td>");
+        }
+    };
+    addNewExamples = function () {
+
+        $('#errorMessage').text("");
+        var ExamplesData = $('#txtExamples').val();
+
+        if (ExamplesData == "" || typeof ExamplesData == 'undefined') {
+            $('#errorMessage').text("Please enter Examples Title");
+        } else {
+
+            Examples_List.push({ Title: ExamplesData });
+            $('#txtExamples').val("");
+            $('#ExamplesList').append("<tr><td>" + ExamplesData + "</tr></td>");
+        }
+    };
+   
+    function SaveFromData(stateBehavior) {
+        alert(stateBehavior);
+        $.each(Image_List, function (key, value) {
+            var Imagemodel = {
+                Title: value.Title,
+                ImgUrl: value.ImageData,
+                DefinitionId: $('#PopUp_DefinitionId').val(),
+
+            };
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: '@Url.Action("CreateImage", "Pictures")',
+                dataType: "html",
+                contentType: 'application/json',
+                data: JSON.stringify(Imagemodel),
+                success: function (result) {
+                    Image_List = [];
+                    //console.log("result" + result);
+                },
+                error: function (result) {
+                    console.log("resultError" + JSON.stringify(result));
+                }
+            })
+        });
+        $.each(SemanticDomains_List, function (key, value) {
+            var Semanticmodel = {
+                Title: value.Title,
+                DefinitionId: $('#PopUp_DefinitionId').val(),
+
+            };
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: '@Url.Action("CreateSemanticDomain", "SemanticDomain")',
+                dataType: "html",
+                contentType: 'application/json',
+                data: JSON.stringify(Semanticmodel),
+                success: function (result) {
+                    SemanticDomains_List = [];
+                    //console.log("result" + result);
+                },
+                error: function (result) {
+                    console.log("resultError" + JSON.stringify(result));
+                }
+            })
+        });
+        $.each(Examples_List, function (key, value) {
+            var Examplesmodel = {
+                Title: value.Title,
+                DefinitionId: $('#PopUp_DefinitionId').val(),
+
+            };
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: '@Url.Action("CreateExample", "Example")',
+                dataType: "html",
+                contentType: 'application/json',
+                data: JSON.stringify(Examplesmodel),
+                success: function (result) {
+                    Examples_List = [];
+                    //console.log("result" + result);
+                },
+                error: function (result) {
+                    console.log("resultError" + JSON.stringify(result));
+                }
+            })
+        });
+        if (stateBehavior == 1) {
+            location.reload();
+        }
+    }
+    $(document).ready(function () {
+
+        if (window.File && window.FileList && window.FileReader) {
+            $("#fileUpload").on("change", function (e) {
+                $(".field-validation-error").hide();
+                var ext = $(this).val().split('.').pop().toLowerCase();
+                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                    if (ext != '') {
+                        $("#output").empty();
+                        $("#fileToUpload").val("");
+                        $('#headerdiv').removeClass("btn-success").removeClass("btn-info").addClass("btn-danger");
+                        $('#modeltitle').html("Important Message !!")
+                        $('#modelMessage').html("Please Select Only Image file like GIF, PNG, JPG, JPEG")
+                        $('.modal-footer').html('<a id="btnYes" href="#" data-dismiss="modal" class="btn btn-primary">Ok</a>');
+                        $('#default_modal').modal('show');
+                    }
+
+                } else {
+                    var files = e.target.files,
+                    filesLength = files.length;
+                    for (var i = 0; i < filesLength ; i++) {
+                        var f = files[i]
+                        var fileReader = new FileReader();
+                        fileReader.onload = (function (e) {
+                            $("#output").empty();
+                            var file = e.target;
+                            var h = "<div class='imgcont'><img src='" + e.target.result + "' title = '" + file.name + "' class='imageThumb'><i class='fa fa-minus del'></i></div>";
+                            $("#output").html(h);
+                        });
+                        fileReader.readAsDataURL(f);
+                    }
+                }
+            });
+        } else { alert("Your browser doesn't support to File API") }
+    });
+</script>

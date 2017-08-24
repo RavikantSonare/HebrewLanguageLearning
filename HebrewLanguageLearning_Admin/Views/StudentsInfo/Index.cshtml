@@ -1,0 +1,90 @@
+﻿@model IEnumerable<HebrewLanguageLearning_Admin.Models.HLL_StudentsInfoModel>
+@using HebrewLanguageLearning_Admin.GenericClasses
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header">
+    <div class="page-title">
+        <h3>Students List <small>List of saved students</small></h3>
+    </div>
+
+    <div id="reportrange" class="range">
+        <div class="visible-xs header-element-toggle">
+            <a class="btn btn-primary btn-icon"><i class="icon-calendar"></i></a>
+        </div>
+        <div class="date-range"><i>2</i> <b><i>Jun</i> <i>2017</i></b><em> - </em><i>1</i> <b><i>Jul</i> <i>2017</i></b></div>
+        <span class="label label-danger">9</span>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="panel panel-default">
+    <div class="panel-heading"><h6 class="panel-title"><i class="icon-table"></i> Students List</h6></div>
+    <div class="datatable">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>City</th>
+                    <th>PurposeLH</th>
+                    <th>PreviousHS</th>
+                    <th>Email</th>
+                    <th>ImgUrl</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => SI._PurposeforLearningHebrewList.Where(v => v.Value.Equals(item.fk_PurposeforLearningHebrew.ToString())).FirstOrDefault().Text)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PreviousHebrewStudies)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmailId)
+                        </td>
+                        <td>
+                            <img style="height:100px;width:100px;" src="~/Pictures/@item.ImgUrl" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActiveStatus)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.StudentsId }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.StudentsId }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.StudentsId })
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

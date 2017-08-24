@@ -1,0 +1,62 @@
+﻿@model HebrewLanguageLearning_Admin.Models.HLL_PicturesModels
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Pictures", FormMethod.Post, new { enctype = "multipart/form-data", @id = "PicturesCreate" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="page-content-inner ">
+        <br>
+        <h2>Add Pictures</h2>
+        <div action="#" role="form">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h6 class="panel-title"><i class="icon-image"></i>Add Pictures</h6></div>
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Picture Name:</label>
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Select Picture:</label>
+                                <div class="controls imgParent">
+                                    @Html.TextBoxFor(p => p.Imagefile, null, new { data_val = "false", type = "file", @class = "input-file", name = "file", id = "fileToUpload" })
+                                    <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
+                                    @Html.ValidationMessageFor(n => n.Imagefile, null, new { @class = "text_danger" })
+                                    <div class="col-md-2" id="output"></div>
+                                </div>
+                                @*<div class="uploader" id="uniform-report-screenshot"><input type="file" class="styled form-control" id="report-screenshot"><span class="filename" style="user-select: none;">No file selected</span><span class="action" style="user-select: none;">Choose File</span></div>
+                                    <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional information:</label>
+                        <div class="form-group">
+                            <label>Enter Definition:</label>
+                            @Html.TextAreaFor(model => model.Title, new { @class = "elastic form-control", style = "height: 100px;" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-actions text-right">
+                        <input type="reset" value="Cancel" class="btn btn-danger">
+                        <input type="submit" value="Saved Pictures" class="btn btn-primary">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

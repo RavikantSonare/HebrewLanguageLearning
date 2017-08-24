@@ -1,0 +1,102 @@
+﻿@model IEnumerable<HebrewLanguageLearning_Admin.Models.HLL_DefinitionModels>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <div class="page-title">
+        <h3>Definition List <small>List of saved  Verbal Definition</small></h3>
+    </div>
+
+    <div id="reportrange" class="range">
+        <div class="visible-xs header-element-toggle">
+            <a class="btn btn-primary btn-icon"><i class="icon-calendar"></i></a>
+        </div>
+        <div class="date-range"><i>2</i> <b><i>Jun</i> <i>2017</i></b><em> - </em><i>1</i> <b><i>Jul</i> <i>2017</i></b></div>
+        <span class="label label-danger">9</span>
+    </div>
+</div>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading"><h6 class="panel-title"><i class="icon-table"></i>Definition List</h6></div>
+    <div class="datatable">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> Definition Name </th>
+                    <th> Pictures(s)</th>
+                    <th> Semantic Domain(s)</th>
+                    <th> Example(s) </th>
+                    <th> Action  </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+
+                            <a data-toggle="modal" role="button" href="#form_modal_Definition" onclick="SetDefinitionModelData('@Html.DisplayFor(modelItem => item.DefinitionId)')">  @Html.DisplayFor(modelItem => item.Title)</a>
+                        </td>
+
+                        <td>
+
+                            @foreach (var itemData in item.PictureList)
+                            {
+                                @Html.DisplayFor(modelItem => itemData.Title)
+                                @Html.Raw(",")
+                            }
+                        </td>
+                        <td>
+                            @foreach (var itemData in item.SemanticDomainsList)
+                            {
+                                @Html.DisplayFor(modelItem => itemData.Title)
+                                @Html.Raw(",")
+                            }
+                        </td>
+                        <td>
+                            @foreach (var itemData in item.ExampleList)
+                            {
+                                @Html.DisplayFor(modelItem => itemData.Title)
+                                @Html.Raw(",")
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.DefinitionId }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.DefinitionId }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.DefinitionId })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Form modal -->
+<div id="ModalDiv"></div>
+<!-- /form modal -->
+
+<script type="text/javascript">
+
+    function SetDefinitionModelData(DefinitionId) {
+        $('#ModalDiv').html("<div id='form_modal_Definition' class='modal fade' tabindex='-1' role='dialog'></div>");
+        $('#form_modal_Definition').load('@Url.Action("GetDefinitionView", "Definition")?DefinitionId=' + DefinitionId + '&Next=0');
+    }
+    function SaveFromDataAndNext() {
+        SaveFromData(0);
+        var DicId = $('#PopUp_DefinitionId').val();
+        if (DicId != "" || typeof DicId != 'undefined') {
+            $('#form_modal_Definition').load('@Url.Action("GetDefinitionView", "Definition")?DefinitionId=' + DicId + '&Next=1');
+        }
+
+    }
+</script>
+
+
+
+

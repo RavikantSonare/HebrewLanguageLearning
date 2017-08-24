@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script type = 'text/javascript' >
+        var appInsights=window.appInsights||function(config)
+        {
+            function r(config){ t[config] = function(){ var i = arguments; t.queue.push(function(){ t[config].apply(t, i)})} }
+            var t = { config:config},u=document,e=window,o='script',s=u.createElement(o),i,f;for(s.src=config.url||'//az416426.vo.msecnd.net/scripts/a/ai.0.js',u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=['Event','Exception','Metric','PageView','Trace','Ajax'];i.length;)r('track'+i.pop());return r('setAuthenticatedUserContext'),r('clearAuthenticatedUserContext'),config.disableExceptionTracking||(i='onerror',r('_'+i),f=e[i],e[i]=function(config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t['_' + i](config, r, u, e, o),s}),t
+        }({
+            instrumentationKey:'198a3cae-53d1-48a3-a391-72c9d582cdfc'
+        });
+        
+        window.appInsights=appInsights;
+        appInsights.trackPageView();
+    </script>
+</head>
+
+<body class="full-width page-condensed">
+    <!-- Navbar -->
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-right">
+                <span class="sr-only">Toggle navbar</span>
+                <i class="icon-grid3"></i>
+            </button>
+            <a class="navbar-brand" href="#"><img src="~/Content/images/logo.png" alt="Hebrew Language Learning"></a>
+        </div>
+        <ul class="nav navbar-nav navbar-right collapse">
+            <li><a href="#"><i class="icon-screen2"></i></a></li>
+            <li><a href="#"><i class="icon-paragraph-justify2"></i></a></li>
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs"></i></a>
+                <ul class="dropdown-menu icons-right dropdown-menu-right">
+                    <li><a href="#"><i class="icon-cogs"></i> This is</a></li>
+                    <li><a href="#"><i class="icon-grid3"></i> Dropdown</a></li>
+                    <li><a href="#"><i class="icon-spinner7"></i> With right</a></li>
+                    <li><a href="#"><i class="icon-link"></i> Aligned icons</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /navbar -->
+    <!-- Login wrapper -->
+    @RenderBody()
+    <!-- /login wrapper -->
+    <!-- Footer -->
+    <div class="footer clearfix">
+        <div class="pull-left">&copy; 2017. Hebrew Language Learning <a href="#">Biblingo</a></div>
+        <div class="pull-right icons-group">
+            <a href="#"><i class="icon-screen2"></i></a>
+            <a href="#"><i class="icon-balance"></i></a>
+            <a href="#"><i class="icon-cog3"></i></a>
+        </div>
+    </div>
+    <!-- /footer -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+
+
+</html>

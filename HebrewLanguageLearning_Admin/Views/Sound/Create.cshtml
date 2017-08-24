@@ -1,0 +1,44 @@
+﻿@model HebrewLanguageLearning_Admin.Models.HLL_SoundModels
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="page-content-inner ">
+            <br>
+            <h2>Sound</h2>
+            <div action="#" role="form">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h6 class="panel-title"><i class="icon-pencil3"></i>Add Sound</h6></div>
+                    <div class="panel-body">
+
+
+
+                        <div class="form-group">
+                            <label>Enter Sound:</label>
+                            @Html.TextAreaFor(model => model.Title, new { @class = "elastic form-control", style = "height: 100px;" })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-actions text-right">
+                            <input type="reset" value="Cancel" class="btn btn-danger">
+                            <input type="submit" value="Save Sound" class="btn btn-primary">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+  
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

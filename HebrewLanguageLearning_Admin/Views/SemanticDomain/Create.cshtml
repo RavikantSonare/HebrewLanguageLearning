@@ -1,0 +1,41 @@
+﻿@model HebrewLanguageLearning_Admin.Models.HLL_SemanticDomainModels
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="page-content-inner ">
+        <br>
+        <h2>Semantic Domain</h2>
+        <div action="#" role="form">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h6 class="panel-title"><i class="icon-pencil3"></i>Add Semantic Domain</h6></div>
+                <div class="panel-body">
+
+
+
+                    <div class="form-group">
+                        <label>Enter Example:</label>
+                        @Html.TextAreaFor(model => model.Title, new { @class = "elastic form-control", style = "height: 100px;" })
+                        @Html.ValidationMessageFor(model => model.SemanticDomainId, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-actions text-right">
+                        <input type="reset" value="Cancel" class="btn btn-danger">
+                        <input type="submit" value="Save Semantic" class="btn btn-primary">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

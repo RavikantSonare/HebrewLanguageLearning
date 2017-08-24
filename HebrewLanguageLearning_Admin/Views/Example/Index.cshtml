@@ -1,0 +1,67 @@
+﻿@model IEnumerable<HebrewLanguageLearning_Admin.DBContext.HLL_Example>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <div class="page-title">
+        <h3>Example List <small>List of saved Example</small></h3>
+    </div>
+
+    <div id="reportrange" class="range">
+        <div class="visible-xs header-element-toggle">
+            <a class="btn btn-primary btn-icon"><i class="icon-calendar"></i></a>
+        </div>
+        <div class="date-range"><i>2</i> <b><i>Jun</i> <i>2017</i></b><em> - </em><i>1</i> <b><i>Jul</i> <i>2017</i></b></div>
+        <span class="label label-danger">9</span>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading"><h6 class="panel-title"><i class="icon-volume-high"></i> Example List</h6></div>
+    <div class="datatable">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Example file Name
+                    </th>
+                    <th>
+                        ActiveStatus
+                    </th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActiveStatus)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ExampleId }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.ExampleId }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ExampleId })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+
+
