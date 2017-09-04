@@ -15,7 +15,11 @@ namespace HebrewLanguageLearning_Admin.DBContext
     public partial class HLL_Grammer
     {
         public string GrammerId { get; set; }
-        public string Title { get; set; }
+        public string LessonId { get; set; }
+        public string EnglishGrammar { get; set; }
+        public string HebrewGrammar { get; set; }
+        public string ImgUrl { get; set; }
+        public string VideoUrl { get; set; }
         public string Description { get; set; }
         public Nullable<bool> ActiveStatus { get; set; }
         public Nullable<bool> IsActive { get; set; }

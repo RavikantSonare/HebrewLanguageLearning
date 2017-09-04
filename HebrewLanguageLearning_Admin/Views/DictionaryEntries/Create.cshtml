@@ -4,7 +4,6 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="crossorigin="anonymous"></script>*@
 
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 
@@ -71,12 +70,23 @@
                             @*</div>*@
                         </div>
                     </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Language Learning Definition</label>
+                                @Html.EditorFor(model => model.DicLanguageLearningDefinition, new { htmlAttributes = new { @class = "form-control", @placeholder = "Language Learning Definition" } })
+                                @Html.ValidationMessageFor(model => model.DicLanguageLearningDefinition, "", new { @class = "text-danger" })
 
+                            </div>
+                          </div>
+                    </div>
+                    
                     <hr>
                     <div class="block-inner">
                         <div class="block-inner">
                             <h6 class="heading-hr">
-                                <i class="icon-spinner7"></i> Language Learning Definition <small class="display-block">All Definition about the Language Learning</small>
+                                <i class="icon-spinner7"></i> Dictionary Definition <small class="display-block">All Definition about the Language Learning</small>
                             </h6>
                         </div>
 

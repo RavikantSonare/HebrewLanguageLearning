@@ -1,123 +1,116 @@
-﻿@model HebrewLanguageLearning_Admin.Models.HLL_DefinitionModel
+﻿@model HebrewLanguageLearning_Admin.Models.HLL_HebrewApplicationDataModel
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title"><i class="icon-paragraph-justify2"></i> Language Learning Definition</h4>
+            <h4 class="modal-title"><i class="icon-paragraph-justify2"></i>Application Correct Answer @Html.DisplayFor(x => x.CorrectAnswerNo)</h4>
         </div>
         <!-- Form inside modal -->
-        <form action="#" role="form">
+@using (Ajax.BeginForm("CreateHebrewAppData", "Application" , new AjaxOptions { UpdateTargetId = "result" }, new { enctype = "multipart/form-data" ,@id= "CreateHebrewAppData" }))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.HebrewApplicationDataNo, new { @id = "PopUp_CorrectAnswerID" })
             <div class="modal-body with-padding">
-                <div class="block-inner text-info">
-                    <h6 class="heading-hr">
-                        @Html.HiddenFor(model => model.DefinitionId, new { @id = "PopUp_DefinitionId" })
-                        @Html.DisplayFor(model => model.Title)
-                        <small id="errorMessage" class="display-block text-danger"> </small>
-                    </h6>
-                </div>
+                <div id="result"/>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4">
-                            <label>Picture Name:</label>
-                            @Html.EditorFor(model => model.PictureTitle, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PictureTitle, "", new { @class = "text-danger" })
+                        <div class="col-md-4 center">
+                            <label>Hebrew Application @Html.DisplayFor(x => x.CorrectAnswerNo) :</label>
+                            @*@Html.EditorFor(model => model.CorrectAnswer1, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CorrectAnswer1, "", new { @class = "text-danger" })*@
                         </div>
 
-                        <div class="col-md-3">
-                            <label>Select Picture:</label>
-                            <div class="controls imgParent">
-                                @Html.TextBoxFor(p => p.Imagefile, null, new { data_val = "false", type = "file", @class = "input-file", name = "fileUpload", id = "fileUpload" })
-                                <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
-                                @Html.ValidationMessageFor(n => n.Imagefile, null, new { @class = "text_danger" })
-                                <div class="col-md-2" style="margin-left:100px!important" id="output"></div>
-                            </div>
-                            @*<div class="uploader" id="uniform-report-screenshot"><input type="file" class="styled form-control" id="report-screenshot"><span class="filename" style="user-select: none;">No file selected</span><span class="action" style="user-select: none;">Choose File</span></div>
-                                <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>*@
-                        </div>
-
-                        <div class="col-md-3">
-                            <input type="button" value="+ Add" onclick="addNewImage()" class="btn btn-info pull-right">
+                        <div class="col-md-8">
+                            @*<label>Correct Answer 2:</label>*@
+                            @Html.EditorFor(model => model.HebrewApplicationData, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.HebrewApplicationData, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <table>
-                        <tbody id="ImageList">
-                            @foreach (var item in Model.PictureList)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Title
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="form-group">
+                    <div class="block-inner text-info">
+                        <h6 class="heading-hr">
+                            @Html.HiddenFor(model => model.HebrewApplicationDataNo, new { @id = "PopUp_DefinitionId" })
+                            @Html.HiddenFor(model => model.HebrewApplicationDataId)
+                            <small id="errorMessage" class="display-block text-danger"> </small>
+                        </h6>
+                    </div>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <label>Semantic Domains</label>
-                            <input type="text" placeholder="Semantic Domains" class="form-control" id="txtSemanticDomains">
+                        <div class="col-md-6">
+                            <label>Correct Answer 1:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer1, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer1, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-sm-6">
-                            <br />
 
-                            <input type="button" value="+ Add Semantic Domains" onclick="addNewSemanticDomains()" class="btn btn-info">
+                        <div class="col-md-6">
+                            <label>Correct Answer 2:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer2, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <table>
-                        <tbody id="SemanticList">
-                            @foreach (var item in Model.SemanticDomainsList)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Title
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-group">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <label>Examples</label>
-                            <input type="text" placeholder="Examples" class="form-control" id="txtExamples">
+                        <div class="col-md-6">
+                            <label>Correct Answer 3:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer3, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer3, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-sm-6">
-                            <br />
 
-                            <input type="button" value="+ Add Examples" onclick="addNewExamples()" class="btn btn-info">
+                        <div class="col-md-6">
+                            <label>Correct Answer 4:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer4, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer4, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Correct Answer 5:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer5, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer5, "", new { @class = "text-danger" })
+                        </div>
 
-                <div class="form-group">
-                    <table>
-                        <tbody id="ExamplesList">
-                            @foreach (var item in Model.ExampleList)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Title
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                        <div class="col-md-6">
+                            <label>Correct Answer 6:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer6, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer6, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Correct Answer 7:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer7, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer7, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Correct Answer 8:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer8, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer8, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Correct Answer 9:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer9, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer9, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Correct Answer 10:</label>
+                            @Html.EditorFor(model => model.CorrectAnswer10, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CorrectAnswer10, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                <button type="button" onclick="SaveFromData(1)" class="btn btn-primary">Save and Exit</button>
-                <button type="button" onclick="SaveFromDataAndNext()" class="btn btn-success">Save and Go to Next Def</button>
+                <button type="button" class="btn btn-primary" onclick="SaveFromDataCorrectAnswer()" value="Save">Save and Exit</button>
+                <button type="button" class="btn btn-success" onclick="SaveFromDataAndNext()" value="SaveNext">Save and Next</button>
+
+                @*<button type="button" onclick="SaveFromData(1)" class="btn btn-primary">Save and Exit</button>
+                <button type="button" onclick="SaveFromDataAndNext()" class="btn btn-success">Save and Go to Next Def</button>*@
             </div>
-        </form>
+       
+}
     </div>
 </div>
 
@@ -281,4 +274,6 @@
             });
         } else { alert("Your browser doesn't support to File API") }
     });
+   
 </script>
+

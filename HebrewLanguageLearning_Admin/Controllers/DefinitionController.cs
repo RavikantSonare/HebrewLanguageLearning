@@ -65,12 +65,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
         public ActionResult DefinitionList()
         {
-            List<HLL_DefinitionModels> Def_Obj = new List<HLL_DefinitionModels>();
+            List<HLL_DefinitionModel> Def_Obj = new List<HLL_DefinitionModel>();
             var hLL_Definition = db.HLL_Definition.ToList();
 
             foreach (var item in hLL_Definition)
             {
-                Def_Obj.Add(new HLL_DefinitionModels
+                Def_Obj.Add(new HLL_DefinitionModel
                 {
                     DefinitionId = item.DefinitionId,
                     Title = item.Title,
@@ -88,11 +88,11 @@ namespace HebrewLanguageLearning_Admin.Controllers
         public PartialViewResult GetDefinitionView(string DefinitionId,string Next)
         {
             if (Next == "1") { DefinitionId = GetDefinitionViewNext(DefinitionId); }
-            HLL_DefinitionModels Def_Obj = new HLL_DefinitionModels();
+            HLL_DefinitionModel Def_Obj = new HLL_DefinitionModel();
             var hLL_Definition = db.HLL_Definition.Where(x => x.DefinitionId.Equals(DefinitionId)).FirstOrDefault();
 
-            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Definition, HLL_DefinitionModels>(); });
-            Def_Obj = AutoMapper.Mapper.Map<HLL_Definition, HLL_DefinitionModels>(hLL_Definition);
+            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Definition, HLL_DefinitionModel>(); });
+            Def_Obj = AutoMapper.Mapper.Map<HLL_Definition, HLL_DefinitionModel>(hLL_Definition);
 
             ////new List<HLL_PicturesModels>() { new HLL_PicturesModels { Title = "Pic_1" }, new HLL_PicturesModels { Title = "Pic_2" }, new HLL_PicturesModels { Title = "Pic_3" }, new HLL_PicturesModels { Title = "Pic_4" } };
             //List< HLL_SemanticDomainModels > SemanticDomainsList = new List<HLL_SemanticDomainModels>() { new HLL_SemanticDomainModels { Title = "Semantic_Domain_1" }, new HLL_SemanticDomainModels { Title = "Semantic_Domain_2" }, new HLL_SemanticDomainModels { Title = "Semantic_Domain_3" } };
@@ -142,13 +142,13 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(HLL_DefinitionModels hLL_Definition)
+        public ActionResult Create(HLL_DefinitionModel hLL_Definition)
         {
             if (ModelState.IsValid)
             {
                 hLL_Definition.DefinitionId = EntityConfig.getnewid("HLL_Definition");
-                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DefinitionModels, HLL_Definition>(); });
-                HLL_Definition DataModel = AutoMapper.Mapper.Map<HLL_DefinitionModels, HLL_Definition>(hLL_Definition);
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DefinitionModel, HLL_Definition>(); });
+                HLL_Definition DataModel = AutoMapper.Mapper.Map<HLL_DefinitionModel, HLL_Definition>(hLL_Definition);
                 db.HLL_Definition.Add(DataModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");

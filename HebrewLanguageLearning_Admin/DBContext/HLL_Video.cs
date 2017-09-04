@@ -12,19 +12,13 @@ namespace HebrewLanguageLearning_Admin.DBContext
     using System;
     using System.Collections.Generic;
     
-    public partial class HLL_DictionaryEntries
+    public partial class HLL_Video
     {
-        public string DictionaryEntriesId { get; set; }
-        public string DicStrongNo { get; set; }
-        public string DicEnglish { get; set; }
-        public string DicHebrew { get; set; }
-        public string DicLanguageLearningDefinition { get; set; }
-        public Nullable<int> Count_TagPictures { get; set; }
-        public Nullable<int> Count_TagVerbalDefinition { get; set; }
-        public Nullable<int> Count_TagExample { get; set; }
-        public Nullable<int> Count_TagSemanticDomain { get; set; }
-        public Nullable<int> Count_TagDictionaries { get; set; }
-        public Nullable<int> Count_TagSound { get; set; }
+        public string VideoId { get; set; }
+        public string MasterTableId { get; set; }
+        public string Title { get; set; }
+        public string VideoUrl { get; set; }
+        public string Description { get; set; }
         public Nullable<bool> ActiveStatus { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }

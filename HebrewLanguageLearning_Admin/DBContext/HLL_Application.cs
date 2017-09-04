@@ -15,6 +15,7 @@ namespace HebrewLanguageLearning_Admin.DBContext
     public partial class HLL_Application
     {
         public string ApplicationId { get; set; }
+        public string LessonId { get; set; }
         public string Title { get; set; }
         public string Sentence { get; set; }
         public string ImgUrl { get; set; }

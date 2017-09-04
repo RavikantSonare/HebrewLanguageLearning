@@ -415,8 +415,10 @@
     <Compile Include="Controllers\DefinitionController.cs" />
     <Compile Include="Controllers\DictionaryEntriesController.cs" />
     <Compile Include="Controllers\ExampleController.cs" />
+    <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\GrammerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\SemanticDomainController.cs" />
@@ -473,6 +475,9 @@
     <Compile Include="DBContext\HLL_Grammer.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\HLL_HebrewApplicationData.cs">
+      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\HLL_Pictures.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
@@ -491,6 +496,9 @@
     <Compile Include="DBContext\HLL_Topics.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\HLL_Video.cs">
+      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\HLL_Vocabulary.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
@@ -500,10 +508,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\HLL_ApplicationModel.cs" />
     <Compile Include="Models\HLL_CommonField.cs" />
-    <Compile Include="Models\HLL_DefinitionModels.cs" />
+    <Compile Include="Models\HLL_DefinitionModel.cs" />
     <Compile Include="Models\HLL_DictionaryModel.cs" />
     <Compile Include="Models\HLL_ExampleModels.cs" />
+    <Compile Include="Models\HLL_HebrewApplicationDataModel.cs" />
     <Compile Include="Models\HLL_PicturesModels.cs" />
     <Compile Include="Models\HLL_SemanticDomainModels.cs" />
     <Compile Include="Models\HLL_SoundModels.cs" />
@@ -772,11 +782,6 @@
     <Content Include="Views\Sound\Details.cshtml" />
     <Content Include="Views\Sound\Edit.cshtml" />
     <Content Include="Views\Sound\Index.cshtml" />
-    <Content Include="Views\Application\Create.cshtml" />
-    <Content Include="Views\Application\Delete.cshtml" />
-    <Content Include="Views\Application\Details.cshtml" />
-    <Content Include="Views\Application\Edit.cshtml" />
-    <Content Include="Views\Application\Index.cshtml" />
     <Content Include="Views\DictionaryEntries\Create.cshtml" />
     <Content Include="Views\DictionaryEntries\Delete.cshtml" />
     <Content Include="Views\Pictures\Create.cshtml" />
@@ -807,6 +812,23 @@
     <Content Include="Views\StudentsInfo\Edit.cshtml" />
     <Content Include="Views\Definition\DefinitionList.cshtml" />
     <Content Include="Views\Shared\_HLL_Definition_PartialView.cshtml" />
+    <Content Include="Views\Lessons\Create.cshtml" />
+    <Content Include="Views\Lessons\Delete.cshtml" />
+    <Content Include="Views\Lessons\Details.cshtml" />
+    <Content Include="Views\Lessons\Edit.cshtml" />
+    <Content Include="Views\Lessons\Index.cshtml" />
+    <Content Include="Views\Games\Create.cshtml" />
+    <Content Include="Views\Games\Delete.cshtml" />
+    <Content Include="Views\Games\Details.cshtml" />
+    <Content Include="Views\Games\Edit.cshtml" />
+    <Content Include="Views\Games\Index.cshtml" />
+    <Content Include="Views\Application\Create.cshtml" />
+    <Content Include="Views\Application\Delete.cshtml" />
+    <Content Include="Views\Application\Details.cshtml" />
+    <Content Include="Views\Application\Edit.cshtml" />
+    <Content Include="Views\Application\Index.cshtml" />
+    <Content Include="Views\Shared\HLL_HebrewApplicationDataCorrectAnswer_PartialView.cshtml" />
+    <Content Include="Views\Shared\_HLL_Application_Data_PartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -71,6 +71,7 @@
             <PropertyRef Name="ApplicationId" />
           </Key>
           <Property Name="ApplicationId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="LessonId" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="250" />
           <Property Name="Sentence" Type="nvarchar" MaxLength="250" />
           <Property Name="ImgUrl" Type="nvarchar" MaxLength="250" />
@@ -106,6 +107,7 @@
           <Property Name="DicStrongNo" Type="nvarchar" MaxLength="250" />
           <Property Name="DicEnglish" Type="nvarchar" MaxLength="250" />
           <Property Name="DicHebrew" Type="nvarchar" MaxLength="250" />
+          <Property Name="DicLanguageLearningDefinition" Type="nvarchar" MaxLength="500" />
           <Property Name="Count_TagPictures" Type="int" />
           <Property Name="Count_TagVerbalDefinition" Type="int" />
           <Property Name="Count_TagExample" Type="int" />
@@ -140,8 +142,38 @@
             <PropertyRef Name="GrammerId" />
           </Key>
           <Property Name="GrammerId" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="LessonId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="EnglishGrammar" Type="nvarchar" MaxLength="500" />
+          <Property Name="HebrewGrammar" Type="nvarchar" MaxLength="500" />
+          <Property Name="ImgUrl" Type="nvarchar" MaxLength="250" />
+          <Property Name="VideoUrl" Type="nvarchar" MaxLength="250" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActiveStatus" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HLL_HebrewApplicationData">
+          <Key>
+            <PropertyRef Name="HebrewApplicationDataId" />
+          </Key>
+          <Property Name="HebrewApplicationDataId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="MasterTableId" Type="nvarchar" MaxLength="250" />
+          <Property Name="HebrewApplicationDataNo" Type="nvarchar" MaxLength="250" />
+          <Property Name="HebrewApplicationData" Type="nvarchar" MaxLength="250" />
+          <Property Name="CorrectAnswer1" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnswer2" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnswer3" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnswer4" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnswer5" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnswer6" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnswer7" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnswer8" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnswer9" Type="nvarchar" MaxLength="500" />
+          <Property Name="CorrectAnswer10" Type="nvarchar" MaxLength="500" />
           <Property Name="ActiveStatus" Type="bit" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDelete" Type="bit" />
@@ -253,6 +285,23 @@
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="HLL_Video">
+          <Key>
+            <PropertyRef Name="VideoId" />
+          </Key>
+          <Property Name="VideoId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="MasterTableId" Type="nvarchar" MaxLength="250" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="VideoUrl" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActiveStatus" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="HLL_Vocabulary">
           <Key>
             <PropertyRef Name="VocabularyId" />
@@ -352,12 +401,14 @@
           <EntitySet Name="HLL_DictionaryEntries" EntityType="Self.HLL_DictionaryEntries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Example" EntityType="Self.HLL_Example" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Grammer" EntityType="Self.HLL_Grammer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HLL_HebrewApplicationData" EntityType="Self.HLL_HebrewApplicationData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Pictures" EntityType="Self.HLL_Pictures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_SemanticDomain" EntityType="Self.HLL_SemanticDomain" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Sound" EntityType="Self.HLL_Sound" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_StudentsInfo" EntityType="Self.HLL_StudentsInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_TagAttachment" EntityType="Self.HLL_TagAttachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Topics" EntityType="Self.HLL_Topics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HLL_Video" EntityType="Self.HLL_Video" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Vocabulary" EntityType="Self.HLL_Vocabulary" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -380,21 +431,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="HLL_Grammer">
-          <Key>
-            <PropertyRef Name="GrammerId" />
-          </Key>
-          <Property Name="GrammerId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ActiveStatus" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="HLL_Topics">
           <Key>
             <PropertyRef Name="TopicId" />
@@ -426,10 +462,8 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityContainer Name="HLLDBContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="HLL_Grammer" EntityType="Self.HLL_Grammer" />
           <EntitySet Name="HLL_Topics" EntityType="Self.HLL_Topics" />
           <EntitySet Name="HLL_Vocabulary" EntityType="Self.HLL_Vocabulary" />
-          <EntitySet Name="HLL_Application" EntityType="Model.HLL_Application" />
           <EntitySet Name="C__MigrationHistory" EntityType="Model.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Model.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Model.AspNetUserClaim" />
@@ -453,30 +487,17 @@
           </FunctionImport>
           <EntitySet Name="HLL_TagAttachment" EntityType="Model.HLL_TagAttachment" />
           <EntitySet Name="HLL_StudentsInfo" EntityType="Model.HLL_StudentsInfo" />
-          <EntitySet Name="HLL_DictionaryEntries" EntityType="Model.HLL_DictionaryEntries" />
           <EntitySet Name="HLL_Sound" EntityType="Model.HLL_Sound" />
           <EntitySet Name="HLL_Definition" EntityType="Model.HLL_Definition" />
           <EntitySet Name="HLL_Pictures" EntityType="Model.HLL_Pictures" />
           <EntitySet Name="HLL_Example" EntityType="Model.HLL_Example" />
           <EntitySet Name="HLL_SemanticDomain" EntityType="Model.HLL_SemanticDomain" />
+          <EntitySet Name="HLL_DictionaryEntries" EntityType="Model.HLL_DictionaryEntries" />
+          <EntitySet Name="HLL_Application" EntityType="Model.HLL_Application" />
+          <EntitySet Name="HLL_Video" EntityType="Model.HLL_Video" />
+          <EntitySet Name="HLL_Grammer" EntityType="Model.HLL_Grammer" />
+          <EntitySet Name="HLL_HebrewApplicationData" EntityType="Model.HLL_HebrewApplicationData" />
         </EntityContainer>
-        <EntityType Name="HLL_Application">
-          <Key>
-            <PropertyRef Name="ApplicationId" />
-          </Key>
-          <Property Name="ApplicationId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Sentence" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ImgUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="VideoUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ActiveStatus" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -609,28 +630,6 @@
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="HLL_DictionaryEntries">
-          <Key>
-            <PropertyRef Name="DictionaryEntriesId" />
-          </Key>
-          <Property Name="DictionaryEntriesId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DicStrongNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DicEnglish" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DicHebrew" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Count_TagPictures" Type="Int32" />
-          <Property Name="Count_TagVerbalDefinition" Type="Int32" />
-          <Property Name="Count_TagExample" Type="Int32" />
-          <Property Name="Count_TagSemanticDomain" Type="Int32" />
-          <Property Name="Count_TagDictionaries" Type="Int32" />
-          <Property Name="Count_TagSound" Type="Int32" />
-          <Property Name="ActiveStatus" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="HLL_Sound">
           <Key>
             <PropertyRef Name="SoundId" />
@@ -709,28 +708,115 @@
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="HLL_DictionaryEntries">
+          <Key>
+            <PropertyRef Name="DictionaryEntriesId" />
+          </Key>
+          <Property Name="DictionaryEntriesId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DicStrongNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DicEnglish" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DicHebrew" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DicLanguageLearningDefinition" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Count_TagPictures" Type="Int32" />
+          <Property Name="Count_TagVerbalDefinition" Type="Int32" />
+          <Property Name="Count_TagExample" Type="Int32" />
+          <Property Name="Count_TagSemanticDomain" Type="Int32" />
+          <Property Name="Count_TagDictionaries" Type="Int32" />
+          <Property Name="Count_TagSound" Type="Int32" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_Application">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LessonId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Sentence" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ImgUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="VideoUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_Video">
+          <Key>
+            <PropertyRef Name="VideoId" />
+          </Key>
+          <Property Name="VideoId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MasterTableId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="VideoUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_Grammer">
+          <Key>
+            <PropertyRef Name="GrammerId" />
+          </Key>
+          <Property Name="GrammerId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LessonId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="EnglishGrammar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HebrewGrammar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ImgUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="VideoUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_HebrewApplicationData">
+          <Key>
+            <PropertyRef Name="HebrewApplicationDataId" />
+          </Key>
+          <Property Name="HebrewApplicationDataId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MasterTableId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="HebrewApplicationDataNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="HebrewApplicationData" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer5" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer6" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer7" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer8" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer9" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CorrectAnswer10" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="HLLDBContext">
-    <EntitySetMapping Name="HLL_Grammer">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.HLL_Grammer)">
-        <MappingFragment StoreEntitySet="HLL_Grammer">
-          <ScalarProperty Name="GrammerId" ColumnName="GrammerId" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="HLL_Topics">
       <EntityTypeMapping TypeName="IsTypeOf(Model.HLL_Topics)">
         <MappingFragment StoreEntitySet="HLL_Topics">
@@ -753,24 +839,6 @@
           <ScalarProperty Name="VocabularyId" ColumnName="VocabularyId" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="HLL_Application">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.HLL_Application)">
-        <MappingFragment StoreEntitySet="HLL_Application">
-          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Sentence" ColumnName="Sentence" />
-          <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
-          <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
           <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
@@ -891,29 +959,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HLL_DictionaryEntries">
-            <EntityTypeMapping TypeName="Model.HLL_DictionaryEntries">
-              <MappingFragment StoreEntitySet="HLL_DictionaryEntries">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-                <ScalarProperty Name="Count_TagSound" ColumnName="Count_TagSound" />
-                <ScalarProperty Name="Count_TagDictionaries" ColumnName="Count_TagDictionaries" />
-                <ScalarProperty Name="Count_TagSemanticDomain" ColumnName="Count_TagSemanticDomain" />
-                <ScalarProperty Name="Count_TagExample" ColumnName="Count_TagExample" />
-                <ScalarProperty Name="Count_TagVerbalDefinition" ColumnName="Count_TagVerbalDefinition" />
-                <ScalarProperty Name="Count_TagPictures" ColumnName="Count_TagPictures" />
-                <ScalarProperty Name="DicHebrew" ColumnName="DicHebrew" />
-                <ScalarProperty Name="DicEnglish" ColumnName="DicEnglish" />
-                <ScalarProperty Name="DicStrongNo" ColumnName="DicStrongNo" />
-                <ScalarProperty Name="DictionaryEntriesId" ColumnName="DictionaryEntriesId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="HLL_Sound">
             <EntityTypeMapping TypeName="Model.HLL_Sound">
               <MappingFragment StoreEntitySet="HLL_Sound">
@@ -994,6 +1039,114 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="DefinitionId" ColumnName="DefinitionId" />
                 <ScalarProperty Name="SemanticDomainId" ColumnName="SemanticDomainId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_DictionaryEntries">
+            <EntityTypeMapping TypeName="Model.HLL_DictionaryEntries">
+              <MappingFragment StoreEntitySet="HLL_DictionaryEntries">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Count_TagSound" ColumnName="Count_TagSound" />
+                <ScalarProperty Name="Count_TagDictionaries" ColumnName="Count_TagDictionaries" />
+                <ScalarProperty Name="Count_TagSemanticDomain" ColumnName="Count_TagSemanticDomain" />
+                <ScalarProperty Name="Count_TagExample" ColumnName="Count_TagExample" />
+                <ScalarProperty Name="Count_TagVerbalDefinition" ColumnName="Count_TagVerbalDefinition" />
+                <ScalarProperty Name="Count_TagPictures" ColumnName="Count_TagPictures" />
+                <ScalarProperty Name="DicLanguageLearningDefinition" ColumnName="DicLanguageLearningDefinition" />
+                <ScalarProperty Name="DicHebrew" ColumnName="DicHebrew" />
+                <ScalarProperty Name="DicEnglish" ColumnName="DicEnglish" />
+                <ScalarProperty Name="DicStrongNo" ColumnName="DicStrongNo" />
+                <ScalarProperty Name="DictionaryEntriesId" ColumnName="DictionaryEntriesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_Application">
+            <EntityTypeMapping TypeName="Model.HLL_Application">
+              <MappingFragment StoreEntitySet="HLL_Application">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
+                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+                <ScalarProperty Name="Sentence" ColumnName="Sentence" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_Video">
+            <EntityTypeMapping TypeName="Model.HLL_Video">
+              <MappingFragment StoreEntitySet="HLL_Video">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
+                <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_Grammer">
+            <EntityTypeMapping TypeName="Model.HLL_Grammer">
+              <MappingFragment StoreEntitySet="HLL_Grammer">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
+                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+                <ScalarProperty Name="HebrewGrammar" ColumnName="HebrewGrammar" />
+                <ScalarProperty Name="EnglishGrammar" ColumnName="EnglishGrammar" />
+                <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+                <ScalarProperty Name="GrammerId" ColumnName="GrammerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_HebrewApplicationData">
+            <EntityTypeMapping TypeName="Model.HLL_HebrewApplicationData">
+              <MappingFragment StoreEntitySet="HLL_HebrewApplicationData">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="CorrectAnswer10" ColumnName="CorrectAnswer10" />
+                <ScalarProperty Name="CorrectAnswer9" ColumnName="CorrectAnswer9" />
+                <ScalarProperty Name="CorrectAnswer8" ColumnName="CorrectAnswer8" />
+                <ScalarProperty Name="CorrectAnswer7" ColumnName="CorrectAnswer7" />
+                <ScalarProperty Name="CorrectAnswer6" ColumnName="CorrectAnswer6" />
+                <ScalarProperty Name="CorrectAnswer5" ColumnName="CorrectAnswer5" />
+                <ScalarProperty Name="CorrectAnswer4" ColumnName="CorrectAnswer4" />
+                <ScalarProperty Name="CorrectAnswer3" ColumnName="CorrectAnswer3" />
+                <ScalarProperty Name="CorrectAnswer2" ColumnName="CorrectAnswer2" />
+                <ScalarProperty Name="CorrectAnswer1" ColumnName="CorrectAnswer1" />
+                <ScalarProperty Name="HebrewApplicationData" ColumnName="HebrewApplicationData" />
+                <ScalarProperty Name="HebrewApplicationDataNo" ColumnName="HebrewApplicationDataNo" />
+                <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
+                <ScalarProperty Name="HebrewApplicationDataId" ColumnName="HebrewApplicationDataId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

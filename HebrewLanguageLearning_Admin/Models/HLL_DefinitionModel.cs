@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HebrewLanguageLearning_Admin.Models
 {
-    public class HLL_DefinitionModels: HLL_CommonField
+    public class HLL_DefinitionModel: HLL_CommonField
     {
         public string DefinitionId { get; set; }
         public string DicEntId { get; set; }

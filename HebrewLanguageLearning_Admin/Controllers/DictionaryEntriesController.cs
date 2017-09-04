@@ -77,7 +77,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                 /* Add Definition */
                 DefinitionController _objDef = new DefinitionController();
-                HLL_DefinitionModels _ModelObjDef = new HLL_DefinitionModels();
+                HLL_DefinitionModel _ModelObjDef = new HLL_DefinitionModel();
                 foreach (var Item in hLL_DictionaryEntries.DicDefinitionDynamicTextBox)
                 {
                     if (!string.IsNullOrEmpty(Item))

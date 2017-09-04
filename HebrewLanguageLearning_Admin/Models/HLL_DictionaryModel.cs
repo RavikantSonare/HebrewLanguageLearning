@@ -16,6 +16,8 @@ namespace HebrewLanguageLearning_Admin.Models
         public string DicEnglish { get; set; }
         [Required(ErrorMessage = "Please Fill Hebrew Text")]
         public string DicHebrew { get; set; }
+        [Required(ErrorMessage = "Please Enter Language Learning Definition.")]
+        public string DicLanguageLearningDefinition { get; set; }
         [Required(ErrorMessage = "Please Enter at least One definition.")]
         public string[] DicDefinitionDynamicTextBox { get; set; }
         public int Count_TagPictures { get; set; }
