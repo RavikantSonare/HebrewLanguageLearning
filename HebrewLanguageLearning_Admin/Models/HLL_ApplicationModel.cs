@@ -17,11 +17,13 @@ namespace HebrewLanguageLearning_Admin.Models
         [Required(ErrorMessage = "Please Enter at least One Application.")]
         public string[] AppSentenceDynamicTextBox { get; set; }
 
-        public string ImgUrl { get; set; }
-        public string VideoUrl { get; set; }
+        public HttpPostedFileBase Imgfile { get; set; }
+        public HttpPostedFileBase Videofile { get; set; }
+        public string[] ImgUrl { get; set; }
+        public string[] VideoUrl { get; set; }
 
        
         public HttpPostedFileBase Soundfile { get; set; }
-        public string SoundUrl { get; set; }
+        public string[] SoundUrl { get; set; }
     }
 }

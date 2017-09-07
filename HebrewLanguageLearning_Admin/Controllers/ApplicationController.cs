@@ -38,7 +38,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View(hLL_Application);
         }
 
-        // GET: Application/Create
 
         public async Task<ActionResult> Create()
         {
@@ -57,6 +56,9 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Application, HLL_ApplicationModel>(); });
                 DataModel = AutoMapper.Mapper.Map<HLL_Application, HLL_ApplicationModel>(_ModelObj);
                 DataModel.AppSentenceDynamicTextBox = new string[15];
+                DataModel.VideoUrl = new string[15];
+                DataModel.ImgUrl = new string[15];
+                DataModel.SoundUrl = new string[15];
                 int i = 0;
                 foreach (var Item in db.HLL_HebrewApplicationData.Where(h => h.MasterTableId.Equals(_ModelObj.ApplicationId)).ToList())
                 {
@@ -128,7 +130,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(HLL_ApplicationModel hLL_Application)
         {
-
+            var httpPostedFile = Request.Files[0];
             if (ModelState.IsValid)
             {
                 /* Add Application */

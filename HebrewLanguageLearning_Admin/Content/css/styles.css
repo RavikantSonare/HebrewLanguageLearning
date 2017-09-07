@@ -7341,6 +7341,15 @@ li.plupload_droptext {
 .imgParent {
  position:relative;
 }
+.imgParent .output {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+    top: 0;
+}
  .imgParent #output {
     width: 100px;
     height: 100px;
