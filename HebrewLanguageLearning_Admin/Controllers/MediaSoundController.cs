@@ -16,7 +16,7 @@ using System.IO.IsolatedStorage;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
-    public class SoundController : Controller
+    public class MediaSoundController : Controller
     {
         private HLLDBContext db = new HLLDBContext();
 
@@ -28,7 +28,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             //{
             //    //return false; // No microphone is attached to the device
             //}
-            return View(db.HLL_Sound.ToList());
+            return View(db.HLL_Media_Sound.ToList());
         }
 
         // GET: Sound/Details/5
@@ -38,12 +38,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HLL_Sound hLL_Sound = db.HLL_Sound.Find(id);
-            if (hLL_Sound == null)
+            HLL_Media_Sound HLL_Media_Sound = db.HLL_Media_Sound.Find(id);
+            if (HLL_Media_Sound == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_Sound);
+            return View(HLL_Media_Sound);
         }
 
         // GET: Sound/Create
@@ -57,47 +57,47 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<ActionResult> Create(HLL_SoundModels hLL_Sound)
+        public async System.Threading.Tasks.Task<ActionResult> Create(HLL_Media_SoundModels HLL_Media_Sound)
         {
             if (ModelState.IsValid)
             {
-                hLL_Sound.SoundId = EntityConfig.getnewid("HLL_Sound");
-                var SoundData = hLL_Sound.Soundfile; //Request.Files["Imagefile"];
-                if (string.IsNullOrEmpty(hLL_Sound.AudioUrl)) { hLL_Sound.AudioUrl = await ImageUtility.base64ToFile(await ImageUtility.base64ToImageConvertion(SoundData), hLL_Sound.SoundId, "Sound"); }
+                HLL_Media_Sound.SoundId = EntityConfig.getnewid("HLL_Media_Sound");
+                var SoundData = HLL_Media_Sound.Soundfile; //Request.Files["Imagefile"];
+                if (string.IsNullOrEmpty(HLL_Media_Sound.AudioUrl)) { HLL_Media_Sound.AudioUrl = await ImageUtility.base64ToFile(await ImageUtility.base64ToImageConvertion(SoundData), HLL_Media_Sound.SoundId, "Sound"); }
 
-                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SoundModels, HLL_Sound>(); });
-                HLL_Sound DataModel = AutoMapper.Mapper.Map<HLL_SoundModels, HLL_Sound>(hLL_Sound);
-                db.HLL_Sound.Add(DataModel);
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_SoundModels, HLL_Media_Sound>(); });
+                HLL_Media_Sound DataModel = AutoMapper.Mapper.Map<HLL_Media_SoundModels, HLL_Media_Sound>(HLL_Media_Sound);
+                db.HLL_Media_Sound.Add(DataModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(hLL_Sound);
+            return View(HLL_Media_Sound);
         }
-        public async System.Threading.Tasks.Task CreateAudio(HLL_SoundModels hLL_Sound)
+        public async System.Threading.Tasks.Task CreateAudio(HLL_Media_SoundModels HLL_Media_Sound)
         {
             if (ModelState.IsValid)
             {
-                hLL_Sound.SoundId = EntityConfig.getnewid("HLL_Sound");
-                var SoundData = hLL_Sound.AudioUrl; //Request.Files["Imagefile"];
-                hLL_Sound.AudioUrl = await ImageUtility.base64ToFile(SoundData, hLL_Sound.SoundId, "Sound");
+                HLL_Media_Sound.SoundId = EntityConfig.getnewid("HLL_Media_Sound");
+                var SoundData = HLL_Media_Sound.AudioUrl; //Request.Files["Imagefile"];
+                HLL_Media_Sound.AudioUrl = await ImageUtility.base64ToFile(SoundData, HLL_Media_Sound.SoundId, "Sound");
             }
-            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SoundModels, HLL_Sound>(); });
-            HLL_Sound DataModel = AutoMapper.Mapper.Map<HLL_SoundModels, HLL_Sound>(hLL_Sound);
-            db.HLL_Sound.Add(DataModel);
+            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_SoundModels, HLL_Media_Sound>(); });
+            HLL_Media_Sound DataModel = AutoMapper.Mapper.Map<HLL_Media_SoundModels, HLL_Media_Sound>(HLL_Media_Sound);
+            db.HLL_Media_Sound.Add(DataModel);
             db.SaveChanges();
 
         }
 
 
 
-        //public ActionResult Create(HLL_SoundModels hLL_Sound)
+        //public ActionResult Create(HLL_Media_SoundModels HLL_Media_Sound)
         //{
 
-        //        hLL_Sound.SoundId = EntityConfig.getnewid("HLL_Sound");
-        //        AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SoundModels, HLL_Sound>(); });
-        //        HLL_Sound DataModel = AutoMapper.Mapper.Map<HLL_SoundModels, HLL_Sound>(hLL_Sound);
-        //        db.HLL_Sound.Add(DataModel);
+        //        HLL_Media_Sound.SoundId = EntityConfig.getnewid("HLL_Media_Sound");
+        //        AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_SoundModels, HLL_Media_Sound>(); });
+        //        HLL_Media_Sound DataModel = AutoMapper.Mapper.Map<HLL_Media_SoundModels, HLL_Media_Sound>(HLL_Media_Sound);
+        //        db.HLL_Media_Sound.Add(DataModel);
         //        db.SaveChanges();
 
         //    return JsonResult(new {result:"success" });
@@ -109,12 +109,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HLL_Sound hLL_Sound = db.HLL_Sound.Find(id);
-            if (hLL_Sound == null)
+            HLL_Media_Sound HLL_Media_Sound = db.HLL_Media_Sound.Find(id);
+            if (HLL_Media_Sound == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_Sound);
+            return View(HLL_Media_Sound);
         }
 
         // POST: Sound/Edit/5
@@ -122,15 +122,15 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SoundId,Title,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] HLL_Sound hLL_Sound)
+        public ActionResult Edit([Bind(Include = "SoundId,Title,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] HLL_Media_Sound HLL_Media_Sound)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(hLL_Sound).State = EntityState.Modified;
+                db.Entry(HLL_Media_Sound).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(hLL_Sound);
+            return View(HLL_Media_Sound);
         }
 
         // GET: Sound/Delete/5
@@ -140,12 +140,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HLL_Sound hLL_Sound = db.HLL_Sound.Find(id);
-            if (hLL_Sound == null)
+            HLL_Media_Sound HLL_Media_Sound = db.HLL_Media_Sound.Find(id);
+            if (HLL_Media_Sound == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_Sound);
+            return View(HLL_Media_Sound);
         }
 
         // POST: Sound/Delete/5
@@ -153,8 +153,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            HLL_Sound hLL_Sound = db.HLL_Sound.Find(id);
-            db.HLL_Sound.Remove(hLL_Sound);
+            HLL_Media_Sound HLL_Media_Sound = db.HLL_Media_Sound.Find(id);
+            db.HLL_Media_Sound.Remove(HLL_Media_Sound);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

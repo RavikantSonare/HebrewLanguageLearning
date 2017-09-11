@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HebrewLanguageLearning_Admin.Models
 {
-    public class HLL_SoundModels : HLL_CommonField
+    public class HLL_Media_SoundModels : HLL_CommonField
     {
         public string SoundId { get; set; }
         public string DicEntId { get; set; }

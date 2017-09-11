@@ -17,5 +17,46 @@ namespace HebrewLanguageLearning_Admin
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        protected void Application_BeginRequest()
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+            var context = HttpContext.Current;
+            var response = context.Response;
+
+            // enable CORS
+            response.AddHeader("Access-Control-Allow-Origin", "*");
+            response.AddHeader("X-Frame-Options", "ALLOW-FROM *");
+
+            if (context.Request.HttpMethod == "OPTIONS")
+            {
+                response.AddHeader("Access-Control-Allow-Methods", "GET, POST");
+                response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
+                response.AddHeader("Access-Control-Max-Age", "1728000");
+                response.End();
+            }
+            //protected void Application_Error(object sender, EventArgs e)
+            //{
+            //    Exception exception = Server.GetLastError();
+
+            //    // ... log error here
+
+            //    var httpEx = exception as HttpException;
+
+            //    if (httpEx != null && httpEx.GetHttpCode() == 403)
+            //    {
+            //        Response.Redirect("~/Error", true);
+            //    }
+            //    else if (httpEx != null && httpEx.GetHttpCode() == 404)
+            //    {
+            //        Response.Redirect("~/Error", true);
+            //    }
+            //    else
+            //    {
+            //        Response.Redirect("~/Error");
+            //    }
+            //}
+        }
     }
 }

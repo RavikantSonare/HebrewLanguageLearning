@@ -12,11 +12,13 @@ namespace HebrewLanguageLearning_Admin.DBContext
     using System;
     using System.Collections.Generic;
     
-    public partial class HLL_Sound
+    public partial class HLL_Media_Video
     {
-        public string SoundId { get; set; }
+        public string VideoId { get; set; }
+        public string MasterTableId { get; set; }
         public string Title { get; set; }
-        public string AudioUrl { get; set; }
+        public string VideoUrl { get; set; }
+        public string Description { get; set; }
         public Nullable<bool> ActiveStatus { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
@@ -24,6 +26,5 @@ namespace HebrewLanguageLearning_Admin.DBContext
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string DicEntId { get; set; }
     }
 }

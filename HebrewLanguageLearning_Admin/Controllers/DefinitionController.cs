@@ -15,13 +15,13 @@ namespace HebrewLanguageLearning_Admin.Controllers
     public class definitionData
     {
         private static HLLDBContext db = new HLLDBContext();
-        internal static List<HLL_PicturesModels> Get_HLL_PictureList(string definitionId)
+        internal static List<HLL_Media_PicturesModels> Get_HLL_PictureList(string definitionId)
         {
             try
             {
-                var HLL_Picture = db.HLL_Pictures.Where(x => x.DefinitionId.Equals(definitionId)).ToList();
-                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Pictures, HLL_PicturesModels>(); });
-                return AutoMapper.Mapper.Map<List<HLL_Pictures>, List<HLL_PicturesModels>>(HLL_Picture);
+                var HLL_Picture = db.HLL_Media_Pictures.Where(x => x.MasterTableId.Equals(definitionId)).ToList();
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_Pictures, HLL_Media_PicturesModels>(); });
+                return AutoMapper.Mapper.Map<List<HLL_Media_Pictures>, List<HLL_Media_PicturesModels>>(HLL_Picture);
             }
             catch { }
             return null;
@@ -94,7 +94,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Definition, HLL_DefinitionModel>(); });
             Def_Obj = AutoMapper.Mapper.Map<HLL_Definition, HLL_DefinitionModel>(hLL_Definition);
 
-            ////new List<HLL_PicturesModels>() { new HLL_PicturesModels { Title = "Pic_1" }, new HLL_PicturesModels { Title = "Pic_2" }, new HLL_PicturesModels { Title = "Pic_3" }, new HLL_PicturesModels { Title = "Pic_4" } };
+            ////new List<HLL_Media_PicturesModels>() { new HLL_Media_PicturesModels { Title = "Pic_1" }, new HLL_Media_PicturesModels { Title = "Pic_2" }, new HLL_Media_PicturesModels { Title = "Pic_3" }, new HLL_Media_PicturesModels { Title = "Pic_4" } };
             //List< HLL_SemanticDomainModels > SemanticDomainsList = new List<HLL_SemanticDomainModels>() { new HLL_SemanticDomainModels { Title = "Semantic_Domain_1" }, new HLL_SemanticDomainModels { Title = "Semantic_Domain_2" }, new HLL_SemanticDomainModels { Title = "Semantic_Domain_3" } };
             //List<HLL_ExampleModels> ExampleList = new List<HLL_ExampleModels>() { new HLL_ExampleModels { Title = "Example_1" }, new HLL_ExampleModels { Title = "Example_2" } };
 

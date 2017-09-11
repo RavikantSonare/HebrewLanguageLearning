@@ -420,9 +420,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="Controllers\MediaPicturesController.cs" />
     <Compile Include="Controllers\SemanticDomainController.cs" />
-    <Compile Include="Controllers\SoundController.cs" />
+    <Compile Include="Controllers\MediaSoundController.cs" />
     <Compile Include="Controllers\StudentsInfoController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
@@ -478,13 +478,16 @@
     <Compile Include="DBContext\HLL_HebrewApplicationData.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBContext\HLL_Pictures.cs">
+    <Compile Include="DBContext\HLL_Media_Pictures.cs">
+      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\HLL_Media_Sound.cs">
+      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\HLL_Media_Video.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\HLL_SemanticDomain.cs">
-      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\HLL_Sound.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\HLL_StudentsInfo.cs">
@@ -494,9 +497,6 @@
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\HLL_Topics.cs">
-      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBContext\HLL_Video.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\HLL_Vocabulary.cs">
@@ -514,9 +514,9 @@
     <Compile Include="Models\HLL_DictionaryModel.cs" />
     <Compile Include="Models\HLL_ExampleModels.cs" />
     <Compile Include="Models\HLL_HebrewApplicationDataModel.cs" />
-    <Compile Include="Models\HLL_PicturesModels.cs" />
+    <Compile Include="Models\HLL_Media_PicturesModels.cs" />
     <Compile Include="Models\HLL_SemanticDomainModels.cs" />
-    <Compile Include="Models\HLL_SoundModels.cs" />
+    <Compile Include="Models\HLL_Media_SoundModels.cs" />
     <Compile Include="Models\HLL_StudentsInfoModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

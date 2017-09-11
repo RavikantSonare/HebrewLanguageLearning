@@ -12,10 +12,10 @@ namespace HebrewLanguageLearning_Admin.DBContext
     using System;
     using System.Collections.Generic;
     
-    public partial class HLL_Pictures
+    public partial class HLL_Media_Pictures
     {
         public string PictureId { get; set; }
-        public string DefinitionId { get; set; }
+        public string MasterTableId { get; set; }
         public string Title { get; set; }
         public string ImgUrl { get; set; }
         public string Description { get; set; }

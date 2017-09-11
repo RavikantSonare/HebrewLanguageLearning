@@ -18,9 +18,9 @@
                 <label>Picture/Video 1:</label>
 
                 <div class="controls imgParent">
-                    @Html.HiddenFor(h => h.VideoUrl[0], new { name = "VideoUrl1", id = "VideoUrl1" })
+                    @Html.HiddenFor(h => h.Videofile[0], new { name = "Videofile1", id = "Videofile1" })
                     @Html.HiddenFor(h => h.ImgUrl[0], new { name = "ImgUrl1", id = "ImgUrl1" })
-                    @Html.TextBoxFor(p => p.Imgfile, null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = "1" })
+                    @Html.TextBoxFor(p => p.Imgfile[0], null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = "1" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                     @Html.ValidationMessageFor(n => n.ImgUrl[0], null, new { @class = "text_danger" })
                     <div class="col-md-2 output" id="output1"></div>
@@ -35,7 +35,7 @@
 
                     @Html.TextBoxFor(p => p.SoundUrl[0], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", id = "1" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
-                    @Html.ValidationMessageFor(n => n.Soundfile, null, new { @class = "text_danger", @style = "color: red !important;" })
+                    @Html.ValidationMessageFor(n => n.Soundfile[0], null, new { @class = "text_danger", @style = "color: red !important;" })
                     <div class="col-md-2 output" id="outputMultiple1"></div>
                     <label id="fileUploaderErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Upload Sound file in MP3 format</label>
 
@@ -65,7 +65,7 @@
 
                     @Html.HiddenFor(h => h.VideoUrl[1], new { name = "VideoUrl2", id = "VideoUrl2" })
                     @Html.HiddenFor(h => h.ImgUrl[1], new { name = "ImgUrl2", id = "ImgUrl2" })
-                    @Html.TextBoxFor(p => p.Imgfile, null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = "2" })
+                    @Html.TextBoxFor(p => p.Imgfile[1], null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = "2" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
 
                     @Html.ValidationMessageFor(n => n.ImgUrl[1], null, new { @class = "text_danger" })
@@ -80,7 +80,7 @@
                     @*@Html.HiddenFor(h => h.Soundfile[1], new { name = "SoundUrl", id = "SoundUrl" })*@
                     @Html.TextBoxFor(p => p.SoundUrl[1], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", id = "2" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
-                    @Html.ValidationMessageFor(n => n.Soundfile, null, new { @class = "text_danger", @style = "color: red !important;" })
+                    @Html.ValidationMessageFor(n => n.Soundfile[1], null, new { @class = "text_danger", @style = "color: red !important;" })
                     <div class="col-md-2 output" id="outputMultiple2"></div>
                     <label id="fileUploaderErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Upload Sound file in MP3 format</label>
 
@@ -109,7 +109,7 @@
                 <div class="controls imgParent">
                     @Html.HiddenFor(h => h.VideoUrl[2], new { name = "VideoUrl3", id = "VideoUrl3" })
                     @Html.HiddenFor(h => h.ImgUrl[2], new { name = "ImgUrl3", id = "ImgUrl3" })
-                    @Html.TextBoxFor(p => p.Imgfile, null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = "3" })
+                    @Html.TextBoxFor(p => p.Imgfile[2], null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = "3" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                     @Html.ValidationMessageFor(n => n.ImgUrl[2], null, new { @class = "text_danger" })
                     <div class="col-md-2 output" id="output3"></div>
@@ -151,7 +151,7 @@
                 <div class="controls imgParent">
                     @Html.HiddenFor(h => h.VideoUrl[3], new { name = "VideoUrl4", id = "VideoUrl4" })
                     @Html.HiddenFor(h => h.ImgUrl[3], new { name = "ImgUrl4", id = "ImgUrl4" })
-                    @Html.TextBoxFor(p => p.ImgUrl[3], null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = "4" })
+                    @Html.TextBoxFor(p => p.Imgfile[3], null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = "4" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                     @Html.ValidationMessageFor(n => n.ImgUrl[3], null, new { @class = "text_danger" })
                     <div class="col-md-2 output" id="output4"></div>

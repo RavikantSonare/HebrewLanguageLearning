@@ -8,12 +8,12 @@
 }
 
 
-<script src="~/Scripts/jquery-1.10.2.js"></script>
+@*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
 
 <div class="page-content-inner ">
     <br>
     <h2>Application</h2>
-    @using (Ajax.BeginForm("Create", "Application", new AjaxOptions { UpdateTargetId = "result", OnBegin = "return StartValidation();" }, new { enctype = "multipart/form-data" }))
+    @using (Ajax.BeginForm("Create", "Application", new AjaxOptions { UpdateTargetId = "result", OnBegin = "return StartValidation();" }, new { enctype = "multipart/form-data", @id = "CreateHebrewAppDataPartial" }))
     {
         @*@using (Html.BeginForm()){*@
         @Html.AntiForgeryToken()
@@ -60,7 +60,7 @@
                 <div class="form-group panel-body">
                     <div class="form-actions text-right">
                         <input type="reset" value="Cancel" class="btn btn-danger">
-                        <input type="submit" value="Save and Continue" class="btn btn-primary">
+                        <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">
                     </div>
                 </div>
             </div>
@@ -74,8 +74,9 @@
 <!-- Form modal -->
 <div id="ModalDiv"></div>
 <!-- /form modal -->
+@*<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>*@
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
@@ -154,7 +155,8 @@
         debugger;
         var CorrectAnswerID = $('#PopUp_CorrectAnswerID').val();
         var LessonId = $('#LessonId').val();
-        $.ajax({ type: "POST",
+        $.ajax({
+            type: "POST",
             url: '@Url.Action("CreateHebrewAppData", "Application")',
             data: $("#CreateHebrewAppData").serialize(),
             success: function (data) {
@@ -166,16 +168,17 @@
         debugger;
         var CorrectAnswerID = $('#PopUp_CorrectAnswerID').val();
         var LessonId = $('#LessonId').val();
-         $.ajax({type: "POST",
-            url: '@Url.Action("CreateHebrewAppData", "Application")', 
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateHebrewAppData", "Application")',
             data: $("#CreateHebrewAppData").serialize(),
             success: function (data) {
-                 $('#form_modal_Definition').load('@Url.Action("GetCorrectAnswerView", "Application")?CorrectAnswerNo=' + CorrectAnswerID + '&LessonId=' + LessonId + '&isNext=true');
+                $('#form_modal_Definition').load('@Url.Action("GetCorrectAnswerView", "Application")?CorrectAnswerNo=' + CorrectAnswerID + '&LessonId=' + LessonId + '&isNext=true');
             }, err: function (data) {
                 console.log("Server Is Not Respose" + data);
             }
         });
-             
+
     });
     isValid = function () {
         var ddlLessonId = $('#LessonId').val();
@@ -192,5 +195,33 @@
             $('#Application_Data').html(res);
         });
     };
+
+    // 09-11-2017
+    function SubmitButtonOnclick() {
+        debugger;
+        var formElement = document.querySelector("#CreateHebrewAppDataPartial");
+        var formData = new FormData(formElement);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/Application/Create", true);
+        xhr.addEventListener("load", function (evt) { UploadComplete(evt); }, false);
+        xhr.addEventListener("error", function (evt) { UploadFailed(evt); }, false);
+        xhr.send(formData);
+
+    }
+
+    function UploadComplete(evt) {
+        console.log("> " + JSON.stringify(evt));
+        if (evt.target.status == 200)
+            alert("Logo uploaded successfully.");
+
+        else
+          
+        alert("Error Uploading File");
+    }
+
+    function UploadFailed(evt) {
+        alert("There was an error attempting to upload the file.");
+
+    }
 
 </script>

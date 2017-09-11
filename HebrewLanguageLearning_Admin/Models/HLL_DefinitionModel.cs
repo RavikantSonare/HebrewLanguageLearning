@@ -16,7 +16,7 @@ namespace HebrewLanguageLearning_Admin.Models
         public string ImgUrl { get; set; }
         public HttpPostedFileBase Imagefile { get; set; }
 
-        public List<HLL_PicturesModels>PictureList { get; set; }
+        public List<HLL_Media_PicturesModels>PictureList { get; set; }
         public List<HLL_SemanticDomainModels> SemanticDomainsList { get; set; }
         public List<HLL_ExampleModels> ExampleList { get; set; }
     }

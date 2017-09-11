@@ -59,6 +59,10 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 DataModel.VideoUrl = new string[15];
                 DataModel.ImgUrl = new string[15];
                 DataModel.SoundUrl = new string[15];
+
+                DataModel.Imgfile = new HttpPostedFileBase[15];
+                DataModel.Videofile = new HttpPostedFileBase[15];
+                DataModel.Soundfile = new HttpPostedFileBase[15];
                 int i = 0;
                 foreach (var Item in db.HLL_HebrewApplicationData.Where(h => h.MasterTableId.Equals(_ModelObj.ApplicationId)).ToList())
                 {
@@ -130,7 +134,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(HLL_ApplicationModel hLL_Application)
         {
-            var httpPostedFile = Request.Files[0];
+         
             if (ModelState.IsValid)
             {
                 /* Add Application */
@@ -164,7 +168,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                 ///* Add Audio */
                 //SoundController _obj = new SoundController();
-                //HLL_SoundModels _ModelObj = new HLL_SoundModels();
+                //HLL_Media_SoundModels _ModelObj = new HLL_Media_SoundModels();
                 //_ModelObj.DicEntId = hLL_DictionaryEntries.DictionaryEntriesId;
                 //_ModelObj.Title = hLL_DictionaryEntries.SoundTitle;
                 //_ModelObj.AudioUrl = hLL_DictionaryEntries.SoundUrl.Substring(22);

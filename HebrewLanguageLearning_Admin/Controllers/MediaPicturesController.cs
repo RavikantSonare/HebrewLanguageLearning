@@ -12,14 +12,14 @@ using HebrewLanguageLearning_Admin.Models;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
-    public class PicturesController : Controller
+    public class MediaPicturesController : Controller
     {
         private HLLDBContext db = new HLLDBContext();
 
         // GET: Pictures
         public ActionResult Index()
         {
-            return View(db.HLL_Pictures.ToList());
+            return View(db.HLL_Media_Pictures.ToList());
         }
 
         // GET: Pictures/Details/5
@@ -29,12 +29,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HLL_Pictures hLL_Pictures = db.HLL_Pictures.Find(id);
-            if (hLL_Pictures == null)
+            HLL_Media_Pictures hLL_Media_Pictures = db.HLL_Media_Pictures.Find(id);
+            if (hLL_Media_Pictures == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_Pictures);
+            return View(hLL_Media_Pictures);
         }
 
         // GET: Pictures/Create
@@ -48,42 +48,42 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<ActionResult> Create(HLL_PicturesModels hLL_Pictures)
+        public async System.Threading.Tasks.Task<ActionResult> Create(HLL_Media_PicturesModels hLL_Media_Pictures)
         {      
             if (ModelState.IsValid)
             {
-                hLL_Pictures.PictureId = EntityConfig.getnewid("HLL_Pictures");
+                hLL_Media_Pictures.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
                 var ImageData = Request.Files["Imagefile"];
-                if (string.IsNullOrEmpty(hLL_Pictures.ImgUrl)) { hLL_Pictures.ImgUrl = await ImageUtility.base64ToImage(await ImageUtility.base64ToImageConvertion(ImageData), hLL_Pictures.PictureId, "Pictures"); }
-                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_PicturesModels, HLL_Pictures>(); });
-                HLL_Pictures DataModel = AutoMapper.Mapper.Map<HLL_PicturesModels, HLL_Pictures>(hLL_Pictures);
-                db.HLL_Pictures.Add(DataModel);
+                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await ImageUtility.base64ToImage(await ImageUtility.base64ToImageConvertion(ImageData), hLL_Media_Pictures.PictureId, "Pictures"); }
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
+                HLL_Media_Pictures DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_Pictures);
+                db.HLL_Media_Pictures.Add(DataModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(hLL_Pictures);
+            return View(hLL_Media_Pictures);
         }
 
         // GET: Pictures/Edit/5
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<ActionResult> CreateImage(HLL_PicturesModels hLL_Pictures)
+        public async System.Threading.Tasks.Task<ActionResult> CreateImage(HLL_Media_PicturesModels hLL_Media_Pictures)
         {
             if (ModelState.IsValid)
             {
-                hLL_Pictures.PictureId = EntityConfig.getnewid("HLL_Pictures");
-                var ImageData = hLL_Pictures.ImgUrl.Substring(22); hLL_Pictures.ImgUrl = string.Empty; 
-                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_PicturesModels, HLL_Pictures>(); });
-                if (string.IsNullOrEmpty(hLL_Pictures.ImgUrl)) { hLL_Pictures.ImgUrl = await ImageUtility.base64ToImage(ImageData, hLL_Pictures.PictureId, "Pictures"); }
-                HLL_Pictures DataModel = AutoMapper.Mapper.Map<HLL_PicturesModels, HLL_Pictures>(hLL_Pictures);
-                db.HLL_Pictures.Add(DataModel);
+                hLL_Media_Pictures.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
+                var ImageData = hLL_Media_Pictures.ImgUrl.Substring(22); hLL_Media_Pictures.ImgUrl = string.Empty; 
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
+                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await ImageUtility.base64ToImage(ImageData, hLL_Media_Pictures.PictureId, "Pictures"); }
+                HLL_Media_Pictures DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_Pictures);
+                db.HLL_Media_Pictures.Add(DataModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(hLL_Pictures);
+            return View(hLL_Media_Pictures);
         }
         public ActionResult Edit(string id)
         {
@@ -91,12 +91,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HLL_Pictures hLL_Pictures = db.HLL_Pictures.Find(id);
-            if (hLL_Pictures == null)
+            HLL_Media_Pictures hLL_Media_Pictures = db.HLL_Media_Pictures.Find(id);
+            if (hLL_Media_Pictures == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_Pictures);
+            return View(hLL_Media_Pictures);
         }
 
         // POST: Pictures/Edit/5
@@ -104,15 +104,15 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PictureId,Title,ImgUrl,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] HLL_Pictures hLL_Pictures)
+        public ActionResult Edit([Bind(Include = "PictureId,Title,ImgUrl,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] HLL_Media_Pictures hLL_Media_Pictures)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(hLL_Pictures).State = EntityState.Modified;
+                db.Entry(hLL_Media_Pictures).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(hLL_Pictures);
+            return View(hLL_Media_Pictures);
         }
 
         // GET: Pictures/Delete/5
@@ -122,12 +122,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HLL_Pictures hLL_Pictures = db.HLL_Pictures.Find(id);
-            if (hLL_Pictures == null)
+            HLL_Media_Pictures hLL_Media_Pictures = db.HLL_Media_Pictures.Find(id);
+            if (hLL_Media_Pictures == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_Pictures);
+            return View(hLL_Media_Pictures);
         }
 
         // POST: Pictures/Delete/5
@@ -135,8 +135,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            HLL_Pictures hLL_Pictures = db.HLL_Pictures.Find(id);
-            db.HLL_Pictures.Remove(hLL_Pictures);
+            HLL_Media_Pictures hLL_Media_Pictures = db.HLL_Media_Pictures.Find(id);
+            db.HLL_Media_Pictures.Remove(hLL_Media_Pictures);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

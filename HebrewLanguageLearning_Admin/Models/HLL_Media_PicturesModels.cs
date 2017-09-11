@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HebrewLanguageLearning_Admin.Models
 {
-    public class HLL_PicturesModels : HLL_CommonField
+    public class HLL_Media_PicturesModels : HLL_CommonField
     {
         public string PictureId { get; set; }
         public string DefinitionId { get; set; }

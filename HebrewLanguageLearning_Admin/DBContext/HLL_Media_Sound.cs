@@ -12,13 +12,12 @@ namespace HebrewLanguageLearning_Admin.DBContext
     using System;
     using System.Collections.Generic;
     
-    public partial class HLL_Video
+    public partial class HLL_Media_Sound
     {
-        public string VideoId { get; set; }
+        public string SoundId { get; set; }
         public string MasterTableId { get; set; }
         public string Title { get; set; }
-        public string VideoUrl { get; set; }
-        public string Description { get; set; }
+        public string AudioUrl { get; set; }
         public Nullable<bool> ActiveStatus { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
