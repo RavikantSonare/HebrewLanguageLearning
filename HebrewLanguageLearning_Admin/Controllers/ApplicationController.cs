@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using HebrewLanguageLearning_Admin.DBContext;
 using HebrewLanguageLearning_Admin.GenericClasses;
 using HebrewLanguageLearning_Admin.Models;
+using System.IO;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
@@ -63,6 +64,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 DataModel.Imgfile = new HttpPostedFileBase[15];
                 DataModel.Videofile = new HttpPostedFileBase[15];
                 DataModel.Soundfile = new HttpPostedFileBase[15];
+                DataModel.ImgVdofile = new HttpPostedFileBase[15];
                 int i = 0;
                 foreach (var Item in db.HLL_HebrewApplicationData.Where(h => h.MasterTableId.Equals(_ModelObj.ApplicationId)).ToList())
                 {
@@ -109,7 +111,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         db.Entry(hebrewApplicationData).State = EntityState.Modified;
                         db.SaveChanges();
 
-                       // return JavaScript("window.location = '/Application/Create'");
+                        // return JavaScript("window.location = '/Application/Create'");
                         return Content("Success");
                     }
                 }
@@ -134,7 +136,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(HLL_ApplicationModel hLL_Application)
         {
-         
+            HLL_HebrewApplicationDataModel _ModelObjHAD = new HLL_HebrewApplicationDataModel();
+            HLL_Media_VideoModels _ModelObjMedVid = new HLL_Media_VideoModels();
+            HLL_Media_PicturesModels _ModelObjMedPic = new HLL_Media_PicturesModels();
+            HLL_Media_SoundModels _ModelObjMedSound = new HLL_Media_SoundModels();
+            int i = 0;
+
             if (ModelState.IsValid)
             {
                 /* Add Application */
@@ -148,9 +155,10 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                 /* Add Hebrew Application Data */
 
-                HLL_HebrewApplicationDataModel _ModelObjHAD = new HLL_HebrewApplicationDataModel();
+               
                 foreach (var Item in hLL_Application.AppSentenceDynamicTextBox)
                 {
+                   
                     if (!string.IsNullOrEmpty(Item))
                     {
                         _ModelObjHAD.HebrewApplicationDataId = EntityConfig.getnewid("HLL_HebrewApplicationData");
@@ -160,56 +168,61 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         HLL_HebrewApplicationData DataModelHAD = AutoMapper.Mapper.Map<HLL_HebrewApplicationDataModel, HLL_HebrewApplicationData>(_ModelObjHAD);
                         db.HLL_HebrewApplicationData.Add(DataModelHAD);
                         db.SaveChanges();
+
+                        //* Add Video, Image, Sound *//
+                        if (hLL_Application.ImgVdofile[i] != null)
+                        {
+                            string extension = Path.GetExtension(hLL_Application.ImgVdofile[i].FileName).ToLower();
+                            string[] extImage = { ".gif", ".png", ".jpg", ".jpeg" }; string[] extVideo = { ".mp4", ".mov", ".avi" };
+                            if (extVideo.Contains(extension))
+                            {
+                                MediaVideoController _objMediaVideo = new MediaVideoController();
+                               
+                                _ModelObjMedVid.MasterTableId = _ModelObjHAD.HebrewApplicationDataId;
+                                _ModelObjMedVid.Videofile = hLL_Application.ImgVdofile[i];
+                                _ModelObjMedVid.TableRef = "HebrewApplicationData";
+                                _objMediaVideo.CreateVideo(_ModelObjMedVid);
+                            }
+                            if (extImage.Contains(extension))
+                            {
+                                MediaPicturesController _objMediaImage = new MediaPicturesController();
+
+                                _ModelObjMedPic.MasterTableId = _ModelObjHAD.HebrewApplicationDataId;
+                                _ModelObjMedPic.Imagefile = hLL_Application.ImgVdofile[i];
+                                _ModelObjMedPic.TableRef = "HebrewApplicationData";
+                                _objMediaImage.CreatePicture(_ModelObjMedPic);
+                            }
+
+                        }
+                        if (hLL_Application.Soundfile[i] != null)
+                        {
+                            string extension = Path.GetExtension(hLL_Application.Soundfile[i].FileName).ToLower();
+                            string[] extAudio = { ".mp3" };
+                            if (extAudio.Contains(extension))
+                            {
+                                MediaSoundController _objMediaSound = new MediaSoundController();
+
+                                _ModelObjMedSound.MasterTableId = _ModelObjHAD.HebrewApplicationDataId;
+                                _ModelObjMedSound.Soundfile = hLL_Application.Soundfile[i];
+                                _ModelObjMedSound.TableRef = "HebrewApplicationData";
+                                _objMediaSound.Create(_ModelObjMedSound);
+                            }
+                           
+                        }
+                        i++;
                     }
                 }
-
-
-
-
-                ///* Add Audio */
-                //SoundController _obj = new SoundController();
-                //HLL_Media_SoundModels _ModelObj = new HLL_Media_SoundModels();
-                //_ModelObj.DicEntId = hLL_DictionaryEntries.DictionaryEntriesId;
-                //_ModelObj.Title = hLL_DictionaryEntries.SoundTitle;
-                //_ModelObj.AudioUrl = hLL_DictionaryEntries.SoundUrl.Substring(22);
-
-                //_obj.CreateAudio(_ModelObj);
-
-                ///* Add Definition */
-                //DefinitionController _objDef = new DefinitionController();
-                //HLL_DefinitionModel _ModelObjDef = new HLL_DefinitionModel();
-                //foreach (var Item in hLL_DictionaryEntries.DicDefinitionDynamicTextBox)
-                //{
-                //    if (!string.IsNullOrEmpty(Item))
-                //    {
-                //        _ModelObjDef.DicEntId = hLL_DictionaryEntries.DictionaryEntriesId;
-                //        _ModelObjDef.Title = Item;
-                //        _objDef.Create(_ModelObjDef);
-                //    }
-                //}
-
-
-
+                
 
                 return JavaScript("window.location = '/Definition/DefinitionList'");
             }
 
             return Content("Please Upload Sound file in MP3 format");
-            //return View(hLL_DictionaryEntries);
-
-
-            //if (ModelState.IsValid)
-            //{
-            //    db.HLL_Application.Add(hLL_Application);
-            //    await db.SaveChangesAsync();
-            //    return RedirectToAction("Index");
-            //}
-
-            //  return View(hLL_Application);
+           
         }
         public PartialViewResult GetCorrectAnswerView(string CorrectAnswerNo, string LessonId, bool isNext)
         {
-            HLL_HebrewApplicationDataModel DataModel=new HLL_HebrewApplicationDataModel();
+            HLL_HebrewApplicationDataModel DataModel = new HLL_HebrewApplicationDataModel();
             if (CorrectAnswerNo != null && LessonId != null)
             {
                 if (isNext)
@@ -218,7 +231,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 }
                 var AppData = CheckAndSetLessonData(CorrectAnswerNo, LessonId);
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(); });
-                 DataModel = AutoMapper.Mapper.Map<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(CheckAndSetLessonData(CorrectAnswerNo, LessonId));
+                DataModel = AutoMapper.Mapper.Map<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(CheckAndSetLessonData(CorrectAnswerNo, LessonId));
                 ModelState.Clear();
             }
             return PartialView("HLL_HebrewApplicationDataCorrectAnswer_PartialView", DataModel);

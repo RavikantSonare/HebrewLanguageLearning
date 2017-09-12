@@ -57,22 +57,22 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<ActionResult> Create(HLL_Media_SoundModels HLL_Media_Sound)
+        public async System.Threading.Tasks.Task<ActionResult> Create(HLL_Media_SoundModels HLL_Media_SoundModel)
         {
             if (ModelState.IsValid)
             {
-                HLL_Media_Sound.SoundId = EntityConfig.getnewid("HLL_Media_Sound");
-                var SoundData = HLL_Media_Sound.Soundfile; //Request.Files["Imagefile"];
-                if (string.IsNullOrEmpty(HLL_Media_Sound.AudioUrl)) { HLL_Media_Sound.AudioUrl = await ImageUtility.base64ToFile(await ImageUtility.base64ToImageConvertion(SoundData), HLL_Media_Sound.SoundId, "Sound"); }
+                HLL_Media_SoundModel.SoundId = EntityConfig.getnewid("HLL_Media_Sound");
+                var SoundData = HLL_Media_SoundModel.Soundfile; //Request.Files["Imagefile"];
+                if (string.IsNullOrEmpty(HLL_Media_SoundModel.AudioUrl)) { HLL_Media_SoundModel.AudioUrl = await FilesUtility.base64ToFile(FilesUtility.FileTobase64Convertion(SoundData), HLL_Media_SoundModel.SoundId, "Sound", HLL_Media_SoundModel.TableRef); }
 
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_SoundModels, HLL_Media_Sound>(); });
-                HLL_Media_Sound DataModel = AutoMapper.Mapper.Map<HLL_Media_SoundModels, HLL_Media_Sound>(HLL_Media_Sound);
+                HLL_Media_Sound DataModel = AutoMapper.Mapper.Map<HLL_Media_SoundModels, HLL_Media_Sound>(HLL_Media_SoundModel);
                 db.HLL_Media_Sound.Add(DataModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(HLL_Media_Sound);
+            return View(HLL_Media_SoundModel);
         }
         public async System.Threading.Tasks.Task CreateAudio(HLL_Media_SoundModels HLL_Media_Sound)
         {
@@ -80,7 +80,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 HLL_Media_Sound.SoundId = EntityConfig.getnewid("HLL_Media_Sound");
                 var SoundData = HLL_Media_Sound.AudioUrl; //Request.Files["Imagefile"];
-                HLL_Media_Sound.AudioUrl = await ImageUtility.base64ToFile(SoundData, HLL_Media_Sound.SoundId, "Sound");
+                HLL_Media_Sound.AudioUrl = await FilesUtility.base64ToFile(SoundData, HLL_Media_Sound.SoundId, "Sound");
             }
             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_SoundModels, HLL_Media_Sound>(); });
             HLL_Media_Sound DataModel = AutoMapper.Mapper.Map<HLL_Media_SoundModels, HLL_Media_Sound>(HLL_Media_Sound);

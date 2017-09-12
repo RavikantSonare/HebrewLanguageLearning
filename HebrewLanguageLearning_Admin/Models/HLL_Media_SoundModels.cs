@@ -9,10 +9,11 @@ namespace HebrewLanguageLearning_Admin.Models
     public class HLL_Media_SoundModels : HLL_CommonField
     {
         public string SoundId { get; set; }
-        public string DicEntId { get; set; }
+        public string MasterTableId { get; set; }
         [Required]
         public string Title { get; set; }
         public string AudioUrl { get; set; }
         public HttpPostedFileBase Soundfile { get; set; }
+        public string TableRef { get; set; }
     }
 }

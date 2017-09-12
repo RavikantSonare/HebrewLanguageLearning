@@ -421,6 +421,7 @@
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MediaPicturesController.cs" />
+    <Compile Include="Controllers\MediaVideoController.cs" />
     <Compile Include="Controllers\SemanticDomainController.cs" />
     <Compile Include="Controllers\MediaSoundController.cs" />
     <Compile Include="Controllers\StudentsInfoController.cs" />
@@ -503,7 +504,7 @@
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GenericClasses\EntityConfig.cs" />
-    <Compile Include="GenericClasses\ImageUtility.cs" />
+    <Compile Include="GenericClasses\FilesUtility.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -515,6 +516,7 @@
     <Compile Include="Models\HLL_ExampleModels.cs" />
     <Compile Include="Models\HLL_HebrewApplicationDataModel.cs" />
     <Compile Include="Models\HLL_Media_PicturesModels.cs" />
+    <Compile Include="Models\HLL_Media_VideoModels.cs" />
     <Compile Include="Models\HLL_SemanticDomainModels.cs" />
     <Compile Include="Models\HLL_Media_SoundModels.cs" />
     <Compile Include="Models\HLL_StudentsInfoModel.cs" />
@@ -829,11 +831,17 @@
     <Content Include="Views\Application\Index.cshtml" />
     <Content Include="Views\Shared\HLL_HebrewApplicationDataCorrectAnswer_PartialView.cshtml" />
     <Content Include="Views\Shared\_HLL_Application_Data_PartialView.cshtml" />
+    <Content Include="Views\MediaVideo\Create.cshtml" />
+    <Content Include="Views\MediaVideo\Delete.cshtml" />
+    <Content Include="Views\MediaVideo\Details.cshtml" />
+    <Content Include="Views\MediaVideo\Edit.cshtml" />
+    <Content Include="Views\MediaVideo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Audio\" />
-    <Folder Include="Pictures\" />
+    <Folder Include="Media\Pictures\" />
+    <Folder Include="Media\Sounds\" />
+    <Folder Include="Media\videos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

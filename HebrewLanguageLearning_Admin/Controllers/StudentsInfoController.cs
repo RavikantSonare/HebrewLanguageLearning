@@ -60,7 +60,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 hLL_StudentsInfo.StudentsId = EntityConfig.getnewid("HLL_StudentsInfo");
                 var ImageData = Request.Files["Imagefile"];
-                if (string.IsNullOrEmpty(hLL_StudentsInfo.ImgUrl)) { hLL_StudentsInfo.ImgUrl = await ImageUtility.base64ToImage(await ImageUtility.base64ToImageConvertion(ImageData), hLL_StudentsInfo.StudentsId, "Students"); }
+                if (string.IsNullOrEmpty(hLL_StudentsInfo.ImgUrl)) { hLL_StudentsInfo.ImgUrl = await FilesUtility.base64ToImage(FilesUtility.FileTobase64Convertion(ImageData), hLL_StudentsInfo.StudentsId, "Students"); }
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_StudentsInfoModel, HLL_StudentsInfo>(); });
                 HLL_StudentsInfo DataModel = AutoMapper.Mapper.Map<HLL_StudentsInfoModel, HLL_StudentsInfo>(hLL_StudentsInfo);
 

@@ -54,7 +54,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 hLL_Media_Pictures.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
                 var ImageData = Request.Files["Imagefile"];
-                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await ImageUtility.base64ToImage(await ImageUtility.base64ToImageConvertion(ImageData), hLL_Media_Pictures.PictureId, "Pictures"); }
+                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await FilesUtility.base64ToImage(FilesUtility.FileTobase64Convertion(ImageData), hLL_Media_Pictures.PictureId, "Pictures"); }
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
                 HLL_Media_Pictures DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_Pictures);
                 db.HLL_Media_Pictures.Add(DataModel);
@@ -76,7 +76,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 hLL_Media_Pictures.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
                 var ImageData = hLL_Media_Pictures.ImgUrl.Substring(22); hLL_Media_Pictures.ImgUrl = string.Empty; 
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
-                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await ImageUtility.base64ToImage(ImageData, hLL_Media_Pictures.PictureId, "Pictures"); }
+                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await FilesUtility.base64ToImage(ImageData, hLL_Media_Pictures.PictureId, "Pictures"); }
                 HLL_Media_Pictures DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_Pictures);
                 db.HLL_Media_Pictures.Add(DataModel);
                 db.SaveChanges();
@@ -84,6 +84,21 @@ namespace HebrewLanguageLearning_Admin.Controllers
             }
 
             return View(hLL_Media_Pictures);
+        }
+
+        public async void CreatePicture(HLL_Media_PicturesModels hLL_Media_Pictures)
+        {
+            if (ModelState.IsValid)
+            {
+                hLL_Media_Pictures.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
+                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await FilesUtility.base64ToImage(FilesUtility.FileTobase64Convertion(hLL_Media_Pictures.Imagefile), hLL_Media_Pictures.PictureId, "Pictures", hLL_Media_Pictures.TableRef); }
+                HLL_Media_Pictures DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_Pictures);
+                db.HLL_Media_Pictures.Add(DataModel);
+                db.SaveChanges();
+
+            }
+            
         }
         public ActionResult Edit(string id)
         {

@@ -69,7 +69,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 /* Add Audio */
                 MediaSoundController _obj = new MediaSoundController();
                 HLL_Media_SoundModels _ModelObj = new HLL_Media_SoundModels();
-                _ModelObj.DicEntId = hLL_DictionaryEntries.DictionaryEntriesId;
+                _ModelObj.MasterTableId = hLL_DictionaryEntries.DictionaryEntriesId;
                 _ModelObj.Title = hLL_DictionaryEntries.SoundTitle;
                 _ModelObj.AudioUrl = hLL_DictionaryEntries.SoundUrl.Substring(22);
 
