@@ -103,7 +103,8 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
      
         };
 
-       
+
+        public static Dictionary<int, string> fileSavedLocation = new Dictionary<int, string> { { 0, "Sounds" }, { 1, "Pictures" }, { 2, "Videos" } };
 
     }
 }

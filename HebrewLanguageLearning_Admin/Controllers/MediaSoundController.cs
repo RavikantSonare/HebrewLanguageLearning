@@ -74,13 +74,14 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
             return View(HLL_Media_SoundModel);
         }
+
         public async System.Threading.Tasks.Task CreateAudio(HLL_Media_SoundModels HLL_Media_Sound)
         {
             if (ModelState.IsValid)
             {
                 HLL_Media_Sound.SoundId = EntityConfig.getnewid("HLL_Media_Sound");
                 var SoundData = HLL_Media_Sound.AudioUrl; //Request.Files["Imagefile"];
-                HLL_Media_Sound.AudioUrl = await FilesUtility.base64ToFile(SoundData, HLL_Media_Sound.SoundId, "Sound");
+                HLL_Media_Sound.AudioUrl = await FilesUtility.base64ToFile(SoundData, HLL_Media_Sound.SoundId, "Sound", "temp");
             }
             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_SoundModels, HLL_Media_Sound>(); });
             HLL_Media_Sound DataModel = AutoMapper.Mapper.Map<HLL_Media_SoundModels, HLL_Media_Sound>(HLL_Media_Sound);
@@ -88,9 +89,31 @@ namespace HebrewLanguageLearning_Admin.Controllers
             db.SaveChanges();
 
         }
+        public async void SetSound(HLL_Media_SoundModels hLL_Media_SoundModels)
+        {
 
+            try
+            {
+                UploadFiles _objUploadFile = new UploadFiles();
+                _objUploadFile.physicalFile = hLL_Media_SoundModels.Soundfile;
+                _objUploadFile.fileExtension = System.IO.Path.GetExtension(hLL_Media_SoundModels.Soundfile.FileName);
+                _objUploadFile.tableName = hLL_Media_SoundModels.TableRef;
+                _objUploadFile.fileType = 0;
+                if (ModelState.IsValid)
+                {
+                    hLL_Media_SoundModels.SoundId = EntityConfig.getnewid("HLL_Media_Video");
+                    _objUploadFile.tableId = hLL_Media_SoundModels.SoundId;
+                    hLL_Media_SoundModels.AudioUrl = await FilesUtility.UploadFiles(_objUploadFile);
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_SoundModels, HLL_Media_Sound>(); });
+                    HLL_Media_Sound DataModel = AutoMapper.Mapper.Map<HLL_Media_SoundModels, HLL_Media_Sound>(hLL_Media_SoundModels);
+                    db.HLL_Media_Sound.Add(DataModel);
+                    db.SaveChanges();
+                }
 
+            }
+            catch (Exception ex) { }
 
+        }
         //public ActionResult Create(HLL_Media_SoundModels HLL_Media_Sound)
         //{
 

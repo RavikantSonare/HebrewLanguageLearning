@@ -61,23 +61,26 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View(hLL_Media_Video);
         }
 
-        public async void CreateVideo(HLL_Media_VideoModels hLL_Media_VideoModels)
+        public async void SetVideo(HLL_Media_VideoModels hLL_Media_VideoModels)
         {
             try
             {
-                string extension = System.IO.Path.GetExtension(hLL_Media_VideoModels.Videofile.FileName);
+                UploadFiles _objUploadFile = new UploadFiles();
+                _objUploadFile.physicalFile = hLL_Media_VideoModels.Videofile;
+                _objUploadFile.fileExtension = System.IO.Path.GetExtension(hLL_Media_VideoModels.Videofile.FileName);
+                _objUploadFile.tableName = hLL_Media_VideoModels.TableRef;
+                _objUploadFile.fileType = 2;
                 if (ModelState.IsValid)
                 {
                     hLL_Media_VideoModels.VideoId = EntityConfig.getnewid("HLL_Media_Video");
-                    //var VideoData = hLL_Media_VideoModels.VideoUrl.Substring(22); hLL_Media_VideoModels.VideoUrl = string.Empty;
-                    var VideoData = hLL_Media_VideoModels.Videofile;
+                    _objUploadFile.tableId = hLL_Media_VideoModels.VideoId;
+                    hLL_Media_VideoModels.VideoUrl = await FilesUtility.UploadFiles(_objUploadFile);  
                     AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_VideoModels, HLL_Media_Video>(); });
-                    if (string.IsNullOrEmpty(hLL_Media_VideoModels.VideoUrl)) { hLL_Media_VideoModels.VideoUrl = await FilesUtility.directTofile(VideoData, hLL_Media_VideoModels.VideoId, "Video", extension); }
                     HLL_Media_Video DataModel = AutoMapper.Mapper.Map<HLL_Media_VideoModels, HLL_Media_Video>(hLL_Media_VideoModels);
                     db.HLL_Media_Video.Add(DataModel);
                     db.SaveChanges();
-
                 }
+
             }
             catch (Exception ex) { }
 

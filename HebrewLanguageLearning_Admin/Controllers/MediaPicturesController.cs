@@ -54,7 +54,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 hLL_Media_Pictures.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
                 var ImageData = Request.Files["Imagefile"];
-                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await FilesUtility.base64ToImage(FilesUtility.FileTobase64Convertion(ImageData), hLL_Media_Pictures.PictureId, "Pictures"); }
+                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await FilesUtility.base64ToImage(FilesUtility.FileTobase64Convertion(ImageData), hLL_Media_Pictures.PictureId, "Pictures","temp"); }
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
                 HLL_Media_Pictures DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_Pictures);
                 db.HLL_Media_Pictures.Add(DataModel);
@@ -76,7 +76,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 hLL_Media_Pictures.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
                 var ImageData = hLL_Media_Pictures.ImgUrl.Substring(22); hLL_Media_Pictures.ImgUrl = string.Empty; 
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
-                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await FilesUtility.base64ToImage(ImageData, hLL_Media_Pictures.PictureId, "Pictures"); }
+                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await FilesUtility.base64ToImage(ImageData, hLL_Media_Pictures.PictureId, "Pictures","temp"); }
                 HLL_Media_Pictures DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_Pictures);
                 db.HLL_Media_Pictures.Add(DataModel);
                 db.SaveChanges();
@@ -86,19 +86,30 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View(hLL_Media_Pictures);
         }
 
-        public async void CreatePicture(HLL_Media_PicturesModels hLL_Media_Pictures)
+        public async void SetPicture(HLL_Media_PicturesModels hLL_Media_PicturesModels)
         {
-            if (ModelState.IsValid)
+           
+            try
             {
-                hLL_Media_Pictures.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
-                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
-                if (string.IsNullOrEmpty(hLL_Media_Pictures.ImgUrl)) { hLL_Media_Pictures.ImgUrl = await FilesUtility.base64ToImage(FilesUtility.FileTobase64Convertion(hLL_Media_Pictures.Imagefile), hLL_Media_Pictures.PictureId, "Pictures", hLL_Media_Pictures.TableRef); }
-                HLL_Media_Pictures DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_Pictures);
-                db.HLL_Media_Pictures.Add(DataModel);
-                db.SaveChanges();
+                UploadFiles _objUploadFile = new UploadFiles();
+                _objUploadFile.physicalFile = hLL_Media_PicturesModels.Imagefile;
+                _objUploadFile.fileExtension = System.IO.Path.GetExtension(hLL_Media_PicturesModels.Imagefile.FileName);
+                _objUploadFile.tableName = hLL_Media_PicturesModels.TableRef;
+                _objUploadFile.fileType = 1;
+                if (ModelState.IsValid)
+                {
+                    hLL_Media_PicturesModels.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
+                    _objUploadFile.tableId = hLL_Media_PicturesModels.PictureId;
+                    hLL_Media_PicturesModels.ImgUrl = await FilesUtility.UploadFiles(_objUploadFile);
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
+                    HLL_Media_Pictures DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_PicturesModels);
+                    db.HLL_Media_Pictures.Add(DataModel);
+                    db.SaveChanges();
+                }
 
             }
-            
+            catch (Exception ex) { }
+
         }
         public ActionResult Edit(string id)
         {

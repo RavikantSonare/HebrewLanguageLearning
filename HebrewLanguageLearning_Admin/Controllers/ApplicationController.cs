@@ -181,7 +181,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                                 _ModelObjMedVid.MasterTableId = _ModelObjHAD.HebrewApplicationDataId;
                                 _ModelObjMedVid.Videofile = hLL_Application.ImgVdofile[i];
                                 _ModelObjMedVid.TableRef = "HebrewApplicationData";
-                                _objMediaVideo.CreateVideo(_ModelObjMedVid);
+                                _objMediaVideo.SetVideo(_ModelObjMedVid);
                             }
                             if (extImage.Contains(extension))
                             {
@@ -190,7 +190,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                                 _ModelObjMedPic.MasterTableId = _ModelObjHAD.HebrewApplicationDataId;
                                 _ModelObjMedPic.Imagefile = hLL_Application.ImgVdofile[i];
                                 _ModelObjMedPic.TableRef = "HebrewApplicationData";
-                                _objMediaImage.CreatePicture(_ModelObjMedPic);
+                                _objMediaImage.SetPicture(_ModelObjMedPic);
                             }
 
                         }
@@ -205,7 +205,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                                 _ModelObjMedSound.MasterTableId = _ModelObjHAD.HebrewApplicationDataId;
                                 _ModelObjMedSound.Soundfile = hLL_Application.Soundfile[i];
                                 _ModelObjMedSound.TableRef = "HebrewApplicationData";
-                                _objMediaSound.Create(_ModelObjMedSound);
+                                _objMediaSound.SetSound(_ModelObjMedSound);
                             }
                            
                         }

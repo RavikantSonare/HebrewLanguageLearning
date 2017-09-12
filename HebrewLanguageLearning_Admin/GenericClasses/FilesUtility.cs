@@ -5,11 +5,46 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
+using HebrewLanguageLearning_Admin.Models;
 
 namespace HebrewLanguageLearning_Admin.GenericClasses
 {
     public static class FilesUtility
     {
+
+        public static async Task<string> UploadFiles(UploadFiles uploadFiles)
+        {
+
+            try
+            {
+                string DateFormat = String.Format("{0:d/M/yyyy HH:mm:ss}", uploadFiles.CreatedDate).Replace(@"/", "").Trim().Replace(@":", "").Trim().Replace(" ", String.Empty);
+                if (string.IsNullOrEmpty(uploadFiles.base64File))
+                {
+
+                    if (uploadFiles.physicalFile.ContentLength > 0)
+                    {
+                        Stream fs = uploadFiles.physicalFile.InputStream;
+                        BinaryReader br = new System.IO.BinaryReader(fs);
+                        byte[] bytes = br.ReadBytes((Int32)fs.Length);
+                        uploadFiles.base64File = Convert.ToBase64String(bytes, 0, bytes.Length);
+
+                    }
+                }
+                if (!string.IsNullOrEmpty(uploadFiles.base64File))
+                {
+
+                    uploadFiles.fileName = uploadFiles.tableName + uploadFiles.tableId + "_" + SI.fileSavedLocation[uploadFiles.fileType] + DateFormat + uploadFiles.fileExtension;
+                    byte[] bytes = System.Convert.FromBase64String(uploadFiles.base64File);
+                    FileStream fs = new FileStream(HostingEnvironment.MapPath("~/Media/" + SI.fileSavedLocation[uploadFiles.fileType] + "/") + uploadFiles.fileName, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                    fs.Write(bytes, 0, bytes.Length);
+                    fs.Close();
+                    fs.Dispose();
+                }
+                return uploadFiles.fileName;
+            }
+            catch (Exception ex) { }
+            return uploadFiles.fileName;
+        }
         public static async Task<string> base64ToImage(string base64Img, string Id, string type, string TableRef)
         {
             string image = string.Empty;

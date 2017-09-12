@@ -189,7 +189,7 @@
           <Property Name="PictureId" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="MasterTableId" Type="nvarchar" MaxLength="250" />
           <Property Name="Title" Type="nvarchar" MaxLength="250" />
-          <Property Name="ImgUrl" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImgUrl" Type="nvarchar" MaxLength="150" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="ActiveStatus" Type="bit" />
           <Property Name="IsActive" Type="bit" />
@@ -222,7 +222,7 @@
           <Property Name="VideoId" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="MasterTableId" Type="nvarchar" MaxLength="250" />
           <Property Name="Title" Type="nvarchar" MaxLength="250" />
-          <Property Name="VideoUrl" Type="nvarchar" MaxLength="50" />
+          <Property Name="VideoUrl" Type="nvarchar" MaxLength="150" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="ActiveStatus" Type="bit" />
           <Property Name="IsActive" Type="bit" />
@@ -494,9 +494,9 @@
           <EntitySet Name="HLL_Application" EntityType="Model.HLL_Application" />
           <EntitySet Name="HLL_Grammer" EntityType="Model.HLL_Grammer" />
           <EntitySet Name="HLL_HebrewApplicationData" EntityType="Model.HLL_HebrewApplicationData" />
-          <EntitySet Name="HLL_Media_Pictures" EntityType="Model.HLL_Media_Pictures" />
           <EntitySet Name="HLL_Media_Sound" EntityType="Model.HLL_Media_Sound" />
           <EntitySet Name="HLL_Media_Video" EntityType="Model.HLL_Media_Video" />
+          <EntitySet Name="HLL_Media_Pictures" EntityType="Model.HLL_Media_Pictures" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -761,23 +761,6 @@
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="HLL_Media_Pictures">
-          <Key>
-            <PropertyRef Name="PictureId" />
-          </Key>
-          <Property Name="PictureId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="MasterTableId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ImgUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ActiveStatus" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="HLL_Media_Sound">
           <Key>
             <PropertyRef Name="SoundId" />
@@ -801,7 +784,24 @@
           <Property Name="VideoId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="MasterTableId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="VideoUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VideoUrl" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_Media_Pictures">
+          <Key>
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="PictureId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MasterTableId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ImgUrl" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ActiveStatus" Type="Boolean" />
           <Property Name="IsActive" Type="Boolean" />
@@ -1097,24 +1097,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HLL_Media_Pictures">
-            <EntityTypeMapping TypeName="Model.HLL_Media_Pictures">
-              <MappingFragment StoreEntitySet="HLL_Media_Pictures">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
-                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="HLL_Media_Sound">
             <EntityTypeMapping TypeName="Model.HLL_Media_Sound">
               <MappingFragment StoreEntitySet="HLL_Media_Sound">
@@ -1147,6 +1129,24 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
                 <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_Media_Pictures">
+            <EntityTypeMapping TypeName="Model.HLL_Media_Pictures">
+              <MappingFragment StoreEntitySet="HLL_Media_Pictures">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
