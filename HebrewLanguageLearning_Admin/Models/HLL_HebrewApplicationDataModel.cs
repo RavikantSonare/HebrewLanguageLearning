@@ -22,6 +22,11 @@ namespace HebrewLanguageLearning_Admin.Models
         public string CorrectAnswer9 { get; set; }
         public string CorrectAnswer10 { get; set; }
         public string CorrectAnswerNo { get; set; }
+        public string ImgVdofile { get; set; }
+        public string Soundfile { get; set; }
+        public string CorrectAnswers { get; set; }
+        public string LessonId { get; set; }
+
 
 
         //public string ApplicationId { get; set; }
