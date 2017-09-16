@@ -416,7 +416,7 @@
     <Compile Include="Controllers\DictionaryEntriesController.cs" />
     <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
-    <Compile Include="Controllers\GrammerController.cs" />
+    <Compile Include="Controllers\GrammarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -473,10 +473,13 @@
     <Compile Include="DBContext\HLL_Example.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBContext\HLL_Grammer.cs">
+    <Compile Include="DBContext\HLL_Grammar.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\HLL_HebrewApplicationData.cs">
+      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\HLL_HebrewGrammarData.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBContext\HLL_Media_Pictures.cs">
@@ -514,7 +517,9 @@
     <Compile Include="Models\HLL_DefinitionModel.cs" />
     <Compile Include="Models\HLL_DictionaryModel.cs" />
     <Compile Include="Models\HLL_ExampleModels.cs" />
+    <Compile Include="Models\HLL_GrammarModel.cs" />
     <Compile Include="Models\HLL_HebrewApplicationDataModel.cs" />
+    <Compile Include="Models\HLL_HebrewGrammarDataModel.cs" />
     <Compile Include="Models\HLL_Media_PicturesModels.cs" />
     <Compile Include="Models\HLL_Media_VideoModels.cs" />
     <Compile Include="Models\HLL_SemanticDomainModels.cs" />
@@ -773,11 +778,6 @@
     <Content Include="Views\Vocabulary\Details.cshtml" />
     <Content Include="Views\Vocabulary\Edit.cshtml" />
     <Content Include="Views\Vocabulary\Index.cshtml" />
-    <Content Include="Views\Grammer\Create.cshtml" />
-    <Content Include="Views\Grammer\Delete.cshtml" />
-    <Content Include="Views\Grammer\Details.cshtml" />
-    <Content Include="Views\Grammer\Edit.cshtml" />
-    <Content Include="Views\Grammer\Index.cshtml" />
     <Content Include="Views\StudentsInfo\Create.cshtml" />
     <Content Include="Views\StudentsInfo\Index.cshtml" />
     <Content Include="Views\Sound\Create.cshtml" />
@@ -837,6 +837,12 @@
     <Content Include="Views\MediaVideo\Details.cshtml" />
     <Content Include="Views\MediaVideo\Edit.cshtml" />
     <Content Include="Views\MediaVideo\Index.cshtml" />
+    <Content Include="Views\Grammar\Create.cshtml" />
+    <Content Include="Views\Grammar\Delete.cshtml" />
+    <Content Include="Views\Grammar\Details.cshtml" />
+    <Content Include="Views\Grammar\Edit.cshtml" />
+    <Content Include="Views\Grammar\Index.cshtml" />
+    <Content Include="Views\Shared\_HLL_Grammar_Data_PartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

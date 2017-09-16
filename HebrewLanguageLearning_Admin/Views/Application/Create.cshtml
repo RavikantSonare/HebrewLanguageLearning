@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Choose Lesson:</label>
-                                @Html.DropDownListFor(x => x.LessonId, SI._PurposeforLessonList, new { @class = "form-control", onchange = @"getDetail(this.value)" })
+                                @Html.DropDownListFor(x => x.LessonId, SI._PurposeforLessonList, new { @class = "form-control", onchange = @"getDetail(this.value,'GetDataForm')" })
                                 @Html.ValidationMessageFor(x => x.LessonId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                 <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
@@ -85,23 +85,29 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+       
         var url = "";
         if (!url) url = window.location.href;
         var pathname = new URL(url).pathname;
         var SplitData = pathname.split('/');
         var LessonId = SplitData[SplitData.length - 1];
-        console.log(pathname);
+        if (LessonId % 1 == 0)
+        {
+            var _that = $('#LessonId');
+            $('.icon - pencil3').val("Edit Application");
+            _that.val(LessonId);
+            _that.attr('disabled', 'disabled');
+            getDetail(LessonId, '../GetDataForm');
+        }
+        else
+        { }
 
-       
-
-       
 
     });
 
     var textboxId = 5; var textboxName = 4;
 
     function StartValidation() {
-        debugger;
         var AppSentenceDynamicTextBoxData = $('#AppSentenceDynamicTextBox').val(); $('#AppSentenceDynamicTextBoxErrorMessage').hide();
         if (typeof AppSentenceDynamicTextBoxData == 'undefined' || AppSentenceDynamicTextBoxData == "") {
             $('#AppSentenceDynamicTextBoxErrorMessage').show();
@@ -157,7 +163,7 @@
         }
     });
     var SetCorrectAnswer = function (CorrectAnswerID) {
-        debugger;
+      
         var ddlLessonId = $('#LessonId').val();
         if (isValid()) {
             $('#ModalDiv').html("<div id='form_modal_Definition' class='modal fade' tabindex='-1' role='dialog'></div>");
@@ -165,7 +171,7 @@
         }
     }
     var SaveFromDataCorrectAnswer = (function () {
-        debugger;
+     
         var CorrectAnswerID = $('#PopUp_CorrectAnswerID').val();
         var LessonId = $('#LessonId').val();
         $.ajax({
@@ -178,7 +184,6 @@
         });
     });
     var SaveFromDataAndNext = (function () {
-        debugger;
         var CorrectAnswerID = $('#PopUp_CorrectAnswerID').val();
         var LessonId = $('#LessonId').val();
         $.ajax({
@@ -203,14 +208,14 @@
         return true;
 
     }
-    var getDetail = function (x) {
-        // $('#Application_Data').html('');
-        $.ajax({ url: 'GetDataForm', method: 'post', data: { LessonId: x, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
+    var getDetail = function (x,baseUrl) {
+        $.ajax({ url: baseUrl, method: 'post', data: { LessonId: x, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
             $('#Application_Data').html(res);
             checker();
         });
     };
     var $containerCon = $('#Application_Data');
+
     var checker = function () {
         textboxArr = $containerCon.find('.single-line');
         textboxArr.each(function (i, v) {
@@ -222,6 +227,7 @@
             setImagesOnApplicationDataView(i + 1, soundurl.val());
         });
     };
+
     var setImagesOnApplicationDataView = function (txtId, imgValue) {
         var h = "";
         if (typeof imgValue != 'undefined') {
@@ -249,7 +255,7 @@
     }
     // 09-11-2017
     function SubmitButtonOnclick() {
-        debugger;
+      
         var formElement = document.querySelector("#CreateHebrewAppDataPartial");
         var formData = new FormData(formElement);
         var xhr = new XMLHttpRequest();
@@ -279,16 +285,4 @@
 
     }
 
-
-    var getUrlVars = function () {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for (var i = 0; i < hashes.length; i++) {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    }
-
-</script>
+    </script>

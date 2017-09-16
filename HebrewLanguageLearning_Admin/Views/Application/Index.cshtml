@@ -59,9 +59,9 @@
                             @Html.DisplayFor(modelItem => item.CorrectAnswers)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Create", new { id = item.LessonId }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.MasterTableId }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.MasterTableId })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.LessonId }) |
+                            @*@Html.ActionLink("Details", "Details", new { id = item.MasterTableId }) |*@
+                            @Html.ActionLink("Delete", "Delete", new { id = item.HebrewApplicationDataId })
                         </td>
                     </tr>
                 }
