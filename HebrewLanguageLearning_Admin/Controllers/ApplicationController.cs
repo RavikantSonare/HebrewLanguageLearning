@@ -95,9 +95,47 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View(hLL_Application);
         }
 
-        public async Task<ActionResult> Create()
+        private HLL_ApplicationModel set_ObjDataModelData(HLL_ApplicationModel _ObjDataModel)
         {
-            return View();
+            _ObjDataModel.AppSentenceDynamicTextBox = new string[15];
+            _ObjDataModel.Imgfile = new HttpPostedFileBase[15];
+            _ObjDataModel.Videofile = new HttpPostedFileBase[15];
+            _ObjDataModel.Soundfile = new HttpPostedFileBase[15];
+            _ObjDataModel.ImgVdofile = new HttpPostedFileBase[15];
+            return _ObjDataModel;
+        }
+
+        public async Task<ActionResult> Create(string Id = "0")
+        {
+            var LessonId = Id; TempData["isEdit"] = false;
+            HLL_ApplicationModel _ObjDataModel = new HLL_ApplicationModel(); _ObjDataModel.DataCounter = 4;
+            _ObjDataModel = set_ObjDataModelData(_ObjDataModel);
+            if (LessonId != "0")
+            {
+                var ApplicationId = getAndSetApplication(LessonId).ApplicationId;
+                TempData["isEdit"] = true;
+                var objApplication = db.HLL_Application.Where(x => x.IsDelete == false).Where(p => p.ApplicationId == ApplicationId).FirstOrDefault();
+                var objApplicationDataList = db.HLL_HebrewApplicationData.Where(x => x.IsDelete == false && x.MasterTableId == objApplication.ApplicationId).ToList();
+                var ListData = objApplicationDataList.Select(y => y.HebrewApplicationDataId).ToList();
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Application, HLL_ApplicationModel>(); });
+                _ObjDataModel = AutoMapper.Mapper.Map<HLL_Application, HLL_ApplicationModel>(objApplication);
+                _ObjDataModel = set_ObjDataModelData(_ObjDataModel);
+                var SoundDataList = db.HLL_Media_Sound.Where(x => (ListData.Contains(x.MasterTableId))).Select(c => c.MasterTableId).ToList();
+                var ImageDataList = db.HLL_Media_Pictures.Where(x => (ListData.Contains(x.MasterTableId))).Select(c => c.MasterTableId).ToList();
+                var VideoDataList = db.HLL_Media_Video.Where(x => (ListData.Contains(x.MasterTableId))).Select(c => c.MasterTableId).ToList();
+                int i = 0, txtlenght = objApplicationDataList.Count() > 4 ? objApplicationDataList.Count() : 4;
+                _ObjDataModel.DataCounter = txtlenght;
+                foreach (var Item in objApplicationDataList)
+                {
+
+                    _ObjDataModel.AppSentenceDynamicTextBox[i] = Item.HebrewApplicationData;
+                    i++;
+                }
+
+
+                ModelState.Clear();
+            }
+            return View(_ObjDataModel);
         }
 
 
@@ -109,8 +147,14 @@ namespace HebrewLanguageLearning_Admin.Controllers
             try
             {
                 var _ModelHLL_ApplicationObj = await db.HLL_Application.Where(x => x.LessonId.Equals(LessonId)).FirstOrDefaultAsync();
-                var _ModelHLL_HebrewApplicationDataObj = await db.HLL_HebrewApplicationData.Where(x => x.MasterTableId.Equals(_ModelHLL_ApplicationObj.ApplicationId)).ToListAsync();
-
+                List<HLL_HebrewApplicationData> _ModelHLL_HebrewApplicationDataObj = new List<HLL_HebrewApplicationData>();
+                if (_ModelHLL_ApplicationObj != null)
+                {
+                    _ModelHLL_HebrewApplicationDataObj = await db.HLL_HebrewApplicationData.Where(x => x.MasterTableId.Equals(_ModelHLL_ApplicationObj.ApplicationId) && x.IsDelete == false).ToListAsync();
+                }else
+                {
+                    _ModelHLL_ApplicationObj = new HLL_Application();
+                }
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Application, HLL_ApplicationModel>(); });
                 DataModel = AutoMapper.Mapper.Map<HLL_Application, HLL_ApplicationModel>(_ModelHLL_ApplicationObj);
                 DataModel.AppSentenceDynamicTextBox = new string[15];
@@ -123,17 +167,25 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 DataModel.Soundfile = new HttpPostedFileBase[15];
                 DataModel.ImgVdofile = new HttpPostedFileBase[15];
                 int i = 0;
+
+
                 foreach (var Item in db.HLL_HebrewApplicationData.Where(h => h.MasterTableId.Equals(_ModelHLL_ApplicationObj.ApplicationId) && h.IsDelete == false).ToList())
                 {
                     DataModel.AppSentenceDynamicTextBox[i] = Item.HebrewApplicationData;
-                    DataModel.SoundUrl[i] = "0";
-                    DataModel.ImgUrl[i] = "1";
-                    DataModel.VideoUrl[i] = "2";
-
-                    // DataModel.AppSentenceDynamicTextBox[i] = db.HLL_HebrewApplicationData.Where(h => h.MasterTableId.Equals(_ModelObj.ApplicationId)).ToList()
-
+                    var SoundDataList = db.HLL_Media_Sound.Where(x => x.MasterTableId == Item.HebrewApplicationDataId).FirstOrDefault();
+                    if (SoundDataList != null) { DataModel.SoundUrl[i] = "0"; }
+                   
+                    var ImageDataList = db.HLL_Media_Pictures.Where(x => x.MasterTableId == Item.HebrewApplicationDataId).FirstOrDefault();
+                    if (ImageDataList != null) { DataModel.VideoUrl[i] = "1"; }
+                    else
+                    {
+                        var VideoDataList = db.HLL_Media_Video.Where(x => x.MasterTableId == Item.HebrewApplicationDataId).FirstOrDefault();
+                        if (VideoDataList != null) { DataModel.VideoUrl[i] = "2"; }
+                    }
+                    
                     i++;
                 }
+                DataModel.DataCounter = i > 4 ? i : 4;
 
             }
             catch (Exception ex) { }
@@ -205,7 +257,13 @@ namespace HebrewLanguageLearning_Admin.Controllers
             HLL_Media_SoundModels _ModelObjMedSound = new HLL_Media_SoundModels();
             int i = 0;
 
-            if (ModelState.IsValid)
+            dynamic isEdit = false;
+            if (TempData["isEdit"] != null)
+            {
+                isEdit = TempData["isEdit"];
+            }
+
+            if (ModelState.IsValid || isEdit)
             {
                 foreach (var Item in hLL_Application.AppSentenceDynamicTextBox)
                 {
@@ -222,14 +280,16 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         db.SaveChanges();
 
                         //* Add Video, Image, Sound *//
+                        MediaVideoController _objMediaVideo = new MediaVideoController();
+                        MediaPicturesController _objMediaImage = new MediaPicturesController();
                         if (hLL_Application.ImgVdofile[i] != null)
                         {
                             string extension = Path.GetExtension(hLL_Application.ImgVdofile[i].FileName).ToLower();
                             string[] extImage = { ".gif", ".png", ".jpg", ".jpeg" }; string[] extVideo = { ".mp4", ".mov", ".avi" };
                             if (extVideo.Contains(extension))
                             {
-                                MediaVideoController _objMediaVideo = new MediaVideoController();
 
+                                _objMediaImage.checkAndDelete(_Obj_HebrewApplicationData.HebrewApplicationDataId);
                                 _ModelObjMedVid.MasterTableId = _Obj_HebrewApplicationData.HebrewApplicationDataId;
                                 _ModelObjMedVid.Videofile = hLL_Application.ImgVdofile[i];
                                 _ModelObjMedVid.TableRef = "HebrewApplicationData";
@@ -237,8 +297,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
                             }
                             if (extImage.Contains(extension))
                             {
-                                MediaPicturesController _objMediaImage = new MediaPicturesController();
 
+                                _objMediaImage.checkAndDelete(_Obj_HebrewApplicationData.HebrewApplicationDataId);
                                 _ModelObjMedPic.MasterTableId = _Obj_HebrewApplicationData.HebrewApplicationDataId;
                                 _ModelObjMedPic.Imagefile = hLL_Application.ImgVdofile[i];
                                 _ModelObjMedPic.TableRef = "HebrewApplicationData";
@@ -283,80 +343,58 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 }
                 var AppData = CheckAndSetLessonData(CorrectAnswerNo, LessonId);
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(); });
-                DataModel = AutoMapper.Mapper.Map<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(CheckAndSetLessonData(CorrectAnswerNo, LessonId));
+                DataModel = AutoMapper.Mapper.Map<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(AppData);
                 ModelState.Clear();
             }
             return PartialView("HLL_HebrewApplicationDataCorrectAnswer_PartialView", DataModel);
         }
 
-        private void applicationCreation(string lessonId)
-        {
-            HLL_ApplicationModel hLL_Application = new HLL_ApplicationModel();
-            hLL_Application.ApplicationId = EntityConfig.getnewid("HLL_Application");
-            hLL_Application.LessonId = lessonId;
-            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_ApplicationModel, HLL_Application>(); });
-            HLL_Application DataModel = AutoMapper.Mapper.Map<HLL_ApplicationModel, HLL_Application>(hLL_Application);
-            db.HLL_Application.Add(DataModel);
-            db.SaveChanges();
-        }
-        private void applicationDataCreation(string correctAnswerNo, string lessonId)
-        {
-            HLL_HebrewApplicationDataModel hLL_HebrewApplicationData = new HLL_HebrewApplicationDataModel();
-            hLL_HebrewApplicationData.HebrewApplicationDataId = EntityConfig.getnewid("HLL_HebrewApplicationData");
-            hLL_HebrewApplicationData.MasterTableId = lessonId;
-            hLL_HebrewApplicationData.HebrewApplicationDataNo = correctAnswerNo;
-            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewApplicationDataModel, HLL_HebrewApplicationData>(); });
-            HLL_HebrewApplicationData DataModel = AutoMapper.Mapper.Map<HLL_HebrewApplicationDataModel, HLL_HebrewApplicationData>(hLL_HebrewApplicationData);
-            db.HLL_HebrewApplicationData.Add(DataModel);
-            db.SaveChanges();
-        }
+
+
         private HLL_HebrewApplicationData CheckAndSetLessonData(string correctAnswerNo, string lessonId)
         {
-            HLL_Application lessonIdData = getApplicationModelData(lessonId);
+            HLL_Application lessonIdData = getAndSetApplication(lessonId);
             HLL_HebrewApplicationData hebrewApplicationData = new HLL_HebrewApplicationData();
             if (lessonIdData != null)
             {
-                hebrewApplicationData = db.HLL_HebrewApplicationData.Where(z => z.MasterTableId.Equals(lessonIdData.ApplicationId) && z.HebrewApplicationDataNo.Equals(correctAnswerNo)).FirstOrDefault();
-                if (hebrewApplicationData != null)
-                {
-                    applicationDataCreation(correctAnswerNo, lessonIdData.ApplicationId);
-                    return hebrewApplicationData;
-                }
-                else
-                {
-
-                    CheckAndSetLessonData(correctAnswerNo, lessonId);
-                }
-            }
-            else
-            {
-                applicationCreation(lessonId);
-                lessonIdData = getApplicationModelData(lessonId);
-                if (lessonIdData != null)
-                {
-                    hebrewApplicationData = db.HLL_HebrewApplicationData.Where(z => z.MasterTableId.Equals(lessonIdData.ApplicationId) && z.HebrewApplicationDataNo.Equals(correctAnswerNo)).FirstOrDefault();
-                    if (hebrewApplicationData != null)
-                    {
-                        return hebrewApplicationData;
-                    }
-                    else
-                    {
-                        applicationDataCreation(correctAnswerNo, lessonIdData.ApplicationId);
-                        hebrewApplicationData = db.HLL_HebrewApplicationData.Where(z => z.MasterTableId.Equals(lessonIdData.ApplicationId) && z.HebrewApplicationDataNo.Equals(correctAnswerNo)).FirstOrDefault();
-
-                        return hebrewApplicationData;
-                    }
-                }
-
+                hebrewApplicationData = getAndSetHebrewApplicationData(lessonIdData.ApplicationId, correctAnswerNo);
             }
             return hebrewApplicationData;
         }
 
-        private HLL_Application getApplicationModelData(string lessonId)
+        private HLL_Application getAndSetApplication(string lessonId)
         {
-            return db.HLL_Application.Where(z => z.LessonId.Equals(lessonId)).FirstOrDefault();
+            HLL_Application applicationTable = new HLL_Application();
+            HLL_ApplicationModel applicationModel = new HLL_ApplicationModel();
+            applicationTable = db.HLL_Application.Where(z => z.LessonId.Equals(lessonId)).FirstOrDefault();
+            if (applicationTable == null)
+            {
+                applicationModel.ApplicationId = EntityConfig.getnewid("HLL_Application");
+                applicationModel.LessonId = lessonId;
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_ApplicationModel, HLL_Application>(); });
+                applicationTable = AutoMapper.Mapper.Map<HLL_ApplicationModel, HLL_Application>(applicationModel);
+                db.HLL_Application.Add(applicationTable);
+                db.SaveChanges();
+            }
+            return applicationTable;
         }
-
+        private HLL_HebrewApplicationData getAndSetHebrewApplicationData(string ApplicationId, string correctAnswerNo)
+        {
+            HLL_HebrewApplicationData hebrewApplicationDataTable = new HLL_HebrewApplicationData();
+            HLL_HebrewApplicationDataModel hebrewApplicationDataModel = new HLL_HebrewApplicationDataModel();
+            hebrewApplicationDataTable = db.HLL_HebrewApplicationData.Where(z => z.MasterTableId.Equals(ApplicationId) && z.IsDelete == false && z.HebrewApplicationDataNo == correctAnswerNo).FirstOrDefault();
+            if (hebrewApplicationDataTable == null)
+            {
+                hebrewApplicationDataModel.HebrewApplicationDataId = EntityConfig.getnewid("HLL_HebrewApplicationData");
+                hebrewApplicationDataModel.MasterTableId = ApplicationId;
+                hebrewApplicationDataModel.HebrewApplicationDataNo = correctAnswerNo;
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewApplicationDataModel, HLL_HebrewApplicationData>(); });
+                hebrewApplicationDataTable = AutoMapper.Mapper.Map<HLL_HebrewApplicationDataModel, HLL_HebrewApplicationData>(hebrewApplicationDataModel);
+                db.HLL_HebrewApplicationData.Add(hebrewApplicationDataTable);
+                db.SaveChanges();
+            }
+            return hebrewApplicationDataTable;
+        }
         // GET: Application/Edit/5
         public async Task<ActionResult> Edit(string id)
         {

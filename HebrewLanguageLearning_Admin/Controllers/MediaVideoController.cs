@@ -66,6 +66,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             try
             {
                 UploadFiles _objUploadFile = new UploadFiles();
+                checkAndDelete(hLL_Media_VideoModels.MasterTableId);
                 _objUploadFile.physicalFile = hLL_Media_VideoModels.Videofile;
                 _objUploadFile.fileExtension = System.IO.Path.GetExtension(hLL_Media_VideoModels.Videofile.FileName);
                 _objUploadFile.tableName = hLL_Media_VideoModels.TableRef;
@@ -86,6 +87,16 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
         }
 
+        internal void checkAndDelete(string MasterId)
+        {
+           
+            HLL_Media_Video hLL_Media_Video = db.HLL_Media_Video.Where(x => x.MasterTableId == MasterId).FirstOrDefault();
+            if (hLL_Media_Video != null)
+            {
+                db.HLL_Media_Video.Remove(hLL_Media_Video);
+                db.SaveChanges();
+            }
+        }
         // GET: MediaVideo/Edit/5
         public async Task<ActionResult> Edit(string id)
         {

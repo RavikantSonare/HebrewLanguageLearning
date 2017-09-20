@@ -37,7 +37,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     if (SoundData.Contains(e.GrammarId)) { e.Soundfiles = "0"; }
                     if (ImageData.Contains(e.GrammarId)) { e.ImgVdofiles = "1"; }
                     if (VideoData.Contains(e.GrammarId)) { e.ImgVdofiles = "2"; }
-                  
+
                     e.ExercisesNumber = correctAnswerCounter.ToString();
 
                 });
@@ -84,11 +84,55 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View(hLL_Application);
         }
 
-        public async Task<ActionResult> Create()
+        private HLL_GrammarModel set_ObjDataModelData(HLL_GrammarModel _ObjDataModel)
         {
-            return View();
+            _ObjDataModel.AppSentenceDynamicTextBox = new string[12];
+            _ObjDataModel.Imgfile = new HttpPostedFileBase[12];
+            _ObjDataModel.Videofile = new HttpPostedFileBase[12];
+            _ObjDataModel.Soundfile = new HttpPostedFileBase[12];
+            _ObjDataModel.ImgVdofile = new HttpPostedFileBase[12];
+            return _ObjDataModel;
         }
 
+        public async Task<ActionResult> Create(string GrammarId = "0")
+        {
+            HLL_GrammarModel _ObjDataModel = new HLL_GrammarModel(); _ObjDataModel.ExercisesNumber = "4"; TempData["isEdit"] = false;
+            _ObjDataModel = set_ObjDataModelData(_ObjDataModel);
+            if (GrammarId != "0")
+            {
+                TempData["isEdit"] = true;
+                var objGrammar = db.HLL_Grammar.Where(x => x.IsDelete == false).Where(p => p.GrammarId == GrammarId).FirstOrDefault();
+                var objGrammarDataList = db.HLL_HebrewGrammarData.Where(x => x.IsDelete == false && x.MasterTableId == objGrammar.GrammarId).ToList();
+                var ListData = objGrammarDataList.Select(y => y.HebrewGrammarDataId).ToList();
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Grammar, HLL_GrammarModel>(); });
+                _ObjDataModel = AutoMapper.Mapper.Map<HLL_Grammar, HLL_GrammarModel>(objGrammar);
+                _ObjDataModel = set_ObjDataModelData(_ObjDataModel);
+                 int i = 0, txtlenght = objGrammarDataList.Count() > 4 ? objGrammarDataList.Count() : 4;
+                _ObjDataModel.ExercisesNumber = Convert.ToString(txtlenght);
+                _ObjDataModel.VideoUrl = new string[15];
+                _ObjDataModel.ImgUrl = new string[15];
+                _ObjDataModel.SoundUrl = new string[15];
+                foreach (var Item in objGrammarDataList)
+                {
+
+                    _ObjDataModel.AppSentenceDynamicTextBox[i] = Item.HebrewGrammarData;
+                    var SoundDataList = db.HLL_Media_Sound.Where(x => x.MasterTableId == Item.HebrewGrammarDataId).FirstOrDefault();
+                    if (SoundDataList != null) { _ObjDataModel.SoundUrl[i] = "0"; }
+                    var ImageDataList = db.HLL_Media_Pictures.Where(x => x.MasterTableId == Item.HebrewGrammarDataId).FirstOrDefault();
+                    if (ImageDataList != null) { _ObjDataModel.VideoUrl[i] = "1"; }
+                    else
+                    {
+                        var VideoDataList = db.HLL_Media_Video.Where(x => x.MasterTableId == Item.HebrewGrammarDataId).FirstOrDefault();
+                        if (VideoDataList != null) { _ObjDataModel.VideoUrl[i] = "2"; }
+                    }
+                    i++;
+                }
+
+
+                ModelState.Clear();
+            }
+            return View(_ObjDataModel);
+        }
 
         [HttpPost]
         // [ValidateAntiForgeryToken]
@@ -115,12 +159,16 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 foreach (var Item in db.HLL_HebrewGrammarData.Where(h => h.MasterTableId.Equals(_ModelHLL_GrammarObj.GrammarId) && h.IsDelete == false).ToList())
                 {
                     DataModel.AppSentenceDynamicTextBox[i] = Item.HebrewGrammarData;
-                    DataModel.SoundUrl[i] = "0";
-                    DataModel.ImgUrl[i] = "1";
-                    DataModel.VideoUrl[i] = "2";
-
-                    // DataModel.AppSentenceDynamicTextBox[i] = db.HLL_HebrewGrammarData.Where(h => h.MasterTableId.Equals(_ModelObj.GrammarId)).ToList()
-
+                    var SoundDataList = db.HLL_Media_Sound.Where(x => x.MasterTableId == Item.HebrewGrammarDataId).FirstOrDefault();
+                    if (SoundDataList != null) { DataModel.SoundUrl[i] = "0"; }
+                    var ImageDataList = db.HLL_Media_Pictures.Where(x => x.MasterTableId == Item.HebrewGrammarDataId).FirstOrDefault();
+                    if (ImageDataList != null) { DataModel.VideoUrl[i] = "1"; }
+                    else
+                    {
+                        var VideoDataList = db.HLL_Media_Video.Where(x => x.MasterTableId == Item.HebrewGrammarDataId).FirstOrDefault();
+                        if (VideoDataList != null) { DataModel.VideoUrl[i] = "2"; }
+                    }
+                    
                     i++;
                 }
 
@@ -134,44 +182,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateHebrewAppData(HLL_HebrewApplicationDataModel hLL_HebrewApplicationDataModel)
-        {
-
-            if (ModelState.IsValid)
-            {
-                /* Add Correct Answer */
-                try
-                {
-                    var hebrewApplicationData = db.HLL_HebrewApplicationData.Where(z => z.HebrewApplicationDataId.Equals(hLL_HebrewApplicationDataModel.HebrewApplicationDataId)).FirstOrDefault();
-                    if (hebrewApplicationData != null)
-                    {
-                        hebrewApplicationData.HebrewApplicationData = hLL_HebrewApplicationDataModel.HebrewApplicationData;
-                        hebrewApplicationData.CorrectAnswer1 = hLL_HebrewApplicationDataModel.CorrectAnswer1;
-                        hebrewApplicationData.CorrectAnswer2 = hLL_HebrewApplicationDataModel.CorrectAnswer2;
-                        hebrewApplicationData.CorrectAnswer3 = hLL_HebrewApplicationDataModel.CorrectAnswer3;
-                        hebrewApplicationData.CorrectAnswer4 = hLL_HebrewApplicationDataModel.CorrectAnswer4;
-                        hebrewApplicationData.CorrectAnswer5 = hLL_HebrewApplicationDataModel.CorrectAnswer5;
-                        hebrewApplicationData.CorrectAnswer6 = hLL_HebrewApplicationDataModel.CorrectAnswer6;
-                        hebrewApplicationData.CorrectAnswer7 = hLL_HebrewApplicationDataModel.CorrectAnswer7;
-                        hebrewApplicationData.CorrectAnswer8 = hLL_HebrewApplicationDataModel.CorrectAnswer8;
-                        hebrewApplicationData.CorrectAnswer9 = hLL_HebrewApplicationDataModel.CorrectAnswer9;
-                        hebrewApplicationData.CorrectAnswer10 = hLL_HebrewApplicationDataModel.CorrectAnswer10;
-                        hebrewApplicationData.UpdatedDate = hLL_HebrewApplicationDataModel.UpdatedDate;
-                        db.Entry(hebrewApplicationData).State = EntityState.Modified;
-                        db.SaveChanges();
-
-                        // return JavaScript("window.location = '/Application/Create'");
-                        return Content("Success");
-                    }
-                }
-                catch (Exception ex) { }
-            }
-            return Content("Sever Not responding");
-
-        }
         public string GetLessonNext(string HebrewApplicationId)
         {
 
@@ -186,8 +196,13 @@ namespace HebrewLanguageLearning_Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(HLL_GrammarModel HLL_GrammarModel)
+        public async Task<ActionResult> Create(HLL_GrammarModel _hLL_GrammarModel)
         {
+            dynamic isEdit = false;
+            if (TempData["isEdit"] != null)
+            {
+                isEdit = TempData["isEdit"];
+            }
             HLL_GrammarModel _ModelObjHAD = new HLL_GrammarModel();
             HLL_Media_VideoModels _ModelObjMedVid = new HLL_Media_VideoModels();
             HLL_Media_PicturesModels _ModelObjMedPic = new HLL_Media_PicturesModels();
@@ -199,60 +214,85 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 {
                     /*  Add Grammer */
                     HLL_HebrewApplicationData _Obj_HebrewApplicationData = new HLL_HebrewApplicationData();
-                    _ModelObjHAD = CheckAndSetGrammerData(HLL_GrammarModel, 0);
+                    if (isEdit)
+                    {
+                        _ModelObjHAD = CheckAndSetGrammerData(_hLL_GrammarModel, 1);
+                        ///  UpdateGrammarModel(_ModelObjHAD, _hLL_GrammarModel);
 
+                    }
+                    else
+                    {
+                        _ModelObjHAD = CheckAndSetGrammerData(_hLL_GrammarModel, 0);
+                    }
 
-                    foreach (var Item in HLL_GrammarModel.AppSentenceDynamicTextBox)
+                    foreach (var Item in _hLL_GrammarModel.AppSentenceDynamicTextBox)
                     {
 
                         if (!string.IsNullOrEmpty(Item))
                         {   /* Add Hebrew Grammar Data */
-
                             HLL_HebrewGrammarDataModel hLL_HebrewGrammarData = new HLL_HebrewGrammarDataModel();
-                            hLL_HebrewGrammarData.HebrewGrammarDataId = EntityConfig.getnewid("HLL_HebrewGrammarData");
-                            hLL_HebrewGrammarData.MasterTableId = _ModelObjHAD.GrammarId;
-                            hLL_HebrewGrammarData.HebrewGrammarDataNo = i.ToString();
-                            hLL_HebrewGrammarData.HebrewGrammarData = Item;
-                            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewGrammarDataModel, HLL_HebrewGrammarData>(); });
-                            HLL_HebrewGrammarData DataModel = AutoMapper.Mapper.Map<HLL_HebrewGrammarDataModel, HLL_HebrewGrammarData>(hLL_HebrewGrammarData);
-                            db.HLL_HebrewGrammarData.Add(DataModel);
-                            db.SaveChanges();
+                            HLL_HebrewGrammarData hLL_HebrewGrammarDataFirstModel = new HLL_HebrewGrammarData();
+                            if (isEdit)
+                            {
+                                hLL_HebrewGrammarDataFirstModel = db.HLL_HebrewGrammarData.Where(x => x.HebrewGrammarDataNo == i.ToString() && x.MasterTableId == _ModelObjHAD.GrammarId).FirstOrDefault();
+                            }
+                            if (isEdit && hLL_HebrewGrammarDataFirstModel != null)
+                            {
+                                hLL_HebrewGrammarDataFirstModel.HebrewGrammarData = Item;
+                                db.Entry(hLL_HebrewGrammarDataFirstModel).State = EntityState.Modified;
+                                db.SaveChanges();
+                                hLL_HebrewGrammarData.HebrewGrammarDataId = hLL_HebrewGrammarDataFirstModel.HebrewGrammarDataId;
+                            }
+                            else
+                            {
+                                hLL_HebrewGrammarData.HebrewGrammarDataId = EntityConfig.getnewid("HLL_HebrewGrammarData");
+                                hLL_HebrewGrammarData.MasterTableId = _ModelObjHAD.GrammarId;
+                                hLL_HebrewGrammarData.HebrewGrammarDataNo = i.ToString();
+                                hLL_HebrewGrammarData.HebrewGrammarData = Item;
+                                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewGrammarDataModel, HLL_HebrewGrammarData>(); });
+                                HLL_HebrewGrammarData DataModel = AutoMapper.Mapper.Map<HLL_HebrewGrammarDataModel, HLL_HebrewGrammarData>(hLL_HebrewGrammarData);
+                                db.HLL_HebrewGrammarData.Add(DataModel);
+                                db.SaveChanges();
+                            }
 
                             //* Add Video, Image, Sound *//
-                            if (HLL_GrammarModel.ImgVdofile[i] != null)
+                            MediaVideoController _objMediaVideo = new MediaVideoController();
+                            MediaPicturesController _objMediaImage = new MediaPicturesController();
+                            if (_hLL_GrammarModel.ImgVdofile[i] != null)
                             {
-                                string extension = Path.GetExtension(HLL_GrammarModel.ImgVdofile[i].FileName).ToLower();
+                                string extension = Path.GetExtension(_hLL_GrammarModel.ImgVdofile[i].FileName).ToLower();
                                 string[] extImage = { ".gif", ".png", ".jpg", ".jpeg" }; string[] extVideo = { ".mp4", ".mov", ".avi" };
                                 if (extVideo.Contains(extension))
                                 {
-                                    MediaVideoController _objMediaVideo = new MediaVideoController();
 
-                                    _ModelObjMedVid.MasterTableId = _ModelObjHAD.GrammarId;
-                                    _ModelObjMedVid.Videofile = HLL_GrammarModel.ImgVdofile[i];
+                                    _objMediaImage.checkAndDelete(hLL_HebrewGrammarData.HebrewGrammarDataId);
+
+                                    _ModelObjMedVid.MasterTableId = hLL_HebrewGrammarData.HebrewGrammarDataId;
+                                    _ModelObjMedVid.Videofile = _hLL_GrammarModel.ImgVdofile[i];
                                     _ModelObjMedVid.TableRef = "HebrewGrammarData";
                                     _objMediaVideo.SetVideo(_ModelObjMedVid);
                                 }
                                 if (extImage.Contains(extension))
                                 {
-                                    MediaPicturesController _objMediaImage = new MediaPicturesController();
 
-                                    _ModelObjMedPic.MasterTableId = _ModelObjHAD.GrammarId;
-                                    _ModelObjMedPic.Imagefile = HLL_GrammarModel.ImgVdofile[i];
+                                    _objMediaVideo.checkAndDelete(hLL_HebrewGrammarData.HebrewGrammarDataId);
+
+                                    _ModelObjMedPic.MasterTableId = hLL_HebrewGrammarData.HebrewGrammarDataId;
+                                    _ModelObjMedPic.Imagefile = _hLL_GrammarModel.ImgVdofile[i];
                                     _ModelObjMedPic.TableRef = "HebrewGrammarData";
                                     _objMediaImage.SetPicture(_ModelObjMedPic);
                                 }
 
                             }
-                            if (HLL_GrammarModel.Soundfile[i] != null)
+                            if (_hLL_GrammarModel.Soundfile[i] != null)
                             {
-                                string extension = Path.GetExtension(HLL_GrammarModel.Soundfile[i].FileName).ToLower();
+                                string extension = Path.GetExtension(_hLL_GrammarModel.Soundfile[i].FileName).ToLower();
                                 string[] extAudio = { ".mp3" };
                                 if (extAudio.Contains(extension))
                                 {
                                     MediaSoundController _objMediaSound = new MediaSoundController();
-
-                                    _ModelObjMedSound.MasterTableId = _ModelObjHAD.GrammarId;
-                                    _ModelObjMedSound.Soundfile = HLL_GrammarModel.Soundfile[i];
+                                    _ModelObjMedSound.MasterTableId = hLL_HebrewGrammarData.HebrewGrammarDataId;
+                                    _ModelObjMedSound.Soundfile = _hLL_GrammarModel.Soundfile[i];
                                     _ModelObjMedSound.TableRef = "HebrewGrammarData";
                                     _objMediaSound.SetSound(_ModelObjMedSound);
                                 }
@@ -269,6 +309,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
         }
 
+
+
         private HLL_GrammarModel CheckAndSetGrammerData(HLL_GrammarModel HLL_GrammarModel, int operationType)
         {
             HLL_GrammarModel HLL_GrammarModelData = new HLL_GrammarModel();
@@ -284,6 +326,20 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     HLL_Grammar DataModel = AutoMapper.Mapper.Map<HLL_GrammarModel, HLL_Grammar>(HLL_GrammarModelData);
                     db.HLL_Grammar.Add(DataModel);
                     db.SaveChanges();
+                }
+                if (operationType == 1)
+                {
+                    var CheckData = db.HLL_Grammar.Find(HLL_GrammarModel.GrammarId);
+                    if (CheckData != null)
+                    {
+                        CheckData.EnglishGrammar = HLL_GrammarModel.EnglishGrammar;
+                        CheckData.HebrewGrammar = HLL_GrammarModel.HebrewGrammar;
+                        CheckData.UpdatedDate = HLL_GrammarModel.UpdatedDate;
+                        db.Entry(CheckData).State = EntityState.Modified;
+                        db.SaveChanges();
+                        AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Grammar, HLL_GrammarModel>(); });
+                        HLL_GrammarModelData = AutoMapper.Mapper.Map<HLL_Grammar, HLL_GrammarModel>(CheckData);
+                    }
                 }
             }
             catch (Exception ex) { }
@@ -307,8 +363,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
             }
             return PartialView("HLL_HebrewApplicationDataCorrectAnswer_PartialView", DataModel);
         }
-
-
 
         private HLL_HebrewApplicationData CheckAndSetLessonData(string correctAnswerNo, string lessonId)
         {
@@ -355,6 +409,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            // Create(string GrammarId = "0")
             return View("Create");
             //HLL_Application hLL_Application = await db.HLL_Application.FindAsync(id);
             //if (hLL_Application == null)
@@ -419,6 +474,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
             base.Dispose(disposing);
         }
 
-
+     
     }
 }

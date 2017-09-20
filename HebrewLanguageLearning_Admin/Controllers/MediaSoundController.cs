@@ -95,6 +95,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             try
             {
                 UploadFiles _objUploadFile = new UploadFiles();
+                checkAndDelete(hLL_Media_SoundModels.MasterTableId);
                 _objUploadFile.physicalFile = hLL_Media_SoundModels.Soundfile;
                 _objUploadFile.fileExtension = System.IO.Path.GetExtension(hLL_Media_SoundModels.Soundfile.FileName);
                 _objUploadFile.tableName = hLL_Media_SoundModels.TableRef;
@@ -114,17 +115,15 @@ namespace HebrewLanguageLearning_Admin.Controllers
             catch (Exception ex) { }
 
         }
-        //public ActionResult Create(HLL_Media_SoundModels HLL_Media_Sound)
-        //{
-
-        //        HLL_Media_Sound.SoundId = EntityConfig.getnewid("HLL_Media_Sound");
-        //        AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_SoundModels, HLL_Media_Sound>(); });
-        //        HLL_Media_Sound DataModel = AutoMapper.Mapper.Map<HLL_Media_SoundModels, HLL_Media_Sound>(HLL_Media_Sound);
-        //        db.HLL_Media_Sound.Add(DataModel);
-        //        db.SaveChanges();
-
-        //    return JsonResult(new {result:"success" });
-        //}
+        private void checkAndDelete(string MasterId)
+        {
+            HLL_Media_Sound hLL_Media_Sound = db.HLL_Media_Sound.Where(x => x.MasterTableId == MasterId).FirstOrDefault();
+            if (hLL_Media_Sound != null)
+            {
+                db.HLL_Media_Sound.Remove(hLL_Media_Sound);
+                db.SaveChanges();
+            }
+        }
         // GET: Sound/Edit/5
         public ActionResult Edit(string id)
         {

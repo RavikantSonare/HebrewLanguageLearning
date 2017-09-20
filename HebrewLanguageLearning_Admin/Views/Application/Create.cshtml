@@ -51,7 +51,69 @@
 
                     <hr>
                     <div id="Application_Data">
-                        @{Html.RenderPartial("_HLL_Application_Data_PartialView", Model);}
+                        <div class="block-inner">
+                            <div class="block-inner">
+                                <h6 class="heading-hr">
+                                    <i class="icon-spinner7"></i> Hebrew Application Data <small class="display-block">All Application Data about the Language Learning</small>
+                                </h6>
+                            </div>
+
+                            @for (int i = 0; i < Convert.ToInt32(Model.DataCounter); i++)
+                            {
+                                var j = i + 1;
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Hebrew Application-@j:</label>
+                                            @Html.EditorFor(model => model.AppSentenceDynamicTextBox[i], new { htmlAttributes = new { @id = "AppSentenceDynamicTextBox" + i, @class = "form-control", @placeholder = "Hebrew Application - " + j } })
+                                            @Html.ValidationMessageFor(model => model.AppSentenceDynamicTextBox[i], "", new { @class = "text-danger" })
+                                            <label id="AppSentenceDynamicTextBoxErrorMessage" class="text-danger" style="display:none;">Please Enter At least one definition</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Picture/Video @j:</label>
+
+                                            <div class="controls imgParent">
+                                                @Html.TextBoxFor(p => p.ImgVdofile[i], null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = @j })
+                                                <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
+                                                @Html.ValidationMessageFor(n => n.ImgVdofile[i], null, new { @class = "text_danger" })
+                                                @*@Html.HiddenFor(h => h.VideoUrl[i], new { name = "VideoUrl0", id = "VideoUrl"+i, @class = "video_url" })*@
+                                                <div class="col-md-2 output" id="@("output" + j)"></div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Sound @j:</label>
+
+                                            <div class="controls imgParent">
+
+                                                @Html.TextBoxFor(p => p.Soundfile[i], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", id = @j })
+                                                <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
+                                                @Html.ValidationMessageFor(n => n.Soundfile[i], null, new { @class = "text_danger", @style = "color: red !important;" })
+                                                @Html.HiddenFor(h => h.SoundUrl[i], new { name = "SoundUrl0", id = "SoundUrl" + i, @class = "sound_url" })
+                                                <div class="col-md-2 output" id="@("outputMultiple" + j)"></div>
+                                                <label id="fileUploaderErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Upload Sound file in MP3 format</label>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Correct Answer-@j:</label>
+                                            <br />
+                                            <a data-toggle="modal" class="btn btn-success" role="button" href="#form_modal_Definition" onclick="SetCorrectAnswer(@j)">  Edit</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            }
+                            <div class="form-group">
+                                <div class="" id="TextBoxContainer">
+                                </div>
+                            </div>
+                            <input type="button" value="+ Add Hebrew Application" onclick="AddTextBox()" class="btn btn-info">
+                        </div>
+                        @*@{Html.RenderPartial("_HLL_Application_Data_PartialView", Model);}*@
                     </div>
 
                 </div>
@@ -65,7 +127,7 @@
                 </div>
             </div>
         </Div>
-                            }
+    }
 
 </div>
 <div>
@@ -85,27 +147,27 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-       
+
         var url = "";
         if (!url) url = window.location.href;
         var pathname = new URL(url).pathname;
         var SplitData = pathname.split('/');
         var LessonId = SplitData[SplitData.length - 1];
-        if (LessonId % 1 == 0)
-        {
+        if (LessonId % 1 == 0) {
             var _that = $('#LessonId');
-            $('.icon - pencil3').val("Edit Application");
+            $('.page-content-inner').find('h2').html('Edit Application');
+            $('.panel-heading').find('h6').html('<i class="icon-pencil3"></i>Edit Application');
             _that.val(LessonId);
-            _that.attr('disabled', 'disabled');
+            //_that.attr('disabled', 'disabled');
+            _that.css('pointer-events', 'none');
             getDetail(LessonId, '../GetDataForm');
         }
-        else
-        { }
+        else { }
 
 
     });
 
-    var textboxId = 5; var textboxName = 4;
+    var textboxId = 0; var textboxName = -1;
 
     function StartValidation() {
         var AppSentenceDynamicTextBoxData = $('#AppSentenceDynamicTextBox').val(); $('#AppSentenceDynamicTextBoxErrorMessage').hide();
@@ -126,28 +188,42 @@
         return "";
 
     }
+
     function GetDynamicTextBox(value) {
-        var div = $("<div class='row'><div class='col-md-3'>" +
-                           "<label>Hebrew Application-" + textboxId + ":</label>" +
-                           "<input class='form-control text-box single-line' id='AppSentenceDynamicTextBox' name='AppSentenceDynamicTextBox[" + textboxName + "]' placeholder='Hebrew Application - " + textboxId + "' type='text' value=''>" +
-                           "<span class='field-validation-valid text-danger' data-valmsg-for='AppSentenceDynamicTextBox[0]' data-valmsg-replace='true'></span>" +
-                           "<label id='AppSentenceDynamicTextBoxErrorMessage' class='text-danger' style='display:none;'>Please Enter At least one definition</label>    </div>" +
-                           "<div class='col-md-3'><label>Picture/Video " + textboxId + ":</label><div class='controls imgParent'>" +
-                           "<input id='SoundUrl' name='ApplicationId' type='hidden' value=''>" +
-                           "<input class='input-file fileUploadImgAndVideo' data-val='false' id='" + textboxId + "' name='ApplicationId' type='file' value=''>" +
-                           "<span class='fileupload'><span class='icon-upload2'></span>Choose File</span></div>   </div>" +
-                           "<div class='col-md-3'><label>Sound " + textboxId + ":</label>" +
-                           "<div class='controls imgParent'>" +
-                           "<input id='SoundUrl' name='ApplicationId' type='hidden' value=''>" +
-                           "<input class='input-file' data-val='false' id='Soundfile' name='ApplicationId' type='file' value=''>" +
-                           "<span class='fileupload'><span class='icon-upload2'></span>Choose File</span>  </div></div>" +
-                           "<div class='col-md-3'><label>Correct Answer-" + textboxId + ":</label> <br>" +
-                           "<a data-toggle='modal' class='btn btn-success' role='button' href='#form_modal_Definition' onclick='SetCorrectAnswer(" + textboxId + ")'>  Edit</a> </div>");
+
+        var div = $("<div class='form-group'> <div class='row'> <div class='col-md-3'> <label>Hebrew Application-" + textboxId + ":</label>" +
+       "<input class='form-control text-box single-line' id='AppSentenceDynamicTextBox3' name='AppSentenceDynamicTextBox[" + textboxName + "]' placeholder='Hebrew Application - " + textboxId + "' type='text' value=''>" +
+       "<span class='field-validation-valid text-danger' data-valmsg-for='AppSentenceDynamicTextBox[" + textboxName + "]' data-valmsg-replace='true'></span>" +
+       "<label id='AppSentenceDynamicTextBoxErrorMessage' class='text-danger' style='display:none;'>Please Enter At least one definition</label> </div>" +
+       "<div class='col-md-3'> <label>Picture/Video " + textboxId + ":</label> <div class='controls imgParent'>" +
+       "<input class='input-file fileUploadImgAndVideo' data-val='false' id='" + textboxId + "' name='ImgVdofile[" + textboxName + "]' type='file' value=''>" +
+       "<span class='fileupload'><span class='icon-upload2'></span>Choose File</span>" +
+       "<span class='field-validation-valid text_danger' data-valmsg-for='ImgUrl[" + textboxName + "]' data-valmsg-replace='true'></span>" +
+       "<input id='VideoUrl3' name='VideoUrl[3]' type='hidden' value=''> <div class='col-md-2 output' id='output" + textboxId + "'></div>" +
+       "</div></div> <div class='col-md-3'> <label>Sound " + textboxId + ":</label> <div class='controls imgParent'>" +
+
+        "<input class='input-file SoundfileMultiple' data-val='false' id='" + textboxId + "' name='Soundfile[" + textboxName + "]' type='file' value=''>" +
+        "<span class='fileupload'><span class='icon-upload2'></span>Choose File</span>" +
+        "<span class='field-validation-valid text_danger' data-valmsg-for='Soundfile' data-valmsg-replace='true' style='color: red !important;'></span>" +
+        "<input id='SoundUrl" + textboxId + "' name='SoundUrl[" + textboxName + "]' type='hidden' value=''>" +
+        "<div class='col-md-2 output' id='outputMultiple" + textboxId + "'></div>" +
+        "<label id='fileUploaderErrorMessage' class='text-danger' style='display:none;color:red;margin-top: 30px;'>Please Upload Sound file in MP3 format</label>     </div>   </div>" +
+        "<div class='col-md-3'><label>Correct Answer-" + textboxId + ":</label> <br>" +
+         "<a data-toggle='modal' class='btn btn-success' role='button' href='#form_modal_Definition' onclick='SetCorrectAnswer(" + textboxId + ")'>  Edit</a> </div> </div> </div>");
         textboxName++;
         textboxId++;
+
         return div;
     }
+
+
     function AddTextBox() {
+        if (textboxId == 0) {
+            $('#Application_Data .form-group').each(function (i, v) {
+                // console.log("P>>>" + i, v);
+                textboxId++; textboxName++;
+            });
+        }
         if (textboxId <= 15) {
             var div = GetDynamicTextBox("");
             $("#TextBoxContainer").append(div);
@@ -163,7 +239,7 @@
         }
     });
     var SetCorrectAnswer = function (CorrectAnswerID) {
-      
+
         var ddlLessonId = $('#LessonId').val();
         if (isValid()) {
             $('#ModalDiv').html("<div id='form_modal_Definition' class='modal fade' tabindex='-1' role='dialog'></div>");
@@ -171,7 +247,7 @@
         }
     }
     var SaveFromDataCorrectAnswer = (function () {
-     
+
         var CorrectAnswerID = $('#PopUp_CorrectAnswerID').val();
         var LessonId = $('#LessonId').val();
         $.ajax({
@@ -179,7 +255,7 @@
             url: '@Url.Action("CreateHebrewAppData", "Application")',
             data: $("#CreateHebrewAppData").serialize(),
             success: function (data) {
-                window.location = '/Application/Create'
+                window.location = '/Application/Create/' + LessonId + ''
             }, err: function (data) { console.log("Server Is Not Respose" + data); }
         });
     });
@@ -208,7 +284,7 @@
         return true;
 
     }
-    var getDetail = function (x,baseUrl) {
+    var getDetail = function (x, baseUrl) {
         $.ajax({ url: baseUrl, method: 'post', data: { LessonId: x, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
             $('#Application_Data').html(res);
             checker();
@@ -230,7 +306,7 @@
 
     var setImagesOnApplicationDataView = function (txtId, imgValue) {
         var h = "";
-        if (typeof imgValue != 'undefined') {
+        if (typeof imgValue != 'undefined' && imgValue != "") {
             switch (imgValue) {
 
                 case "0":
@@ -255,7 +331,7 @@
     }
     // 09-11-2017
     function SubmitButtonOnclick() {
-      
+
         var formElement = document.querySelector("#CreateHebrewAppDataPartial");
         var formData = new FormData(formElement);
         var xhr = new XMLHttpRequest();
@@ -285,4 +361,4 @@
 
     }
 
-    </script>
+</script>

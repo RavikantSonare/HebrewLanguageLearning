@@ -17,7 +17,7 @@ $(document).ready(function () {
     
     
    
-
+    // Old Code for Image and Video File
     if (window.File && window.FileList && window.FileReader) {
         // alert("Your browser doesn't support to File API6")
         $("#fileToUpload").on("change", function (e) {
@@ -55,7 +55,7 @@ $(document).ready(function () {
             }
         });
     } else { alert("Your browser doesn't support to File API") }
-
+    // Old Code for Mp3 File
     if (window.File && window.FileList && window.FileReader) {
         $("#Soundfile").on("change", function (e) {
             // alert("Your browser doesn't support to File API")
@@ -65,7 +65,6 @@ $(document).ready(function () {
                 if (ext != '') {
                     $("#output").empty();
                     $("#fileToUpload").val("");
-
                     $('#headerdiv').removeClass("btn-success").removeClass("btn-info").addClass("btn-danger");
                     $('#modeltitle').html("Important Message !!")
                     $('#modelMessage').html("Please Select Only Audio file like MP3")

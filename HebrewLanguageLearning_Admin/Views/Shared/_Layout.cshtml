@@ -278,7 +278,7 @@
                 <a href="charts.html"><span>Language Learning</span> <i class="icon-bars"></i></a>
                 <ul>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Grammar"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Grammar Topics List", "Index", "Grammar")</li>
-                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Grammar"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Add Grammar Topics", "Create", "Grammar")</li>
+                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Grammar"  && ViewContext.RouteData.Values["Action"].ToString() == "Create"? "active" : "")">@Html.ActionLink("Add Grammar Topics", "Create", "Grammar")</li>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Application"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Application List", "Index", "Application")</li>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Application"  && ViewContext.RouteData.Values["Action"].ToString() == "Create"? "active" : "")">@Html.ActionLink("Add Application", "Create", "Application")</li>
                 </ul>

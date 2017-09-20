@@ -6,10 +6,10 @@ using System.Web;
 
 namespace HebrewLanguageLearning_Admin.Models
 {
-    public class HLL_ApplicationModel: HLL_CommonField
+    public class HLL_ApplicationModel : HLL_CommonField
     {
         public string ApplicationId { get; set; }
-        [Required(ErrorMessage = "Please Select Lesson"), Range(1, 50,ErrorMessage = "Please Select Lesson")]
+        [Required(ErrorMessage = "Please Select Lesson"), Range(1, 50, ErrorMessage = "Please Select Lesson")]
         public string LessonId { get; set; }
         public string Title { get; set; }
 
@@ -23,8 +23,9 @@ namespace HebrewLanguageLearning_Admin.Models
         public string[] ImgUrl { get; set; }
         public string[] VideoUrl { get; set; }
 
-       
+
         public HttpPostedFileBase[] Soundfile { get; set; }
         public string[] SoundUrl { get; set; }
+        public int DataCounter { get; set; }
     }
 }
