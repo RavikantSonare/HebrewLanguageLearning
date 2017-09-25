@@ -90,8 +90,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                db.HLL_DictionaryEntries.Add(DataModel);
                db.SaveChanges();
-
-              
                 return JavaScript("window.location = '/Definition/DefinitionList'");
             }
 

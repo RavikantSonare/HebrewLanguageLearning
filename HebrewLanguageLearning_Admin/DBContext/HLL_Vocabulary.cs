@@ -15,7 +15,8 @@ namespace HebrewLanguageLearning_Admin.DBContext
     public partial class HLL_Vocabulary
     {
         public string VocabularyId { get; set; }
-        public string Title { get; set; }
+        public string LessonId { get; set; }
+        public string DictionaryEntriesId { get; set; }
         public string Description { get; set; }
         public Nullable<bool> ActiveStatus { get; set; }
         public Nullable<bool> IsActive { get; set; }

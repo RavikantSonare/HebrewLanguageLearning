@@ -322,7 +322,8 @@
             <PropertyRef Name="VocabularyId" />
           </Key>
           <Property Name="VocabularyId" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="LessonId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DictionaryEntriesId" Type="nvarchar" MaxLength="250" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="ActiveStatus" Type="bit" />
           <Property Name="IsActive" Type="bit" />
@@ -462,24 +463,8 @@
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="HLL_Vocabulary">
-          <Key>
-            <PropertyRef Name="VocabularyId" />
-          </Key>
-          <Property Name="VocabularyId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ActiveStatus" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityContainer Name="HLLDBContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="HLL_Topics" EntityType="Self.HLL_Topics" />
-          <EntitySet Name="HLL_Vocabulary" EntityType="Self.HLL_Vocabulary" />
           <EntitySet Name="C__MigrationHistory" EntityType="Model.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Model.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Model.AspNetUserClaim" />
@@ -514,6 +499,7 @@
           <EntitySet Name="HLL_Media_Pictures" EntityType="Model.HLL_Media_Pictures" />
           <EntitySet Name="HLL_HebrewGrammarData" EntityType="Model.HLL_HebrewGrammarData" />
           <EntitySet Name="HLL_Grammar" EntityType="Model.HLL_Grammar" />
+          <EntitySet Name="HLL_Vocabulary" EntityType="Model.HLL_Vocabulary" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -843,6 +829,22 @@
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="HLL_Vocabulary">
+          <Key>
+            <PropertyRef Name="VocabularyId" />
+          </Key>
+          <Property Name="VocabularyId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LessonId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DictionaryEntriesId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -853,22 +855,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model.HLL_Topics)">
         <MappingFragment StoreEntitySet="HLL_Topics">
           <ScalarProperty Name="TopicId" ColumnName="TopicId" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="HLL_Vocabulary">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.HLL_Vocabulary)">
-        <MappingFragment StoreEntitySet="HLL_Vocabulary">
-          <ScalarProperty Name="VocabularyId" ColumnName="VocabularyId" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
@@ -1195,6 +1181,23 @@
                 <ScalarProperty Name="HebrewGrammar" ColumnName="HebrewGrammar" />
                 <ScalarProperty Name="EnglishGrammar" ColumnName="EnglishGrammar" />
                 <ScalarProperty Name="GrammarId" ColumnName="GrammarId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_Vocabulary">
+            <EntityTypeMapping TypeName="Model.HLL_Vocabulary">
+              <MappingFragment StoreEntitySet="HLL_Vocabulary">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DictionaryEntriesId" ColumnName="DictionaryEntriesId" />
+                <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+                <ScalarProperty Name="VocabularyId" ColumnName="VocabularyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -28,7 +28,6 @@ namespace HebrewLanguageLearning_Admin.DBContext
         }
     
         public virtual DbSet<HLL_Topics> HLL_Topics { get; set; }
-        public virtual DbSet<HLL_Vocabulary> HLL_Vocabulary { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
@@ -47,6 +46,7 @@ namespace HebrewLanguageLearning_Admin.DBContext
         public virtual DbSet<HLL_Media_Pictures> HLL_Media_Pictures { get; set; }
         public virtual DbSet<HLL_HebrewGrammarData> HLL_HebrewGrammarData { get; set; }
         public virtual DbSet<HLL_Grammar> HLL_Grammar { get; set; }
+        public virtual DbSet<HLL_Vocabulary> HLL_Vocabulary { get; set; }
     
         public virtual ObjectResult<get_row_id> get_row_id(string t_name, ObjectParameter row_id)
         {

@@ -5,62 +5,84 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="page-header">
-    <div class="page-title">
-        <h3>Vocabulary List <small>List of saved vocabulary</small></h3>
-    </div>
-
-    <div id="reportrange" class="range">
-        <div class="visible-xs header-element-toggle">
-            <a class="btn btn-primary btn-icon"><i class="icon-calendar"></i></a>
-        </div>
-        <div class="date-range"><i>2</i> <b><i>Jun</i> <i>2017</i></b><em> - </em><i>1</i> <b><i>Jul</i> <i>2017</i></b></div>
-        <span class="label label-danger">9</span>
-    </div>
-</div>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<div class="panel panel-default">
-    <div class="panel-heading"><h6 class="panel-title"><i class="icon-table"></i> Vocabulary List</h6></div>
-    <div class="datatable">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Title
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                    <th>
-                        ActiveStatus
-                    </th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ActiveStatus)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id=item.VocabularyId }) |
-                            @Html.ActionLink("Details", "Details", new { id=item.VocabularyId }) |
-                            @Html.ActionLink("Delete", "Delete", new { id=item.VocabularyId })
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LessonId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DictionaryEntriesId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActiveStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LessonId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DictionaryEntriesId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActiveStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDelete)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.VocabularyId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.VocabularyId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.VocabularyId })
+        </td>
+    </tr>
+}
+
+</table>

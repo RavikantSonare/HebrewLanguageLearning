@@ -136,18 +136,14 @@
 <!-- Form modal -->
 <div id="ModalDiv"></div>
 <!-- /form modal -->
-@*<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>*@
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
-
-
 <script type="text/javascript">
     $(document).ready(function () {
-
+        $('#LessonId').val("0");
         var url = "";
         if (!url) url = window.location.href;
         var pathname = new URL(url).pathname;
@@ -351,8 +347,6 @@
         else {
             alert("Error Uploading File");
         }
-
-
 
     }
 

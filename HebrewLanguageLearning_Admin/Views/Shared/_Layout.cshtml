@@ -287,8 +287,8 @@
 
             <li>
                 <a href="#"><span>Data Management</span> <i class="icon-copy"></i></a>
-                <ul>
-                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Sound"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Sound", "Index", "Sound")<span class="label label-danger">New</span></li>
+                <ul>@*@Html.ActionLink("Sound", "Index", "Sound", new { })*@
+                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Sound"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")"> <a href='@Url.Action("Index", "MediaSound")'>Sound<span class='label label-danger'>New</span></a></li>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Definition"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Definition", "Index", "Definition")</li>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Pictures"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Pictures/Video", "Index", "Pictures")</li>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "SemanticDomain"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Semantic Domain", "Index", "SemanticDomain")</li>
@@ -301,9 +301,8 @@
                     <li>
                         <a href="#"><span>Lessons</span> <i class="icon-grid"></i></a>
                         <ul>
-                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "DictionaryEntries"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Vocabulary", "Index", "DictionaryEntries")</li>
-                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "DictionaryEntries"  && ViewContext.RouteData.Values["Action"].ToString() == "Create"? "active" : "")">@Html.ActionLink("Grammar", "Create", "DictionaryEntries")</li>
-                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Lessons"  && ViewContext.RouteData.Values["Action"].ToString() == "Create"? "active" : "")">@Html.ActionLink("Application", "Create", "Application")</li>
+                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Vocabulary"  && ViewContext.RouteData.Values["Action"].ToString() == "Create"? "active" : "")">@Html.ActionLink("Vocabulary", "Create", "Vocabulary")</li>
+                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Grammar"  && ViewContext.RouteData.Values["Action"].ToString() == "GrammarSelector"? "active" : "")">@Html.ActionLink("Grammar", "GrammarSelector", "Grammar")</li>
 
                         </ul>
                     </li>
@@ -362,12 +361,10 @@
             </div>
         </div>
     </div>
-</div>
-
-
+</div>  
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+@*<script src="~/Scripts/js/selectDragAndDrop.js"></script>*@
 @RenderSection("scripts", required: false)
 </body>
-
 </html>

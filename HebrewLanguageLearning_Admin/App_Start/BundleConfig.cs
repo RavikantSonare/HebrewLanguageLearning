@@ -23,8 +23,9 @@ namespace HebrewLanguageLearning_Admin
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/js/plugins/interface/datatables.min.js",
-                       "~/Scripts/js/plugins/forms/select2.min.js",
-                      "~/Scripts/js/application.js"));
+                      "~/Scripts/js/plugins/forms/select2.min.js",
+                      "~/Scripts/js/application.js",
+                      "~/Scripts/js/selectDragAndDrop.js"));
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

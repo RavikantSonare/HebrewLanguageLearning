@@ -100,11 +100,13 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
         ,new SelectListItem{ Value = "48", Text ="Lesson-48" }
         ,new SelectListItem{ Value = "49", Text ="Lesson-49" }
         ,new SelectListItem{ Value = "50", Text ="Lesson-50" }
-     
+
         };
 
 
         public static Dictionary<int, string> fileSavedLocation = new Dictionary<int, string> { { 0, "Sounds" }, { 1, "Pictures" }, { 2, "Videos" } };
 
+        public static List<SelectListItem> _GrammarPointList = new List<SelectListItem>() { new SelectListItem { Value = "0", Text ="Choose Phases" },
+        new SelectListItem{Value = "1", Text ="All Phases" },new SelectListItem{ Value = "2", Text ="Assoc. & Act." },new SelectListItem{ Value = "3",Text ="Assoc. & Pass" },new SelectListItem {Value="4",Text="Pass & Act."  } };
     }
 }

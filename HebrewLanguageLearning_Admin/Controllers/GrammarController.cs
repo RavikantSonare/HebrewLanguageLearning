@@ -107,7 +107,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Grammar, HLL_GrammarModel>(); });
                 _ObjDataModel = AutoMapper.Mapper.Map<HLL_Grammar, HLL_GrammarModel>(objGrammar);
                 _ObjDataModel = set_ObjDataModelData(_ObjDataModel);
-                 int i = 0, txtlenght = objGrammarDataList.Count() > 4 ? objGrammarDataList.Count() : 4;
+                int i = 0, txtlenght = objGrammarDataList.Count() > 4 ? objGrammarDataList.Count() : 4;
                 _ObjDataModel.ExercisesNumber = Convert.ToString(txtlenght);
                 _ObjDataModel.VideoUrl = new string[15];
                 _ObjDataModel.ImgUrl = new string[15];
@@ -168,7 +168,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         var VideoDataList = db.HLL_Media_Video.Where(x => x.MasterTableId == Item.HebrewGrammarDataId).FirstOrDefault();
                         if (VideoDataList != null) { DataModel.VideoUrl[i] = "2"; }
                     }
-                    
+
                     i++;
                 }
 
@@ -474,6 +474,31 @@ namespace HebrewLanguageLearning_Admin.Controllers
             base.Dispose(disposing);
         }
 
-     
+
+        public async Task<ActionResult> GrammarSelector()
+        {
+            List<SelectListItem> GrammarTopicsAvailablelist = new List<SelectListItem>();
+            var GrammarList = await db.HLL_Grammar.Where(x => x.IsDelete == false).ToListAsync();
+            ViewData["GrammarTopicsinLesson"]  = new List<SelectListItem>();
+            foreach (var Item in GrammarList)
+            {
+                GrammarTopicsAvailablelist.Add(new SelectListItem() { Value = Item.GrammarId, Text = Item.HebrewGrammar + " | " + Item.EnglishGrammar });
+            }
+
+
+            ViewData["GrammarTopicsAvailable"] = GrammarTopicsAvailablelist;
+            return View();
+        }
+
+        public async Task<ActionResult> setDropDwonList(string LessonId)
+        {
+            var objApplication = db.HLL_Application.Where(x => x.IsDelete == false && x.LessonId == LessonId).FirstOrDefault();
+            List<HLL_HebrewApplicationData> objApplicationDataList = new List<HLL_HebrewApplicationData>();
+            if (objApplication != null)
+            {
+                objApplicationDataList = db.HLL_HebrewApplicationData.Where(x => x.IsDelete == false && x.MasterTableId == objApplication.ApplicationId).ToList();
+            }
+            return Json(objApplicationDataList, JsonRequestBehavior.AllowGet);
+        }
     }
 }
