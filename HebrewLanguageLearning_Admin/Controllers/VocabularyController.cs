@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HebrewLanguageLearning_Admin.DBContext;
+using HebrewLanguageLearning_Admin.Models;
+using HebrewLanguageLearning_Admin.GenericClasses;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
@@ -15,6 +17,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
     {
         private HLLDBContext db = new HLLDBContext();
         private List<HLL_DictionaryEntries> VocabularyInLessonList = new List<HLL_DictionaryEntries>();
+        private List<HLL_Vocabulary> _ObjHLL_Vocabulary = new List<HLL_Vocabulary>();
         // GET: Vocabulary
         public async Task<ActionResult> Index()
         {
@@ -57,19 +60,55 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // POST: Vocabulary/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        HLL_VocabularyModel _ObjHLL_VocabularyModel = new HLL_VocabularyModel();
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "VocabularyId,LessonId,DictionaryEntriesId")] HLL_Vocabulary hLL_Vocabulary)
         {
+            _ObjHLL_VocabularyModel = new HLL_VocabularyModel();
             if (ModelState.IsValid)
             {
-                db.HLL_Vocabulary.Add(hLL_Vocabulary);
-                await db.SaveChangesAsync();
+
+                foreach (var item in VocabularyInLessonList)
+                {
+
+                    _ObjHLL_VocabularyModel.VocabularyId = EntityConfig.getnewid("HLL_Vocabulary");
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_VocabularyModel, HLL_Vocabulary>(); });
+                    var vocabularyTable = AutoMapper.Mapper.Map<HLL_VocabularyModel, HLL_Vocabulary>(_ObjHLL_VocabularyModel);
+                    db.HLL_Vocabulary.Add(vocabularyTable);
+                    await db.SaveChangesAsync();
+                }
                 return RedirectToAction("Index");
             }
 
             return View(hLL_Vocabulary);
         }
+
+        public async void AddRemoveVocabularyInLesson(int isAdd, HLL_Vocabulary hLL_Vocabulary)
+        {
+            _ObjHLL_VocabularyModel = new HLL_VocabularyModel();
+            if (isAdd == 1)
+            {
+
+                _ObjHLL_VocabularyModel.VocabularyId = EntityConfig.getnewid("HLL_Vocabulary");
+                _ObjHLL_VocabularyModel.LessonId = hLL_Vocabulary.LessonId;
+                _ObjHLL_VocabularyModel.DictionaryEntriesId = hLL_Vocabulary.DictionaryEntriesId;
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_VocabularyModel, HLL_Vocabulary>(); });
+                var vocabularyTable = AutoMapper.Mapper.Map<HLL_VocabularyModel, HLL_Vocabulary>(_ObjHLL_VocabularyModel);
+                db.HLL_Vocabulary.Add(vocabularyTable);
+                await db.SaveChangesAsync();
+            }
+            if (isAdd == 0)
+            {
+                hLL_Vocabulary.IsDelete = true;
+                hLL_Vocabulary.UpdatedDate = _ObjHLL_VocabularyModel.UpdatedDate;
+                db.Entry(hLL_Vocabulary).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+
+            }
+
+        }
+
 
         // GET: Vocabulary/Edit/5
         public async Task<ActionResult> Edit(string id)
@@ -85,6 +124,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             }
             return View(hLL_Vocabulary);
         }
+
 
         // POST: Vocabulary/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -103,9 +143,10 @@ namespace HebrewLanguageLearning_Admin.Controllers
         }
         public async Task<ActionResult> setDropDwonList(string LessonId)
         {
-            var objVocabularyList = db.HLL_Vocabulary.Where(x => x.IsDelete == false && x.LessonId == LessonId).Select(z=>z.DictionaryEntriesId).ToList();
+            _ObjHLL_Vocabulary = db.HLL_Vocabulary.Where(x => x.IsDelete == false && x.LessonId == LessonId).ToList();
+            var objVocabularyList = _ObjHLL_Vocabulary.Select(z => z.DictionaryEntriesId).ToList();
             VocabularyInLessonList = db.HLL_DictionaryEntries.Where(z => objVocabularyList.Contains(z.DictionaryEntriesId)).ToList();
-             
+
             return Json(objVocabularyList, JsonRequestBehavior.AllowGet);
         }
 

@@ -28,3 +28,12 @@ var isValid = function () {
 
 }
 
+var getDetail = function (x, baseUrl) {
+        $.ajax({ url: baseUrl, method: 'post', data: { LessonId: x, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
+            $('#rightSelector').html('');
+            $.each(res, function (i, v) {
+                $('#rightSelector').append('<option value="' + v["HebrewApplicationData"] + '">' + v["HebrewApplicationData"] + '</option>')
+            });
+        });
+    };
+
