@@ -84,12 +84,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View(hLL_Vocabulary);
         }
 
-        public async void AddRemoveVocabularyInLesson(int isAdd, HLL_Vocabulary hLL_Vocabulary)
+        public async Task<string> AddRemoveDataInLesson(int isAdd, HLL_VocabularyModel hLL_Vocabulary)
         {
+            string result = "Your Data is successfully Saved";
             _ObjHLL_VocabularyModel = new HLL_VocabularyModel();
             if (isAdd == 1)
             {
-
                 _ObjHLL_VocabularyModel.VocabularyId = EntityConfig.getnewid("HLL_Vocabulary");
                 _ObjHLL_VocabularyModel.LessonId = hLL_Vocabulary.LessonId;
                 _ObjHLL_VocabularyModel.DictionaryEntriesId = hLL_Vocabulary.DictionaryEntriesId;
@@ -100,13 +100,18 @@ namespace HebrewLanguageLearning_Admin.Controllers
             }
             if (isAdd == 0)
             {
-                hLL_Vocabulary.IsDelete = true;
-                hLL_Vocabulary.UpdatedDate = _ObjHLL_VocabularyModel.UpdatedDate;
-                db.Entry(hLL_Vocabulary).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                HLL_Vocabulary hLL_VocabularyLocal = await db.HLL_Vocabulary.Where(z => z.DictionaryEntriesId == hLL_Vocabulary.DictionaryEntriesId && z.LessonId == hLL_Vocabulary.LessonId).FirstOrDefaultAsync();
+                if (hLL_VocabularyLocal != null)
+                {
+                    db.HLL_Vocabulary.Remove(hLL_VocabularyLocal);
+                    await db.SaveChangesAsync();
+                    result = "Your Data is successfully delete";
+                }
+                else { result = "Your Data is not found"; }
 
             }
 
+            return result;
         }
 
 
@@ -147,7 +152,14 @@ namespace HebrewLanguageLearning_Admin.Controllers
             var objVocabularyList = _ObjHLL_Vocabulary.Select(z => z.DictionaryEntriesId).ToList();
             VocabularyInLessonList = db.HLL_DictionaryEntries.Where(z => objVocabularyList.Contains(z.DictionaryEntriesId)).ToList();
 
-            return Json(objVocabularyList, JsonRequestBehavior.AllowGet);
+            ViewBag.InLessonList = db.HLL_DictionaryEntries.Where(z => objVocabularyList.Contains(z.DictionaryEntriesId)).Select(x =>
+                                 new SelectListItem()
+                                 {
+                                     Value = x.DictionaryEntriesId,
+                                     Text = x.DicStrongNo + ", " + x.DicHebrew + ", " + x.DicEnglish
+                                 }).ToList();
+
+            return Json(ViewBag.InLessonList, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Vocabulary/Delete/5

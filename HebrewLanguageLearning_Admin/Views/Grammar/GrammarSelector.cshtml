@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Choose Lesson:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, SI._PurposeforLessonList, new { @class = "form-control", onchange = @"getDetail(this.value,'setDropDwonList')" })
+                                    @Html.DropDownListFor(x => x.GrammarId, SI._PurposeforLessonList, new { @id = "LessonId", @class = "form-control", onchange = @"getDetail(this.value,'setDropDwonList')" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
@@ -42,7 +42,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Grammar Topics Available:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, (IEnumerable<SelectListItem>)ViewData["GrammarTopicsAvailable"], string.Empty, new { @id = "leftSelector", @class = "form-control", size = "18", onchange = @"getDetail1(this.value,'setDropDwonList')" })
+                                    @Html.DropDownListFor(x => x.GrammarId, (IEnumerable<SelectListItem>)ViewData["GrammarTopicsAvailable"], string.Empty, new { @id = "leftSelector", @class = "form-control", size = "18" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <label>Grammar Topics in Lesson:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, (IEnumerable<SelectListItem>)ViewData["GrammarTopicsinLesson"], string.Empty, new { @id = "rightSelector", @class = "form-control", size = "18" })
+                                    @Html.DropDownListFor(x => x.GrammarId, (IEnumerable<SelectListItem>)ViewData["GrammarTopicsinLesson"], string.Empty, new { @id = "rightSelector", @class = "form-control", size = "18", onchange = @"getLessonGrammarDetail(this.value)" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
@@ -67,7 +67,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <label>Grammar Point 1:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint1", @class = "form-control" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
@@ -75,15 +75,15 @@
 
                                 <div class="col-md-3">
                                     <label>Grammar Point 2:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @class = "form-control"})
+                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint2", @class = "form-control" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
                                 </div>
-                                
+
                                 <div class="col-md-3">
                                     <label>Grammar Point 3:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint3", @class = "form-control" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
@@ -91,18 +91,18 @@
 
                                 <div class="col-md-3">
                                     <label>Grammar Point 4:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint4", @class = "form-control" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
                                 </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                     <div class="form-group panel-body">
                         <div class="form-actions text-right">
-                            <input type="reset" value="Cancel" class="btn btn-danger">
-                            <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">
+                            @*<input type="reset" value="Cancel" class="btn btn-danger">
+                            <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">*@
                         </div>
                     </div>
                 </div>
@@ -113,16 +113,41 @@
         @Html.ActionLink("Back to List", "Index")
     </div>
 }
+
+
 <script>
+    var leftSelectorOptions = [];
     var getDetail = function (x, baseUrl) {
-
+        grammarTopicsInLesson()
         $.ajax({ url: baseUrl, method: 'post', data: { LessonId: x, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
-            $('#leftSelector').html('');
-            $.each(res, function (i, v) {
-                $('#leftSelector').append('<option value="' + v["HebrewApplicationData"] + '">' + v["HebrewApplicationData"] + '</option>')
-              
-            });
+            $('#rightSelector').html('');
 
+            $.each(res, function (i, v) {
+                $('#rightSelector').append('<option value="' + v["Value"] + '">' + v["Text"] + '</option>')
+                $("#leftSelector option[value='" + v["Value"] + "']").remove();
+            });
+        });
+    };
+    var grammarTopicsInLesson = function () {
+        if (typeof leftSelectorOptions == 'undefined' || leftSelectorOptions.length == 0) {
+            // leftSelectorOptions = $('#leftSelector option').val();
+            $("#leftSelector option").each(function () {
+                leftSelectorOptions.push({ "Value": $(this).val(), "Text": $(this).text() });
+            });
+        }
+        $('#leftSelector').html('');
+        $.each(leftSelectorOptions, function (i, v) {
+            $('#leftSelector').append('<option value="' + v["Value"] + '">' + v["Text"] + '</option>')
+        });
+    };
+    var getLessonGrammarDetail = function (value) {
+
+        $.ajax({ url: 'setLessonGrammarDropDwonList', method: 'post', data: { LessonId: $('#LessonId').val(), grammarId: value, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
+            console.log("helloM");
+            console.log("66" > JSON.stringify(res));
+            $('#GrammarPoint1').val(res['GrammarPoint1']); $('#GrammarPoint2').val(res['GrammarPoint2']);
+            $('#GrammarPoint3').val(res['GrammarPoint3']); $('#GrammarPoint4').val(res['GrammarPoint4']);
+        
         });
     };
 </script>

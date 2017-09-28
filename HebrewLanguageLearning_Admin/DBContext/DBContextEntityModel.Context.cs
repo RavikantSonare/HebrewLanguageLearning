@@ -47,6 +47,7 @@ namespace HebrewLanguageLearning_Admin.DBContext
         public virtual DbSet<HLL_HebrewGrammarData> HLL_HebrewGrammarData { get; set; }
         public virtual DbSet<HLL_Grammar> HLL_Grammar { get; set; }
         public virtual DbSet<HLL_Vocabulary> HLL_Vocabulary { get; set; }
+        public virtual DbSet<HLL_LessonsGrammar> HLL_LessonsGrammar { get; set; }
     
         public virtual ObjectResult<get_row_id> get_row_id(string t_name, ObjectParameter row_id)
         {

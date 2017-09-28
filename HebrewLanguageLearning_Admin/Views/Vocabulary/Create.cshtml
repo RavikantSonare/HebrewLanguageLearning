@@ -2,84 +2,102 @@
 @using HebrewLanguageLearning_Admin.GenericClasses
 
 
-    <div class="page-content-inner ">
-        <br>
-        <h2>Lessons Vocabulary</h2>
-        @using (Ajax.BeginForm("Create", "Vocabulary", new AjaxOptions { UpdateTargetId = "result", OnBegin = "return StartValidation();" }, new { enctype = "multipart/form-data", @id = "CreateHebrewAppDataPartial" }))
-        {
-            @Html.AntiForgeryToken()
-            <Div action="#" role="form">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h6 class="panel-title"><i class="icon-pencil3"></i>Add Lessons Vocabulary</h6></div>
-                    <div class="panel-body">
-                        <div class="text-danger" id="result"></div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Choose Lesson:</label>
-                                    @Html.DropDownListFor(x => x.LessonId, SI._PurposeforLessonList, new { @class = "form-control", onchange = @"getDetail(this.value,'setDropDwonList')" })
-                                    @Html.ValidationMessageFor(x => x.LessonId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
-                                    <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
+<div class="page-content-inner ">
+    <br>
+    <h2>Lessons Vocabulary</h2>
+    @using (Ajax.BeginForm("Create", "Vocabulary", new AjaxOptions { UpdateTargetId = "result", OnBegin = "return StartValidation();" }, new { enctype = "multipart/form-data", @id = "CreateHebrewAppDataPartial" }))
+    {
+        @Html.AntiForgeryToken()
+        <Div action="#" role="form">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h6 class="panel-title"><i class="icon-pencil3"></i>Add Lessons Vocabulary</h6></div>
+                <div class="panel-body">
+                    <div class="text-danger" id="result"></div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Choose Lesson:</label>
+                                @Html.DropDownListFor(x => x.LessonId, SI._PurposeforLessonList, new { @class = "form-control", onchange = @"getDetail(this.value,'setDropDwonList')" })
+                                @Html.ValidationMessageFor(x => x.LessonId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
+                                <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Import Excel File:</label>
-                                    <div class="controls imgParent">
-                                        @Html.HiddenFor(h => h.LessonId, new { name = "SoundUrl", id = "SoundUrl" })
-                                        @Html.TextBoxFor(p => p.LessonId, null, new { data_val = "false", type = "file", @class = "input-file", name = "Soundfile", id = "Soundfile" })
-                                        <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Word Bank:</label>
-                                    @Html.DropDownListFor(x => x.LessonId, (IEnumerable<SelectListItem>)ViewBag.dic_Entry, string.Empty, new { @id = "leftSelector", @class = "form-control", size = "18" })
-                                    @Html.ValidationMessageFor(x => x.LessonId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
-                                    <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
-
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="draganddropbutton">
-                                        <button type="button" class="btn btn-success btn-arrow-right" id="rightbtn">></button>
-                                        <br />
-                                        <button type="button" class="btn btn-danger btn-arrow-left" id="leftbtn"><</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <label>Vocabulary in Lesson:</label>
-                                    @Html.DropDownListFor(x => x.LessonId, (IEnumerable<SelectListItem>)ViewBag.tempList , string.Empty, new { @id = "rightSelector", @class = "form-control", size = "18" })
-                                    @Html.ValidationMessageFor(x => x.LessonId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
-                                    <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
+                            <div class="col-md-6">
+                                <label>Import Excel File:</label>
+                                <div class="controls imgParent">
+                                    @Html.HiddenFor(h => h.LessonId, new { name = "SoundUrl", id = "SoundUrl" })
+                                    @Html.TextBoxFor(p => p.LessonId, null, new { data_val = "false", type = "file", @class = "input-file", name = "Soundfile", id = "Soundfile" })
+                                    <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group panel-body">
-                        <div class="form-actions text-right">
-                            <input type="reset" value="Cancel" class="btn btn-danger">
-                            <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Word Bank:</label>
+                                @Html.DropDownListFor(x => x.LessonId, (IEnumerable<SelectListItem>)ViewBag.dic_Entry, string.Empty, new { @id = "leftSelector", @class = "form-control", size = "18" })
+                                @Html.ValidationMessageFor(x => x.LessonId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
+                                <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
+
+                            </div>
+                            <div class="col-md-1">
+                                <div class="draganddropbutton">
+                                    <button type="button" class="btn btn-success btn-arrow-right" id="rightbtn">></button>
+                                    <br />
+                                    <button type="button" class="btn btn-danger btn-arrow-left" id="leftbtn"><</button>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <label>Vocabulary in Lesson:</label>
+                                @Html.DropDownListFor(x => x.LessonId, (IEnumerable<SelectListItem>)ViewBag.tempList, string.Empty, new { @id = "rightSelector", @class = "form-control", size = "18" })
+                                @Html.ValidationMessageFor(x => x.LessonId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
+                                <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </Div>
-        }
-    </div>
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+                <div class="form-group panel-body">
+                    <div class="form-actions text-right">
+
+                        @*PerllareLinq, yeld, inmrable-iqrable-iqrator,orverride or vitual method in abstrac class*@
+                        @*premitive100 user in wcf type of serlization,POCO avoid show all data contract expretionTree and logical tree What is spring in agil model Constractor in abstac class*@
+                        @*<input type="reset" value="Cancel" class="btn btn-danger">
+                        <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">*@
+                    </div>
+                </div>
+            </div>
+        </Div>
+    }
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 
 <script>
+    var leftSelectorOptions = [];
     var getDetail = function (x, baseUrl) {
-
+        setWordBank()
         $.ajax({ url: baseUrl, method: 'post', data: { LessonId: x, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
             $('#rightSelector').html('');
+
             $.each(res, function (i, v) {
-                $('#rightSelector').append('<option value="' + v["HebrewApplicationData"] + '">' + v["HebrewApplicationData"] + '</option>')
+                $('#rightSelector').append('<option value="' + v["Value"] + '">' + v["Text"] + '</option>')
+                $("#leftSelector option[value='" + v["Value"] + "']").remove();
             });
+        });
+    };
+    var setWordBank = function () {
+        if (typeof leftSelectorOptions == 'undefined' || leftSelectorOptions.length == 0) {
+            // leftSelectorOptions = $('#leftSelector option').val();
+            $("#leftSelector option").each(function () {
+                leftSelectorOptions.push({ "Value": $(this).val(), "Text": $(this).text() });
+            });
+        }
+        $('#leftSelector').html('');
+        $.each(leftSelectorOptions, function (i, v) {
+            $('#leftSelector').append('<option value="' + v["Value"] + '">' + v["Text"] + '</option>')
         });
     };
 </script>

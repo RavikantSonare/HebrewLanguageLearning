@@ -288,9 +288,9 @@
             <li>
                 <a href="#"><span>Data Management</span> <i class="icon-copy"></i></a>
                 <ul>@*@Html.ActionLink("Sound", "Index", "Sound", new { })*@
-                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Sound"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")"> <a href='@Url.Action("Index", "MediaSound")'>Sound<span class='label label-danger'>New</span></a></li>
+                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "MediaSound"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")"> @Html.ActionLink("Sound", "Index", "MediaSound")</li> @*<a href='@Url.Action("Index", "MediaSound")'>Sound<span class='label label-danger'>New</span></a></li>*@
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Definition"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Definition", "Index", "Definition")</li>
-                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Pictures"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Pictures/Video", "Index", "Pictures")</li>
+                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "MediaPictures"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Pictures/Video", "Index", "MediaPictures")</li>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "SemanticDomain"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Semantic Domain", "Index", "SemanticDomain")</li>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Example"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Example", "Index", "Example")</li>
 

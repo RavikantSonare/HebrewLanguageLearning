@@ -197,6 +197,26 @@
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="HLL_LessonsGrammar">
+          <Key>
+            <PropertyRef Name="LessonsGrammarId" />
+          </Key>
+          <Property Name="LessonsGrammarId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="fkLessonId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="fkGrammarId" Type="nvarchar" MaxLength="250" />
+          <Property Name="GrammarPoint1" Type="int" />
+          <Property Name="GrammarPoint2" Type="int" />
+          <Property Name="GrammarPoint3" Type="int" />
+          <Property Name="GrammarPoint4" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActiveStatus" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="HLL_Media_Pictures">
           <Key>
             <PropertyRef Name="PictureId" />
@@ -419,6 +439,7 @@
           <EntitySet Name="HLL_Grammar" EntityType="Self.HLL_Grammar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_HebrewApplicationData" EntityType="Self.HLL_HebrewApplicationData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_HebrewGrammarData" EntityType="Self.HLL_HebrewGrammarData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HLL_LessonsGrammar" EntityType="Self.HLL_LessonsGrammar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Media_Pictures" EntityType="Self.HLL_Media_Pictures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Media_Sound" EntityType="Self.HLL_Media_Sound" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Media_Video" EntityType="Self.HLL_Media_Video" Schema="dbo" store:Type="Tables" />
@@ -500,6 +521,7 @@
           <EntitySet Name="HLL_HebrewGrammarData" EntityType="Model.HLL_HebrewGrammarData" />
           <EntitySet Name="HLL_Grammar" EntityType="Model.HLL_Grammar" />
           <EntitySet Name="HLL_Vocabulary" EntityType="Model.HLL_Vocabulary" />
+          <EntitySet Name="HLL_LessonsGrammar" EntityType="Model.HLL_LessonsGrammar" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -836,6 +858,26 @@
           <Property Name="VocabularyId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="LessonId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DictionaryEntriesId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_LessonsGrammar">
+          <Key>
+            <PropertyRef Name="LessonsGrammarId" />
+          </Key>
+          <Property Name="LessonsGrammarId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="fkLessonId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="fkGrammarId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="GrammarPoint1" Type="Int32" />
+          <Property Name="GrammarPoint2" Type="Int32" />
+          <Property Name="GrammarPoint3" Type="Int32" />
+          <Property Name="GrammarPoint4" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ActiveStatus" Type="Boolean" />
           <Property Name="IsActive" Type="Boolean" />
@@ -1198,6 +1240,27 @@
                 <ScalarProperty Name="DictionaryEntriesId" ColumnName="DictionaryEntriesId" />
                 <ScalarProperty Name="LessonId" ColumnName="LessonId" />
                 <ScalarProperty Name="VocabularyId" ColumnName="VocabularyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_LessonsGrammar">
+            <EntityTypeMapping TypeName="Model.HLL_LessonsGrammar">
+              <MappingFragment StoreEntitySet="HLL_LessonsGrammar">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="GrammarPoint4" ColumnName="GrammarPoint4" />
+                <ScalarProperty Name="GrammarPoint3" ColumnName="GrammarPoint3" />
+                <ScalarProperty Name="GrammarPoint2" ColumnName="GrammarPoint2" />
+                <ScalarProperty Name="GrammarPoint1" ColumnName="GrammarPoint1" />
+                <ScalarProperty Name="fkGrammarId" ColumnName="fkGrammarId" />
+                <ScalarProperty Name="fkLessonId" ColumnName="fkLessonId" />
+                <ScalarProperty Name="LessonsGrammarId" ColumnName="LessonsGrammarId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

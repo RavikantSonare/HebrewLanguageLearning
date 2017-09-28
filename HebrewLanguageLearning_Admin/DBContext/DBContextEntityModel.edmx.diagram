@@ -28,6 +28,7 @@
         <EntityTypeShape EntityType="Model.HLL_HebrewGrammarData" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model.HLL_Grammar" Width="1.5" PointX="8.375" PointY="14.75" />
         <EntityTypeShape EntityType="Model.HLL_Vocabulary" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.HLL_LessonsGrammar" Width="1.5" PointX="10.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

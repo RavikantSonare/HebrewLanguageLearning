@@ -482,6 +482,9 @@
     <Compile Include="DBContext\HLL_HebrewGrammarData.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\HLL_LessonsGrammar.cs">
+      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\HLL_Media_Pictures.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
@@ -520,6 +523,7 @@
     <Compile Include="Models\HLL_GrammarModel.cs" />
     <Compile Include="Models\HLL_HebrewApplicationDataModel.cs" />
     <Compile Include="Models\HLL_HebrewGrammarDataModel.cs" />
+    <Compile Include="Models\HLL_LessonsGrammarModel.cs" />
     <Compile Include="Models\HLL_Media_PicturesModels.cs" />
     <Compile Include="Models\HLL_Media_VideoModels.cs" />
     <Compile Include="Models\HLL_SemanticDomainModels.cs" />
@@ -777,18 +781,18 @@
     <Content Include="Views\SemanticDomain\Index.cshtml" />
     <Content Include="Views\StudentsInfo\Create.cshtml" />
     <Content Include="Views\StudentsInfo\Index.cshtml" />
-    <Content Include="Views\Sound\Create.cshtml" />
-    <Content Include="Views\Sound\Delete.cshtml" />
-    <Content Include="Views\Sound\Details.cshtml" />
-    <Content Include="Views\Sound\Edit.cshtml" />
-    <Content Include="Views\Sound\Index.cshtml" />
+    <Content Include="Views\MediaSound\Create.cshtml" />
+    <Content Include="Views\MediaSound\Delete.cshtml" />
+    <Content Include="Views\MediaSound\Details.cshtml" />
+    <Content Include="Views\MediaSound\Edit.cshtml" />
+    <Content Include="Views\MediaSound\Index.cshtml" />
     <Content Include="Views\DictionaryEntries\Create.cshtml" />
     <Content Include="Views\DictionaryEntries\Delete.cshtml" />
-    <Content Include="Views\Pictures\Create.cshtml" />
-    <Content Include="Views\Pictures\Delete.cshtml" />
-    <Content Include="Views\Pictures\Details.cshtml" />
-    <Content Include="Views\Pictures\Edit.cshtml" />
-    <Content Include="Views\Pictures\Index.cshtml" />
+    <Content Include="Views\MediaPictures\Create.cshtml" />
+    <Content Include="Views\MediaPictures\Delete.cshtml" />
+    <Content Include="Views\MediaPictures\Details.cshtml" />
+    <Content Include="Views\MediaPictures\Edit.cshtml" />
+    <Content Include="Views\MediaPictures\Index.cshtml" />
     <Content Include="Views\VerbalDefinition\Create.cshtml" />
     <Content Include="Views\VerbalDefinition\Delete.cshtml" />
     <Content Include="Views\VerbalDefinition\Details.cshtml" />

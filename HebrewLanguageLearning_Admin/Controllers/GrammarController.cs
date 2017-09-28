@@ -465,21 +465,14 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
 
 
         public async Task<ActionResult> GrammarSelector()
         {
             List<SelectListItem> GrammarTopicsAvailablelist = new List<SelectListItem>();
             var GrammarList = await db.HLL_Grammar.Where(x => x.IsDelete == false).ToListAsync();
-            ViewData["GrammarTopicsinLesson"]  = new List<SelectListItem>();
+            ViewData["GrammarTopicsinLesson"] = new List<SelectListItem>();
             foreach (var Item in GrammarList)
             {
                 GrammarTopicsAvailablelist.Add(new SelectListItem() { Value = Item.GrammarId, Text = Item.HebrewGrammar + " | " + Item.EnglishGrammar });
@@ -490,15 +483,72 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View();
         }
 
+        public async Task<ActionResult> setLessonGrammarDropDwonList(string LessonId, string grammarId)
+        {
+            var _ObjHLL_LessonsGrammarTab = db.HLL_LessonsGrammar.Where(x => x.IsDelete == false && x.fkLessonId == LessonId && x.fkGrammarId == grammarId).Select(z => new { z.GrammarPoint1, z.GrammarPoint2, z.GrammarPoint3, z.GrammarPoint4 }).FirstOrDefault();
+
+            return Json(_ObjHLL_LessonsGrammarTab, JsonRequestBehavior.AllowGet);
+        }
         public async Task<ActionResult> setDropDwonList(string LessonId)
         {
-            var objApplication = db.HLL_Application.Where(x => x.IsDelete == false && x.LessonId == LessonId).FirstOrDefault();
-            List<HLL_HebrewApplicationData> objApplicationDataList = new List<HLL_HebrewApplicationData>();
-            if (objApplication != null)
+            var _ObjHLL_LessonsGrammarTab = db.HLL_LessonsGrammar.Where(x => x.IsDelete == false && x.fkLessonId == LessonId).ToList();
+            var objLessonsGrammarList = _ObjHLL_LessonsGrammarTab.Select(z => z.fkGrammarId).ToList();
+            var LessonsGrammarInLessonList = db.HLL_Grammar.Where(z => objLessonsGrammarList.Contains(z.GrammarId)).ToList();
+
+            ViewBag.InLessonList = db.HLL_Grammar.Where(z => objLessonsGrammarList.Contains(z.GrammarId)).Select(x =>
+                                 new SelectListItem()
+                                 {
+                                     Value = x.GrammarId,
+                                     Text = x.HebrewGrammar + ", " + x.EnglishGrammar
+                                 }).ToList();
+
+            return Json(ViewBag.InLessonList, JsonRequestBehavior.AllowGet);
+        }
+
+        HLL_LessonsGrammarModel _ObjHLL_LessonsGrammar = new HLL_LessonsGrammarModel();
+        public async Task<string> AddRemoveDataInLesson(int isAdd, HLL_LessonsGrammarModel hLL_LessonsGrammar)
+        {
+            string result = "Your Data is successfully Saved";
+            _ObjHLL_LessonsGrammar = new HLL_LessonsGrammarModel();
+            if (isAdd == 1)
             {
-                objApplicationDataList = db.HLL_HebrewApplicationData.Where(x => x.IsDelete == false && x.MasterTableId == objApplication.ApplicationId).ToList();
+                _ObjHLL_LessonsGrammar.LessonsGrammarId = EntityConfig.getnewid("HLL_LessonsGrammar");
+                _ObjHLL_LessonsGrammar.fkLessonId = hLL_LessonsGrammar.fkLessonId;
+                _ObjHLL_LessonsGrammar.fkGrammarId = hLL_LessonsGrammar.fkGrammarId;
+                _ObjHLL_LessonsGrammar.GrammarPoint1 = hLL_LessonsGrammar.GrammarPoint1;
+                _ObjHLL_LessonsGrammar.GrammarPoint2 = hLL_LessonsGrammar.GrammarPoint2;
+                _ObjHLL_LessonsGrammar.GrammarPoint3 = hLL_LessonsGrammar.GrammarPoint3;
+                _ObjHLL_LessonsGrammar.GrammarPoint4 = hLL_LessonsGrammar.GrammarPoint4;
+
+
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_LessonsGrammarModel, HLL_LessonsGrammar>(); });
+                var LessonsGrammarTable = AutoMapper.Mapper.Map<HLL_LessonsGrammarModel, HLL_LessonsGrammar>(_ObjHLL_LessonsGrammar);
+                db.HLL_LessonsGrammar.Add(LessonsGrammarTable);
+                await db.SaveChangesAsync();
             }
-            return Json(objApplicationDataList, JsonRequestBehavior.AllowGet);
+            if (isAdd == 0)
+            {
+                HLL_LessonsGrammar hLL_LessonsGrammarLocal = await db.HLL_LessonsGrammar.Where(z => z.fkGrammarId == hLL_LessonsGrammar.fkGrammarId && z.fkLessonId == hLL_LessonsGrammar.fkLessonId).FirstOrDefaultAsync();
+                if (hLL_LessonsGrammarLocal != null)
+                {
+                    db.HLL_LessonsGrammar.Remove(hLL_LessonsGrammarLocal);
+                    await db.SaveChangesAsync();
+                    result = "Your Data is successfully delete";
+                }
+                else { result = "Your Data is not found"; }
+
+            }
+
+            return result;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
