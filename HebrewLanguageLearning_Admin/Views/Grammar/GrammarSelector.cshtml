@@ -67,7 +67,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <label>Grammar Point 1:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint1", @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint1", @class = "form-control", onchange = @"checkGrammarExistValue(this)" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
@@ -75,7 +75,7 @@
 
                                 <div class="col-md-3">
                                     <label>Grammar Point 2:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint2", @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint2", @class = "form-control", onchange = @"checkGrammarExistValue(this)" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
@@ -83,7 +83,7 @@
 
                                 <div class="col-md-3">
                                     <label>Grammar Point 3:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint3", @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint3", @class = "form-control", onchange = @"checkGrammarExistValue(this)" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
@@ -91,18 +91,26 @@
 
                                 <div class="col-md-3">
                                     <label>Grammar Point 4:</label>
-                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint4", @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.GrammarId, SI._GrammarPointList, new { @id = "GrammarPoint4", @class = "form-control", onchange = @"checkGrammarExistValue(this)" })
                                     @Html.ValidationMessageFor(x => x.GrammarId, "", new { @class = "text_danger", @Style = "color: #D65C4F" })
                                     <label id="LessonIdErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Select lesson</label>
 
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div id="divExistData" class="text-danger" style="display:none;">You have already set this grammar point!! </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="form-group panel-body">
                         <div class="form-actions text-right">
                             @*<input type="reset" value="Cancel" class="btn btn-danger">
-                            <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">*@
+                                <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">*@
                         </div>
                     </div>
                 </div>
@@ -130,7 +138,7 @@
     };
     var grammarTopicsInLesson = function () {
         if (typeof leftSelectorOptions == 'undefined' || leftSelectorOptions.length == 0) {
-            // leftSelectorOptions = $('#leftSelector option').val();
+        
             $("#leftSelector option").each(function () {
                 leftSelectorOptions.push({ "Value": $(this).val(), "Text": $(this).text() });
             });
@@ -143,11 +151,22 @@
     var getLessonGrammarDetail = function (value) {
 
         $.ajax({ url: 'setLessonGrammarDropDwonList', method: 'post', data: { LessonId: $('#LessonId').val(), grammarId: value, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
-            console.log("helloM");
-            console.log("66" > JSON.stringify(res));
             $('#GrammarPoint1').val(res['GrammarPoint1']); $('#GrammarPoint2').val(res['GrammarPoint2']);
             $('#GrammarPoint3').val(res['GrammarPoint3']); $('#GrammarPoint4').val(res['GrammarPoint4']);
-        
+
         });
     };
+    var ddlGrammarSetValue = [];
+    var checkGrammarExistValue = function (_this) {
+        $("#divExistData").hide();
+        var _that = _this;
+        var _currentValue = _that.value;
+        if ($.inArray(_that.value, ddlGrammarSetValue) > -1) {
+            $("#divExistData").show();
+            _that.selectedIndex = 0;
+        }
+        ddlGrammarSetValue.push(_currentValue);
+
+    };
+
 </script>

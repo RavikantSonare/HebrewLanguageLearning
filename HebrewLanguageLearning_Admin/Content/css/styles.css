@@ -7496,3 +7496,21 @@ li.plupload_droptext {
     justify-content: center;
    
 }
+ul.dropdown-menu li form a {
+    display: block;
+    padding: 10px 12px 11px 12px;
+    color: #333;
+    font-weight:600;
+}
+ul.dropdown-menu li form a i {
+        float:right;
+        opacity:0.4;
+}
+ul.dropdown-menu li form a:hover, ul.dropdown-menu li form a> a:focus {
+    color: #ffffff;
+    background-color: #3A4B55;
+    box-shadow: 1px 0 0 #3A4B55, -1px 0 0 #3A4B55;
+    -webkit-box-shadow: 1px 0 0 #3A4B55, -1px 0 0 #3A4B55;
+    -moz-box-shadow: 1px 0 0 #3A4B55, -1px 0 0 #3A4B55;
+}
+ul.dropdown-menu li form a:hover i, ul.dropdown-menu li form a> a:focus i{opacity:1;}

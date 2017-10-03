@@ -486,7 +486,11 @@ namespace HebrewLanguageLearning_Admin.Controllers
         public async Task<ActionResult> setLessonGrammarDropDwonList(string LessonId, string grammarId)
         {
             var _ObjHLL_LessonsGrammarTab = db.HLL_LessonsGrammar.Where(x => x.IsDelete == false && x.fkLessonId == LessonId && x.fkGrammarId == grammarId).Select(z => new { z.GrammarPoint1, z.GrammarPoint2, z.GrammarPoint3, z.GrammarPoint4 }).FirstOrDefault();
-
+            if (_ObjHLL_LessonsGrammarTab == null)
+            {
+               var _ObjHLL_LessonsGrammarMod = new HLL_LessonsGrammarModel();
+                return Json(_ObjHLL_LessonsGrammarMod, JsonRequestBehavior.AllowGet);
+            }
             return Json(_ObjHLL_LessonsGrammarTab, JsonRequestBehavior.AllowGet);
         }
         public async Task<ActionResult> setDropDwonList(string LessonId)

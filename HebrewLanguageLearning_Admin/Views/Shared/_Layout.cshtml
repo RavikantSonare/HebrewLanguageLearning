@@ -200,13 +200,15 @@
                             <li><a href="#"><i class="icon-user"></i> Profile</a></li>
                             <li><a href="#"><i class="icon-bubble4"></i> Messages</a></li>
                             <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
-                            <li><a href="#"><i class="icon-exit"></i> Logout</a></li>
+                            @*<li><a href="#"><i class="icon-exit"></i> Logout</a></li>*@
+                            <li>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-exit"></i> Logout</a>
 
-                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-exit"></i> Logout</a></li>
-                            }
+                                }
+                            </li>
 
                         </ul>
                     </li>
