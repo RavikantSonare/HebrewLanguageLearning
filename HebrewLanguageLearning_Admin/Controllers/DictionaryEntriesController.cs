@@ -23,8 +23,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: DictionaryEntries
         public ActionResult Index()
         {
-
-            return View(db.HLL_DictionaryEntries.ToList());
+           return View(db.HLL_DictionaryEntries.ToList());
         }
 
         // GET: DictionaryEntries/Details/5
@@ -90,7 +89,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                db.HLL_DictionaryEntries.Add(DataModel);
                db.SaveChanges();
-                return JavaScript("window.location = '/Definition/DefinitionList'");
+              // RedirectToAction("DefinitionList", "Definition");
+              return JavaScript("window.location = '/Definition/DefinitionList'");
             }
 
             return Content("Please Upload Sound file in MP3 format");

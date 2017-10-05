@@ -11,7 +11,7 @@
     <br>
     <h2>Dictionary Entries</h2>
 
-    @using (Ajax.BeginForm("Create", "DictionaryEntries", new AjaxOptions { UpdateTargetId = "result", OnBegin = "return StartValidation();", HttpMethod = "POST", OnFailure = "OnError(e);" }, new { enctype = "multipart/form-data" }))
+    @using (Ajax.BeginForm("Create", "DictionaryEntries", new AjaxOptions { UpdateTargetId = "result", OnBegin = "return StartValidation();", HttpMethod = "POST",OnSuccess= "window.location = '/Definition/DefinitionList'", OnFailure = "OnError(e);" }, new { enctype = "multipart/form-data" }))
     {
         @*@using (Html.BeginForm()){*@
         @Html.AntiForgeryToken()

@@ -21,7 +21,7 @@ $(document).ready(function () {
     if (window.File && window.FileList && window.FileReader) {
         // alert("Your browser doesn't support to File API6")
         $("#fileToUpload").on("change", function (e) {
-            alert("Your browser doesn't support to File API")
+           
             $(".field-validation-error").hide();
             var ext = $(this).val().split('.').pop().toLowerCase();
             if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
@@ -54,7 +54,8 @@ $(document).ready(function () {
                 }
             }
         });
-    } else { alert("Your browser doesn't support to File API") }
+    } else { //alert("Your browser doesn't support to File API") 
+    }
     // Old Code for Mp3 File
     if (window.File && window.FileList && window.FileReader) {
         $("#Soundfile").on("change", function (e) {
@@ -103,7 +104,8 @@ $(document).ready(function () {
                 }
             }
         });
-    } else { alert("Your browser doesn't support to File API") }
+    } else { //alert("Your browser doesn't support to File API") 
+    }
 
     if (window.File && window.FileList && window.FileReader) {
         $("body").on("change", ".fileUploadImgAndVideo", function (e) {
@@ -164,7 +166,9 @@ $(document).ready(function () {
                 }
             }
         });
-    } else { alert("Your browser doesn't support to File API") }
+    } else {
+       // alert("Your browser doesn't support to File API")
+    }
 
     if (window.File && window.FileList && window.FileReader) {
         $("body").on("change", ".SoundfileMultiple", function (e) {
@@ -213,7 +217,9 @@ $(document).ready(function () {
                 }
             }
         });
-    } else { alert("Your browser doesn't support to File API") }
+    } else {
+        //alert("Your browser doesn't support to File API")
+    }
 
 
 });

@@ -36,27 +36,28 @@ namespace HebrewLanguageLearning_Admin
                 response.AddHeader("Access-Control-Max-Age", "1728000");
                 response.End();
             }
-            //protected void Application_Error(object sender, EventArgs e)
-            //{
-            //    Exception exception = Server.GetLastError();
-
-            //    // ... log error here
-
-            //    var httpEx = exception as HttpException;
-
-            //    if (httpEx != null && httpEx.GetHttpCode() == 403)
-            //    {
-            //        Response.Redirect("~/Error", true);
-            //    }
-            //    else if (httpEx != null && httpEx.GetHttpCode() == 404)
-            //    {
-            //        Response.Redirect("~/Error", true);
-            //    }
-            //    else
-            //    {
-            //        Response.Redirect("~/Error");
-            //    }
-            //}
         }
+        //protected void Application_Error(object sender, EventArgs e)
+        //{
+        //    Exception exception = Server.GetLastError();
+
+        //    // ... log error here
+        //    HttpContext.Current.RewritePath("Error/NotFound");
+        //    var httpEx = exception as HttpException;
+
+        //    if (httpEx != null && httpEx.GetHttpCode() == 403)
+        //    {
+        //        Response.RedirectToRoute("ErrorPage");
+        //    }
+        //    else if (httpEx != null && httpEx.GetHttpCode() == 404)
+        //    {
+        //        Response.RedirectToRoute("ErrorPage");
+        //    }
+        //    else
+        //    {
+        //        Response.RedirectToRoute("ErrorPage");
+        //    }
+        //}
     }
 }
+

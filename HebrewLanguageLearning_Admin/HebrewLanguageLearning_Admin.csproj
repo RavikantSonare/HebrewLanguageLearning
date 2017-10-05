@@ -414,6 +414,7 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\DefinitionController.cs" />
     <Compile Include="Controllers\DictionaryEntriesController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\GrammarController.cs" />
@@ -608,6 +609,7 @@
     <Content Include="Content\images\logo_dark.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\music-player.png" />
+    <Content Include="Content\images\User.jpg" />
     <Content Include="DBContext\DBContextEntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBContextEntityModel.edmx</DependentUpon>
@@ -643,15 +645,17 @@
     </Content>
     <None Include="Properties\PublishProfiles\Biblingo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2Old.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\applicationMin.js" />
     <Content Include="Scripts\js\application.js" />
     <Content Include="Scripts\js\application_blank.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
@@ -856,6 +860,7 @@
     <Folder Include="Media\Pictures\" />
     <Folder Include="Media\Sounds\" />
     <Folder Include="Media\Videos\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

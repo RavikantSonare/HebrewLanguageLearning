@@ -24,7 +24,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             List<HLL_HebrewApplicationDataModel> DataModelList = new List<HLL_HebrewApplicationDataModel>();
             try
             {
-
+               
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(); });
                 DataModelList = AutoMapper.Mapper.Map<List<HLL_HebrewApplicationData>, List<HLL_HebrewApplicationDataModel>>(await db.HLL_HebrewApplicationData.Where(x => x.IsDelete == false).ToListAsync());
 

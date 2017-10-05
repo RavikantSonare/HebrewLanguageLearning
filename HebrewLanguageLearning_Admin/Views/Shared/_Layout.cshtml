@@ -222,15 +222,15 @@
                 <!-- User dropdown -->
                 <div class="user-menu dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="http://placehold.it/300">
+                        <img src="~/Content/images/User.jpg" />
                         <div class="user-info">
-                            Madison Gartner <span>Web Developer</span>
+                           @Html.Raw(User.Identity.GetUserName().ToString().Substring(0, 10))<span>Admin</span>
                         </div>
                     </a>
                     <div class="popup dropdown-menu dropdown-menu-right">
                         <div class="thumbnail">
                             <div class="thumb">
-                                <img src="http://placehold.it/300">
+                                <img src="~/Content/images/User.jpg" />
                                 <div class="thumb-options">
                                     <span>
                                         <a href="#" class="btn btn-icon btn-success"><i class="icon-pencil"></i></a>
@@ -240,7 +240,7 @@
                             </div>
 
                             <div class="caption text-center">
-                                <h6>Madison Gartner <small>Front end developer</small></h6>
+                                <h6>@Html.Raw(User.Identity.GetUserName().ToString().Substring(0, 10)) <small>Admin</small></h6>
                             </div>
                         </div>
                         <ul class="list-group">
@@ -277,7 +277,7 @@
                 </ul>
             </li>
             <li>
-                <a href="charts.html"><span>Language Learning</span> <i class="icon-bars"></i></a>
+                <a href="#"><span>Language Learning</span> <i class="icon-bars"></i></a>
                 <ul>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Grammar"  && ViewContext.RouteData.Values["Action"].ToString() == "Index"? "active" : "")">@Html.ActionLink("Grammar Topics List", "Index", "Grammar")</li>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Grammar"  && ViewContext.RouteData.Values["Action"].ToString() == "Create"? "active" : "")">@Html.ActionLink("Add Grammar Topics", "Create", "Grammar")</li>
