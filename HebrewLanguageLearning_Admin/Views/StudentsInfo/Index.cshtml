@@ -36,7 +36,7 @@
                     <th>PreviousHS</th>
                     <th>Email</th>
                     <th>ImgUrl</th>
-                    <th>Status</th>
+                    @*<th>Status</th>*@
                     <th>Action</th>
                 </tr>
             </thead>
@@ -70,15 +70,15 @@
                             @Html.DisplayFor(modelItem => item.EmailId)
                         </td>
                         <td>
-                            <img style="height:100px;width:100px;" src="~/Pictures/@item.ImgUrl" />
+                            <img style="height:100px;width:100px;" src="~/Media/Pictures/@item.ImgUrl" />
                         </td>
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(modelItem => item.ActiveStatus)
-                        </td>
+                        </td>*@
 
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.StudentsId }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.StudentsId }) |
+                            @*@Html.ActionLink("Details", "Details", new { id = item.StudentsId }) |*@
                             @Html.ActionLink("Delete", "Delete", new { id = item.StudentsId })
                         </td>
                     </tr>

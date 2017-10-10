@@ -23,9 +23,10 @@
 
                         <div class="col-md-8">
                             @*<label>Correct Answer 2:</label>*@
-                            @Html.EditorFor(model => model.HebrewApplicationData, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HebrewApplicationData, "", new { @class = "text-danger" })
-                        </div>
+                            <label> @Html.DisplayFor(x => x.HebrewApplicationData) </label>
+                                @*@Html.EditorFor(model => model.HebrewApplicationData, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.HebrewApplicationData, "", new { @class = "text-danger" })*@
+</div>
                     </div>
                     <div class="block-inner text-info">
                         <h6 class="heading-hr">

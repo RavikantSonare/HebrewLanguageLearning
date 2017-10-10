@@ -211,7 +211,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     var hebrewApplicationData = db.HLL_HebrewApplicationData.Where(z => z.HebrewApplicationDataId.Equals(hLL_HebrewApplicationDataModel.HebrewApplicationDataId)).FirstOrDefault();
                     if (hebrewApplicationData != null)
                     {
-                        hebrewApplicationData.HebrewApplicationData = hLL_HebrewApplicationDataModel.HebrewApplicationData;
+                       if(!string.IsNullOrEmpty(hLL_HebrewApplicationDataModel.HebrewApplicationData)) hebrewApplicationData.HebrewApplicationData = hLL_HebrewApplicationDataModel.HebrewApplicationData;
                         hebrewApplicationData.CorrectAnswer1 = hLL_HebrewApplicationDataModel.CorrectAnswer1;
                         hebrewApplicationData.CorrectAnswer2 = hLL_HebrewApplicationDataModel.CorrectAnswer2;
                         hebrewApplicationData.CorrectAnswer3 = hLL_HebrewApplicationDataModel.CorrectAnswer3;
@@ -326,7 +326,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 }
 
 
-                return JavaScript("window.location = '/Definition/DefinitionList'");
+                return JavaScript("  $('#frmloading').show(); window.location = '/Definition/DefinitionList'; $('#frmloading').show();");
             }
 
             return Content("Please Check blank fields");
@@ -344,6 +344,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 var AppData = CheckAndSetLessonData(CorrectAnswerNo, LessonId);
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(); });
                 DataModel = AutoMapper.Mapper.Map<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(AppData);
+                DataModel.CorrectAnswerNo = CorrectAnswerNo;
                 ModelState.Clear();
             }
             return PartialView("HLL_HebrewApplicationDataCorrectAnswer_PartialView", DataModel);

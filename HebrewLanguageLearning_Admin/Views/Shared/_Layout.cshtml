@@ -191,8 +191,8 @@
                     <li class="user dropdown">
                         @*@Html.Partial("_LoginPartial")*@
                         <a class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="http://placehold.it/300">
-                            <span>@Html.Raw(User.Identity.GetUserName()) </span>
+                            <img src="~/Content/images/User.jpg" />
+                            <span>@Html.Raw(Convert.ToString(User.Identity.GetUserName()).Length > 10 ? User.Identity.GetUserName().ToString().Substring(0, 10) : User.Identity.GetUserName()) </span>
 
                             <i class="caret"></i>
                         </a>
@@ -224,7 +224,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="~/Content/images/User.jpg" />
                         <div class="user-info">
-                           @Html.Raw(User.Identity.GetUserName().ToString().Substring(0, 10))<span>Admin</span>
+                           @Html.Raw(Convert.ToString( User.Identity.GetUserName()).Length > 10 ? User.Identity.GetUserName().ToString().Substring(0, 10) : User.Identity.GetUserName())<span>Admin</span>
                         </div>
                     </a>
                     <div class="popup dropdown-menu dropdown-menu-right">
@@ -240,7 +240,8 @@
                             </div>
 
                             <div class="caption text-center">
-                                <h6>@Html.Raw(User.Identity.GetUserName().ToString().Substring(0, 10)) <small>Admin</small></h6>
+                                <h6>@Html.Raw(Convert.ToString(User.Identity.GetUserName()).Length > 10 ? User.Identity.GetUserName().ToString().Substring(0, 10) : User.Identity.GetUserName())<span>Admin</span>
+ <small>Admin</small></h6>
                             </div>
                         </div>
                         <ul class="list-group">

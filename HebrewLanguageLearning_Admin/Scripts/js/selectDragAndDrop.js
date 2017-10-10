@@ -19,17 +19,31 @@ $(function () {
             moveItems('#leftSelector', '#rightSelector');
             if (ViewName = 'GrammarPageData') { setVocabularyData(_childId, 1); }
             if (ViewName = 'VocabularyPageData') { setLessonsGrammarData(_childId, 1); }
-           
+
         }
     });
 });
 
 var isValid = function () {
+
     var ddlLessonId = $('#LessonId').val();
     $('#LessonIdErrorMessage').hide();
-    if (typeof ddlLessonId == 'undefined' || ddlLessonId == '0') {
-        $('#LessonIdErrorMessage').show();
-        return false;
+    if ($('#LessonId').length > 0) {
+        if (typeof ddlLessonId == 'undefined' || ddlLessonId == '0') {
+            $('#LessonIdErrorMessage').show();
+            return false;
+        }
+    } else {
+        var txtEnglishGrammarData = $('#EnglishGrammar').val(); var txtHebrewGrammarData = $('#HebrewGrammar').val();
+        $('#EnglishGrammarErrorMessage').hide(); $('#HebrewGrammarErrorMessage').hide();
+        if (typeof txtEnglishGrammarData == 'undefined' || txtEnglishGrammarData == "") {
+            $('#EnglishGrammarErrorMessage').show();
+            return false;
+        }
+        if (typeof txtHebrewGrammarData == 'undefined' || txtHebrewGrammarData == "") {
+            $('#HebrewGrammarErrorMessage').show();
+            return false;
+        }
     }
     return true;
 
@@ -66,6 +80,6 @@ $(document).ready(function () {
     ViewName = SplitData[SplitData.length - 2] + SplitData[SplitData.length - 1];
     if (ViewName == 'GrammarGrammarSelector') { ViewName = 'GrammarPageData'; }
     if (ViewName == 'VocabularyCreate') { ViewName = 'VocabularyPageData'; }
-   
+
 
 });

@@ -11,6 +11,7 @@ using HebrewLanguageLearning_Admin.GenericClasses;
 using HebrewLanguageLearning_Admin.Models;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
+using System.Threading.Tasks;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
@@ -23,7 +24,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: DictionaryEntries
         public ActionResult Index()
         {
-           return View(db.HLL_DictionaryEntries.ToList());
+            return View(db.HLL_DictionaryEntries.ToList());
         }
 
         // GET: DictionaryEntries/Details/5
@@ -64,7 +65,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryModel, HLL_DictionaryEntries>(); });
                 HLL_DictionaryEntries DataModel = AutoMapper.Mapper.Map<HLL_DictionaryModel, HLL_DictionaryEntries>(hLL_DictionaryEntries);
 
-                
+
                 /* Add Audio */
                 MediaSoundController _obj = new MediaSoundController();
                 HLL_Media_SoundModels _ModelObj = new HLL_Media_SoundModels();
@@ -87,10 +88,10 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     }
                 }
 
-               db.HLL_DictionaryEntries.Add(DataModel);
-               db.SaveChanges();
-              // RedirectToAction("DefinitionList", "Definition");
-              return JavaScript("window.location = '/Definition/DefinitionList'");
+                db.HLL_DictionaryEntries.Add(DataModel);
+                db.SaveChanges();
+                // RedirectToAction("DefinitionList", "Definition");
+                return JavaScript("window.location = '/Definition/DefinitionList'");
             }
 
             return Content("Please Upload Sound file in MP3 format");
@@ -100,16 +101,31 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: DictionaryEntries/Edit/5
         public ActionResult Edit(string id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HLL_DictionaryEntries hLL_DictionaryEntries = db.HLL_DictionaryEntries.Find(id);
-            if (hLL_DictionaryEntries == null)
+
+            // HLL_StudentsInfo hLL_StudentsInfo = db.HLL_StudentsInfo.Find(id);
+
+            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryEntries, HLL_DictionaryModel>(); });
+            HLL_DictionaryModel DataModel = AutoMapper.Mapper.Map<HLL_DictionaryEntries, HLL_DictionaryModel>(db.HLL_DictionaryEntries.Find(id));
+            var tmpList = db.HLL_Definition.Where(h => h.DicEntId.Equals(DataModel.DictionaryEntriesId) && h.IsDelete == false).ToList();
+            DataModel.DicDefinitionDynamicTextBox = new string[tmpList.Count()];
+            int i = 0;
+            foreach (var Item in tmpList)
+            {
+                DataModel.DicDefinitionDynamicTextBox[i] = Item.Title;
+                i++;
+            }
+
+            // HLL_DictionaryModel hLL_DictionaryEntries = db.HLL_DictionaryEntries.Find(id);
+            if (DataModel == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_DictionaryEntries);
+            return View(DataModel);
         }
 
         // POST: DictionaryEntries/Edit/5
@@ -117,15 +133,65 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DictionaryEntriesId,DicEnglish,DicHebrew,fk_TagPictures,fk_TagVerbalDefinition,fk_TagExample,fk_TagSemanticDomain,fk_TagDictionaries,fk_TagSound,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] HLL_DictionaryEntries hLL_DictionaryEntries)
+        public async Task<ActionResult> Edit(HLL_DictionaryModel hLL_DictionaryModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(hLL_DictionaryEntries).State = EntityState.Modified;
+                /* Add Update Sound */
+                MediaSoundController _objMediaSound = new MediaSoundController();
+                HLL_Media_SoundModels _ModelObjSound = new HLL_Media_SoundModels();
+
+                /* Add Update Definition */
+                DefinitionController _objDef = new DefinitionController();
+                HLL_DefinitionModel _ModelObjDef = new HLL_DefinitionModel();
+
+                if (hLL_DictionaryModel.Soundfile != null)
+                {
+                    _ModelObjSound.MasterTableId = hLL_DictionaryModel.DictionaryEntriesId;
+                    _ModelObjSound.Soundfile = hLL_DictionaryModel.Soundfile;
+                    _ModelObjSound.TableRef = "DictionaryEntries";
+                    _objMediaSound.SetSound(_ModelObjSound);
+                }
+
+
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryModel, HLL_DictionaryEntries>(); });
+                HLL_DictionaryEntries DataModel = AutoMapper.Mapper.Map<HLL_DictionaryModel, HLL_DictionaryEntries>(hLL_DictionaryModel);
+                db.Entry(DataModel).State = EntityState.Modified;
                 db.SaveChanges();
+                HLL_Definition hLL_Definition = new HLL_Definition();
+
+                var tmpList = db.HLL_Definition.Where(h => h.DicEntId.Equals(DataModel.DictionaryEntriesId) && h.IsDelete == false).Select(z => z.DefinitionId).ToList();
+                int i = 0;
+                string DefinitionId = string.Empty; 
+                foreach (var Item in hLL_DictionaryModel.DicDefinitionDynamicTextBox)
+                {
+                    if (!string.IsNullOrEmpty(Item))
+                    {
+                        DefinitionId = string.Empty;
+                        if (tmpList.Count() > i)
+                        {
+                             DefinitionId = tmpList[i];
+                        }
+                        var dicData = db.HLL_Definition.Where(p => p.DicEntId == hLL_DictionaryModel.DictionaryEntriesId && p.DefinitionId == DefinitionId).FirstOrDefault();
+
+                        if (dicData != null)
+                        {
+                            dicData.Title = Item;
+                            _objDef.Edit(dicData);
+                        }
+                        else
+                        {
+                            _ModelObjDef.DicEntId = hLL_DictionaryModel.DictionaryEntriesId;
+                            _ModelObjDef.Title = Item;
+                             _objDef.Create(_ModelObjDef);
+                        }
+                    }
+                    i++;
+                }
+
                 return RedirectToAction("Index");
             }
-            return View(hLL_DictionaryEntries);
+            return View(hLL_DictionaryModel);
         }
 
         // GET: DictionaryEntries/Delete/5

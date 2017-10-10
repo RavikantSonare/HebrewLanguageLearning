@@ -26,7 +26,7 @@
                                 <label>Import Excel File:</label>
                                 <div class="controls imgParent">
                                     @Html.HiddenFor(h => h.LessonId, new { name = "SoundUrl", id = "SoundUrl" })
-                                    @Html.TextBoxFor(p => p.LessonId, null, new { data_val = "false", type = "file", @class = "input-file", name = "Soundfile", id = "Soundfile" })
+                                    @Html.TextBoxFor(p => p.LessonId, null, new { data_val = "false", type = "file", @class = "input-file", name = "ExcelUploadfile", id = "ExcelUploadfile", accept = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" })
                                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                                 </div>
                             </div>

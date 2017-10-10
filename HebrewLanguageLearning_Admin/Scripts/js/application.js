@@ -108,6 +108,7 @@ $(document).ready(function () {
     }
 
     if (window.File && window.FileList && window.FileReader) {
+       
         $("body").on("change", ".fileUploadImgAndVideo", function (e) {
             debugger;
             if (isValid()) { } else { return; }

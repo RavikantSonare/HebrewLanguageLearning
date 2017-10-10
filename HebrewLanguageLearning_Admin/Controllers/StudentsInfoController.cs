@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using HebrewLanguageLearning_Admin.DBContext;
 using HebrewLanguageLearning_Admin.GenericClasses;
 using HebrewLanguageLearning_Admin.Models;
+using System.Threading.Tasks;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
@@ -21,10 +22,11 @@ namespace HebrewLanguageLearning_Admin.Controllers
         {
             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_StudentsInfo, HLL_StudentsInfoModel>(); });
             List<HLL_StudentsInfoModel> DataModel = AutoMapper.Mapper.Map<List<HLL_StudentsInfo>, List<HLL_StudentsInfoModel>>(db.HLL_StudentsInfo.ToList());
-
+            var StudentIdList = DataModel.Select(p => p.StudentsId).ToList();
+            var ImageList = db.HLL_Media_Pictures.Where(x => StudentIdList.Contains(x.MasterTableId)).ToList();
+            DataModel.ForEach(z => z.ImgUrl = ImageList.Where(p => p.MasterTableId == z.StudentsId).FirstOrDefault() == null ? "" : ImageList.Where(p => p.MasterTableId == z.StudentsId).FirstOrDefault().ImgUrl);
             return View(DataModel);
         }
-
 
         // GET: StudentsInfo/Details/5
         public ActionResult Details(string id)
@@ -68,10 +70,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-
-
-
+            
             return View(hLL_StudentsInfo);
         }
 
@@ -83,11 +82,15 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             HLL_StudentsInfo hLL_StudentsInfo = db.HLL_StudentsInfo.Find(id);
-            if (hLL_StudentsInfo == null)
+
+            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_StudentsInfo, HLL_StudentsInfoModel>(); });
+            HLL_StudentsInfoModel DataModel = AutoMapper.Mapper.Map<HLL_StudentsInfo, HLL_StudentsInfoModel>(db.HLL_StudentsInfo.Find(id));
+
+            if (DataModel == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_StudentsInfo);
+            return View(DataModel);
         }
 
         // POST: StudentsInfo/Edit/5
@@ -95,11 +98,23 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( HLL_StudentsInfo hLL_StudentsInfo)
+        public async Task<ActionResult> Edit(HLL_StudentsInfoModel hLL_StudentsInfo)
         {
+            MediaPicturesController _objMediaImage = new MediaPicturesController();
+            HLL_Media_PicturesModels _ModelObjMedPic = new HLL_Media_PicturesModels();
             if (ModelState.IsValid)
             {
-                db.Entry(hLL_StudentsInfo).State = EntityState.Modified;
+
+                if (hLL_StudentsInfo.Imagefile != null)
+                {
+                    _ModelObjMedPic.MasterTableId = hLL_StudentsInfo.StudentsId;
+                    _ModelObjMedPic.Imagefile = hLL_StudentsInfo.Imagefile;
+                    _ModelObjMedPic.TableRef = "StudentsInfo";
+                    _objMediaImage.SetPicture(_ModelObjMedPic);
+                }
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_StudentsInfoModel, HLL_StudentsInfo>(); });
+                HLL_StudentsInfo DataModel = AutoMapper.Mapper.Map<HLL_StudentsInfoModel, HLL_StudentsInfo>(hLL_StudentsInfo);
+                db.Entry(DataModel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -140,7 +155,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             }
             base.Dispose(disposing);
         }
-       
+
     }
-   
+
 }

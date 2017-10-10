@@ -32,7 +32,7 @@
 
                 <div class="controls imgParent">
 
-                    @Html.TextBoxFor(p => p.Soundfile[0], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", id = "1" })
+                    @Html.TextBoxFor(p => p.Soundfile[0], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", accept = ".mp3,audio/*" , id = "1" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                     @Html.ValidationMessageFor(n => n.Soundfile[0], null, new { @class = "text_danger", @style = "color: red !important;" })
                     @Html.HiddenFor(h => h.SoundUrl[0], new { name = "SoundUrl0", id = "SoundUrl0", @class = "sound_url" })
@@ -71,7 +71,7 @@
 
                 <div class="controls imgParent">
                     @*@Html.HiddenFor(h => h.Soundfile[1], new { name = "SoundUrl", id = "SoundUrl" })*@
-                    @Html.TextBoxFor(p => p.Soundfile[1], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", id = "2" })
+                    @Html.TextBoxFor(p => p.Soundfile[1], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", accept = ".mp3,audio/*" , id = "2" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                     @Html.ValidationMessageFor(n => n.Soundfile[1], null, new { @class = "text_danger", @style = "color: red !important;" })
                     @Html.HiddenFor(h => h.SoundUrl[1], new { name = "SoundUrl1", id = "SoundUrl1" })
@@ -109,7 +109,7 @@
 
                 <div class="controls imgParent">
                     @*@Html.HiddenFor(h => h.SoundUrl[2], new { name = "SoundUrl", id = "SoundUrl" })*@
-                    @Html.TextBoxFor(p => p.Soundfile[2], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", id = "3" })
+                    @Html.TextBoxFor(p => p.Soundfile[2], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", accept = ".mp3,audio/*" , id = "3" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                     @Html.ValidationMessageFor(n => n.Soundfile, null, new { @class = "text_danger", @style = "color: red !important;" })
                     @Html.HiddenFor(h => h.SoundUrl[2], new { name = "SoundUrl2", id = "SoundUrl2" })
@@ -146,7 +146,7 @@
                 <label>Sound 4:</label>
                 <div class="controls imgParent">
                     @*@Html.HiddenFor(h => h.SoundUrl[3], new { name = "SoundUrl", id = "SoundUrl" })*@
-                    @Html.TextBoxFor(p => p.Soundfile[3], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", id = "4" })
+                    @Html.TextBoxFor(p => p.Soundfile[3], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", accept = ".mp3,audio/*" , id = "4" })
                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                     @Html.ValidationMessageFor(n => n.Soundfile, null, new { @class = "text_danger", @style = "color: red !important;" })
                     @Html.HiddenFor(h => h.SoundUrl[3], new { name = "SoundUrl3", id = "SoundUrl3" })

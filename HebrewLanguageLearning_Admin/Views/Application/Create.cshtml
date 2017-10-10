@@ -15,7 +15,9 @@
     <h2>Application</h2>
     @using (Ajax.BeginForm("Create", "Application", new AjaxOptions { UpdateTargetId = "result", OnBegin = "return StartValidation();" }, new { enctype = "multipart/form-data", @id = "CreateHebrewAppDataPartial" }))
     {
-        @*@using (Html.BeginForm()){*@
+        <div id="frmloading" style="display:none;">
+            <div class="loading">Loading&#8230;</div>
+        </div>
         @Html.AntiForgeryToken()
         <Div action="#" role="form">
             <div class="panel panel-default">
@@ -35,13 +37,10 @@
                                 <label>Import Excel File:</label>
 
                                 <div class="controls imgParent">
-                                    @Html.HiddenFor(h => h.ApplicationId, new { name = "SoundUrl", id = "SoundUrl" })
-                                    @Html.TextBoxFor(p => p.ApplicationId, null, new { data_val = "false", type = "file", @class = "input-file", name = "Soundfile", id = "Soundfile" })
+                                    @Html.HiddenFor(h => h.ApplicationId, new { name = "ExcelUpload", id = "ExcelUpload" })
+                                    @Html.TextBoxFor(p => p.ApplicationId, null, new { data_val = "false", type = "file", @class = "input-file", name = "ExcelUploadfile", id = "ExcelUploadfile", accept = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" })
                                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
-                                    @*@Html.ValidationMessageFor(n => n.Soundfile, null, new { @class = "text_danger", @style = "color: red !important;" })
-                                        <div class="col-md-2" id="output"></div>
-                                        <label id="fileUploaderErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Upload Sound file in MP3 format</label>*@
-
+                                 
                                 </div>
 
                             </div>
@@ -87,9 +86,9 @@
 
                                             <div class="controls imgParent">
 
-                                                @Html.TextBoxFor(p => p.Soundfile[i], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", id = @j })
+                                                @Html.TextBoxFor(p => p.Soundfile[i], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", accept = ".mp3,audio/*" , id = @j})
                                                 <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
-                                                @Html.ValidationMessageFor(n => n.Soundfile[i], null, new { @class = "text_danger", @style = "color: red !important;" })
+                                                @Html.ValidationMessageFor(n => n.Soundfile[i], null, new { @class = "text_danger", @style = "color: red !important;"})
                                                 @Html.HiddenFor(h => h.SoundUrl[i], new { name = "SoundUrl0", id = "SoundUrl" + i, @class = "sound_url" })
                                                 <div class="col-md-2 output" id="@("outputMultiple" + j)"></div>
                                                 <label id="fileUploaderErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Upload Sound file in MP3 format</label>
@@ -121,7 +120,7 @@
                 <hr>
                 <div class="form-group panel-body">
                     <div class="form-actions text-right">
-                        <input type="reset" value="Cancel" class="btn btn-danger">
+                       <input type="reset" value="Reset" class="btn btn-danger">
                         <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">
                     </div>
                 </div>
@@ -251,7 +250,8 @@
             url: '@Url.Action("CreateHebrewAppData", "Application")',
             data: $("#CreateHebrewAppData").serialize(),
             success: function (data) {
-                window.location = '/Application/Create/' + LessonId + ''
+                window.location = '/Application/Create';
+                //window.location = '/Application/Create/' + LessonId + ''
             }, err: function (data) { console.log("Server Is Not Respose" + data); }
         });
     });
@@ -281,6 +281,7 @@
 
     }
     var getDetail = function (x, baseUrl) {
+        $('#frmloading').show();
         $.ajax({ url: baseUrl, method: 'post', data: { LessonId: x, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
             $('#Application_Data').html(res);
             checker();
@@ -298,6 +299,7 @@
             setImagesOnApplicationDataView(i + 1, videourl.val());
             setImagesOnApplicationDataView(i + 1, soundurl.val());
         });
+        $('#frmloading').hide();
     };
 
     var setImagesOnApplicationDataView = function (txtId, imgValue) {
@@ -327,7 +329,7 @@
     }
     // 09-11-2017
     function SubmitButtonOnclick() {
-
+        $('#frmloading').show();
         var formElement = document.querySelector("#CreateHebrewAppDataPartial");
         var formData = new FormData(formElement);
         var xhr = new XMLHttpRequest();
@@ -351,7 +353,7 @@
     }
 
     function UploadFailed(evt) {
-        alert("There was an error attempting to upload the file.");
+        console.log("There was an error attempting to upload the file.");
 
     }
 

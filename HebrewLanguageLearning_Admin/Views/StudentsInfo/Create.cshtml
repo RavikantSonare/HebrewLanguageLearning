@@ -7,7 +7,9 @@
 @using (Html.BeginForm("Create", "StudentsInfo", FormMethod.Post, new { enctype = "multipart/form-data", @id = "studendInfoCreate" }))
 {
     @Html.AntiForgeryToken()
-
+    <div id="frmloading" style="display:none;">
+        <div class="loading">Loading&#8230;</div>
+    </div>
     <div class="page-content-inner ">
         <br>
         <h2>Add Student</h2>
@@ -19,13 +21,13 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Student First Name:</label>
+                                <label>Student First Name:<span class="text-danger">(*)</span></label>
                                 @Html.EditorFor(model => model.FName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.FName, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="col-md-6">
-                                <label>Student Last Name:</label>
+                                <label>Student Last Name:<span class="text-danger">(*)</span></label>
                                 @Html.EditorFor(model => model.LName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.LName, "", new { @class = "text-danger" })
                             </div>
@@ -35,14 +37,14 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Student User Name:</label>
+                                <label>Student User Name:<span class="text-danger">(*)</span></label>
                                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="col-md-6">
-                                <label>Password:</label>
-                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                <label>Password:<span class="text-danger">(*)</span></label>
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control",@type= "Password", oncut = "return false", oncopy = "return false", onpaste = "return false"} })
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -73,7 +75,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label>Email Address:</label>
+                                <label>Email Address:<span class="text-danger">(*)</span></label>
                                 @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger" })
                             </div>
@@ -104,7 +106,7 @@
                             <div class="col-md-6">
                                 <label>Select User Image:</label>
                                 <div class="controls imgParent">
-                                    @Html.TextBoxFor(p => p.Imagefile, null, new { data_val = "false", type = "file", @class = "input-file", name = "file", id = "fileToUpload" })
+                                    @Html.TextBoxFor(p => p.Imagefile, null, new { data_val = "false", type = "file", @class = "input-file", name = "file", id = "fileToUpload", accept = "image/*" })
                                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                                     @Html.ValidationMessageFor(n => n.ImgUrl, null, new { @class = "text_danger" })
                                     <div class="col-md-2" id="output"></div>
@@ -125,8 +127,8 @@
                     </div>
 
                     <div class="form-actions text-right">
-                        <input type="reset" value="Cancel" class="btn btn-danger">
-                        <input type="submit" value="Submit report" class="btn btn-primary">
+                       <input type="reset" value="Reset" class="btn btn-danger">
+                        <input type="submit" value="    Save    " class="btn btn-success">
                     </div>
                 </div>
             </div>
@@ -137,3 +139,7 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script type="text/javascript">
+    $('#studendInfoCreate').submit(function () { $('#frmloading').show(); });
+   
+</script>

@@ -1,156 +1,188 @@
-﻿@model HebrewLanguageLearning_Admin.DBContext.HLL_DictionaryEntries
-
+﻿@model HebrewLanguageLearning_Admin.Models.HLL_DictionaryModel
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<div class="page-content-inner ">
+    <br>
+    <h2>Edit Dictionary Entries</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>HLL_DictionaryEntries</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.DictionaryEntriesId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DicEnglish, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DicEnglish, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DicEnglish, "", new { @class = "text-danger" })
-            </div>
+    @using (Ajax.BeginForm("Edit", "DictionaryEntries", new AjaxOptions { LoadingElementId = "frmloading", UpdateTargetId = "result", OnBegin = "return StartValidation();", HttpMethod = "POST", OnFailure = "OnError(e);" }, new { enctype = "multipart/form-data" }))
+    {
+        <div id="frmloading" style="display:none;">
+            <div class="loading">Loading&#8230;</div>
         </div>
+      @Html.HiddenFor(z => z.DictionaryEntriesId);
+        @Html.AntiForgeryToken()
+        <Div action="#" role="form">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h6 class="panel-title"><i class="icon-pencil3"></i>Edit Dictionary</h6></div>
+                <div class="panel-body">
+                    <div class="text-danger" id="result"></div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>English:<span class="text-danger">(*)</span></label>
+                                @Html.EditorFor(model => model.DicEnglish, new { htmlAttributes = new { @class = "form-control", @placeholder = "Entry English Name" } })
+                                @Html.ValidationMessageFor(model => model.DicEnglish, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DicHebrew, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DicHebrew, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DicHebrew, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Count_TagPictures, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Count_TagPictures, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Count_TagPictures, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <div class="col-md-6">
+                                <label>Hebrew:<span class="text-danger">(*)</span></label>
+                                @Html.EditorFor(model => model.DicHebrew, new { htmlAttributes = new { @class = "form-control", @placeholder = "כניסה שם באנגלית" } })
+                                @Html.ValidationMessageFor(model => model.DicHebrew, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Count_TagVerbalDefinition, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Count_TagVerbalDefinition, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Count_TagVerbalDefinition, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Strong's Number:<span class="text-danger">(*)</span></label>
+                                @Html.EditorFor(model => model.DicStrongNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Strong's Number" } })
+                                @Html.ValidationMessageFor(model => model.DicStrongNo, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Count_TagExample, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Count_TagExample, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Count_TagExample, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Count_TagSemanticDomain, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Count_TagSemanticDomain, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Count_TagSemanticDomain, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            @*<div style="border-color:sandybrown;border-bottom-style:solid;">*@
+                            <div class="col-md-3">
+                                <label>Sound:</label>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Count_TagDictionaries, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Count_TagDictionaries, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Count_TagDictionaries, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                                <div class="controls imgParent">
+                                    @Html.HiddenFor(h => h.SoundUrl, new { name = "SoundUrl", id = "SoundUrl" })
+                                    @Html.TextBoxFor(p => p.Soundfile, null, new { data_val = "false", type = "file", @class = "input-file", name = "Soundfile", accept = ".mp3,audio/*" , id = "Soundfile" })
+                                    <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
+                                    @Html.ValidationMessageFor(n => n.Soundfile, null, new { @class = "text_danger", @style = "color: red !important;" })
+                                  
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Sound Title:</label>
+                                @Html.EditorFor(model => model.SoundTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sound Title" } })
+                                @Html.ValidationMessageFor(model => model.SoundTitle, "", new { @class = "text-danger" })
+                            </div>
+                            @*</div>*@
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Language Learning Definition:<span class="text-danger">(*)</span></label>
+                                @Html.EditorFor(model => model.DicLanguageLearningDefinition, new { htmlAttributes = new { @class = "form-control", @placeholder = "Language Learning Definition" } })
+                                @Html.ValidationMessageFor(model => model.DicLanguageLearningDefinition, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Count_TagSound, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Count_TagSound, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Count_TagSound, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="block-inner">
+                        <div class="block-inner">
+                            <h6 class="heading-hr">
+                                <i class="icon-spinner7"></i> Dictionary Definition <small class="display-block">All Definition about the Language Learning</small>
+                            </h6>
+                        </div>
+                        <div class="form-group" id="Dictionary_Data">
+                            <div class="row" id="TextBoxContainer">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ActiveStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.ActiveStatus)
-                    @Html.ValidationMessageFor(model => model.ActiveStatus, "", new { @class = "text-danger" })
+                                @for (int i = 0; i < Convert.ToInt32(Model.DicDefinitionDynamicTextBox.Count()); i++)
+                                {
+                                    var j = i + 1;
+                                    <div class="col-md-6">
+                                        <label style="margin-top: 20px;">
+                                            Dictionary definition-@j:@if (@j == 1)
+                                            {<span class="text-danger">(*)</span>}
+                                        </label>
+                                        @Html.EditorFor(model => model.DicDefinitionDynamicTextBox[i], new { htmlAttributes = new { @id = "DicDefinitionDynamicTextBox", @class = "form-control", @placeholder = "Dictionary definition - " + @j } })
+                                        @Html.ValidationMessageFor(model => model.DicDefinitionDynamicTextBox[0], "", new { @class = "text-danger" })
+                                        @if (@j == 1)
+                                        {
+                                            <label id="DicDefinitionDynamicTextBoxErrorMessage" class="text-danger" style="display:none;">Please Enter At least one definition</label>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+
+                        <input type="button" value="+ Add Dictionary Definition" onclick="AddTextBoxInWindow()" class="btn btn-info">
+                    </div>
+
+                </div>
+                <hr>
+                <hr>
+                <div class="form-group panel-body">
+                    <div class="form-actions text-right">
+                        <input type="reset" value="Reset" class="btn btn-danger">
+                        <input type="submit" value="Update and Continue" class="btn btn-primary">
+                    </div>
                 </div>
             </div>
-        </div>
+        </Div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsActive)
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsDelete, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsDelete)
-                    @Html.ValidationMessageFor(model => model.IsDelete, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script type="text/javascript">
+
+    var textboxId = 1; var textboxName = 0;
+    var OnError = function (e) {
+        console.log(e);
+    }
+    function StartValidation() {
+
+        var fileUploaderData = $('#AudioToUpload').val();
+        var DicDefinitionDynamicTextBoxData = $('#DicDefinitionDynamicTextBox').val(); $('#DicDefinitionDynamicTextBoxErrorMessage').hide();
+        if (typeof DicDefinitionDynamicTextBoxData == 'undefined' || DicDefinitionDynamicTextBoxData == "") {
+            $('#DicDefinitionDynamicTextBoxErrorMessage').show();
+            return false;
+        }
+        debugger;
+        var fileExt = getFileExtension(fileUploaderData);
+        if (typeof fileUploaderData == 'undefined' || fileUploaderData == "" || fileExt != 'mp3') {
+            $('#fileUploaderErrorMessage').show();
+            if ($('#SoundUrl').val().length < 1) {
+                return false;
+            } else {
+                $('#fileUploaderErrorMessage').hide();
+                return true;
+            }
+        }
+        else
+            $('#fileUploaderErrorMessage').hide();
+        $('#frmloading').show();
+        return true;
+    }
+    function getFileExtension(filename) {
+        if (typeof filename != 'undefined') {
+            return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+        }
+        return "";
+    }
+    function GetDynamicTextBox(value) {
+        var div = $("<div style='margin-top: 20px;' class='col-md-6'> <label>Dictionary definition-" + textboxId + ":</label>" +
+        "<input class='form-control text-box single-line' id='DicDefinitionDynamicTextBox' name='DicDefinitionDynamicTextBox[" + textboxName + "]' placeholder='Dictionary definition - " + textboxId + "' type='text' value=''>" +
+        "<span class='field-validation-valid text-danger' data-valmsg-for='DicEnglish' data-valmsg-replace='true'></span>   </div>");
+        textboxName++;
+        textboxId++;
+        return div;
+    }
+    function AddTextBoxInWindow() {
+        debugger;
+        if (textboxId == 1) {
+            $('#Dictionary_Data .col-md-6').each(function (i, v) {
+                textboxId++; textboxName++;
+            });
+        }
+        var div = GetDynamicTextBox("");
+        $("#TextBoxContainer").append(div);
+    }
+
+</script>

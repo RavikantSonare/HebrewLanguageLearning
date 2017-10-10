@@ -35,19 +35,25 @@
                         Dictionary Hebrew
                     </th>
                     <th>
-                      Sound
+                        Sound
                     </th>
                     <th>
                         Language Learning Definition
                     </th>
-                  
+
                     <th>
                         Definition
                     </th>
-                  
                     <th>
-                        Active Status
+                        Picture/Videos
                     </th>
+                    <th>
+                        Semantic Domain(s)
+                    </th>
+                    <th>
+                        Example(s)
+                    </th>
+
                     <th>Action</th>
                 </tr>
             </thead>
@@ -71,27 +77,24 @@
                             @Html.DisplayFor(modelItem => item.Count_TagExample)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Count_TagSemanticDomain)
+                            @Html.DisplayFor(modelItem => item.Count_TagExample)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Count_TagDictionaries)
+                            @Html.DisplayFor(modelItem => item.Count_TagExample)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Count_TagSound)
+                            @Html.DisplayFor(modelItem => item.Count_TagExample)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ActiveStatus)
-                        </td>
-
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.DictionaryEntriesId }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.DictionaryEntriesId }) |
+                            @Html.ActionLink("Edit Entry", "Edit", new { id = item.DictionaryEntriesId }) |
+                            @Html.ActionLink("New Entry", "Edit", new { id = item.DictionaryEntriesId }) |
+                            @Html.ActionLink("Edit Picture", "Details", new { id = item.DictionaryEntriesId }) |
                             @Html.ActionLink("Delete", "Delete", new { id = item.DictionaryEntriesId })
                         </td>
                     </tr>
                 }
-                </tbody>
-</table>
+            </tbody>
+        </table>
 
     </div>
 </div>

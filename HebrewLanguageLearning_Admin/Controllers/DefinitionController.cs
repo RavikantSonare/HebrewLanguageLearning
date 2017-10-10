@@ -177,10 +177,13 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DefinitionId,Title,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] HLL_Definition hLL_Definition)
+        public ActionResult Edit(HLL_Definition hLL_Definition)
         {
             if (ModelState.IsValid)
             {
+                HLL_DefinitionModel obj = new HLL_DefinitionModel();
+                hLL_Definition.UpdatedDate = obj.UpdatedDate;
+                hLL_Definition.UpdatedBy = obj.UpdatedBy;
                 db.Entry(hLL_Definition).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

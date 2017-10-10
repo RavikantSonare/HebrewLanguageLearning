@@ -10,6 +10,9 @@
     {
         @*@using (Html.BeginForm()){*@
         @Html.AntiForgeryToken()
+        <div id="frmloading" style="display:none;">
+            <div class="loading">Loading&#8230;</div>
+        </div>
         <Div action="#" role="form">
             <div class="panel panel-default">
                 <div class="panel-heading"><h6 class="panel-title"><i class="icon-pencil3"></i>Add Grammar</h6></div>
@@ -38,7 +41,7 @@
 
                                 <div class="controls imgParent">
                                     @Html.HiddenFor(h => h.GrammarId, new { name = "GrammarId", id = "GrammarId" })
-                                    @Html.TextBoxFor(p => p.GrammarId, null, new { data_val = "false", type = "file", @class = "input-file", name = "Soundfile", id = "Soundfile" })
+                                    @Html.TextBoxFor(p => p.GrammarId, null, new { data_val = "false", type = "file", @class = "input-file", name = "ExcelUploadfile", id = "ExcelUploadfile", accept = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" })
                                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                                     @*@Html.ValidationMessageFor(n => n.Soundfile, null, new { @class = "text_danger", @style = "color: red !important;" })
                                         <div class="col-md-2" id="output"></div>
@@ -70,14 +73,14 @@
                                             @Html.ValidationMessageFor(model => model.AppSentenceDynamicTextBox[i], "", new { @class = "text-danger" })
                                             <label id="AppSentenceDynamicTextBoxErrorMessage" class="text-danger" style="display:none;">Please Enter At least one definition</label>
                                         </div>
-                                        <div class="col-md-4">
+
+                                            <div class="col-md-4">
                                             <label>Picture/Video @j:</label>
 
                                             <div class="controls imgParent">
                                                 @Html.TextBoxFor(p => p.ImgVdofile[i], null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = @j })
                                                 <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                                                 @Html.ValidationMessageFor(n => n.ImgVdofile[i], null, new { @class = "text_danger" })
-                                                @Html.HiddenFor(h => h.VideoUrl[i], new { name = "VideoUrl0", id = "VideoUrl" + i, @class = "video_url" })
                                                 <div class="col-md-2 output" id="@("output" + j)"></div>
                                             </div>
 
@@ -87,8 +90,7 @@
                                             <label>Sound @j:</label>
 
                                             <div class="controls imgParent">
-
-                                                @Html.TextBoxFor(p => p.Soundfile[i], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", id = @j })
+                                                @Html.TextBoxFor(p => p.Soundfile[i], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", accept = ".mp3,audio/*" , id = @j })
                                                 <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                                                 @Html.ValidationMessageFor(n => n.Soundfile[i], null, new { @class = "text_danger", @style = "color: red !important;" })
                                                 @Html.HiddenFor(h => h.SoundUrl[i], new { name = "SoundUrl0", id = "SoundUrl" + i, @class = "sound_url" })
@@ -96,10 +98,8 @@
                                                 <label id="fileUploaderErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Upload Sound file in MP3 format</label>
 
                                             </div>
-
+                                          </div>
                                         </div>
-
-                                    </div>
                                 </div>
 
 
@@ -120,7 +120,7 @@
                 <hr>
                 <div class="form-group panel-body">
                     <div class="form-actions text-right">
-                        <input type="reset" value="Cancel" class="btn btn-danger">
+                       <input type="reset" value="Reset" class="btn btn-danger">
                         <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">
                     </div>
                 </div>
@@ -260,20 +260,20 @@
         });
 
     });
-    isValid = function () {
-        var txtEnglishGrammarData = $('#EnglishGrammar').val(); var txtHebrewGrammarData = $('#HebrewGrammar').val();
-        $('#EnglishGrammarErrorMessage').hide(); $('#HebrewGrammarErrorMessage').hide();
-        if (typeof txtEnglishGrammarData == 'undefined' || txtEnglishGrammarData == "") {
-            $('#EnglishGrammarErrorMessage').show();
-            return false;
-        }
-        if (typeof txtHebrewGrammarData == 'undefined' || txtHebrewGrammarData == "") {
-            $('#HebrewGrammarErrorMessage').show();
-            return false;
-        }
-        return true;
+    //isValid = function () {
+    //    var txtEnglishGrammarData = $('#EnglishGrammar').val(); var txtHebrewGrammarData = $('#HebrewGrammar').val();
+    //    $('#EnglishGrammarErrorMessage').hide(); $('#HebrewGrammarErrorMessage').hide();
+    //    if (typeof txtEnglishGrammarData == 'undefined' || txtEnglishGrammarData == "") {
+    //        $('#EnglishGrammarErrorMessage').show();
+    //        return false;
+    //    }
+    //    if (typeof txtHebrewGrammarData == 'undefined' || txtHebrewGrammarData == "") {
+    //        $('#HebrewGrammarErrorMessage').show();
+    //        return false;
+    //    }
+    //    return true;
 
-    }
+    //}
     var getDetail = function (x, baseUrl) {
         $.ajax({ url: baseUrl, method: 'post', data: { GrammarId: x, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
             //$('#Application_Data').html(res);
@@ -325,6 +325,7 @@
     function SubmitButtonOnclick() {
 
         if (isValid()) {
+            $('#frmloading').show();
             var formElement = document.querySelector("#CreateGrammar");
             var formData = new FormData(formElement);
             var xhr = new XMLHttpRequest();
