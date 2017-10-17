@@ -27,10 +27,10 @@ namespace HebrewLanguageLearning_Admin.Models
         public int Count_TagDictionaries { get; set; }
         public int Count_TagSound { get; set; }
         public string SoundTitle { get; set; }
-       // [Required(ErrorMessage = "Please Upload Sound file in MP3 format ")]
+        // [Required(ErrorMessage = "Please Upload Sound file in MP3 format ")]
         public HttpPostedFileBase Soundfile { get; set; }
         public string SoundUrl { get; set; }
-
+        public List<HLL_DefinitionModel> DefinitionList { get; set; }
     }
 
 }

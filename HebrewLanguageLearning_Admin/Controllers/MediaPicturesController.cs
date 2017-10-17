@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using HebrewLanguageLearning_Admin.DBContext;
 using HebrewLanguageLearning_Admin.GenericClasses;
 using HebrewLanguageLearning_Admin.Models;
+using System.Transactions;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
@@ -67,8 +68,9 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
         // GET: Pictures/Edit/5
 
-        [HttpPost]
+
         //[ValidateAntiForgeryToken]
+        [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> CreateImage(HLL_Media_PicturesModels hLL_Media_Pictures)
         {
             if (ModelState.IsValid)
@@ -112,6 +114,44 @@ namespace HebrewLanguageLearning_Admin.Controllers
             catch (Exception ex) { }
 
         }
+
+
+        [HttpPost]
+        public bool InsertMultiplePicture(List<HLL_Media_PicturesModels> hLL_PicturesModelslst)
+        {
+            bool Status = false;
+            using (TransactionScope scope = new TransactionScope())
+            {
+                HLLDBContext contextdb = new HLLDBContext();
+                try
+                {
+                   
+                    foreach (var entityToInsert in hLL_PicturesModelslst)
+                    {
+                        entityToInsert.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
+                        if (string.IsNullOrEmpty(entityToInsert.ImgUrl)) {
+                            //var result = AsyncContext.Run(FilesUtility.base64ToImage(ImageData, hLL_Media_Pictures.PictureId, "Pictures", "temp"));
+                            //entityToInsert.ImgUrl = await FilesUtility.base64ToImage(ImageData, hLL_Media_Pictures.PictureId, "Pictures", "temp");
+                        }
+
+                    }
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
+                    List<HLL_Media_Pictures> DataModel = AutoMapper.Mapper.Map<List<HLL_Media_PicturesModels>, List<HLL_Media_Pictures>>(hLL_PicturesModelslst);
+                    contextdb.HLL_Media_Pictures.AddRange(DataModel);
+                    contextdb.SaveChanges();
+                }
+                finally
+                {
+                    if (contextdb != null)
+                        contextdb.Dispose();
+                }
+                scope.Complete();
+                Status = true;
+            }
+            return Status;
+        }
+
+
         public ActionResult Edit(string id)
         {
             if (id == null)

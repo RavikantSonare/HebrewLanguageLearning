@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using HebrewLanguageLearning_Admin.DBContext;
 using HebrewLanguageLearning_Admin.Models;
 using HebrewLanguageLearning_Admin.GenericClasses;
+using System.Transactions;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
@@ -77,6 +78,36 @@ namespace HebrewLanguageLearning_Admin.Controllers
             }
 
             return new EmptyResult();
+        }
+
+        [HttpPost]
+        public bool InsertMultipleExamples(List<HLL_ExampleModels> hLL_ExampleModelslst)
+        {
+            bool Status = false;
+            using (TransactionScope scope = new TransactionScope())
+            {
+                HLLDBContext contextdb = new HLLDBContext();
+                try
+                {
+                    foreach (var entityToInsert in hLL_ExampleModelslst)
+                    {
+                        entityToInsert.ExampleId = EntityConfig.getnewid("HLL_Example");
+                    }
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_ExampleModels, HLL_Example>(); });
+                    List<HLL_Example> DataModel = AutoMapper.Mapper.Map<List<HLL_ExampleModels>, List<HLL_Example>>(hLL_ExampleModelslst);
+                    contextdb.HLL_Example.AddRange(DataModel);
+                    contextdb.SaveChanges();
+                }
+                catch(Exception e) { }
+                finally
+                {
+                    if (contextdb != null)
+                        contextdb.Dispose();
+                }
+                scope.Complete();
+                Status = true;
+            }
+            return Status;
         }
         // GET: Example/Edit/5
         public ActionResult Edit(string id)

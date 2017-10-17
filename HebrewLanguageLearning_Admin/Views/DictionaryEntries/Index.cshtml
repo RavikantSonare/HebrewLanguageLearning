@@ -20,7 +20,7 @@
 </div>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+  
 </p>
 <div class="panel panel-default">
     <div class="panel-heading"><h6 class="panel-title"><i class="icon-table"></i> Dictionary List</h6></div>
@@ -87,7 +87,7 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit Entry", "Edit", new { id = item.DictionaryEntriesId }) |
-                            @Html.ActionLink("New Entry", "Edit", new { id = item.DictionaryEntriesId }) |
+                            @Html.ActionLink("New Entry", "Create") |
                             @Html.ActionLink("Edit Picture", "Details", new { id = item.DictionaryEntriesId }) |
                             @Html.ActionLink("Delete", "Delete", new { id = item.DictionaryEntriesId })
                         </td>

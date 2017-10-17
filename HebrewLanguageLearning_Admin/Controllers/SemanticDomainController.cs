@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using HebrewLanguageLearning_Admin.DBContext;
 using HebrewLanguageLearning_Admin.Models;
 using HebrewLanguageLearning_Admin.GenericClasses;
+using System.Transactions;
+
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
@@ -64,7 +66,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         }
 
         [HttpPost]
-        public async System.Threading.Tasks.Task<ActionResult>  CreateSemanticDomain(HLL_SemanticDomainModels hLL_SemanticDomain)
+        public async System.Threading.Tasks.Task<ActionResult> CreateSemanticDomain(HLL_SemanticDomainModels hLL_SemanticDomain)
         {
             if (ModelState.IsValid)
             {
@@ -79,6 +81,35 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View(hLL_SemanticDomain);
         }
 
+        [HttpPost]
+        public bool InsertMultipleSemanticDomain(List<HLL_SemanticDomainModels> hLL_SemanticDomainlst)
+        {
+            bool Status = false;
+            using (TransactionScope scope = new TransactionScope())
+            {
+                HLLDBContext contextdb = new HLLDBContext();
+                try
+                {
+                    foreach (var entityToInsert in hLL_SemanticDomainlst)
+                    {
+                        entityToInsert.SemanticDomainId = EntityConfig.getnewid("HLL_SemanticDomain");
+                    }
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SemanticDomainModels, HLL_SemanticDomain>(); });
+                    List<HLL_SemanticDomain> DataModel = AutoMapper.Mapper.Map<List<HLL_SemanticDomainModels>,List<HLL_SemanticDomain>>(hLL_SemanticDomainlst);
+                    contextdb.HLL_SemanticDomain.AddRange(DataModel);
+                    contextdb.SaveChanges();
+                }
+                finally
+                {
+                    if (contextdb != null)
+                        contextdb.Dispose();
+                }
+                scope.Complete();
+                Status = true;
+            }
+              return Status;
+        }
+        
         // GET: SemanticDomain/Edit/5
         public ActionResult Edit(string id)
         {

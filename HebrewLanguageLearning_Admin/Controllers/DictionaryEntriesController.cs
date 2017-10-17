@@ -30,16 +30,50 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: DictionaryEntries/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            HLL_DictionaryModel DataModelDictionary = new HLL_DictionaryModel();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                var DictionaryObj = db.HLL_DictionaryEntries.Find(id);
+                if (DictionaryObj != null)
+                {
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryEntries, HLL_DictionaryModel>(); });
+                    DataModelDictionary = AutoMapper.Mapper.Map<HLL_DictionaryEntries, HLL_DictionaryModel>(DictionaryObj);
+
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Definition, HLL_DefinitionModel>(); });
+                    var DefinitionList = AutoMapper.Mapper.Map<List<HLL_Definition>, List<HLL_DefinitionModel>>(db.HLL_Definition.Where(z => z.DicEntId == DataModelDictionary.DictionaryEntriesId).ToList());
+
+                    foreach (var Item in DefinitionList)
+                    {
+                        AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_Pictures, HLL_Media_PicturesModels>(); });
+                        Item.PictureList = AutoMapper.Mapper.Map<List<HLL_Media_Pictures>, List<HLL_Media_PicturesModels>>(db.HLL_Media_Pictures.Where(x => x.MasterTableId.Equals(Item.DefinitionId)).ToList());
+
+                        AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SemanticDomain, HLL_SemanticDomainModels>(); });
+                        Item.SemanticDomainsList = AutoMapper.Mapper.Map<List<HLL_SemanticDomain>, List<HLL_SemanticDomainModels>>(db.HLL_SemanticDomain.Where(x => x.DefinitionId.Equals(Item.DefinitionId)).ToList());
+
+                        AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Example, HLL_ExampleModels>(); });
+                        Item.ExampleList = AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(db.HLL_Example.Where(x => x.DefinitionId.Equals(Item.DefinitionId)).ToList());
+
+                    }
+
+                    DataModelDictionary.DefinitionList = DefinitionList;
+
+                    if (DataModelDictionary == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(DataModelDictionary);
+                }
             }
-            HLL_DictionaryEntries hLL_DictionaryEntries = db.HLL_DictionaryEntries.Find(id);
-            if (hLL_DictionaryEntries == null)
+            catch
             {
-                return HttpNotFound();
+                return View(DataModelDictionary);
             }
-            return View(hLL_DictionaryEntries);
+            return View(DataModelDictionary);
         }
 
         // GET: DictionaryEntries/Create
@@ -65,16 +99,16 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryModel, HLL_DictionaryEntries>(); });
                 HLL_DictionaryEntries DataModel = AutoMapper.Mapper.Map<HLL_DictionaryModel, HLL_DictionaryEntries>(hLL_DictionaryEntries);
 
-
-                /* Add Audio */
-                MediaSoundController _obj = new MediaSoundController();
-                HLL_Media_SoundModels _ModelObj = new HLL_Media_SoundModels();
-                _ModelObj.MasterTableId = hLL_DictionaryEntries.DictionaryEntriesId;
-                _ModelObj.Title = hLL_DictionaryEntries.SoundTitle;
-                _ModelObj.AudioUrl = hLL_DictionaryEntries.SoundUrl.Substring(22);
-
-                _obj.CreateAudio(_ModelObj);
-
+                if (!string.IsNullOrEmpty(hLL_DictionaryEntries.SoundUrl))
+                {
+                    /* Add Audio */
+                    MediaSoundController _obj = new MediaSoundController();
+                    HLL_Media_SoundModels _ModelObj = new HLL_Media_SoundModels();
+                    _ModelObj.MasterTableId = hLL_DictionaryEntries.DictionaryEntriesId;
+                    _ModelObj.Title = hLL_DictionaryEntries.SoundTitle;
+                    _ModelObj.AudioUrl = hLL_DictionaryEntries.SoundUrl.Substring(22);
+                    _obj.CreateAudio(_ModelObj);
+                }
                 /* Add Definition */
                 DefinitionController _objDef = new DefinitionController();
                 HLL_DefinitionModel _ModelObjDef = new HLL_DefinitionModel();
@@ -90,8 +124,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                 db.HLL_DictionaryEntries.Add(DataModel);
                 db.SaveChanges();
-                // RedirectToAction("DefinitionList", "Definition");
-                return JavaScript("window.location = '/Definition/DefinitionList'");
+                // RedirectToAction("DefinitionList", "Definition"); return JavaScript("window.location = '/Definition/DefinitionList'");
+                return JavaScript("window.location = '/DictionaryEntries/Details/" + hLL_DictionaryEntries.DictionaryEntriesId + "'");
             }
 
             return Content("Please Upload Sound file in MP3 format");
@@ -144,7 +178,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 /* Add Update Definition */
                 DefinitionController _objDef = new DefinitionController();
                 HLL_DefinitionModel _ModelObjDef = new HLL_DefinitionModel();
-
                 if (hLL_DictionaryModel.Soundfile != null)
                 {
                     _ModelObjSound.MasterTableId = hLL_DictionaryModel.DictionaryEntriesId;
@@ -152,8 +185,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     _ModelObjSound.TableRef = "DictionaryEntries";
                     _objMediaSound.SetSound(_ModelObjSound);
                 }
-
-
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryModel, HLL_DictionaryEntries>(); });
                 HLL_DictionaryEntries DataModel = AutoMapper.Mapper.Map<HLL_DictionaryModel, HLL_DictionaryEntries>(hLL_DictionaryModel);
                 db.Entry(DataModel).State = EntityState.Modified;
@@ -162,7 +193,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                 var tmpList = db.HLL_Definition.Where(h => h.DicEntId.Equals(DataModel.DictionaryEntriesId) && h.IsDelete == false).Select(z => z.DefinitionId).ToList();
                 int i = 0;
-                string DefinitionId = string.Empty; 
+                string DefinitionId = string.Empty;
                 foreach (var Item in hLL_DictionaryModel.DicDefinitionDynamicTextBox)
                 {
                     if (!string.IsNullOrEmpty(Item))
@@ -170,7 +201,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         DefinitionId = string.Empty;
                         if (tmpList.Count() > i)
                         {
-                             DefinitionId = tmpList[i];
+                            DefinitionId = tmpList[i];
                         }
                         var dicData = db.HLL_Definition.Where(p => p.DicEntId == hLL_DictionaryModel.DictionaryEntriesId && p.DefinitionId == DefinitionId).FirstOrDefault();
 
@@ -183,7 +214,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         {
                             _ModelObjDef.DicEntId = hLL_DictionaryModel.DictionaryEntriesId;
                             _ModelObjDef.Title = Item;
-                             _objDef.Create(_ModelObjDef);
+                            _objDef.Create(_ModelObjDef);
                         }
                     }
                     i++;
@@ -197,9 +228,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: DictionaryEntries/Delete/5
         public ActionResult Delete(string id)
         {
-
-
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -223,14 +251,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        //public ActionResult AddControl()
-        //{
-        //    TextBox txtDic = new TextBox();
-        //    txtDic.Text = "</label><div class='col-sm-8'>";
-        //    ctrlPlaceholderTextBox.Controls.Add(lblop);
-        //    return new EmptyResult();
-        //}
-        // POST: Home
         [HttpPost]
         public ActionResult SaveData(string[] DynamicTextBox)
         {

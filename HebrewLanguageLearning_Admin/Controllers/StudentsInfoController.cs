@@ -48,7 +48,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
         {
             return View();
         }
-
+        MediaPicturesController _objMediaImage = new MediaPicturesController();
+        HLL_Media_PicturesModels _ModelObjMedPic = new HLL_Media_PicturesModels();
         // POST: StudentsInfo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -61,8 +62,13 @@ namespace HebrewLanguageLearning_Admin.Controllers
             if (ModelState.IsValid)
             {
                 hLL_StudentsInfo.StudentsId = EntityConfig.getnewid("HLL_StudentsInfo");
-                var ImageData = Request.Files["Imagefile"];
-                if (string.IsNullOrEmpty(hLL_StudentsInfo.ImgUrl)) { hLL_StudentsInfo.ImgUrl = await FilesUtility.base64ToImage(FilesUtility.FileTobase64Convertion(ImageData), hLL_StudentsInfo.StudentsId, "Students", "temp"); }
+                if (hLL_StudentsInfo.Imagefile != null)
+                {
+                    _ModelObjMedPic.MasterTableId = hLL_StudentsInfo.StudentsId;
+                    _ModelObjMedPic.Imagefile = hLL_StudentsInfo.Imagefile;
+                    _ModelObjMedPic.TableRef = "StudentsInfo";
+                    _objMediaImage.SetPicture(_ModelObjMedPic);
+                }
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_StudentsInfoModel, HLL_StudentsInfo>(); });
                 HLL_StudentsInfo DataModel = AutoMapper.Mapper.Map<HLL_StudentsInfoModel, HLL_StudentsInfo>(hLL_StudentsInfo);
 
@@ -100,8 +106,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(HLL_StudentsInfoModel hLL_StudentsInfo)
         {
-            MediaPicturesController _objMediaImage = new MediaPicturesController();
-            HLL_Media_PicturesModels _ModelObjMedPic = new HLL_Media_PicturesModels();
+           
             if (ModelState.IsValid)
             {
 
