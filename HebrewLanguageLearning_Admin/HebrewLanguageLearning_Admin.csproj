@@ -422,6 +422,7 @@
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\GrammarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LanguageLearningDefinitionController.cs" />
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MediaPicturesController.cs" />
@@ -486,6 +487,9 @@
     <Compile Include="DBContext\HLL_HebrewGrammarData.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\HLL_LanguageLearningDefinition.cs">
+      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\HLL_LessonsGrammar.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
@@ -518,6 +522,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\HLL_ApplicationModel.cs" />
     <Compile Include="Models\HLL_CommonField.cs" />
@@ -857,6 +862,11 @@
     <Content Include="Views\Vocabulary\Details.cshtml" />
     <Content Include="Views\Vocabulary\Edit.cshtml" />
     <Content Include="Views\Vocabulary\Index.cshtml" />
+    <Content Include="Views\LanguageLearningDefinition\Create.cshtml" />
+    <Content Include="Views\LanguageLearningDefinition\Delete.cshtml" />
+    <Content Include="Views\LanguageLearningDefinition\Details.cshtml" />
+    <Content Include="Views\LanguageLearningDefinition\Edit.cshtml" />
+    <Content Include="Views\LanguageLearningDefinition\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

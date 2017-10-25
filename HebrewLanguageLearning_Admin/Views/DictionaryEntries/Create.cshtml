@@ -16,7 +16,7 @@
         <div id="frmloading" style="display:none;">
             <div class="loading">Loading&#8230;</div>
         </div>
-     
+
         @Html.AntiForgeryToken()
         <Div action="#" role="form">
             <div class="panel panel-default">
@@ -46,13 +46,13 @@
                                 <label>Strong's Number:<span class="text-danger">(*)</span></label>
                                 @Html.EditorFor(model => model.DicStrongNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Strong's Number" } })
                                 @Html.ValidationMessageFor(model => model.DicStrongNo, "", new { @class = "text-danger" })
-                                </div>
-                             @*<div style="border-color:sandybrown;border-bottom-style:solid;"><span class="text-danger">(*)</span>*@
+                            </div>
+                            @*<div style="border-color:sandybrown;border-bottom-style:solid;"><span class="text-danger">(*)</span>*@
                             <div class="col-md-3">
                                 <label>Sound:</label>
                                 <div class="controls imgParent">
                                     @Html.HiddenFor(h => h.SoundUrl, new { name = "SoundUrl", id = "SoundUrl" })
-                                    @Html.TextBoxFor(p => p.Soundfile, null, new { data_val = "false", type = "file", @class = "input-file", name = "Soundfile", accept = ".mp3,audio/*" , id = "Soundfile" })
+                                    @Html.TextBoxFor(p => p.Soundfile, null, new { data_val = "false", type = "file", @class = "input-file", name = "Soundfile", accept = ".mp3,audio/*", id = "Soundfile" })
                                     <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                                     @Html.ValidationMessageFor(n => n.Soundfile, null, new { @class = "text_danger", @style = "color: red !important;" })
                                     <div class="col-md-2" id="output"></div>
@@ -71,12 +71,19 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Language Learning Definition:<span class="text-danger">(*)</span></label>
-                                @Html.EditorFor(model => model.DicLanguageLearningDefinition, new { htmlAttributes = new { @class = "form-control", @placeholder = "Language Learning Definition" } })
-                                @Html.ValidationMessageFor(model => model.DicLanguageLearningDefinition, "", new { @class = "text-danger" })
-
+                                <label>Language Learning Definition: 1</label>
+                                @Html.EditorFor(model => model.DicLanguageLearningDefinitionDynamicTextBox[0], new { htmlAttributes = new { @class = "form-control", @placeholder = "Language Learning Definition 1" } })
+                            </div>
+                            <div class="col-md-6">
+                                <label>Language Learning Definition: 2</label>
+                                @Html.EditorFor(model => model.DicLanguageLearningDefinitionDynamicTextBox[1], new { htmlAttributes = new { @class = "form-control", @placeholder = "Language Learning Definition 2" } })
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="row" id="TextBoxContainerLLD">
+                            </div>
+                        </div>
+                        <input type="button" value="+ Add Language Learning Definition" onclick="AddLanguageLearningDefinition()" class="btn btn-info">
                     </div>
                     <hr>
                     <div class="block-inner">
@@ -161,8 +168,51 @@
 <script type="text/javascript">
 
     var textboxId = 7; var textboxName = 6;
+    var textboxIdLLD = 3; var textboxNameLLD = 2;
     var OnError = function (e) {
         console.log(e);
+    }
+   
+    function getFileExtension(filename) {
+        if (typeof filename != 'undefined') {
+            return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+        }
+        return "";
+
+    }
+    function GetDynamicTextBox(value) {
+        var div = "";
+        if (value == 0) {
+            div = $("<div style='margin-top: 15px;' class='col-md-6'> <label>Dictionary definition-" + textboxId + ":</label>" +
+            "<input class='form-control text-box single-line' id='DicDefinitionDynamicTextBox' name='DicDefinitionDynamicTextBox[" + textboxName + "]' placeholder='Dictionary definition - " + textboxId + "' type='text' value=''></div>");
+            textboxName++;
+            textboxId++;
+        }
+        else {
+            div = $("<div style='margin-top: 15px;' class='col-md-6'> <label>Language Learning Definition-" + textboxIdLLD + ":</label>" +
+                   "<input class='form-control text-box single-line' id='LanLearDefinitionDynamicTextBox' name='DicLanguageLearningDefinitionDynamicTextBox[" + textboxNameLLD + "]' placeholder='Language Learning Definition - " + textboxIdLLD + "' type='text' value=''></div>");
+            textboxNameLLD++;
+            textboxIdLLD++;
+        }
+        return div;
+    }
+
+    function AddTextBox() {
+        var div = GetDynamicTextBox(0);
+        $("#TextBoxContainer").append(div);
+    }
+    $(function () {
+        var values = eval('@Html.Raw(ViewBag.Values)');
+        if (values != null) {
+            $("#TextBoxContainer").html("");
+            $(values).each(function () {
+                $("#TextBoxContainer").append(GetDynamicTextBox(this));
+            });
+        }
+    });
+    var AddLanguageLearningDefinition = function () {
+        var div = GetDynamicTextBox(1);
+        $("#TextBoxContainerLLD").append(div);
     }
     function StartValidation() {
 
@@ -188,33 +238,4 @@
         //$('#frmloading').show();
         return true;
     }
-    function getFileExtension(filename) {
-        if (typeof filename != 'undefined') {
-            return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
-        }
-        return "";
-
-    }
-    function GetDynamicTextBox(value) {
-
-        var div = $("<div style='margin-top: 15px;' class='col-md-6'> <label>Dictionary definition-" + textboxId + ":</label>" +
-        "<input class='form-control text-box single-line' id='DicDefinitionDynamicTextBox' name='DicDefinitionDynamicTextBox[" + textboxName + "]' placeholder='Dictionary definition - " + textboxId + "' type='text' value=''>" +
-        "<span class='field-validation-valid text-danger' data-valmsg-for='DicEnglish' data-valmsg-replace='true'></span>   </div>");
-        textboxName++;
-        textboxId++;
-        return div;
-    }
-    function AddTextBox() {
-        var div = GetDynamicTextBox("");
-        $("#TextBoxContainer").append(div);
-    }
-    $(function () {
-        var values = eval('@Html.Raw(ViewBag.Values)');
-        if (values != null) {
-            $("#TextBoxContainer").html("");
-            $(values).each(function () {
-                $("#TextBoxContainer").append(GetDynamicTextBox(this));
-            });
-        }
-    });
 </script>

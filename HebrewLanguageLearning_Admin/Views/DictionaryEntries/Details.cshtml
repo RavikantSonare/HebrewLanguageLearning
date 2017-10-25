@@ -1,5 +1,4 @@
 ﻿@model HebrewLanguageLearning_Admin.Models.HLL_DictionaryModel
-
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -35,9 +34,72 @@
         <table class="table">
             <thead>
                 <tr>
-
                     <th>
                         Language Learning Definition
+                    </th>
+                    <th>
+                        Picture/Videos
+                    </th>
+
+                    <th>
+                        Semantic Domain(s)
+                    </th>
+                    <th>
+                        Example(s)
+                    </th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.LngLrngDefinitionList != null)
+                {
+                    foreach (var item in Model.LngLrngDefinitionList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @foreach (var itemData in item.PictureList)
+                                {
+                                    @Html.Raw(itemData.Title.ToString() + ",");
+                                }
+                            </td>
+                            <td>
+                                @foreach (var itemData in item.SemanticDomainsList)
+                                {
+                                    @Html.Raw(itemData.Title.ToString() + ",");
+                                }
+                            </td>
+                            <td>
+                                @foreach (var itemData in item.ExampleList)
+                                {
+                                    @Html.Raw(itemData.Title.ToString() + ",");
+                                }
+
+                            </td>
+                            <td>
+                                <a data-toggle="modal" class="btn btn-info" role="button" href="#form_modal_Definition" onclick="SetDefinitionModelData('@Html.DisplayFor(modelItem => item.DefinitionId)').setTimeout(window.location.reload.bind(window.location), 5000)">  Add Content</a>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading"><h6 class="panel-title"><i class="icon-table"></i> Dictionary Data</h6></div>
+    <div class="datatable">
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th>
+                        Dictionary Definition
                     </th>
 
                     <th>
@@ -101,6 +163,5 @@
         $('#ModalDiv').html("<div id='form_modal_Definition' class='modal fade' tabindex='-1' role='dialog'></div>");
         $('#form_modal_Definition').load('@Url.Action("GetDefinitionView", "Definition")?DefinitionId=' + DefinitionId + '&Next=0');
     }
-    var ShowLoder = function () { alert("Hello1"); setTimeout(function () { alert("Hello"); }, 3000); };
-
+  
 </script>

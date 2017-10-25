@@ -197,6 +197,21 @@
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="HLL_LanguageLearningDefinition">
+          <Key>
+            <PropertyRef Name="LanLernDefId" />
+          </Key>
+          <Property Name="LanLernDefId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DicEntId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="ActiveStatus" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="HLL_LessonsGrammar">
           <Key>
             <PropertyRef Name="LessonsGrammarId" />
@@ -439,6 +454,7 @@
           <EntitySet Name="HLL_Grammar" EntityType="Self.HLL_Grammar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_HebrewApplicationData" EntityType="Self.HLL_HebrewApplicationData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_HebrewGrammarData" EntityType="Self.HLL_HebrewGrammarData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HLL_LanguageLearningDefinition" EntityType="Self.HLL_LanguageLearningDefinition" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_LessonsGrammar" EntityType="Self.HLL_LessonsGrammar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Media_Pictures" EntityType="Self.HLL_Media_Pictures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Media_Sound" EntityType="Self.HLL_Media_Sound" Schema="dbo" store:Type="Tables" />
@@ -522,6 +538,7 @@
           <EntitySet Name="HLL_Grammar" EntityType="Model.HLL_Grammar" />
           <EntitySet Name="HLL_Vocabulary" EntityType="Model.HLL_Vocabulary" />
           <EntitySet Name="HLL_LessonsGrammar" EntityType="Model.HLL_LessonsGrammar" />
+          <EntitySet Name="HLL_LanguageLearningDefinition" EntityType="Model.HLL_LanguageLearningDefinition" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -879,6 +896,21 @@
           <Property Name="GrammarPoint3" Type="Int32" />
           <Property Name="GrammarPoint4" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_LanguageLearningDefinition">
+          <Key>
+            <PropertyRef Name="LanLernDefId" />
+          </Key>
+          <Property Name="LanLernDefId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DicEntId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ActiveStatus" Type="Boolean" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsDelete" Type="Boolean" />
@@ -1261,6 +1293,22 @@
                 <ScalarProperty Name="fkGrammarId" ColumnName="fkGrammarId" />
                 <ScalarProperty Name="fkLessonId" ColumnName="fkLessonId" />
                 <ScalarProperty Name="LessonsGrammarId" ColumnName="LessonsGrammarId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_LanguageLearningDefinition">
+            <EntityTypeMapping TypeName="Model.HLL_LanguageLearningDefinition">
+              <MappingFragment StoreEntitySet="HLL_LanguageLearningDefinition">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DicEntId" ColumnName="DicEntId" />
+                <ScalarProperty Name="LanLernDefId" ColumnName="LanLernDefId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

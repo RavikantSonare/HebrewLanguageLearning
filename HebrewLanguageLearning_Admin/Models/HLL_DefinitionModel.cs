@@ -8,6 +8,7 @@ namespace HebrewLanguageLearning_Admin.Models
     public class HLL_DefinitionModel: HLL_CommonField
     {
         public string DefinitionId { get; set; }
+        public string LanLernDefId { get; set; }
         public string DicEntId { get; set; }
         public string Title { get; set; }
         //Picture Id

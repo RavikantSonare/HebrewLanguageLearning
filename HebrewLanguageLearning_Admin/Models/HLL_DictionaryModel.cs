@@ -16,8 +16,9 @@ namespace HebrewLanguageLearning_Admin.Models
         public string DicEnglish { get; set; }
         [Required(ErrorMessage = "Please Fill Hebrew Text")]
         public string DicHebrew { get; set; }
-        [Required(ErrorMessage = "Please Enter Language Learning Definition.")]
+        //[Required(ErrorMessage = "Please Enter Language Learning Definition.")]
         public string DicLanguageLearningDefinition { get; set; }
+        public string[] DicLanguageLearningDefinitionDynamicTextBox { get; set; }
         [Required(ErrorMessage = "Please Enter at least One definition.")]
         public string[] DicDefinitionDynamicTextBox { get; set; }
         public int Count_TagPictures { get; set; }
@@ -31,6 +32,7 @@ namespace HebrewLanguageLearning_Admin.Models
         public HttpPostedFileBase Soundfile { get; set; }
         public string SoundUrl { get; set; }
         public List<HLL_DefinitionModel> DefinitionList { get; set; }
+        public List<HLL_DefinitionModel> LngLrngDefinitionList { get; set; }
     }
 
 }
