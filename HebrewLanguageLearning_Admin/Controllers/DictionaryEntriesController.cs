@@ -39,7 +39,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 var DictionaryObj = db.HLL_DictionaryEntries.Find(id);
-                var LLDictionaryObj = db.HLL_LanguageLearningDefinition.Where(t=>t.DicEntId==id).ToList();
+                var LLDictionaryObj = db.HLL_LanguageLearningDefinition.Where(t => t.DicEntId == id).ToList();
                 if (DictionaryObj != null)
                 {
                     AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryEntries, HLL_DictionaryModel>(); });
@@ -54,10 +54,10 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         Item.PictureList = AutoMapper.Mapper.Map<List<HLL_Media_Pictures>, List<HLL_Media_PicturesModels>>(db.HLL_Media_Pictures.Where(x => x.MasterTableId.Equals(Item.DefinitionId)).ToList());
 
                         AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SemanticDomain, HLL_SemanticDomainModels>(); });
-                        Item.SemanticDomainsList = AutoMapper.Mapper.Map<List<HLL_SemanticDomain>, List<HLL_SemanticDomainModels>>(db.HLL_SemanticDomain.Where(x => x.DefinitionId.Equals(Item.DefinitionId)).ToList());
+                        Item.SemanticDomainsList = AutoMapper.Mapper.Map<List<HLL_SemanticDomain>, List<HLL_SemanticDomainModels>>(db.HLL_SemanticDomain.Where(x => x.MasterTableId.Equals(Item.DefinitionId)).ToList());
 
                         AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Example, HLL_ExampleModels>(); });
-                        Item.ExampleList = AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(db.HLL_Example.Where(x => x.DefinitionId.Equals(Item.DefinitionId)).ToList());
+                        Item.ExampleList = AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(db.HLL_Example.Where(x => x.MasterTableId.Equals(Item.DefinitionId)).ToList());
 
                     }
                     if (LLDictionaryObj != null)
@@ -74,17 +74,15 @@ namespace HebrewLanguageLearning_Admin.Controllers
                             Item.PictureList = AutoMapper.Mapper.Map<List<HLL_Media_Pictures>, List<HLL_Media_PicturesModels>>(db.HLL_Media_Pictures.Where(x => x.MasterTableId.Equals(Item.LanLernDefId)).ToList());
 
                             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SemanticDomain, HLL_SemanticDomainModels>(); });
-                            Item.SemanticDomainsList = AutoMapper.Mapper.Map<List<HLL_SemanticDomain>, List<HLL_SemanticDomainModels>>(db.HLL_SemanticDomain.Where(x => x.DefinitionId.Equals(Item.LanLernDefId)).ToList());
+                            Item.SemanticDomainsList = AutoMapper.Mapper.Map<List<HLL_SemanticDomain>, List<HLL_SemanticDomainModels>>(db.HLL_SemanticDomain.Where(x => x.MasterTableId.Equals(Item.LanLernDefId)).ToList());
 
                             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Example, HLL_ExampleModels>(); });
-                            Item.ExampleList = AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(db.HLL_Example.Where(x => x.DefinitionId.Equals(Item.LanLernDefId)).ToList());
+                            Item.ExampleList = AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(db.HLL_Example.Where(x => x.MasterTableId.Equals(Item.LanLernDefId)).ToList());
 
                         }
                         DataModelDictionary.LngLrngDefinitionList = LLDefinitionList;
                     }
                     DataModelDictionary.DefinitionList = DefinitionList;
-
-
                     if (DataModelDictionary == null)
                     {
                         return HttpNotFound();
@@ -179,16 +177,25 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryEntries, HLL_DictionaryModel>(); });
             HLL_DictionaryModel DataModel = AutoMapper.Mapper.Map<HLL_DictionaryEntries, HLL_DictionaryModel>(db.HLL_DictionaryEntries.Find(id));
-            var tmpList = db.HLL_Definition.Where(h => h.DicEntId.Equals(DataModel.DictionaryEntriesId) && h.IsDelete == false).ToList();
-            DataModel.DicDefinitionDynamicTextBox = new string[tmpList.Count()];
+            var tmpListDicDefinition = db.HLL_Definition.Where(h => h.DicEntId.Equals(DataModel.DictionaryEntriesId) && h.IsDelete == false).ToList();
+            DataModel.DicDefinitionDynamicTextBox = new string[tmpListDicDefinition.Count()];
             int i = 0;
-            foreach (var Item in tmpList)
+            foreach (var Item in tmpListDicDefinition)
             {
                 DataModel.DicDefinitionDynamicTextBox[i] = Item.Title;
                 i++;
             }
 
-            // HLL_DictionaryModel hLL_DictionaryEntries = db.HLL_DictionaryEntries.Find(id);
+            var tmpLLDList = db.HLL_LanguageLearningDefinition.Where(h => h.DicEntId.Equals(DataModel.DictionaryEntriesId) && h.IsDelete == false).ToList();
+            DataModel.DicLanguageLearningDefinitionDynamicTextBox = new string[tmpLLDList.Count()];
+            i = 0;
+            foreach (var Item in tmpLLDList)
+            {
+                DataModel.DicLanguageLearningDefinitionDynamicTextBox[i] = Item.Title;
+                i++;
+            }
+
+            var picData = db.HLL_Media_Sound.Where(p => p.MasterTableId.Equals(id)).FirstOrDefault(); if (picData != null) { DataModel.SoundTitle = picData.Title; }
             if (DataModel == null)
             {
                 return HttpNotFound();
@@ -212,11 +219,14 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 /* Add Update Definition */
                 DefinitionController _objDef = new DefinitionController();
                 HLL_DefinitionModel _ModelObjDef = new HLL_DefinitionModel();
-                if (hLL_DictionaryModel.Soundfile != null)
+                if (hLL_DictionaryModel.Soundfile != null || hLL_DictionaryModel.SoundUrl != null)
                 {
+
                     _ModelObjSound.MasterTableId = hLL_DictionaryModel.DictionaryEntriesId;
                     _ModelObjSound.Soundfile = hLL_DictionaryModel.Soundfile;
+                    _ModelObjSound.AudioUrl = hLL_DictionaryModel.SoundUrl;
                     _ModelObjSound.TableRef = "DictionaryEntries";
+                    _ModelObjSound.Title = hLL_DictionaryModel.SoundTitle;
                     _objMediaSound.SetSound(_ModelObjSound);
                 }
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryModel, HLL_DictionaryEntries>(); });
@@ -253,8 +263,38 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     }
                     i++;
                 }
+                /* Add Update LanguageLearningDefinition */
+                LanguageLearningDefinitionController _objLLDef = new LanguageLearningDefinitionController();
+                var tmpLLDList = db.HLL_LanguageLearningDefinition.Where(h => h.DicEntId.Equals(DataModel.DictionaryEntriesId) && h.IsDelete == false).Select(z => z.LanLernDefId).ToList();
+                i = 0;
+                string LanLernDefId = string.Empty;
+                foreach (var Item in hLL_DictionaryModel.DicLanguageLearningDefinitionDynamicTextBox)
+                {
+                    if (!string.IsNullOrEmpty(Item))
+                    {
+                        LanLernDefId = string.Empty;
+                        if (tmpLLDList.Count() > i)
+                        {
+                            LanLernDefId = tmpLLDList[i];
+                        }
+                        var dicData = db.HLL_LanguageLearningDefinition.Where(p => p.DicEntId == hLL_DictionaryModel.DictionaryEntriesId && p.LanLernDefId == LanLernDefId).FirstOrDefault();
 
-                return RedirectToAction("Index");
+                        if (dicData != null)
+                        {
+                            dicData.Title = Item;
+                            _objLLDef.Edit(dicData);
+                        }
+                        else
+                        {
+                            _ModelObjDef.DicEntId = hLL_DictionaryModel.DictionaryEntriesId;
+                            _ModelObjDef.Title = Item;
+                            _objLLDef.Create(_ModelObjDef);
+                        }
+                    }
+                    i++;
+                }
+                return JavaScript("window.location = '/DictionaryEntries/Details/" + hLL_DictionaryModel.DictionaryEntriesId + "'");
+                //return RedirectToAction("Index");
             }
             return View(hLL_DictionaryModel);
         }

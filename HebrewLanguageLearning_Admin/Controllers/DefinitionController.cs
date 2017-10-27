@@ -31,7 +31,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         {
             try
             {
-                var HLL_SemanticDomain = db.HLL_SemanticDomain.Where(x => x.DefinitionId.Equals(definitionId)).ToList();
+                var HLL_SemanticDomain = db.HLL_SemanticDomain.Where(x => x.MasterTableId.Equals(definitionId)).ToList();
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SemanticDomain, HLL_SemanticDomainModels>(); });
                 return AutoMapper.Mapper.Map<List<HLL_SemanticDomain>, List<HLL_SemanticDomainModels>>(HLL_SemanticDomain);
             }
@@ -43,7 +43,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         {
             try
             {
-                var HLL_Example = db.HLL_Example.Where(x => x.DefinitionId.Equals(definitionId)).ToList();
+                var HLL_Example = db.HLL_Example.Where(x => x.MasterTableId.Equals(definitionId)).ToList();
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Example, HLL_ExampleModels>(); });
                 return AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(HLL_Example);
             }
@@ -105,6 +105,23 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return PartialView("_HLL_Definition_PartialView", Def_Obj);
         }
 
+        public PartialViewResult GetLLDefinitionView(string LLDefinitionId, string Next)
+        {
+            if (Next == "1") { LLDefinitionId = GetDefinitionViewNext(LLDefinitionId); }
+            HLL_DefinitionModel Def_Obj = new HLL_DefinitionModel();
+            var Obj_LanguageLearningDefinition = db.HLL_LanguageLearningDefinition.Where(x => x.LanLernDefId.Equals(LLDefinitionId)).FirstOrDefault();
+
+            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_LanguageLearningDefinition, HLL_DefinitionModel>(); });
+            Def_Obj = AutoMapper.Mapper.Map<HLL_LanguageLearningDefinition, HLL_DefinitionModel>(Obj_LanguageLearningDefinition);
+
+          
+            Def_Obj.PictureList = definitionData.Get_HLL_PictureList(LLDefinitionId);
+            Def_Obj.SemanticDomainsList = definitionData.Get_HLL_SemanticDomainsList(LLDefinitionId);
+            Def_Obj.ExampleList = definitionData.Get_HLL_ExampleList(LLDefinitionId);
+            ModelState.Clear();
+            return PartialView("_HLL_Definition_PartialView", Def_Obj);
+        }
+
         public string GetDefinitionViewNext(string DefinitionId)
         {
 
@@ -115,6 +132,18 @@ namespace HebrewLanguageLearning_Admin.Controllers
             }
 
             return DefinitionId;
+
+        }
+        public string GetLLDefinitionViewNext(string LLDefinitionId)
+        {
+
+            var next = db.HLL_LanguageLearningDefinition.ToList().SkipWhile(obj => obj.LanLernDefId != LLDefinitionId).Skip(1).FirstOrDefault();
+            if (next != null)
+            {
+                LLDefinitionId = next.LanLernDefId;
+            }
+
+            return LLDefinitionId;
 
         }
         public ActionResult Details(string id)

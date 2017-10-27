@@ -58,7 +58,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                 if (!string.IsNullOrEmpty(base64Img))
                 {
                     filePath = HostingEnvironment.MapPath("~/Media/Pictures/");
-                    image = Id + type + "_Pic" + data + ".png";
+                    image = Id + type + TableRef + data + ".png";
                     //if (File.Exists(filePath + oldImage))
                     //{
                     //    System.IO.File.Delete((filePath + oldImage));

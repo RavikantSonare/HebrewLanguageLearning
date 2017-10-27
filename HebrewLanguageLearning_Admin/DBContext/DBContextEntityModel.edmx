@@ -127,7 +127,7 @@
             <PropertyRef Name="ExampleId" />
           </Key>
           <Property Name="ExampleId" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="DefinitionId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="MasterTableId" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="250" />
           <Property Name="ActiveStatus" Type="bit" />
           <Property Name="IsActive" Type="bit" />
@@ -287,7 +287,7 @@
             <PropertyRef Name="SemanticDomainId" />
           </Key>
           <Property Name="SemanticDomainId" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="DefinitionId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="MasterTableId" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="250" />
           <Property Name="ActiveStatus" Type="bit" />
           <Property Name="IsActive" Type="bit" />
@@ -526,8 +526,6 @@
           <EntitySet Name="HLL_TagAttachment" EntityType="Model.HLL_TagAttachment" />
           <EntitySet Name="HLL_StudentsInfo" EntityType="Model.HLL_StudentsInfo" />
           <EntitySet Name="HLL_Definition" EntityType="Model.HLL_Definition" />
-          <EntitySet Name="HLL_Example" EntityType="Model.HLL_Example" />
-          <EntitySet Name="HLL_SemanticDomain" EntityType="Model.HLL_SemanticDomain" />
           <EntitySet Name="HLL_DictionaryEntries" EntityType="Model.HLL_DictionaryEntries" />
           <EntitySet Name="HLL_Application" EntityType="Model.HLL_Application" />
           <EntitySet Name="HLL_HebrewApplicationData" EntityType="Model.HLL_HebrewApplicationData" />
@@ -539,6 +537,8 @@
           <EntitySet Name="HLL_Vocabulary" EntityType="Model.HLL_Vocabulary" />
           <EntitySet Name="HLL_LessonsGrammar" EntityType="Model.HLL_LessonsGrammar" />
           <EntitySet Name="HLL_LanguageLearningDefinition" EntityType="Model.HLL_LanguageLearningDefinition" />
+          <EntitySet Name="HLL_Example" EntityType="Model.HLL_Example" />
+          <EntitySet Name="HLL_SemanticDomain" EntityType="Model.HLL_SemanticDomain" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -678,36 +678,6 @@
           </Key>
           <Property Name="DefinitionId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DicEntId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ActiveStatus" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="HLL_Example">
-          <Key>
-            <PropertyRef Name="ExampleId" />
-          </Key>
-          <Property Name="ExampleId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DefinitionId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ActiveStatus" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="HLL_SemanticDomain">
-          <Key>
-            <PropertyRef Name="SemanticDomainId" />
-          </Key>
-          <Property Name="SemanticDomainId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DefinitionId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ActiveStatus" Type="Boolean" />
           <Property Name="IsActive" Type="Boolean" />
@@ -919,6 +889,36 @@
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="HLL_Example">
+          <Key>
+            <PropertyRef Name="ExampleId" />
+          </Key>
+          <Property Name="ExampleId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MasterTableId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_SemanticDomain">
+          <Key>
+            <PropertyRef Name="SemanticDomainId" />
+          </Key>
+          <Property Name="SemanticDomainId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MasterTableId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1064,38 +1064,6 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="DicEntId" ColumnName="DicEntId" />
                 <ScalarProperty Name="DefinitionId" ColumnName="DefinitionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HLL_Example">
-            <EntityTypeMapping TypeName="Model.HLL_Example">
-              <MappingFragment StoreEntitySet="HLL_Example">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="DefinitionId" ColumnName="DefinitionId" />
-                <ScalarProperty Name="ExampleId" ColumnName="ExampleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HLL_SemanticDomain">
-            <EntityTypeMapping TypeName="Model.HLL_SemanticDomain">
-              <MappingFragment StoreEntitySet="HLL_SemanticDomain">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="DefinitionId" ColumnName="DefinitionId" />
-                <ScalarProperty Name="SemanticDomainId" ColumnName="SemanticDomainId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1309,6 +1277,38 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="DicEntId" ColumnName="DicEntId" />
                 <ScalarProperty Name="LanLernDefId" ColumnName="LanLernDefId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_Example">
+            <EntityTypeMapping TypeName="Model.HLL_Example">
+              <MappingFragment StoreEntitySet="HLL_Example">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
+                <ScalarProperty Name="ExampleId" ColumnName="ExampleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_SemanticDomain">
+            <EntityTypeMapping TypeName="Model.HLL_SemanticDomain">
+              <MappingFragment StoreEntitySet="HLL_SemanticDomain">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
+                <ScalarProperty Name="SemanticDomainId" ColumnName="SemanticDomainId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

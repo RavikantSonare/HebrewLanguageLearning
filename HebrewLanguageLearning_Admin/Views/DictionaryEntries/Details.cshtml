@@ -80,7 +80,7 @@
 
                             </td>
                             <td>
-                                <a data-toggle="modal" class="btn btn-info" role="button" href="#form_modal_Definition" onclick="SetDefinitionModelData('@Html.DisplayFor(modelItem => item.DefinitionId)').setTimeout(window.location.reload.bind(window.location), 5000)">  Add Content</a>
+                                <a data-toggle="modal" class="btn btn-info" role="button" href="#form_modal_Definition" onclick="SetLLDefinitionModelData('@Html.DisplayFor(modelItem => item.LanLernDefId)')">  Add Content</a>
 
                             </td>
                         </tr>
@@ -145,7 +145,7 @@
 
                             </td>
                             <td>
-                                <a data-toggle="modal" class="btn btn-info" role="button" href="#form_modal_Definition" onclick="SetDefinitionModelData('@Html.DisplayFor(modelItem => item.DefinitionId)').setTimeout(window.location.reload.bind(window.location), 5000)">  Add Content</a>
+                                <a data-toggle="modal" class="btn btn-info" role="button" href="#form_modal_Definition" onclick="SetDefinitionModelData('@Html.DisplayFor(modelItem => item.DefinitionId)')">  Add Content</a>
 
                             </td>
                         </tr>
@@ -163,5 +163,10 @@
         $('#ModalDiv').html("<div id='form_modal_Definition' class='modal fade' tabindex='-1' role='dialog'></div>");
         $('#form_modal_Definition').load('@Url.Action("GetDefinitionView", "Definition")?DefinitionId=' + DefinitionId + '&Next=0');
     }
+    function SetLLDefinitionModelData(LLDefinitionId) {
+        $('#ModalDiv').html("<div id='form_modal_Definition' class='modal fade' tabindex='-1' role='dialog'></div>");
+        $('#form_modal_Definition').load('@Url.Action("GetLLDefinitionView", "Definition")?LLDefinitionId=' + LLDefinitionId + '&Next=0');
+    }
+    
   
 </script>

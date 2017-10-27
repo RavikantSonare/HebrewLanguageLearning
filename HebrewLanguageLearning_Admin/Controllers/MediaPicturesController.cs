@@ -10,6 +10,7 @@ using HebrewLanguageLearning_Admin.DBContext;
 using HebrewLanguageLearning_Admin.GenericClasses;
 using HebrewLanguageLearning_Admin.Models;
 using System.Transactions;
+using System.Threading.Tasks;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
@@ -129,9 +130,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     foreach (var entityToInsert in hLL_PicturesModelslst)
                     {
                         entityToInsert.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
-                        if (string.IsNullOrEmpty(entityToInsert.ImgUrl)) {
-                            //var result = AsyncContext.Run(FilesUtility.base64ToImage(ImageData, hLL_Media_Pictures.PictureId, "Pictures", "temp"));
-                            //entityToInsert.ImgUrl = await FilesUtility.base64ToImage(ImageData, hLL_Media_Pictures.PictureId, "Pictures", "temp");
+                        if (!string.IsNullOrEmpty(entityToInsert.ImgUrl)) {
+                            entityToInsert.ImgUrl = Task.Run(async () => await FilesUtility.base64ToImage(entityToInsert.ImgUrl, entityToInsert.PictureId, "Pictures", entityToInsert.TableRef)).Result;
                         }
 
                     }
@@ -140,6 +140,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     contextdb.HLL_Media_Pictures.AddRange(DataModel);
                     contextdb.SaveChanges();
                 }
+                catch(Exception ex) { }
                 finally
                 {
                     if (contextdb != null)

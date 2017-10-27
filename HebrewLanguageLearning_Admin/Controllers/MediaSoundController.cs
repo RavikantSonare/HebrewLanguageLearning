@@ -96,8 +96,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 UploadFiles _objUploadFile = new UploadFiles();
                 checkAndDelete(hLL_Media_SoundModels.MasterTableId);
-                _objUploadFile.physicalFile = hLL_Media_SoundModels.Soundfile;
-                _objUploadFile.fileExtension = System.IO.Path.GetExtension(hLL_Media_SoundModels.Soundfile.FileName);
+                _objUploadFile.physicalFile = hLL_Media_SoundModels.Soundfile; if (_objUploadFile.physicalFile != null) { _objUploadFile.fileExtension = System.IO.Path.GetExtension(hLL_Media_SoundModels.Soundfile.FileName); }
+                _objUploadFile.base64File = hLL_Media_SoundModels.AudioUrl; if (_objUploadFile.base64File != null) { _objUploadFile.base64File = _objUploadFile.base64File.Substring(22); }
                 _objUploadFile.tableName = hLL_Media_SoundModels.TableRef;
                 _objUploadFile.fileType = 0;
                 if (ModelState.IsValid)

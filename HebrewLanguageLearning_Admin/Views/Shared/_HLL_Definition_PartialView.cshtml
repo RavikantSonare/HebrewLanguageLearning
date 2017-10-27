@@ -1,4 +1,8 @@
 ﻿@model HebrewLanguageLearning_Admin.Models.HLL_DefinitionModel
+    @{ 
+        var PopUpHeader = "Language Learning Definition";
+        if(string.IsNullOrEmpty(Model.LanLernDefId)) { PopUpHeader = "Dictionary Definition"; }
+    }
 <div class="modal-dialog">
     <div id="frmloading" style="display:none;">
         <div class="loading">Loading&#8230;</div>
@@ -6,7 +10,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title"><i class="icon-paragraph-justify2"></i> Language Learning Definition</h4>
+            <h4 class="modal-title"><i class="icon-paragraph-justify2"></i> @PopUpHeader</h4>
         </div>
         <!-- Form inside modal -->
         <form action="#" role="form">
@@ -14,6 +18,7 @@
                 <div class="block-inner text-info">
                     <h6 class="heading-hr">
                         @Html.HiddenFor(model => model.DefinitionId, new { @id = "PopUp_DefinitionId" })
+                        @Html.HiddenFor(model => model.LanLernDefId, new { @id = "PopUp_LanLernDefId" })
                         @Html.DisplayFor(model => model.Title)
                         <small id="errorMessage" class="display-block text-danger"> </small>
                     </h6>
@@ -126,11 +131,12 @@
 
 <script type="text/javascript">
     var Image_List = [], SemanticDomains_List = [], Examples_List = [];
+    var _masterId = $('#PopUp_LanLernDefId').val(); var TableRefName = "HLL_LanguageLearningDefinition";
+    if (_masterId == "") { _masterId = $('#PopUp_DefinitionId').val(); TableRefName = "HLL_Definition"; }
     //var Imagemodel = {
     //    Title: value.Title,
     //    ImgUrl: value.ImageData,
     //    MasterTableId: $('#PopUp_DefinitionId').val(),
-
     //};
     addNewImage = function () {
         debugger;
@@ -143,7 +149,7 @@
         } else
 
             if (ImageSrcData == "" || typeof ImageSrcData == 'undefined') { $('#errorMessage').text("Please Upload Image file"); } else {
-                Image_List.push({ Title: PictureTitle, ImgUrl: ImageSrcData, MasterTableId: $('#PopUp_DefinitionId').val() });
+                Image_List.push({ Title: PictureTitle, ImgUrl: ImageSrcData, MasterTableId: _masterId, TableRef: TableRefName });
                 $('#PictureTitle').val("");
                 $('#output').empty();
                 $('#ImageList').append("<tr><td>" + PictureTitle + "</tr></td>");
@@ -158,7 +164,7 @@
             $('#errorMessage').text("Please enter Semantic Domains Title");
         } else {
 
-            SemanticDomains_List.push({ Title: SemanticDomains, DefinitionId: $('#PopUp_DefinitionId').val() });
+            SemanticDomains_List.push({ Title: SemanticDomains, MasterTableId: _masterId });
             $('#txtSemanticDomains').val("");
 
             $('#SemanticList').append("<tr><td>" + SemanticDomains + "</tr></td>");
@@ -173,13 +179,12 @@
             $('#errorMessage').text("Please enter Examples Title");
         } else {
 
-            Examples_List.push({ Title: ExamplesData, DefinitionId: $('#PopUp_DefinitionId').val() });
+            Examples_List.push({ Title: ExamplesData, MasterTableId: _masterId });
             $('#txtExamples').val("");
             $('#ExamplesList').append("<tr><td>" + ExamplesData + "</tr></td>");
         }
     };
     function compareValue(target, Current) {
-        //alert(target + "1" + Current);
         //debugger;
         if (target == Current) {
             location.reload();
@@ -193,7 +198,7 @@
             $.ajax({
                 type: "POST",
                 cache: false,
-                url: '@Url.Action("InsertMultipleImage", "MediaPictures")',
+                url: '@Url.Action("InsertMultiplePicture", "MediaPictures")',
                 dataType: "html",
                 contentType: 'application/json',
                 data: JSON.stringify(Image_List),
@@ -291,26 +296,3 @@
         } else { console.log("Your browser doesn't support to File API"); }
     });
 </script>
-@*//var passTime = Image_List.length * 1000 + 5000;
-    //setTimeout(window.location.reload.bind(window.location), passTime);*@
-@*$.each(Examples_List, function (key, value) {
-        var Examplesmodel = {
-            Title: value.Title,
-            DefinitionId: $('#PopUp_DefinitionId').val(),
-        };
-        $.ajax({
-            type: "POST",
-            cache: false,
-            url: '@Url.Action("CreateExample", "Example")',
-            dataType: "html",
-            contentType: 'application/json',
-            data: JSON.stringify(Examplesmodel),
-            success: function (result) {
-                Examples_List = [];
-                //console.log("result" + result);
-            },
-            error: function (result) {
-                console.log("resultError" + JSON.stringify(result));
-            }
-        })
-    });*@

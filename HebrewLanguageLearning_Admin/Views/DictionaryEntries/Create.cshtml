@@ -172,13 +172,12 @@
     var OnError = function (e) {
         console.log(e);
     }
-   
+
     function getFileExtension(filename) {
         if (typeof filename != 'undefined') {
             return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
         }
         return "";
-
     }
     function GetDynamicTextBox(value) {
         var div = "";
@@ -189,6 +188,7 @@
             textboxId++;
         }
         else {
+            console.log(">>" + textboxNameLLD + textboxIdLLD)
             div = $("<div style='margin-top: 15px;' class='col-md-6'> <label>Language Learning Definition-" + textboxIdLLD + ":</label>" +
                    "<input class='form-control text-box single-line' id='LanLearDefinitionDynamicTextBox' name='DicLanguageLearningDefinitionDynamicTextBox[" + textboxNameLLD + "]' placeholder='Language Learning Definition - " + textboxIdLLD + "' type='text' value=''></div>");
             textboxNameLLD++;

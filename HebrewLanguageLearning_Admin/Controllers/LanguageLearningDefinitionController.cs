@@ -84,15 +84,16 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "LanLernDefId,DicEntId,Title,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] HLL_LanguageLearningDefinition hLL_LanguageLearningDefinition)
+        public async Task<ActionResult> Edit(HLL_LanguageLearningDefinition hLL_LLDefinitionModel)
         {
+            
             if (ModelState.IsValid)
             {
-                db.Entry(hLL_LanguageLearningDefinition).State = EntityState.Modified;
+                db.Entry(hLL_LLDefinitionModel).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(hLL_LanguageLearningDefinition);
+            return View(hLL_LLDefinitionModel);
         }
 
         // GET: LanguageLearningDefinition/Delete/5

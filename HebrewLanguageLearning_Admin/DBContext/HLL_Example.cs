@@ -15,7 +15,7 @@ namespace HebrewLanguageLearning_Admin.DBContext
     public partial class HLL_Example
     {
         public string ExampleId { get; set; }
-        public string DefinitionId { get; set; }
+        public string MasterTableId { get; set; }
         public string Title { get; set; }
         public Nullable<bool> ActiveStatus { get; set; }
         public Nullable<bool> IsActive { get; set; }
