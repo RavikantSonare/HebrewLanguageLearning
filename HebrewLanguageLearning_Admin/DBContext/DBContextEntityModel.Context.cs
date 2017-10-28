@@ -52,14 +52,16 @@ namespace HebrewLanguageLearning_Admin.DBContext
 
         public virtual ObjectResult<get_row_id> get_row_id(string t_name, ObjectParameter row_id)
         {
+            retry:
             try
             {
+              
                 var t_nameParameter = t_name != null ?
                 new ObjectParameter("t_name", t_name) :
                 new ObjectParameter("t_name", typeof(string));
                 return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_row_id>("get_row_id", t_nameParameter, row_id);
             }
-            catch { }
+            catch { goto retry; }
             return null;
         }
     }

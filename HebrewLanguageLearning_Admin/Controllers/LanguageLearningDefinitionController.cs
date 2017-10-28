@@ -49,7 +49,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(HLL_DefinitionModel hLL_DefinitionModel)
+        public ActionResult Create(HLL_DefinitionModel hLL_DefinitionModel)
         {
             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DefinitionModel, HLL_LanguageLearningDefinition>(); });
             var _mapObj = AutoMapper.Mapper.Map<HLL_DefinitionModel, HLL_LanguageLearningDefinition>(hLL_DefinitionModel);
@@ -58,7 +58,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             {
                 _mapObj.LanLernDefId = EntityConfig.getnewid("HLL_LanguageLearningDefinition");
                 db.HLL_LanguageLearningDefinition.Add(_mapObj);
-                await db.SaveChangesAsync();
+                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(_mapObj);
@@ -84,13 +84,13 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(HLL_LanguageLearningDefinition hLL_LLDefinitionModel)
+        public ActionResult Edit(HLL_LanguageLearningDefinition hLL_LLDefinitionModel)
         {
             
             if (ModelState.IsValid)
             {
                 db.Entry(hLL_LLDefinitionModel).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+               db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(hLL_LLDefinitionModel);
