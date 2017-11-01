@@ -1,8 +1,8 @@
 ﻿@model HebrewLanguageLearning_Admin.Models.HLL_DefinitionModel
-    @{ 
-        var PopUpHeader = "Language Learning Definition";
-        if(string.IsNullOrEmpty(Model.LanLernDefId)) { PopUpHeader = "Dictionary Definition"; }
-    }
+@{
+    var PopUpHeader = "Language Learning Definition";
+    if (string.IsNullOrEmpty(Model.LanLernDefId)) { PopUpHeader = "Dictionary Definition"; }
+}
 <div class="modal-dialog">
     <div id="frmloading" style="display:none;">
         <div class="loading">Loading&#8230;</div>
@@ -184,10 +184,15 @@
             $('#ExamplesList').append("<tr><td>" + ExamplesData + "</tr></td>");
         }
     };
+    var isNext = false;
     function compareValue(target, Current) {
-        //debugger;
+
         if (target == Current) {
-            location.reload();
+            if (!isNext) {
+                location.reload();
+            } else {
+                $('#frmloading').hide();
+            }
         }
     }
     function SaveFromData(stateBehavior) {
@@ -255,11 +260,22 @@
         }
         if (stateBehavior == 1) {
             $('#frmloading').show();
-            $.when(async2, async1).done(function (result2, result1) {
-                location.reload();
-            });
+
         }
     }
+    var SaveFromDataAndNext = (function () {
+        isNext = true;
+        SaveFromData(1);
+
+        var MasterDataId = $('#PopUp_DefinitionId').val();
+        if (MasterDataId) {
+            $('#form_modal_Definition').load('@Url.Action("GetDefinitionView", "Definition")?DefinitionId=' + _masterId + '&Next=1');
+        } else {
+            $('#form_modal_Definition').load('@Url.Action("GetLLDefinitionView", "Definition")?LLDefinitionId=' + _masterId + '&Next=1');
+        }
+
+
+    });
     $(document).ready(function () {
 
         if (window.File && window.FileList && window.FileReader) {

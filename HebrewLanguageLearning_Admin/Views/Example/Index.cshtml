@@ -31,6 +31,12 @@
                         Example file Name
                     </th>
                     <th>
+                        Strong's Number
+                    </th>
+                    <th>
+                        Hebrew Word
+                    </th>
+                    <th>
                         ActiveStatus
                     </th>
 
@@ -45,9 +51,15 @@
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
+                            @*@Html.DisplayFor(modelItem => item.ActiveStatus)*@
+                        </td>
+                        <td>
+
+                            @*@Html.DisplayFor(modelItem => item.Title)*@
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.ActiveStatus)
                         </td>
-
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.ExampleId }) |
                             @Html.ActionLink("Details", "Details", new { id = item.ExampleId }) |

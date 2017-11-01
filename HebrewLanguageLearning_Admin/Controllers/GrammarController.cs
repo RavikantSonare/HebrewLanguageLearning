@@ -268,6 +268,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                                     _objMediaImage.checkAndDelete(hLL_HebrewGrammarData.HebrewGrammarDataId);
 
                                     _ModelObjMedVid.MasterTableId = hLL_HebrewGrammarData.HebrewGrammarDataId;
+                                    _ModelObjMedVid.Title = _hLL_GrammarModel.ImgVdofile[i].FileName;
                                     _ModelObjMedVid.Videofile = _hLL_GrammarModel.ImgVdofile[i];
                                     _ModelObjMedVid.TableRef = "HebrewGrammarData";
                                     _objMediaVideo.SetVideo(_ModelObjMedVid);
@@ -278,6 +279,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                                     _objMediaVideo.checkAndDelete(hLL_HebrewGrammarData.HebrewGrammarDataId);
 
                                     _ModelObjMedPic.MasterTableId = hLL_HebrewGrammarData.HebrewGrammarDataId;
+                                    _ModelObjMedPic.Title = _hLL_GrammarModel.ImgVdofile[i].FileName;
                                     _ModelObjMedPic.Imagefile = _hLL_GrammarModel.ImgVdofile[i];
                                     _ModelObjMedPic.TableRef = "HebrewGrammarData";
                                     _objMediaImage.SetPicture(_ModelObjMedPic);
@@ -292,6 +294,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                                 {
                                     MediaSoundController _objMediaSound = new MediaSoundController();
                                     _ModelObjMedSound.MasterTableId = hLL_HebrewGrammarData.HebrewGrammarDataId;
+                                    _ModelObjMedSound.Title = _hLL_GrammarModel.Soundfile[i].FileName;
                                     _ModelObjMedSound.Soundfile = _hLL_GrammarModel.Soundfile[i];
                                     _ModelObjMedSound.TableRef = "HebrewGrammarData";
                                     _objMediaSound.SetSound(_ModelObjMedSound);

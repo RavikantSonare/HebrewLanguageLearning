@@ -21,7 +21,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: SemanticDomain
         public ActionResult Index()
         {
-            return View(db.HLL_SemanticDomain.ToList());
+            var ListSemticDomain = db.HLL_SemanticDomain.ToList();
+            return View();
         }
 
         // GET: SemanticDomain/Details/5

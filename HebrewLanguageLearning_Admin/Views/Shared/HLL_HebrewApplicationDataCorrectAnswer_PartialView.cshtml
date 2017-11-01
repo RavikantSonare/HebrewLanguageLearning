@@ -104,25 +104,19 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="SaveFromDataCorrectAnswer()" value="Save">Save and Exit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SaveFromDataCorrectAnswer()" value="Save">Save and Exit</button>
                 <button type="button" class="btn btn-success" onclick="SaveFromDataAndNext()" value="SaveNext">Save and Next</button>
 
-                @*<button type="button" onclick="SaveFromData(1)" class="btn btn-primary">Save and Exit</button>
-                <button type="button" onclick="SaveFromDataAndNext()" class="btn btn-success">Save and Go to Next Def</button>*@
             </div>
        
 }
     </div>
 </div>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     var Image_List = [], SemanticDomains_List = [], Examples_List = [];
     addNewImage = function () {
-
-        debugger;
-
-
-        $('#errorMessage').text("");
+         $('#errorMessage').text("");
         var PictureTitle = $('#PictureTitle').val();
         var ImageSrcData = $('.imgcont').children('img').attr("src");
 
@@ -276,5 +270,5 @@
         } else { alert("Your browser doesn't support to File API") }
     });
    
-</script>
+</script>*@
 

@@ -67,7 +67,7 @@ var setLessonsGrammarData = function (_fkGrammarId, _isAdd) {
     };
 
     $.ajax({ url: 'AddRemoveDataInLesson', method: 'post', data: (jsonData) }).done(function (res) {
-        console.log(res);
+        // console.log(res
     });
 };
 var ViewName = '';
@@ -80,6 +80,4 @@ $(document).ready(function () {
     ViewName = SplitData[SplitData.length - 2] + SplitData[SplitData.length - 1];
     if (ViewName == 'GrammarGrammarSelector') { ViewName = 'GrammarPageData'; }
     if (ViewName == 'VocabularyCreate') { ViewName = 'VocabularyPageData'; }
-
-
 });

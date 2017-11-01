@@ -15,7 +15,7 @@
     @using (Ajax.BeginForm("Create", "Application", new AjaxOptions { UpdateTargetId = "result", OnBegin = "return StartValidation();" }, new { enctype = "multipart/form-data", @id = "CreateHebrewAppDataPartial" }))
     {
         <div id="frmloading" style="display:none;">
-            <div class="loading">Loading&#8230;</div>
+        <div class="loading">Loading&#8230;</div>
         </div>
         @Html.AntiForgeryToken()
         <Div action="#" role="form">
@@ -233,9 +233,9 @@
             url: '@Url.Action("CreateHebrewAppData", "Application")',
             data: $("#CreateHebrewAppData").serialize(),
             success: function (data) {
-                window.location = '/Application/Create';
-                //window.location = '/Application/Create/' + LessonId + ''
-            }, err: function (data) { console.log("Server Is Not Respose" + data); }
+               
+                //window.location = '/Application/Create';
+                }, err: function (data) { console.log("Server Is Not Respose" + data); }
         });
     });
     var SaveFromDataAndNext = (function () {

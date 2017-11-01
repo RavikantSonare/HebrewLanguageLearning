@@ -126,7 +126,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     MediaSoundController _obj = new MediaSoundController();
                     HLL_Media_SoundModels _ModelObj = new HLL_Media_SoundModels();
                     _ModelObj.MasterTableId = hLL_DictionaryEntries.DictionaryEntriesId;
-                    _ModelObj.Title = hLL_DictionaryEntries.SoundTitle;
+                    _ModelObj.Title = String.IsNullOrEmpty(hLL_DictionaryEntries.SoundTitle)? hLL_DictionaryEntries.DicHebrew+"_SoundFile" : hLL_DictionaryEntries.SoundTitle;
                     _ModelObj.AudioUrl = hLL_DictionaryEntries.SoundUrl.Substring(22);
                     _obj.CreateAudio(_ModelObj);
                 }

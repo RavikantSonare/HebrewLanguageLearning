@@ -107,7 +107,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
         public PartialViewResult GetLLDefinitionView(string LLDefinitionId, string Next)
         {
-            if (Next == "1") { LLDefinitionId = GetDefinitionViewNext(LLDefinitionId); }
+            if (Next == "1") { LLDefinitionId = GetLLDefinitionViewNext(LLDefinitionId); }
             HLL_DefinitionModel Def_Obj = new HLL_DefinitionModel();
             var Obj_LanguageLearningDefinition = db.HLL_LanguageLearningDefinition.Where(x => x.LanLernDefId.Equals(LLDefinitionId)).FirstOrDefault();
 
@@ -136,7 +136,6 @@ namespace HebrewLanguageLearning_Admin.Controllers
         }
         public string GetLLDefinitionViewNext(string LLDefinitionId)
         {
-
             var next = db.HLL_LanguageLearningDefinition.ToList().SkipWhile(obj => obj.LanLernDefId != LLDefinitionId).Skip(1).FirstOrDefault();
             if (next != null)
             {

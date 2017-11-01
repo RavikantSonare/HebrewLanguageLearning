@@ -24,7 +24,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             List<HLL_HebrewApplicationDataModel> DataModelList = new List<HLL_HebrewApplicationDataModel>();
             try
             {
-               
+
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(); });
                 DataModelList = AutoMapper.Mapper.Map<List<HLL_HebrewApplicationData>, List<HLL_HebrewApplicationDataModel>>(await db.HLL_HebrewApplicationData.Where(x => x.IsDelete == false).ToListAsync());
 
@@ -146,26 +146,32 @@ namespace HebrewLanguageLearning_Admin.Controllers
             HLL_ApplicationModel DataModel = new HLL_ApplicationModel();
             try
             {
+
+                int tmpCnt = 15;
                 var _ModelHLL_ApplicationObj = await db.HLL_Application.Where(x => x.LessonId.Equals(LessonId)).FirstOrDefaultAsync();
                 List<HLL_HebrewApplicationData> _ModelHLL_HebrewApplicationDataObj = new List<HLL_HebrewApplicationData>();
                 if (_ModelHLL_ApplicationObj != null)
                 {
                     _ModelHLL_HebrewApplicationDataObj = await db.HLL_HebrewApplicationData.Where(x => x.MasterTableId.Equals(_ModelHLL_ApplicationObj.ApplicationId) && x.IsDelete == false).ToListAsync();
-                }else
+                    tmpCnt = _ModelHLL_HebrewApplicationDataObj.Count() > 15 ? _ModelHLL_HebrewApplicationDataObj.Count() : tmpCnt;
+
+                }
+                else
                 {
                     _ModelHLL_ApplicationObj = new HLL_Application();
+
                 }
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Application, HLL_ApplicationModel>(); });
                 DataModel = AutoMapper.Mapper.Map<HLL_Application, HLL_ApplicationModel>(_ModelHLL_ApplicationObj);
-                DataModel.AppSentenceDynamicTextBox = new string[15];
-                DataModel.VideoUrl = new string[15];
-                DataModel.ImgUrl = new string[15];
-                DataModel.SoundUrl = new string[15];
+                DataModel.AppSentenceDynamicTextBox = new string[tmpCnt];
+                DataModel.VideoUrl = new string[tmpCnt];
+                DataModel.ImgUrl = new string[tmpCnt];
+                DataModel.SoundUrl = new string[tmpCnt];
 
-                DataModel.Imgfile = new HttpPostedFileBase[15];
-                DataModel.Videofile = new HttpPostedFileBase[15];
-                DataModel.Soundfile = new HttpPostedFileBase[15];
-                DataModel.ImgVdofile = new HttpPostedFileBase[15];
+                DataModel.Imgfile = new HttpPostedFileBase[tmpCnt];
+                DataModel.Videofile = new HttpPostedFileBase[tmpCnt];
+                DataModel.Soundfile = new HttpPostedFileBase[tmpCnt];
+                DataModel.ImgVdofile = new HttpPostedFileBase[tmpCnt];
                 int i = 0;
 
 
@@ -174,7 +180,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     DataModel.AppSentenceDynamicTextBox[i] = Item.HebrewApplicationData;
                     var SoundDataList = db.HLL_Media_Sound.Where(x => x.MasterTableId == Item.HebrewApplicationDataId).FirstOrDefault();
                     if (SoundDataList != null) { DataModel.SoundUrl[i] = "0"; }
-                   
+
                     var ImageDataList = db.HLL_Media_Pictures.Where(x => x.MasterTableId == Item.HebrewApplicationDataId).FirstOrDefault();
                     if (ImageDataList != null) { DataModel.VideoUrl[i] = "1"; }
                     else
@@ -182,7 +188,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         var VideoDataList = db.HLL_Media_Video.Where(x => x.MasterTableId == Item.HebrewApplicationDataId).FirstOrDefault();
                         if (VideoDataList != null) { DataModel.VideoUrl[i] = "2"; }
                     }
-                    
+
                     i++;
                 }
                 DataModel.DataCounter = i > 4 ? i : 4;
@@ -211,7 +217,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     var hebrewApplicationData = db.HLL_HebrewApplicationData.Where(z => z.HebrewApplicationDataId.Equals(hLL_HebrewApplicationDataModel.HebrewApplicationDataId)).FirstOrDefault();
                     if (hebrewApplicationData != null)
                     {
-                       if(!string.IsNullOrEmpty(hLL_HebrewApplicationDataModel.HebrewApplicationData)) hebrewApplicationData.HebrewApplicationData = hLL_HebrewApplicationDataModel.HebrewApplicationData;
+                        if (!string.IsNullOrEmpty(hLL_HebrewApplicationDataModel.HebrewApplicationData)) hebrewApplicationData.HebrewApplicationData = hLL_HebrewApplicationDataModel.HebrewApplicationData;
                         hebrewApplicationData.CorrectAnswer1 = hLL_HebrewApplicationDataModel.CorrectAnswer1;
                         hebrewApplicationData.CorrectAnswer2 = hLL_HebrewApplicationDataModel.CorrectAnswer2;
                         hebrewApplicationData.CorrectAnswer3 = hLL_HebrewApplicationDataModel.CorrectAnswer3;
@@ -291,6 +297,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                                 _objMediaImage.checkAndDelete(_Obj_HebrewApplicationData.HebrewApplicationDataId);
                                 _ModelObjMedVid.MasterTableId = _Obj_HebrewApplicationData.HebrewApplicationDataId;
+                                _ModelObjMedVid.Title = hLL_Application.ImgVdofile[i].FileName;
                                 _ModelObjMedVid.Videofile = hLL_Application.ImgVdofile[i];
                                 _ModelObjMedVid.TableRef = "HebrewApplicationData";
                                 _objMediaVideo.SetVideo(_ModelObjMedVid);
@@ -300,6 +307,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                                 _objMediaImage.checkAndDelete(_Obj_HebrewApplicationData.HebrewApplicationDataId);
                                 _ModelObjMedPic.MasterTableId = _Obj_HebrewApplicationData.HebrewApplicationDataId;
+                                _ModelObjMedPic.Title = hLL_Application.ImgVdofile[i].FileName;
                                 _ModelObjMedPic.Imagefile = hLL_Application.ImgVdofile[i];
                                 _ModelObjMedPic.TableRef = "HebrewApplicationData";
                                 _objMediaImage.SetPicture(_ModelObjMedPic);
@@ -315,6 +323,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                                 MediaSoundController _objMediaSound = new MediaSoundController();
 
                                 _ModelObjMedSound.MasterTableId = _Obj_HebrewApplicationData.HebrewApplicationDataId;
+                                _ModelObjMedSound.Title = hLL_Application.Soundfile[i].FileName;
                                 _ModelObjMedSound.Soundfile = hLL_Application.Soundfile[i];
                                 _ModelObjMedSound.TableRef = "HebrewApplicationData";
                                 _objMediaSound.SetSound(_ModelObjMedSound);

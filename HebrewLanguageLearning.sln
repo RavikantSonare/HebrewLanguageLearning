@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HebrewLanguageLearning_Admin", "HebrewLanguageLearning_Admin\HebrewLanguageLearning_Admin.csproj", "{E83FCE28-6E6B-4060-982B-0887C905DEA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HebrewLanguageLearning_Desktop", "HebrewLanguageLearning_Desktop\HebrewLanguageLearning_Desktop.csproj", "{913A2D4C-7C00-42CB-A7CF-11AC2A891DCD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HebrewLanguageLearning_Api", "HebrewLanguageLearning_Api\HebrewLanguageLearning_Api.csproj", "{211A3EF8-7C18-4E7D-9B8B-724288629ADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HebrewLanguageLearning_Users", "HebrewLanguageLearning_Users\HebrewLanguageLearning_Users.csproj", "{BADD9674-3308-4194-AF59-344997B4926C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{E83FCE28-6E6B-4060-982B-0887C905DEA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E83FCE28-6E6B-4060-982B-0887C905DEA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E83FCE28-6E6B-4060-982B-0887C905DEA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{913A2D4C-7C00-42CB-A7CF-11AC2A891DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{913A2D4C-7C00-42CB-A7CF-11AC2A891DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{913A2D4C-7C00-42CB-A7CF-11AC2A891DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{913A2D4C-7C00-42CB-A7CF-11AC2A891DCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{211A3EF8-7C18-4E7D-9B8B-724288629ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{211A3EF8-7C18-4E7D-9B8B-724288629ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{211A3EF8-7C18-4E7D-9B8B-724288629ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{211A3EF8-7C18-4E7D-9B8B-724288629ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BADD9674-3308-4194-AF59-344997B4926C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BADD9674-3308-4194-AF59-344997B4926C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BADD9674-3308-4194-AF59-344997B4926C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BADD9674-3308-4194-AF59-344997B4926C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

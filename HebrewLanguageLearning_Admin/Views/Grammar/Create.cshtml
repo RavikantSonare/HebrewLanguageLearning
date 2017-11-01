@@ -121,7 +121,7 @@
                 <div class="form-group panel-body">
                     <div class="form-actions text-right">
                        <input type="reset" value="Reset" class="btn btn-danger">
-                        <input type="button" onclick="SubmitButtonOnclick()" value="Save and Continue" class="btn btn-primary">
+                        <input type="button" id="SubmitButton" onclick="SubmitButtonOnclick()" value="Save and New" class="btn btn-primary">
                     </div>
                 </div>
             </div>
@@ -150,7 +150,7 @@
         var url = new URL(url);
         var GrammarId = url.searchParams.get("GrammarId");
         if (typeof GrammarId != 'undefined' && GrammarId != null) {
-            $('.page-content-inner').find('h2').html('Edit Grammar');
+            $('.page-content-inner').find('h2').html('Edit Grammar'); $('#SubmitButton').val('Update')
             $('.panel-heading').find('h6').html('<i class="icon-pencil3"></i>Edit Grammar');
             checker();
         }
@@ -339,7 +339,8 @@
     function UploadComplete(evt) {
         console.log("> " + JSON.stringify(evt));
         if (evt.target.status == 200) {
-            window.location = '/Grammar/Index';
+            location.reload();
+           // window.location = '/Grammar/Index'; // Changed by Ravikant Sonare 30/10/2017
             // alert("Logo uploaded successfully.");
         }
         else {

@@ -10,5 +10,8 @@ namespace HebrewLanguageLearning_Admin.Models
         public string SemanticDomainId { get; set; }
         public string MasterTableId { get; set; }
         public string Title { get; set; }
+        public string DicStrongNo { get; set; }
+        public string DicEnglish { get; set; }
+        public string DicHebrew { get; set; }
     }
 }

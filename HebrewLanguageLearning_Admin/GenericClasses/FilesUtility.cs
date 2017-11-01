@@ -145,5 +145,19 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             catch (Exception ex) { }
             return video;
         }
+
+        public static string knowFileName(HttpPostedFileBase fileData, string Base64Data)
+        {
+            string filename = string.Empty;
+            if (!string.IsNullOrEmpty(Base64Data))
+            {
+                var split = Base64Data.Split('\n').Select(p => p.Trim()).ToList();
+                filename = split.First(p => p.StartsWith("filename="));
+                filename = filename.Substring(10, filename.Length - 11);
+                var base64 = split[split.Count - 2];
+            }
+
+            return filename;
+        }
     }
 }

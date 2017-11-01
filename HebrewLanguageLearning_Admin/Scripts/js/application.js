@@ -15,8 +15,7 @@
 
 $(document).ready(function () {
     
-    
-   
+
     // Old Code for Image and Video File
     if (window.File && window.FileList && window.FileReader) {
         // alert("Your browser doesn't support to File API6")
@@ -28,7 +27,6 @@ $(document).ready(function () {
                 if (ext != '') {
                     $("#output").empty();
                     $("#fileToUpload").val("");
-
                     $('#headerdiv').removeClass("btn-success").removeClass("btn-info").addClass("btn-danger");
                     $('#modeltitle').html("Important Message !!")
                     $('#modelMessage').html("Please Select Only Image file like GIF, PNG, JPG, JPEG")
@@ -59,8 +57,7 @@ $(document).ready(function () {
     // Old Code for Mp3 File
     if (window.File && window.FileList && window.FileReader) {
         $("#Soundfile").on("change", function (e) {
-            // alert("Your browser doesn't support to File API")
-            // $(".field-validation-error").hide();
+          
             var ext = $(this).val().split('.').pop().toLowerCase();
             if ($.inArray(ext, ['mp3']) == -1) {
                 if (ext != '') {
@@ -74,7 +71,7 @@ $(document).ready(function () {
                 }
 
             } else {
-
+               
                 var files = e.target.files,
                 filesLength = files.length;
                 for (var i = 0; i < filesLength ; i++) {
@@ -83,6 +80,7 @@ $(document).ready(function () {
                     fileReader.readAsDataURL(f);
                     fileReader.onload = function () {
                         $('#SoundUrl').val(fileReader.result)
+                        $('#SoundTitle').val()
                         $("#output").empty();
 
                         var h = "<div class='imgcont'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAAgSAAAIEgHhc9o4AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAASZQTFRF/////wAA/4CA/1VV/4BA/1VV32BA5mZN62JO7mZE72BQ8GlL5F5D6F1G6WRD62JF7WRJ7WFG5mNK6GRG6mBF62JI52VH6GNG62FH7GNH6WJI6mJI6mBH7GFJ6WRG6WJJ6mBI62FG6WJH6mJH6mNI6mJI62FH62JJ6mJH6mJJ6mFI6mNH62JJ6WJI6WFH6mNJ62JH62JI6WJI6mFI6mJJ62FI6WJJ6WNI6mJH6mFJ6mJI62NH6WFI6mFI6mJH6WJI6mNH6mJI6mJI62JH62NI6WJI6mJI6mFJ62JI62JI6WJI6mJI6mNI6mJI6mFI6mNH6mJI6mJJ6mJJ6mJI6mJI6mJI6mJJ6mJI6mJI6mJI6mJI6mJI6mJI6WJI6mJI6mJI6mJI6mJIQkWPcAAAAGF0Uk5TAAECAwQGCAoNDxARExYXGhwdHyElJyssMjY5PD1CRUZKTFNWX2NkZmttbm9wdXZ3fX+Ag4WLjI6PkJWWmKChpqirrq+wsbm6u7y9vsLDx8/R09rf4+bo6uvx8vf4+fv9/gw7j64AAADtSURBVDjLY2DACtjFFDXNXQIiddElWIRlVU3s/cISocASRVbBKzguERVYoChwSMQAlgOpIDbIzUZf2RVTQXyIj52RiowAE1jEBk2Bs7wIK4oIugIj9HAb4gr41a2tVYRwK9CJAoVmjDYuBRqwAI/GroAvFldkQRUoJRJQoIlQYAgRkbP2dTeWgiuQRCiQB/HZHcHsBFMnqAJmP5h8IBuIbwtXD/OFYAiEHy4K4kkkYihg4DADKgm14gZztBAKDJBczMUDY+khFKgzYAPSCAXiWBUwecLknRiwA15/iLwfJw4FDMya3hFhHmqMWCUBQ6eAVhqL6ccAAAAASUVORK5CYII=' title = '' class='imageThumb'><i class='fa fa-minus del'></i></div>";
@@ -110,7 +108,7 @@ $(document).ready(function () {
     if (window.File && window.FileList && window.FileReader) {
        
         $("body").on("change", ".fileUploadImgAndVideo", function (e) {
-            debugger;
+            
             if (isValid()) { } else { return; }
             var elmtId = this.id;
             var ext = $(this).val().split('.').pop().toLowerCase();

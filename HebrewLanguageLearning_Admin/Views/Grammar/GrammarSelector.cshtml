@@ -134,7 +134,7 @@
                 $('#rightSelector').append('<option value="' + v["Value"] + '">' + v["Text"] + '</option>')
                 $("#leftSelector option[value='" + v["Value"] + "']").remove();
             });
-        });
+        }); DDLResteFun();
     };
     var grammarTopicsInLesson = function () {
         if (typeof leftSelectorOptions == 'undefined' || leftSelectorOptions.length == 0) {
@@ -158,15 +158,22 @@
     };
     var ddlGrammarSetValue = [];
     var checkGrammarExistValue = function (_this) {
-        $("#divExistData").hide();
+        ///$("#divExistData").hide();
         var _that = _this;
         var _currentValue = _that.value;
-        if ($.inArray(_that.value, ddlGrammarSetValue) > -1) {
-            $("#divExistData").show();
-            _that.selectedIndex = 0;
-        }
+        //if ($.inArray(_that.value, ddlGrammarSetValue) > -1) {
+        //    $("#divExistData").show();
+        //    _that.selectedIndex = 0;
+        //}
         ddlGrammarSetValue.push(_currentValue);
 
     };
-
+   
+    var DDLResteFun = function () {
+        $("#divExistData").hide();
+        $('#GrammarPoint1').prop('selectedIndex', 0);
+        $('#GrammarPoint2').prop('selectedIndex', 0);
+        $('#GrammarPoint3').prop('selectedIndex', 0);
+        $('#GrammarPoint4').prop('selectedIndex', 0);
+    }
 </script>
