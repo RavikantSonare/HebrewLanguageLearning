@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HebrewLanguageLearning_Admin.DBContext.HLL_SemanticDomain>
+﻿@model IEnumerable<HebrewLanguageLearning_Admin.Models.HLL_SemanticDomainModels>
 
 @{
     ViewBag.Title = "Index";
@@ -54,13 +54,13 @@
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @*@Html.DisplayFor(modelItem => item.)*@
+                            @Html.DisplayFor(modelItem => item.DicStrongNo)
                         </td>
                         <td>
-                            @*@Html.DisplayFor(modelItem => item.)*@
+                            @Html.DisplayFor(modelItem => item.DicEnglish)
                         </td>
                         <td>
-                            @*@Html.DisplayFor(modelItem => item.Title)*@
+                            @Html.DisplayFor(modelItem => item.DicHebrew)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ActiveStatus)

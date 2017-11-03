@@ -20,9 +20,53 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: Example
         public ActionResult Index()
         {
-            return View(db.HLL_Example.ToList());
+           
+            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Example, HLL_ExampleModels>(); });
+            List<HLL_ExampleModels> DataModel = AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(db.HLL_Example.ToList());
+            foreach (var Item in DataModel)
+            {
+                var tmpDic = getDictionary(Item.MasterTableId);
+                if (tmpDic != null)
+                {
+                    Item.DicStrongNo = tmpDic.DicStrongNo;
+                    Item.DicEnglish = tmpDic.DicEnglish;
+                    Item.DicHebrew = tmpDic.DicHebrew;
+                }
+            }
+            return View(DataModel);
         }
+        private static List<string> _masterList;
+        private static List<HLL_Definition> _definationList;
+        private static List<HLL_LanguageLearningDefinition> _LLDefinationList;
+        private HLL_DictionaryEntries getDictionary(string MasterTableId)
+        {
+            if (_masterList == null)
+            {
+                _masterList = db.HLL_Example.Select(p => p.MasterTableId).ToList();
+            }
+            if (_definationList == null)
+            {
+                _definationList = db.HLL_Definition.Where(d => (_masterList.Contains(d.DefinitionId))).ToList();
+            }
 
+            if (_LLDefinationList == null)
+            {
+                _LLDefinationList = db.HLL_LanguageLearningDefinition.Where(d => (_masterList.Contains(d.LanLernDefId))).ToList();
+            }
+            var chk = _definationList.Where(d => d.DefinitionId == MasterTableId).FirstOrDefault();
+            if (chk != null)
+            {
+                return db.HLL_DictionaryEntries.Where(e => e.DictionaryEntriesId == chk.DicEntId).FirstOrDefault();
+
+            }
+            var chkLLD = _LLDefinationList.Where(d => d.LanLernDefId == MasterTableId).FirstOrDefault();
+            if (chkLLD != null)
+            {
+                return db.HLL_DictionaryEntries.Where(e => e.DictionaryEntriesId == chkLLD.DicEntId).FirstOrDefault();
+            }
+
+            return null;
+        }
         // GET: Example/Details/5
         public ActionResult Details(string id)
         {

@@ -102,7 +102,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         return View(model);
                 }
             }
-            catch
+            catch(Exception ex)
             {
 
             }

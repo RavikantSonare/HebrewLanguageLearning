@@ -19,12 +19,60 @@ namespace HebrewLanguageLearning_Admin.Controllers
         private HLLDBContext db = new HLLDBContext();
 
         // GET: SemanticDomain
+
+       
         public ActionResult Index()
         {
-            var ListSemticDomain = db.HLL_SemanticDomain.ToList();
-            return View();
-        }
+            var _semanticDomainList = db.HLL_SemanticDomain.ToList();
 
+            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SemanticDomain, HLL_SemanticDomainModels>(); });
+            List<HLL_SemanticDomainModels> DataModel = AutoMapper.Mapper.Map<List<HLL_SemanticDomain>, List<HLL_SemanticDomainModels>>(_semanticDomainList);
+            foreach (var Item in DataModel)
+            {
+                var tmpDic = getDictionary(Item.MasterTableId);
+                if (tmpDic != null)
+                {
+                    Item.DicStrongNo = tmpDic.DicStrongNo;
+                    Item.DicEnglish = tmpDic.DicEnglish;
+                    Item.DicHebrew = tmpDic.DicHebrew;
+                }
+            }
+
+
+            return View(DataModel);
+        }
+        private static List<string> _masterList;
+        private static List<HLL_Definition> _definationList;
+        private static List<HLL_LanguageLearningDefinition> _LLDefinationList;
+        private HLL_DictionaryEntries getDictionary(string MasterTableId)
+        {
+            if (_masterList == null)
+            {
+                _masterList = db.HLL_SemanticDomain.Select(p => p.MasterTableId).ToList();
+            }
+            if (_definationList == null)
+            {
+                _definationList = db.HLL_Definition.Where(d => (_masterList.Contains(d.DefinitionId))).ToList();
+            }
+
+            if (_LLDefinationList == null)
+            {
+                _LLDefinationList = db.HLL_LanguageLearningDefinition.Where(d => (_masterList.Contains(d.LanLernDefId))).ToList();
+            }
+            var chk = _definationList.Where(d => d.DefinitionId == MasterTableId).FirstOrDefault();
+            if (chk != null)
+            {
+                return db.HLL_DictionaryEntries.Where(e => e.DictionaryEntriesId == chk.DicEntId).FirstOrDefault();
+
+            }
+            var chkLLD = _LLDefinationList.Where(d => d.LanLernDefId == MasterTableId).FirstOrDefault();
+            if (chkLLD != null)
+            {
+                return db.HLL_DictionaryEntries.Where(e => e.DictionaryEntriesId == chkLLD.DicEntId).FirstOrDefault();
+            }
+
+            return null;
+        }
         // GET: SemanticDomain/Details/5
         public ActionResult Details(string id)
         {
@@ -96,7 +144,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         entityToInsert.SemanticDomainId = EntityConfig.getnewid("HLL_SemanticDomain");
                     }
                     AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_SemanticDomainModels, HLL_SemanticDomain>(); });
-                    List<HLL_SemanticDomain> DataModel = AutoMapper.Mapper.Map<List<HLL_SemanticDomainModels>,List<HLL_SemanticDomain>>(hLL_SemanticDomainlst);
+                    List<HLL_SemanticDomain> DataModel = AutoMapper.Mapper.Map<List<HLL_SemanticDomainModels>, List<HLL_SemanticDomain>>(hLL_SemanticDomainlst);
                     contextdb.HLL_SemanticDomain.AddRange(DataModel);
                     contextdb.SaveChanges();
                 }
@@ -108,9 +156,9 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 scopeSD.Complete();
                 Status = true;
             }
-              return Status;
+            return Status;
         }
-        
+
         // GET: SemanticDomain/Edit/5
         public ActionResult Edit(string id)
         {

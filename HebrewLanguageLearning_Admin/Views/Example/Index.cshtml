@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HebrewLanguageLearning_Admin.DBContext.HLL_Example>
+﻿@model IEnumerable<HebrewLanguageLearning_Admin.Models.HLL_ExampleModels>
 
 @{
     ViewBag.Title = "Index";
@@ -34,6 +34,9 @@
                         Strong's Number
                     </th>
                     <th>
+                        English Word
+                    </th>
+                    <th>
                         Hebrew Word
                     </th>
                     <th>
@@ -51,18 +54,21 @@
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @*@Html.DisplayFor(modelItem => item.ActiveStatus)*@
+                            @Html.DisplayFor(modelItem => item.DicStrongNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DicEnglish)
                         </td>
                         <td>
 
-                            @*@Html.DisplayFor(modelItem => item.Title)*@
+                            @Html.DisplayFor(modelItem => item.DicHebrew)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ActiveStatus)
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.ExampleId }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ExampleId }) |
+                            @*@Html.ActionLink("Details", "Details", new { id = item.ExampleId }) |*@
                             @Html.ActionLink("Delete", "Delete", new { id = item.ExampleId })
                         </td>
                     </tr>
