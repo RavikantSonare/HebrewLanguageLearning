@@ -19,18 +19,58 @@ namespace HebrewLanguageLearning_Admin.Controllers
     {
         private HLLDBContext db = new HLLDBContext();
 
-        public object Mapper { get; private set; }
-
         // GET: DictionaryEntries
+        HLL_DictionaryModel DataModelDictionary;
         public ActionResult Index()
         {
-            return View(db.HLL_DictionaryEntries.ToList());
+            var DictionaryObj = db.HLL_DictionaryEntries.ToList();
+            List<HLL_DictionaryModel> DataModelDictionary = new List<HLL_DictionaryModel>();
+
+            try
+            {
+                if (DictionaryObj != null)
+                {
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryEntries, HLL_DictionaryModel>(); });
+                    DataModelDictionary = AutoMapper.Mapper.Map<List<HLL_DictionaryEntries>, List<HLL_DictionaryModel>>(DictionaryObj);
+                }
+               
+                foreach (var Item in DataModelDictionary)
+                {
+
+                    var _currentDef = db.HLL_Definition.Where(x => x.DicEntId.Equals(Item.DictionaryEntriesId)).ToList();
+                    var _currentLLD = db.HLL_LanguageLearningDefinition.Where(x => x.DicEntId.Equals(Item.DictionaryEntriesId)).ToList();
+
+                    Item.Count_Sound = db.HLL_Media_Sound.Where(x => x.MasterTableId.Equals(Item.DictionaryEntriesId)).Count();
+                    Item.Count_LLD = _currentLLD.Count();
+                    Item.Count_Definition = _currentDef.Count();
+
+                    if (_currentDef != null)
+                    {
+                        var _curDefLst = _currentDef.Select(z => z.DefinitionId).ToList();
+                        Item.Count_SemanticDomain = db.HLL_SemanticDomain.Where(x => _curDefLst.Contains(x.MasterTableId)).Count();
+                        Item.Count_Pictures = db.HLL_Media_Pictures.Where(p => _curDefLst.Contains(p.MasterTableId)).Count();
+                    }
+                    if (_currentLLD != null)
+                    {
+                        var _curLLDLst = _currentLLD.Select(l => l.LanLernDefId).ToList();
+                        Item.Count_Example = db.HLL_Example.Where(x => _curLLDLst.Contains(x.MasterTableId)).Count();
+                        Item.Count_Pictures = Item.Count_Pictures + db.HLL_Media_Pictures.Where(p => _curLLDLst.Contains(p.MasterTableId)).Count();
+                    }
+                }
+             
+            }
+            catch
+            {
+                return View(DataModelDictionary);
+            }
+            return View(DataModelDictionary);
+
         }
 
         // GET: DictionaryEntries/Details/5
         public ActionResult Details(string id)
         {
-            HLL_DictionaryModel DataModelDictionary = new HLL_DictionaryModel();
+            DataModelDictionary = new HLL_DictionaryModel();
             try
             {
 
@@ -126,7 +166,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     MediaSoundController _obj = new MediaSoundController();
                     HLL_Media_SoundModels _ModelObj = new HLL_Media_SoundModels();
                     _ModelObj.MasterTableId = hLL_DictionaryEntries.DictionaryEntriesId;
-                    _ModelObj.Title = String.IsNullOrEmpty(hLL_DictionaryEntries.SoundTitle)? hLL_DictionaryEntries.DicHebrew+"_SoundFile" : hLL_DictionaryEntries.SoundTitle;
+                    _ModelObj.Title = String.IsNullOrEmpty(hLL_DictionaryEntries.SoundTitle) ? hLL_DictionaryEntries.DicHebrew + "_SoundFile" : hLL_DictionaryEntries.SoundTitle;
                     _ModelObj.AudioUrl = hLL_DictionaryEntries.SoundUrl.Substring(22);
                     _obj.CreateAudio(_ModelObj);
                 }

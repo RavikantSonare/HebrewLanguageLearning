@@ -21,12 +21,13 @@ namespace HebrewLanguageLearning_Admin.Models
         public string[] DicLanguageLearningDefinitionDynamicTextBox { get; set; }
         [Required(ErrorMessage = "Please Enter at least One definition.")]
         public string[] DicDefinitionDynamicTextBox { get; set; }
-        public int Count_TagPictures { get; set; }
-        public int Count_TagVerbalDefinition { get; set; }
-        public int Count_TagExample { get; set; }
-        public int Count_TagSemanticDomain { get; set; }
-        public int Count_TagDictionaries { get; set; }
-        public int Count_TagSound { get; set; }
+        public int Count_Pictures { get; set; }
+        public int Count_Definition { get; set; }
+        public int Count_Example { get; set; }
+        public int Count_SemanticDomain { get; set; }
+        public int Count_Dictionaries { get; set; }
+        public int Count_LLD { get; set; }
+        public int Count_Sound { get; set; }
         public string SoundTitle { get; set; }
         // [Required(ErrorMessage = "Please Upload Sound file in MP3 format ")]
         public HttpPostedFileBase Soundfile { get; set; }

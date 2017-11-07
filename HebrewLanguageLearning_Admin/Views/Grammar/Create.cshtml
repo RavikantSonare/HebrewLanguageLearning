@@ -81,6 +81,7 @@
                                                 @Html.TextBoxFor(p => p.ImgVdofile[i], null, new { data_val = "false", type = "file", @class = "input-file fileUploadImgAndVideo", name = "file", id = @j })
                                                 <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                                                 @Html.ValidationMessageFor(n => n.ImgVdofile[i], null, new { @class = "text_danger" })
+                                                @Html.HiddenFor(h => h.VideoUrl[i], new { name = "VideoUrl" + i, id = "VideoUrl" + i, @class = "sound_url" })
                                                 <div class="col-md-2 output" id="@("output" + j)"></div>
                                             </div>
 
@@ -260,20 +261,7 @@
         });
 
     });
-    //isValid = function () {
-    //    var txtEnglishGrammarData = $('#EnglishGrammar').val(); var txtHebrewGrammarData = $('#HebrewGrammar').val();
-    //    $('#EnglishGrammarErrorMessage').hide(); $('#HebrewGrammarErrorMessage').hide();
-    //    if (typeof txtEnglishGrammarData == 'undefined' || txtEnglishGrammarData == "") {
-    //        $('#EnglishGrammarErrorMessage').show();
-    //        return false;
-    //    }
-    //    if (typeof txtHebrewGrammarData == 'undefined' || txtHebrewGrammarData == "") {
-    //        $('#HebrewGrammarErrorMessage').show();
-    //        return false;
-    //    }
-    //    return true;
-
-    //}
+  
     var getDetail = function (x, baseUrl) {
         $.ajax({ url: baseUrl, method: 'post', data: { GrammarId: x, __RequestVerificationToken: document.getElementsByName('__RequestVerificationToken')[0].value } }).done(function (res) {
             //$('#Application_Data').html(res);
@@ -281,7 +269,6 @@
         });
     };
     var $containerCon = $('#Application_Data');
-
     var checker = function () {
         textboxArr = $containerCon.find('.single-line');
         textboxArr.each(function (i, v) {

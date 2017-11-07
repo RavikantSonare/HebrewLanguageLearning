@@ -28,17 +28,26 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_HebrewApplicationData, HLL_HebrewApplicationDataModel>(); });
                 DataModelList = AutoMapper.Mapper.Map<List<HLL_HebrewApplicationData>, List<HLL_HebrewApplicationDataModel>>(await db.HLL_HebrewApplicationData.Where(x => x.IsDelete == false).ToListAsync());
 
-                var SoundData = db.HLL_Media_Sound.Select(c => c.MasterTableId).ToList();
-                var ImageData = db.HLL_Media_Pictures.Select(c => c.MasterTableId).ToList();
-                var VideoData = db.HLL_Media_Video.Select(c => c.MasterTableId).ToList();
+                var SoundData = db.HLL_Media_Sound.Select(c => new { c.MasterTableId, c.Title }).ToList();
+                var ImageData = db.HLL_Media_Pictures.Select(c => new { c.MasterTableId, c.Title }).ToList();
+                var VideoData = db.HLL_Media_Video.Select(c => new { c.MasterTableId, c.Title }).ToList();
                 int correctAnswerCounter = 0;
                 DataModelList.ForEach(e =>
                 {
                     correctAnswerCounter = 0;
                     e.LessonId = ReturnLesson(e.MasterTableId);
-                    if (SoundData.Contains(e.HebrewApplicationDataId)) { e.Soundfile = "0"; }
-                    if (ImageData.Contains(e.HebrewApplicationDataId)) { e.ImgVdofile = "1"; }
-                    if (VideoData.Contains(e.HebrewApplicationDataId)) { e.ImgVdofile = "2"; }
+                    
+                    var SD = SoundData.Where(p => p.MasterTableId == e.HebrewApplicationDataId).FirstOrDefault();
+                    e.Soundfile = SD != null ? SD.Title : "";
+
+                    var SI = ImageData.Where(p => p.MasterTableId == e.HebrewApplicationDataId).FirstOrDefault();
+                    e.ImgVdofile = SI != null ? SI.Title : "";
+                    if (string.IsNullOrEmpty(e.ImgVdofile))
+                    {
+                        var SV = VideoData.Where(p => p.MasterTableId == e.HebrewApplicationDataId).FirstOrDefault();
+                        e.ImgVdofile = SV != null ? SV.Title : "";
+                    }
+                  
                     if (e.CorrectAnswer1 != null) { correctAnswerCounter++; }
                     if (e.CorrectAnswer2 != null) { correctAnswerCounter++; }
                     if (e.CorrectAnswer3 != null) { correctAnswerCounter++; }

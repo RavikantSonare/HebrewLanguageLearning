@@ -30,15 +30,15 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 var SoundData = db.HLL_Media_Sound.Select(c => c.MasterTableId).ToList();
                 var ImageData = db.HLL_Media_Pictures.Select(c => c.MasterTableId).ToList();
                 var VideoData = db.HLL_Media_Video.Select(c => c.MasterTableId).ToList();
-                int correctAnswerCounter = 0;
                 DataModelList.ForEach(e =>
                 {
-                    correctAnswerCounter = 0;
-                    if (SoundData.Contains(e.GrammarId)) { e.Soundfiles = "0"; }
-                    if (ImageData.Contains(e.GrammarId)) { e.ImgVdofiles = "1"; }
-                    if (VideoData.Contains(e.GrammarId)) { e.ImgVdofiles = "2"; }
+                    e.ImgVdofiles = "0";
+                    var _GrammarData = db.HLL_HebrewGrammarData.Where(x => x.MasterTableId == e.GrammarId);
+                    e.ExercisesNumber = _GrammarData.Count().ToString();
+                    e.Soundfiles = SoundData.Where(p=>_GrammarData.Select(z=>z.HebrewGrammarDataId).Contains(p)).Count().ToString();
+                    e.ImgVdofiles = ImageData.Where(p => _GrammarData.Select(z => z.HebrewGrammarDataId).Contains(p)).Count().ToString();
+                    e.ImgVdofiles = (Convert.ToInt32(e.ImgVdofiles)+ VideoData.Where(p => _GrammarData.Select(z => z.HebrewGrammarDataId).Contains(p)).Count()).ToString();
 
-                    e.ExercisesNumber = correctAnswerCounter.ToString();
 
                 });
 

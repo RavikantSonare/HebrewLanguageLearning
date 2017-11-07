@@ -284,6 +284,7 @@
                 var ext = $(this).val().split('.').pop().toLowerCase();
                 if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
                     if (ext != '') {
+                     
                         $("#output").empty();
                         $("#fileToUpload").val("");
                         $('#headerdiv').removeClass("btn-success").removeClass("btn-info").addClass("btn-danger");
@@ -294,6 +295,7 @@
                     }
 
                 } else {
+                    
                     var files = e.target.files,
                     filesLength = files.length;
                     for (var i = 0; i < filesLength ; i++) {
@@ -303,6 +305,7 @@
                             $("#output").empty();
                             var file = e.target;
                             var h = "<div class='imgcont'><img src='" + e.target.result + "' title = '" + file.name + "' class='imageThumb'><i class='fa fa-minus del'></i></div>";
+                            $("#PictureTitle").val(f.name)
                             $("#output").html(h);
                         });
                         fileReader.readAsDataURL(f);
