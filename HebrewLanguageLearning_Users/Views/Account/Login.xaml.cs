@@ -10,28 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HebrewLanguageLearning_Users.Views
+namespace HebrewLanguageLearning_Users.Views.Account
 {
     /// <summary>
-    /// Interaction logic for RootView.xaml
+    /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class RootView : Window
+    public partial class Login : Page
     {
-        public RootView()
+        public Login()
         {
             InitializeComponent();
-        }
-
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
         }
     }
 }

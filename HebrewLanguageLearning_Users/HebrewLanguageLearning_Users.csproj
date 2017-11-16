@@ -47,6 +47,14 @@
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.2.1003, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.3.2-ci1003\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -75,7 +83,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controller\AccountController.cs" />
+    <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\RootViewModel.cs" />
+    <Compile Include="Views\Account\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RootView.xaml.cs">
       <DependentUpon>RootView.xaml</DependentUpon>
     </Compile>
@@ -99,6 +116,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Assets\HEBREW_Admin.ep" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -109,14 +127,41 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Page Include="Views\Account\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Account\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RootView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\active_dot.png" />
+    <Resource Include="Assets\biblingo.png" />
+    <Resource Include="Assets\Change_arrow.png" />
+    <Resource Include="Assets\close_btn.png" />
+    <Resource Include="Assets\continue_lesson.png" />
+    <Resource Include="Assets\cuntinue_passage.png" />
+    <Resource Include="Assets\dark_circle.png" />
+    <Resource Include="Assets\gray_circle.png" />
+    <Resource Include="Assets\gray_dot.png" />
+    <Resource Include="Assets\keyboard.png" />
+    <Resource Include="Assets\left_arrow.png" />
+    <Resource Include="Assets\pages.png" />
+    <Resource Include="Assets\page_change.png" />
+    <Resource Include="Assets\pink_triangle.png" />
+    <Resource Include="Assets\qustion.png" />
+    <Resource Include="Assets\ribbon.png" />
+    <Resource Include="Assets\side_menu.png" />
+    <Resource Include="Assets\small_triangle.png" />
+    <Resource Include="Assets\volume.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

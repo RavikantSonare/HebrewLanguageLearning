@@ -7,7 +7,17 @@ using System.Threading.Tasks;
 
 namespace HebrewLanguageLearning_Users.ViewModels
 {
-    public class RootViewModel : Screen
+    public class RootViewModel : Conductor<object>
     {
+        public RootViewModel()
+        {
+           LoadLoginView();
+        }
+
+        public void LoadLoginView()
+        {
+            ActivateItem(new Account.LoginViewModel());
+        }
+       
     }
 }
