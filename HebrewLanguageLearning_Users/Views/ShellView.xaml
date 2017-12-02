@@ -1,0 +1,105 @@
+﻿<Window x:Name="biblingo" x:Class="HebrewLanguageLearning_Users.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HebrewLanguageLearning_Users.Views"
+        mc:Ignorable="d"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialMenu="clr-namespace:MaterialMenu;assembly=MaterialMenu"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+    Title="Biblingo" Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
+  
+    
+    <Window.Resources>
+       
+        <Style x:Key="toggelButton" TargetType="{x:Type Image}">
+            <Setter Property="Source" Value="/HebrewLanguageLearning_Users;component/Assets/side_menu.png" />
+            <Style.Triggers>
+                <DataTrigger  Binding ="{Binding ElementName=StateMenu, Path=Tag}"  Value="Visible">
+                    <Setter Property="Source" Value="/HebrewLanguageLearning_Users;component/Assets/close_btn.png"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="456*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--<ContentControl Grid.Row="1" Grid.ColumnSpan="3" x:Name="ActiveItem"/>-->
+
+        <Frame Grid.Row="1" Grid.ColumnSpan="3" cal:Message.Attach="RegisterFrame($source)" DataContext="{x:Null}" NavigationUIVisibility="Hidden"/>
+        
+        <Grid Panel.ZIndex="2" Grid.Row="0" Grid.Column="0" Background="Transparent" VerticalAlignment="Top" Grid.ColumnSpan="3">
+            <StackPanel HorizontalAlignment="Left"  Background="#788493" Height="70" Width="1200" Grid.ColumnSpan="3">
+                <Button  x:Name="MenuIconOpen" BorderThickness="0" Height="65" HorizontalAlignment="Left" Margin="0,-2,0,0" Style="{DynamicResource MaterialDesignRaisedButton}"  BorderBrush="Transparent" Background="Transparent" 
+                        Click="MenuIconOpen_Click">
+                    <Image x:Name="toggelButton" Style="{StaticResource toggelButton}" Width="40" Height="50"></Image>
+                </Button>
+            </StackPanel>
+            <Image Panel.ZIndex="1" x:Name="logo" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="50" Margin="0 0 0 0" Source="/HebrewLanguageLearning_Users;component/Assets/biblingo.png"/>
+          
+
+        </Grid>
+        <Grid Panel.ZIndex="4" Grid.Row="0" Grid.Column="0" Background="Transparent" Margin="0,0,0,0" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Top" Width="95" >
+            <Image Panel.ZIndex="5" x:Name="imageRight" MouseDown="MenuIconOpenRight_Click" HorizontalAlignment="Right" Margin="0 -3 0 0" Source="/HebrewLanguageLearning_Users;component/Assets/pages.png"/>
+        </Grid>
+        
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Panel.ZIndex="1">
+            <materialMenu:SideMenu HorizontalAlignment="Left" x:Name="StateMenu"  MenuWidth="300"
+                               Tag="{Binding StateValue}"
+                               Theme="None"                                
+                               State="Hidden"
+                               ButtonBackground="#788493"
+                               ButtonHover="SlateGray" ClosingType="Manual" >
+                <materialMenu:SideMenu.Menu>
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden"  Background="#788493">
+                        <StackPanel Orientation="Vertical">
+                            <Line X1="200" Margin="20 20 20 20" Stroke="White" StrokeThickness="2" />
+                            <materialMenu:MenuButton Text="Profile"></materialMenu:MenuButton>
+                            <Line X1="200" Margin="20 20 20 20" Stroke="White" StrokeThickness="2" />
+                            <materialMenu:MenuButton cal:Message.Attach="[Event Click] = [Action Settings()]" Text="Settings"></materialMenu:MenuButton>
+                            <Line X1="200" Margin="20 20 20 20" Stroke="White" StrokeThickness="2" />
+                            <materialMenu:MenuButton MouseDown="LogOut_MouseDown" Text="Log Out"></materialMenu:MenuButton>
+                        </StackPanel>
+                    </ScrollViewer>
+                </materialMenu:SideMenu.Menu>
+            </materialMenu:SideMenu>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Panel.ZIndex="3">
+            <materialMenu:SideMenuRight  HorizontalAlignment="Right" x:Name="StateMenuRight"  MenuWidth="0"
+                               Tag="{Binding StateValue}"
+                               Theme="None"                                
+                               State="Hidden"
+                               ButtonBackground="#A9CDDA" 
+                               ButtonHover="SlateGray" ClosingType="Manual" >
+                <materialMenu:SideMenuRight.Menu>
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden"  Background="#A9CDDA">
+                        <StackPanel Orientation="Vertical" Margin="50 30 20 50">
+                            <TextBlock FontSize="20">Vocab Decks</TextBlock>
+                            <Line X1="120"  Margin="0 10 0 0" Stroke="Black" StrokeThickness="2" />
+                           
+                          
+                        </StackPanel>
+                    </ScrollViewer>
+                </materialMenu:SideMenuRight.Menu>
+            </materialMenu:SideMenuRight>
+           
+        </Grid>
+    </Grid>
+</Window>

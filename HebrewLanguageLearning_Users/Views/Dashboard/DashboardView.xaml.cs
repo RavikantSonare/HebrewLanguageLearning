@@ -13,16 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HebrewLanguageLearning_Users.Views.Account
+namespace HebrewLanguageLearning_Users.Views.Dashboard
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for DashboardView.xaml
     /// </summary>
-    public partial class Login : Page
+    public partial class DashboardView : Page
     {
-        public Login()
+        public DashboardView()
         {
             InitializeComponent();
+            //UIElement parent = App.Current.MainWindow;
+            //parent.IsEnabled = true;
+
+
         }
     }
 }

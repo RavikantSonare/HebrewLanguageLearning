@@ -19,12 +19,14 @@ namespace HebrewLanguageLearning_Users.Views.Account
     /// <summary>
     /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class LoginView : UserControl
+    public partial class LoginView : Page
     {
         public LoginView()
         {
             InitializeComponent();
-            DataContext = new ViewModels.Account.LoginViewModel();
+            //UIElement parent = App.Current.MainWindow;
+            //parent.IsEnabled = false;
+            //  DataContext = new ViewModels.Account.LoginViewModel();
         }
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {

@@ -15,9 +15,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Account
 {
     public class LoginViewModel : Screen
     {
-        public LoginViewModel()
-        {
-        }
+      
         #region Property
         private string _userName;
         private string _password;
@@ -62,13 +60,23 @@ namespace HebrewLanguageLearning_Users.ViewModels.Account
         }
         #endregion
 
+        private readonly INavigationService navigationService;
+        public LoginViewModel(INavigationService navigationService)
+        {
+            this.navigationService = navigationService;
+        }
         public void btn_Login()
         {
 
             if (!string.IsNullOrEmpty(UserName) || !string.IsNullOrEmpty(Password))
+
             {
-                if (UserName=="Admin" || Password=="1")
+                if (UserName=="1" || Password=="1")
                 {
+                    
+              
+                    navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
+                  
                 }
                 else
                 {
@@ -90,5 +98,6 @@ namespace HebrewLanguageLearning_Users.ViewModels.Account
 
     }
    
+
 
 }
