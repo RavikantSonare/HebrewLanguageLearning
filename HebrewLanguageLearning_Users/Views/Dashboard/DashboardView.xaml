@@ -6,19 +6,32 @@
              xmlns:local="clr-namespace:HebrewLanguageLearning_Users.Views.Dashboard"
              mc:Ignorable="d" 
               d:DesignHeight="300" d:DesignWidth="300" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="20"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="20"
+            TextOptions.TextFormattingMode="Ideal" 
+            TextOptions.TextRenderingMode="Auto"        
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
       Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+    <Page.Resources>
+        <Style x:Key="visibleBorder" TargetType="{x:Type Border}">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Setter Property="Width" Value="60"/>
+            <Style.Triggers>
+                <DataTrigger  Binding ="{Binding ElementName=blueRectangle, Path=Tag}"  Value="{x:Null}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Setter Property="Width" Value="60"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="52"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -30,39 +43,119 @@
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
-        <!--Grid Row 1-->
+        <!--Grid Column 0 Row 1-->
         <StackPanel  Grid.Column="0" Grid.Row="1"  Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
             <Label FontSize="25" FontWeight="Bold" >LANGUAGE LEARNINIG</Label>
         </StackPanel>
         <StackPanel  Grid.Column="0" Grid.Row="2"  Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Image Grid.Column="1" Grid.Row="4" x:Name="imageLevel1" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
-            <Image Grid.Column="1" Grid.Row="4" x:Name="imageLevel2" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
-            <Image Grid.Column="1" Grid.Row="4" x:Name="imageLevel3" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
-            <Image Grid.Column="1" Grid.Row="4" x:Name="imageLevel4" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
-            <Image Grid.Column="1" Grid.Row="4" x:Name="imageLevel5" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
+
+            <Image Grid.Column="1"  x:Name="imageLevel2" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
+            <Image Grid.Column="1"  x:Name="imageLevel1" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
+            <Image Grid.Column="1"  x:Name="imageLevel3" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
+            <Image Grid.Column="1"  x:Name="imageLevel4" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
+            <Image Grid.Column="1"  x:Name="imageLevel5" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
 
         </StackPanel>
-        <StackPanel Background="Red" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <StackPanel  Grid.Column="0" Grid.Row="3"  Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
+            <!--<Image Grid.Column="1"  x:Name="imageLessonBox" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>-->
+            <!--<Rectangle x:Name="blueRectangle" Width="20" Height="10" Fill="Red"></Rectangle>-->
+            <Canvas Width="500">
+                <ItemsControl Grid.Column="0" Grid.Row="3" x:Name="numberButtonItems" ItemsSource="{Binding rectelgleProp}">
+                    <ItemsControl.ItemsPanel>
+                        <!-- specify the panel that is the container for your items -->
+                        <ItemsPanelTemplate>
+                            <!--<UniformGrid Rows="6" Columns="10" HorizontalAlignment="Left"/>-->
+                            <Canvas Width="50" Height="20"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <!-- specify the template used to render each item  Rows="6" Columns="10" -->
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    
+                                </Grid.RowDefinitions>
+                           
+                                <TextBlock x:Name="blueRectangle" 
+                           TextAlignment="Center"  HorizontalAlignment="Center" VerticalAlignment="Center" Tag="{Binding ColorProp}"  Foreground="White" Text="{Binding Value}" Margin="{Binding margin}" Width="{Binding width}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Background" Value="{Binding ColorProp}"/>
+                                            <Setter Property="Height" Value="20"/>
+                                           
+                                            
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ColorProp}" Value="{x:Null}">
+                                                    <!--<Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Background" Value="Red"/>
+                                                -->
+                                                    <!--<Setter Property="Height" Value="20"/>-->
+                                                    <!--
+                                                <Setter Property="Width" Value="60"/>-->
+                                                    <!--<Setter Property="Grid.RowSpan" Value="3"/>
+                                                <Setter Property="Margin" Value="1"/>-->
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+
+                                </TextBlock>
+
+                                <Border Grid.RowSpan="3"  BorderThickness="2"  BorderBrush="#00D5B6" Margin="{Binding margin}"
+                             Background="white"  VerticalAlignment="Center"  Width="100" Height="36" Style="{StaticResource visibleBorder}">
+                                    <Canvas>
+                                        <TextBlock Canvas.Top="4" Canvas.Left="10" Background="#00D5B6" Height="26" Width="6"></TextBlock>
+                                        <TextBlock Canvas.Top="4" Canvas.Left="20" Background="#00D5B6" Height="26" Width="6"></TextBlock>
+                                        <TextBlock Canvas.Top="4" Canvas.Left="30" Background="#00D5B6" Height="26" Width="6"></TextBlock>
+                                        <TextBlock Canvas.Top="4" Canvas.Left="40" Background="#00D5B6" Height="26" Width="6"></TextBlock>
+                                        <TextBlock Canvas.Top="4" Canvas.Left="50" Background="#00D5B6" Height="26" Width="6"></TextBlock>
+                                        <TextBlock Canvas.Top="4" Canvas.Left="60" Background="#C3C3C3" Height="26" Width="6"></TextBlock>
+                                        <TextBlock Canvas.Top="4" Canvas.Left="70" Background="#C3C3C3" Height="26" Width="6"></TextBlock>
+                                        <TextBlock Canvas.Top="4" Canvas.Left="80" Background="#C3C3C3" Height="26" Width="6"></TextBlock>
+
+                                    </Canvas>
+                                </Border>
+                                <!--<TextBlock x:Name="blueRectangleCurrent" Width="100" Height="20" Background="Bisque"
+                           TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="White" Margin="2"></TextBlock>-->
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+            </Canvas>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image  Height="50"  Width="500" x:Name="imageCL"  Source="/HebrewLanguageLearning_Users;component/Assets/continue_lesson.png"/>
         </StackPanel>
+
+        <!--Grid Column 1 Row 1-->
+        <Canvas Grid.Column="1" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="6"></Canvas>
         <Grid Panel.ZIndex="2" Grid.Column="1" Grid.Row="1" Grid.RowSpan="4">
         <Line Y1="1000" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#D9DCDF" StrokeThickness="2" />
         </Grid>
         <Grid Panel.ZIndex="3" Grid.Column="1" Grid.Row="4">
-            <Image  x:Name="imageCenter" HorizontalAlignment="Right"  Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png"/>
+            <Image Height="50" Width="50" x:Name="imageCenter" HorizontalAlignment="Center"  Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png"/>
         </Grid>
+
+        <!--Grid Column 2 Row 1-->
+        <Canvas Grid.Column="2"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="6"></Canvas>
         <StackPanel Grid.Column="2"  Grid.Row="1"  Background="#E6EAEE" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Label FontSize="25"  Grid.Row="4" FontWeight="Bold" >BIBLE READING</Label>
-           
+            <Label FontSize="25"  Grid.Row="4" FontWeight="Bold"  >BIBLE READING</Label>
+            
         </StackPanel>
-
-        <StackPanel Background="Red" Height="50" Width="500" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Grid.Column="2"  Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Line X1="500" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#00D5B6" StrokeThickness="2" />
+            <TextBlock x:Name="BibleTxt"  FontSize="20"  Grid.Row="4"    Height="300" Width="500" Background="White" TextWrapping="Wrap"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Column="2"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock x:Name="LastLeftDate" FontSize="25"  Grid.Row="4" FontWeight="Bold" >Where you left off on December 12,2017</TextBlock>
+        </StackPanel>
+        <StackPanel Height="50" Width="500" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image  Height="50" Width="500" x:Name="imageCP"  Source="/HebrewLanguageLearning_Users;component/Assets/cuntinue_passage.png"/>
-            <TextBlock FontStretch="Expanded" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">Countnue lesson</TextBlock>
-        </StackPanel>
+          </StackPanel>
+
        
-
-
         <!-- Grid Row 2-->
         <!--
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
