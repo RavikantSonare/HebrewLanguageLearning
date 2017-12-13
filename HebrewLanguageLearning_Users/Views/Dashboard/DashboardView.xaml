@@ -49,6 +49,12 @@
         </StackPanel>
         <StackPanel  Grid.Column="0" Grid.Row="2"  Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
 
+            <Label Name="McLabel" Foreground="White" FontSize="14" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Height="80" >
+                Lavel Deept
+                    <Label.Background>
+                    <ImageBrush ImageSource="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png" Opacity="0.6"/>
+                </Label.Background>
+            </Label>
             <Image Grid.Column="1"  x:Name="imageLevel2" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
             <Image Grid.Column="1"  x:Name="imageLevel1" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
             <Image Grid.Column="1"  x:Name="imageLevel3" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
@@ -57,19 +63,19 @@
 
         </StackPanel>
 
-        <StackPanel  Grid.Column="0" Grid.Row="3"  Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel  Grid.Column="0" Grid.Row="3"  Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center" >
             <!--<Image Grid.Column="1"  x:Name="imageLessonBox" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>-->
             <!--<Rectangle x:Name="blueRectangle" Width="20" Height="10" Fill="Red"></Rectangle>-->
-            <Canvas Width="500">
-                <ItemsControl Grid.Column="0" Grid.Row="3" x:Name="numberButtonItems" ItemsSource="{Binding rectelgleProp}">
+            <Canvas Width="450" x:Name="RectingleController" Margin="0 ,50,0,0">
+                <!--<ItemsControl Grid.Column="0" Grid.Row="3" x:Name="numberButtonItems" ItemsSource="{Binding rectelgleProp}">
                     <ItemsControl.ItemsPanel>
-                        <!-- specify the panel that is the container for your items -->
+                        --><!-- specify the panel that is the container for your items --><!--
                         <ItemsPanelTemplate>
-                            <!--<UniformGrid Rows="6" Columns="10" HorizontalAlignment="Left"/>-->
+                            --><!--<UniformGrid Rows="6" Columns="10" HorizontalAlignment="Left"/>--><!--
                             <Canvas Width="50" Height="20"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                    <!-- specify the template used to render each item  Rows="6" Columns="10" -->
+                    --><!-- specify the template used to render each item  Rows="6" Columns="10" --><!--
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -87,14 +93,14 @@
                                             
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding ColorProp}" Value="{x:Null}">
-                                                    <!--<Setter Property="Visibility" Value="Visible"/>
+                                                    --><!--<Setter Property="Visibility" Value="Visible"/>
                                                 <Setter Property="Background" Value="Red"/>
                                                 -->
                                                     <!--<Setter Property="Height" Value="20"/>-->
                                                     <!--
                                                 <Setter Property="Width" Value="60"/>-->
                                                     <!--<Setter Property="Grid.RowSpan" Value="3"/>
-                                                <Setter Property="Margin" Value="1"/>-->
+                                                <Setter Property="Margin" Value="1"/>--><!--
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -116,19 +122,19 @@
 
                                     </Canvas>
                                 </Border>
-                                <!--<TextBlock x:Name="blueRectangleCurrent" Width="100" Height="20" Background="Bisque"
-                           TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="White" Margin="2"></TextBlock>-->
+                                --><!--<TextBlock x:Name="blueRectangleCurrent" Width="100" Height="20" Background="Bisque"
+                           TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="White" Margin="2"></TextBlock>--><!--
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
-                </ItemsControl>
+                </ItemsControl>-->
             </Canvas>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image  Height="50"  Width="500" x:Name="imageCL"  Source="/HebrewLanguageLearning_Users;component/Assets/continue_lesson.png"/>
         </StackPanel>
-
+      
         <!--Grid Column 1 Row 1-->
         <Canvas Grid.Column="1" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="6"></Canvas>
         <Grid Panel.ZIndex="2" Grid.Column="1" Grid.Row="1" Grid.RowSpan="4">
