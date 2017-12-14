@@ -38,6 +38,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
@@ -49,21 +50,66 @@
         </StackPanel>
         <StackPanel  Grid.Column="0" Grid.Row="2"  Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
 
-            <Label Name="McLabel" Foreground="White" FontSize="14" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Height="80" >
-                Lavel Deept
-                    <Label.Background>
-                    <ImageBrush ImageSource="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png" Opacity="0.6"/>
-                </Label.Background>
-            </Label>
-            <Image Grid.Column="1"  x:Name="imageLevel2" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
-            <Image Grid.Column="1"  x:Name="imageLevel1" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
-            <Image Grid.Column="1"  x:Name="imageLevel3" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
+          
+               
+                <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
+           
+            <Canvas Grid.Column="1" Margin="10" Width="70">
+                <Image  x:Name="imageLevel1" HorizontalAlignment="Right"  Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
+                <Image  x:Name="ribbon" Margin="25,25 0 0" HorizontalAlignment="Center"  VerticalAlignment="Center" Source="/HebrewLanguageLearning_Users;component/Assets/ribbon.png"/>
+
+                <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18" Canvas.Left="1">
+               Level 1: <LineBreak /> Book
+                </TextBlock>
+                <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
+            </Canvas>
+
+            <Canvas Grid.Column="1" Margin="10" Width="70">
+                <Image  x:Name="imageLevel2" HorizontalAlignment="Right"  Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>
+
+                <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18">
+               Level 2: <LineBreak /> Deepn
+                </TextBlock>
+                <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
+            </Canvas>
+            <Canvas Grid.Column="1" Margin="10" Width="70">
+                <Image  x:Name="imageLevel3" HorizontalAlignment="Right"  Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
+
+                <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18">
+               Level 3: <LineBreak /> Name
+                </TextBlock>
+                <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
+            </Canvas>
+            <Canvas Grid.Column="1" Margin="10" Width="70">
+                <Image  x:Name="imageLevel4" HorizontalAlignment="Right"  Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
+
+                <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18">
+               Level 4: <LineBreak /> Name
+                </TextBlock>
+                
+                
+                <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
+            </Canvas>
+            <Canvas Grid.Column="1" Margin="10" Width="70">
+                <Image  x:Name="imageLevel5" HorizontalAlignment="Right"  Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
+
+                <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18">
+               Level 5: <LineBreak /> Name
+                </TextBlock>
+                <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
+            </Canvas>
+            <!--<Image Grid.Column="1"  x:Name="imageLevel3" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
             <Image Grid.Column="1"  x:Name="imageLevel4" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
-            <Image Grid.Column="1"  x:Name="imageLevel5" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
+            <Image Grid.Column="1"  x:Name="imageLevel5" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>-->
 
         </StackPanel>
-
-        <StackPanel  Grid.Column="0" Grid.Row="3"  Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center" >
+        <Canvas  Grid.Column="0" Grid.Row="3" x:Name="CompleteLessonStatus" Width="500">
+            
+            <!--<Border BorderThickness="0 4 0 0" BorderBrush="#00D5B6" Width="120" >
+            <TextBlock Background="Transparent" Width="auto" Height="25">9% Complete</TextBlock>
+            </Border>-->
+        </Canvas>
+        <StackPanel  Grid.Column="0" Grid.Row="4"  Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center" >
             <!--<Image Grid.Column="1"  x:Name="imageLessonBox" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/dark_circle.png"/>-->
             <!--<Rectangle x:Name="blueRectangle" Width="20" Height="10" Fill="Red"></Rectangle>-->
             <Canvas Width="450" x:Name="RectingleController" Margin="0 ,50,0,0">
@@ -131,7 +177,7 @@
                 </ItemsControl>-->
             </Canvas>
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image  Height="50"  Width="500" x:Name="imageCL"  Source="/HebrewLanguageLearning_Users;component/Assets/continue_lesson.png"/>
         </StackPanel>
       
@@ -150,14 +196,14 @@
             <Label FontSize="25"  Grid.Row="4" FontWeight="Bold"  >BIBLE READING</Label>
             
         </StackPanel>
-        <StackPanel Grid.Column="2"  Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Grid.Column="2"  Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Line X1="500" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#00D5B6" StrokeThickness="2" />
             <TextBlock x:Name="BibleTxt"  FontSize="20"  Grid.Row="4"    Height="300" Width="500" Background="White" TextWrapping="Wrap"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Column="2"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock x:Name="LastLeftDate" FontSize="25"  Grid.Row="4" FontWeight="Bold" >Where you left off on December 12,2017</TextBlock>
+            <TextBlock x:Name="LastLeftDate" FontSize="25"  FontWeight="Bold" >Where you left off on December 12,2017</TextBlock>
         </StackPanel>
-        <StackPanel Height="50" Width="500" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Height="50" Width="500" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image  Height="50" Width="500" x:Name="imageCP"  Source="/HebrewLanguageLearning_Users;component/Assets/cuntinue_passage.png"/>
           </StackPanel>
 

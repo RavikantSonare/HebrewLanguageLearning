@@ -23,16 +23,50 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
         public DashboardView()
         {
             InitializeComponent();
-            ChildControllerAdd_Loaded();
+            CompleteLessonStatusSeter(100);
+            RectingleChildControllerAdd_Loaded();
 
         }
-        private void ChildControllerAdd_Loaded()
+        private void CompleteLessonStatusSeter(int CurrentPossion)
+        {
+            Point Point1 = new Point(5, 0);
+            Point Point2 = new Point(10, 10);
+            Point Point3 = new Point(0, 10);
+            var TriangleSet = createTriangle(Point1, Point2, Point3, "#00D5B6", "#00D5B6");
+            Canvas.SetLeft(TriangleSet, CurrentPossion + 60);
+            Canvas.SetTop(TriangleSet, -1);
+            CompleteLessonStatus.Children.Add(TriangleSet);
+
+            var _border = new Border();
+            _border.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#00D5B6");
+            _border.HorizontalAlignment = HorizontalAlignment.Center;
+            _border.BorderThickness = new Thickness(0, 4, 0, 0);
+            _border.Margin = new Thickness(2, -10, 2, 0);
+            _border.Width = 120;
+
+            Canvas.SetLeft(_border, CurrentPossion);
+            Canvas.SetTop(_border, 15);
+            CompleteLessonStatus.Children.Add(_border);
+
+            var _txtBloack = new TextBlock
+            {
+                Foreground = Brushes.Black,
+            };
+            _txtBloack.Height = 25;
+            _txtBloack.Width = 140;
+            _txtBloack.Text = "9 % Complete";
+            Canvas.SetLeft(_txtBloack, CurrentPossion);
+            Canvas.SetTop(_txtBloack, 10);
+            CompleteLessonStatus.Children.Add(_txtBloack);
+        }
+        private void RectingleChildControllerAdd_Loaded()
         {
             int SetColomnHeight = 0; int SetRowWidht = 0;
             int _currentTopicNo = 5;
             string _currentTopicName = "Culture";
             int _completedLesson = 35;
-            string _currentLessonNo = Convert.ToString(_completedLesson+1);
+            int tooltip = _completedLesson + 3;
+            string _currentLessonNo = Convert.ToString(_completedLesson + 1);
             for (int i = 0; i < 50; i++)
             {
                 var _txtBloack = new TextBlock
@@ -42,13 +76,34 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                     Foreground = Brushes.White,
                 };
                 // Backgroud Color
+
                 if (i > _completedLesson)
                 {
-                    _txtBloack.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C0C0C0"));
+                    if (tooltip == i)
+                    {
+
+                        _txtBloack.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#9DE8E1"));
+                        var tooltipData = nextTooltipLocationIndicator(5, "7", "Traditions");
+                        Canvas.SetLeft(tooltipData, SetRowWidht-10);
+                        Canvas.SetTop(tooltipData, SetColomnHeight-50);
+                        RectingleController.Children.Add(tooltipData);
+                        Point Point1 = new Point(0, 0);
+                        Point Point2 = new Point(7, 14);
+                        Point Point3 = new Point(14, 0);
+                        var TriangleSet = createTriangle(Point1, Point2, Point3, "#9DE8E1", "#9DE8E1");
+                        Canvas.SetLeft(TriangleSet, SetRowWidht + 50);
+                        Canvas.SetTop(TriangleSet, SetColomnHeight - 22);
+                        RectingleController.Children.Add(TriangleSet);
+                    }
+                    else
+                    {
+                        _txtBloack.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C0C0C0"));
+                    }
                 }
                 else
                 {
                     _txtBloack.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00D5B6"));
+
                 }
 
                 // set Heigh width
@@ -67,7 +122,6 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                     {
                         SetColomnHeight = SetColomnHeight + 39; _txtBloack.Text = Convert.ToString(i + 1);
                         SetRowWidht = 0;
-
                     }
                 }
                 else
@@ -83,9 +137,12 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                 else
                 {
                     var CurrentLocator = currentLocationIndicator(1, _currentTopicNo);
-                    var TriangleSet = createTriangle();
+                    Point Point1 = new Point(-5, 0);
+                    Point Point2 = new Point(5, 12);
+                    Point Point3 = new Point(15, 0);
+                    var TriangleSet = createTriangle(Point1, Point2, Point3, "#C3C3C3", "#D9DCDF");
                     var CurrentLessonLable = createCurrentLesson(ref _currentLessonNo, ref _currentTopicName);
-                    
+
                     Canvas.SetLeft(CurrentLessonLable, SetRowWidht);
                     Canvas.SetTop(CurrentLessonLable, SetColomnHeight - 55);
 
@@ -114,28 +171,59 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                 Text = "Lesson " + currentLessonNo + ":" + currentTopic,
                 FontSize = 15,
                 FontWeight = FontWeights.SemiBold
-        };
+            };
             return _txtBloack;
         }
-        private Polygon createTriangle()
+        private Polygon createTriangle(Point Point1, Point Point2, Point Point3, string Stroke, string Fill)
         {
             var arrowTriangle = new Polygon();
-            arrowTriangle.Stroke = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C3C3C3"));
-            arrowTriangle.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#D9DCDF"));
+            arrowTriangle.Stroke = (SolidColorBrush)(new BrushConverter().ConvertFrom(Stroke));
+            arrowTriangle.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom(Fill));
             arrowTriangle.StrokeThickness = .8;
             arrowTriangle.HorizontalAlignment = HorizontalAlignment.Left;
             arrowTriangle.VerticalAlignment = VerticalAlignment.Center;
-            Point Point1 = new Point(-5, 0);
-            Point Point2 = new Point(5, 12);
-            Point Point3 = new Point(15, 0);
             PointCollection arrowTrianglePointCollection = new PointCollection();
             arrowTrianglePointCollection.Add(Point1);
             arrowTrianglePointCollection.Add(Point2);
             arrowTrianglePointCollection.Add(Point3);
             arrowTriangle.Points = arrowTrianglePointCollection;
             return arrowTriangle;
-           
         }
+
+        private Border nextTooltipLocationIndicator(double MarginPro, string CurrentTopicNo, string toolTipTopicData)
+        {
+            var _border = new Border();
+            _border.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#9DE8E1");
+            _border.HorizontalAlignment = HorizontalAlignment.Center;
+            _border.VerticalAlignment = VerticalAlignment.Center;
+            _border.BorderThickness = new Thickness(4);
+            _border.Width = 138;
+            _border.Height = 28;
+            _border.CornerRadius = new CornerRadius(4);
+            _border.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#9DE8E1"));
+            var _canvas = new Canvas();
+            var _txtBloack = new TextBlock
+            {
+                TextAlignment = TextAlignment.Center,
+                HorizontalAlignment=HorizontalAlignment.Center,
+                VerticalAlignment=VerticalAlignment.Center,
+               // Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#9DE8E1")),
+                Foreground = Brushes.Gray,
+                Margin = new Thickness(-2, 0, 0, 1),
+                Width = 134,
+                Height = 28,
+                FontSize = 14,
+                FontWeight = FontWeights.Medium,
+                Text = "Lesson:" + CurrentTopicNo + " " + toolTipTopicData,
+               
+        };
+            Canvas.SetLeft(_txtBloack, 1);
+            Canvas.SetTop(_txtBloack, 1);
+            _canvas.Children.Add(_txtBloack);
+            _border.Child = _canvas;
+            return _border;
+        }
+
         private Border currentLocationIndicator(double MarginPro, int CurrentTopicNo)
         {
             var _border = new Border();
