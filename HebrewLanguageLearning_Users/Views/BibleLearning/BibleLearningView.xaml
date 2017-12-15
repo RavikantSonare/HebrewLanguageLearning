@@ -1,0 +1,120 @@
+﻿<Page x:Class="HebrewLanguageLearning_Users.Views.BibleLearning.BibleLearningView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HebrewLanguageLearning_Users.Views.BibleLearning"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="20"
+            TextOptions.TextFormattingMode="Ideal" 
+            TextOptions.TextRenderingMode="Auto"        
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+      Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="183*"/>
+            <ColumnDefinition Width="52"/>
+            <ColumnDefinition Width="193*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+
+        <!--Grid Column 0 Row 1-->
+        <WrapPanel  Grid.Column="0" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" >
+            <Label FontSize="25" FontWeight="Normal"  Width="23" Margin="0 0 10 0">
+                <TextBlock FontSize="25" FontWeight="Medium" Foreground="Gray" Margin="0 100 0 0" TextWrapping="Wrap">language       learning</TextBlock>
+            </Label>
+            <Image Height="50" Margin="-50 30 0 0" Width="50" x:Name="imageCenterLeft" HorizontalAlignment="Center"  Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png"/>
+            <Line Y1="1200" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#00D5B6" StrokeThickness="4" />
+        </WrapPanel>
+        <!--Grid Column 0 Row 1-->
+        <Canvas  Grid.Column="1" Grid.Row="1"  Background="#EFF4F9" HorizontalAlignment="Center" Width="500" Height="100">
+            <Label FontSize="15" FontWeight="Bold" Margin="10 0 0 10" >BOOK</Label>
+            <ComboBox Text="Is not open" Width="160" x:Name="ddl_Book" Margin="10 30 0 10">
+                <ComboBoxItem IsSelected="True" Name="cbi1">Genesis</ComboBoxItem>
+                <ComboBoxItem  Name="cbi2">Inauguration</ComboBoxItem>
+                <ComboBoxItem  Name="cbi3">Preface</ComboBoxItem>
+            </ComboBox>
+
+            <Label FontSize="15" FontWeight="Bold" Margin="200 0 0 10" >CHAPTER</Label>
+            <ComboBox Text="Is not open" Width="100" x:Name="ddl_Chapter" Margin="210 30 0 10">
+                <ComboBoxItem IsSelected="True" Name="cbi7">1</ComboBoxItem>
+                <ComboBoxItem  Name="cbi4">2</ComboBoxItem>
+                <ComboBoxItem  Name="cbi5">3</ComboBoxItem>
+            </ComboBox>
+            <Label FontSize="15" FontWeight="Bold" Margin="370 0 0 10">VERSE</Label>
+            <ComboBox Text="Is not open" Width="100" x:Name="ddl_Verse" Margin="380 30 0 10">
+                <ComboBoxItem IsSelected="True" Name="cbI9">1</ComboBoxItem>
+                <ComboBoxItem  Name="cbi6">2</ComboBoxItem>
+                <ComboBoxItem  Name="cbi8">3</ComboBoxItem>
+            </ComboBox>
+        </Canvas>
+        <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="5" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderThickness="2">
+                <TextBlock x:Name="BibleTxtLesson"  FontSize="20"  Grid.Row="4" Height="Auto" Width="460" TextAlignment="Right" TextWrapping="Wrap"></TextBlock>
+            </ScrollViewer>
+        </StackPanel>
+        
+
+        <!--Grid Column 1 Row 1-->
+        <Canvas Grid.Column="2" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="9"></Canvas>
+        <Grid Panel.ZIndex="2" Grid.Column="2" Grid.Row="1" Grid.RowSpan="9">
+            <Line Y1="1000" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#D9DCDF" StrokeThickness="2" />
+        </Grid>
+        <Grid Panel.ZIndex="3" Grid.Column="2" Grid.Row="4">
+            <Image Height="50" Width="50" x:Name="imageCenter" HorizontalAlignment="Center"  Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png"/>
+        </Grid>
+
+        <!--Grid Column 2 Row 1-->
+        <Canvas Grid.Column="3"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="10"></Canvas>
+        <StackPanel Grid.Column="3"  Grid.Row="1"  Background="#E6EAEE" Orientation="Horizontal" HorizontalAlignment="Center" Margin="193,0,192,0">
+            <Label FontSize="20"  Grid.Row="4" FontWeight="Bold"  >כִּתבֵי הַקוֹדֶשׁ</Label>
+
+        </StackPanel>
+        <StackPanel Grid.Column="3"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
+            <!--<Line X1="500" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#00D5B6" StrokeThickness="2" />-->
+            <Border BorderThickness="1" BorderBrush="Black">
+                <TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="150" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>
+            </Border>
+        </StackPanel>
+        <!--<StackPanel Grid.Column="3"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,35">
+            <TextBlock x:Name="LastLeftDate" FontSize="25"  FontWeight="Bold" >Where you left off on December 12,2017</TextBlock>
+        </StackPanel>-->
+        <StackPanel Height="170" Width="500" Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Description</TextBlock>
+            <TextBlock FontSize="18" Width="400" Height="auto" TextWrapping="Wrap" Grid.Row="4" FontWeight="Bold"  >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</TextBlock>
+
+        </StackPanel>
+        <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Example</TextBlock>
+            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  >Genesis 7.2</TextBlock>
+
+        </StackPanel>
+        <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock FontSize="22"  Grid.Row="4" FontWeight="Bold"  >Semantic Domain
+            </TextBlock>
+            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  >32.42 xx Data</TextBlock>
+
+        </StackPanel>
+        <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Dictionary Reference</TextBlock>
+            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  >CBH v3,432</TextBlock>
+
+        </StackPanel>
+
+    </Grid>
+</Page>

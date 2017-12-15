@@ -27,11 +27,12 @@ namespace HebrewLanguageLearning_Users.ViewModels
             navigationService = new FrameAdapter(frame);
 
             container.Instance(navigationService);
-            navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
+               navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
+            // navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
             // navigationService.NavigateToViewModel(typeof(Account.LoginViewModel));
         }
 
-     
+
 
         public void Logout()
         {

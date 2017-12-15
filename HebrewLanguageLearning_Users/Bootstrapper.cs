@@ -35,7 +35,8 @@ namespace HebrewLanguageLearning_Users
             container
                .PerRequest<ShellViewModel>()
                .PerRequest<ViewModels.Dashboard.DashboardViewModel>()
-               .PerRequest<ViewModels.Account.LoginViewModel>();
+               .PerRequest<ViewModels.Account.LoginViewModel>()
+               .PerRequest<ViewModels.BibleLearning.BibleLearningViewModel>();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
