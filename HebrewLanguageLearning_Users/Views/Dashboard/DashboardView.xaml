@@ -13,7 +13,7 @@
             TextOptions.TextRenderingMode="Auto"        
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="{DynamicResource MaterialDesignFont}"
-      Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top">
+      Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top" xmlns:cal="http://www.caliburnproject.org">
 
     <Page.Resources>
         <Style x:Key="visibleBorder" TargetType="{x:Type Border}">
@@ -204,9 +204,11 @@
         <StackPanel Grid.Column="2"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock x:Name="LastLeftDate" FontSize="25"  FontWeight="Bold" >Where you left off on December 12,2017</TextBlock>
         </StackPanel>
-        <StackPanel Height="50" Width="500" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image  Height="50" Width="500" x:Name="imageCP"  Source="/HebrewLanguageLearning_Users;component/Assets/cuntinue_passage.png"/>
-          </StackPanel>
+        <StackPanel  Height="50" Width="500" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Background="Transparent" cal:Message.Attach="btn_continue_passage(1)" BorderThickness="0" Height="50" Width="500">
+                <Image  Margin="-50 -50" cal:Message.Attach="[Event MouseEnter] = [Action btn_continue_passage(1)]" x:Name="btn_continue_passage" Height="50" Width="500"  Source="/HebrewLanguageLearning_Users;component/Assets/cuntinue_passage.png"/>
+            </Button>
+        </StackPanel>
 
        
         <!-- Grid Row 2-->

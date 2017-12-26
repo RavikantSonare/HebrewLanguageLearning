@@ -55,6 +55,10 @@
       <HintPath>..\packages\MaterialDesignThemes.2.3.2-ci1003\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -86,14 +90,20 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommonHelper\ImageDrawHelper.cs" />
-    <Compile Include="Controller\AccountController.cs" />
+    <Compile Include="GenericClasses\EntityConfig.cs" />
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\DataControllers\BibleLearningController.cs" />
+    <Compile Include="Models\DataModels\BibleLearningModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
+    <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningViewModel.cs" />
     <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\Account\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BibleLearning\BibleLearningFromMediaView.xaml.cs">
+      <DependentUpon>BibleLearningFromMediaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BibleLearning\BibleLearningView.xaml.cs">
       <DependentUpon>BibleLearningView.xaml</DependentUpon>
@@ -143,6 +153,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BibleLearning\BibleLearningFromMediaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BibleLearning\BibleLearningView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -182,6 +196,62 @@
       <Project>{dc810fba-1dc9-429f-a247-35075ea49648}</Project>
       <Name>MaterialMenu</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\DataProviders\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Resource\Book\wlc\1Chr.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="bin\Debug\Resource\Book\wlc\1Kgs.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\1Sam.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\2Chr.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\2Kgs.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\2Sam.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Amos.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Dan.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Deut.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Eccl.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Esth.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Exod.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Ezek.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Ezra.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Gen.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Hab.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Hag.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Hos.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Isa.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Jer.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Job.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Joel.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Jonah.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Josh.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Judg.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Lam.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Lev.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Mal.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Mic.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Nah.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Neh.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Num.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Obad.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Prov.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Ps.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Ruth.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Song.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\VerseMap.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Zech.xml" />
+    <Resource Include="bin\Debug\Resource\Book\wlc\Zeph.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Resource\Book\wlc\BookData.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Resource\Book\wlc\sk.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Resource\Book\wlc\XMLFile1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

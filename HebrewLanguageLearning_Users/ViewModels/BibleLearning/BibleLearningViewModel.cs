@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using HebrewLanguageLearning_Users.GenericClasses;
+using HebrewLanguageLearning_Users.Models.DataControllers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,8 +15,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 {
     public class BibleLearningViewModel : Conductor<object>
     {
-
-    private string _BibleTxtLesson = @"בראשית ברא אלוהים את השמים ואת הארץ.
+        BibleLearningController _ObjBC = new BibleLearningController();
+        private string _BibleTxtLesson = @"בראשית ברא אלוהים את השמים ואת הארץ.
 והארץ היתה ללא צורה, וריק; ואת החושך על פני המעמקים.ורוח אלוהים נעה על פני המים.
 ויאמר אלהים יהי אור ויהי אור.
 וירא ה 'את האור, כי טוב: ואלוהים חילק את האור מהחושך.
@@ -56,17 +58,18 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 וירא ה 'את האור, כי טוב: ואלוהים חילק את האור מהחושך.
 ואלוהים קרא את יום האור, ואת החושך הוא קרא לילה.והערב והבוקר היו היום הראשון.
 ויאמר אלהים, יהי ברקע בתוך המים, ונתן לו לחלק את המים מן המים.";
-        //     private ItemsControl _progressBox;
-        //     public ItemsControl ProgressBox
-        //     {
-        //         get { return _progressBox; }
-        //         set
-        //         {
-        //             _bibleTxt.ItemsSource = Enumerable.Range(1, 60)
-        //.Select(r => new KeyValuePair<string, string>(r.ToString(), r.ToString())).ToList(); ;
-        //             NotifyOfPropertyChange(() => ProgressBox);
-        //         }
-        //     }
+        private List<SelectListItem> _ItemBook = EntityConfig._booksTitleList;
+        public List<SelectListItem> ItemBook
+        {
+            get { return _ItemBook; }
+            set
+            {
+                _ItemBook = value;
+                NotifyOfPropertyChange(() => ItemBook);
+            }
+        }
+
+
         public string BibleTxt
         {
             get { return _bibleTxt; }
@@ -78,9 +81,23 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         }
         protected override void OnActivate()
         {
+
             base.OnActivate();
 
             //MessageBox.Show("Deshboard");//This is for testing - currently doesn't display
         }
+        public void DDLBookSelect(SelectListItem _ObjList)
+        {
+            string _currentfileName = _ObjList.Value;
+            if (!string.IsNullOrEmpty(_currentfileName))
+            {
+                _ObjBC.ShowBookData(_currentfileName);
+            }
+        }
+        //BibleLearningViewModel()
+        //{
+        //  //  var ItemBook = EntityConfig._booksTitleList;
+        //}
+
     }
 }

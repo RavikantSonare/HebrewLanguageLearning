@@ -16,10 +16,10 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
     Title="Biblingo" Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
-  
-    
+
+
     <Window.Resources>
-       
+
         <Style x:Key="toggelButton" TargetType="{x:Type Image}">
             <Setter Property="Source" Value="/HebrewLanguageLearning_Users;component/Assets/side_menu.png" />
             <Style.Triggers>
@@ -33,7 +33,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="456*"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>
@@ -43,7 +43,7 @@
         <!--<ContentControl Grid.Row="1" Grid.ColumnSpan="3" x:Name="ActiveItem"/>-->
 
         <Frame Grid.Row="1" Grid.ColumnSpan="3" cal:Message.Attach="RegisterFrame($source)" DataContext="{x:Null}" NavigationUIVisibility="Hidden"/>
-        
+
         <Grid Panel.ZIndex="2" Grid.Row="0" Grid.Column="0" Background="Transparent" VerticalAlignment="Top" Grid.ColumnSpan="3">
             <StackPanel HorizontalAlignment="Left"  Background="#788493" Height="70" Width="1200" Grid.ColumnSpan="3">
                 <Button  x:Name="MenuIconOpen" BorderThickness="0" Height="65" HorizontalAlignment="Left" Margin="0,-2,0,0" Style="{DynamicResource MaterialDesignRaisedButton}"  BorderBrush="Transparent" Background="Transparent" 
@@ -52,13 +52,13 @@
                 </Button>
             </StackPanel>
             <Image Panel.ZIndex="1" x:Name="logo" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="50" Margin="0 0 0 0" Source="/HebrewLanguageLearning_Users;component/Assets/biblingo.png"/>
-          
+
 
         </Grid>
         <Grid Panel.ZIndex="4" Grid.Row="0" Grid.Column="0" Background="Transparent" Margin="0,0,0,0" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Top" Width="95" >
             <Image Panel.ZIndex="5" x:Name="imageRight" MouseDown="MenuIconOpenRight_Click" HorizontalAlignment="Right" Margin="0 -3 0 0" Source="/HebrewLanguageLearning_Users;component/Assets/pages.png"/>
         </Grid>
-        
+
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Panel.ZIndex="1">
             <materialMenu:SideMenu HorizontalAlignment="Left" x:Name="StateMenu"  MenuWidth="300"
                                Tag="{Binding StateValue}"
@@ -93,13 +93,22 @@
                         <StackPanel Orientation="Vertical" Margin="50 30 20 50">
                             <TextBlock FontSize="20">Vocab Decks</TextBlock>
                             <Line X1="120"  Margin="0 10 0 0" Stroke="Black" StrokeThickness="2" />
-                           
-                          
+                            <TreeView Margin="10 35 0 10">
+                                <TreeViewItem FontSize="20" FontStretch="Normal" Header="Words that Need Practice" IsExpanded="True">
+                                    <TreeViewItem Header="Lesson 2.1" />
+                                    <TreeViewItem Header="Lesson 2.2" IsExpanded="True">
+                                        <TreeViewItem Header="Lesson 3.1" />
+                                        <TreeViewItem Header="Lesson 3.2" />
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Lesson Decks" />
+                                </TreeViewItem>
+                            </TreeView>
+                            <TextBlock FontSize="20">+ Create New Vocab Deck</TextBlock>
                         </StackPanel>
                     </ScrollViewer>
                 </materialMenu:SideMenuRight.Menu>
             </materialMenu:SideMenuRight>
-           
+
         </Grid>
     </Grid>
 </Window>
