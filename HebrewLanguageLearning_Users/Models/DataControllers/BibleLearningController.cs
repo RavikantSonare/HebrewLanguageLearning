@@ -10,14 +10,17 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using HebrewLanguageLearning_Users.GenericClasses;
+using System.Xml.XPath;
 
 namespace HebrewLanguageLearning_Users.Models.DataControllers
 {
     public class BibleLearningController
     {
-        internal void ShowBookData(string CurrentfileName)
+        BibleLearningModel _objBLM = new BibleLearningModel();
+        internal BibleLearningModel ShowBookData(string CurrentfileName)
         {
-            var DataGet = GetBookData(CurrentfileName);
+            return GetBookData(CurrentfileName);
         }
         internal static string fileRootPath = System.AppDomain.CurrentDomain.BaseDirectory + "Resource\\Book\\wlc\\";
 
@@ -42,40 +45,87 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
             }
             //return _examqueanslist;
-            return null;
+            return _objBLM;
         }
-        public List<ChapterList> _ChapterList = new List<ChapterList>();
-        public List<VerseList> _VerseList = new List<VerseList>();
+
+        //public List<ChapterList> _ChapterList = new List<ChapterList>();
+        //public List<VerseList> _VerseList = new List<VerseList>();
 
         public void ObjectToXML(string CurrentfileName)
         {
-            XmlDocument doc = new XmlDocument();
-            string fileName = fileRootPath + CurrentfileName + ".xml";
-
-            //  string fileName = fileRootPath + "XMLFile1.xml";
-
-            XElement xmlsp = XElement.Load(fileName);
-            XNode DivNode = ((System.Xml.Linq.XContainer)xmlsp.LastNode).LastNode;
-            //  XElement elementq = XElement.Load(fileName);
-            
-            doc.LoadXml(DivNode.ToString());
-            XmlElement root = doc.DocumentElement;
-            var ChildNodesList = root.ChildNodes;
-            
-            foreach (dynamic chapterChildNodesList in ChildNodesList)
+            int i = 0;
+            try
             {
-                XmlElement rootData = chapterChildNodesList; var AttrData = rootData.Attributes["osisID"].Value;
-                _ChapterList.Add(new ChapterList { Value = AttrData, Name = AttrData });
 
-                foreach (dynamic verseChildNodesList in rootData.ChildNodes)
+                XmlDocument doc = new XmlDocument();
+                string fileName = fileRootPath + CurrentfileName + ".xml";
+
+                //  string fileName = fileRootPath + "XMLFile1.xml";
+
+                XElement xmlsp = XElement.Load(fileName);
+                XNode DivNode = ((System.Xml.Linq.XContainer)xmlsp.LastNode).LastNode;
+                // XElement elementq = XElement.Load(fileName);
+
+                doc.LoadXml(DivNode.ToString());
+                XmlElement root = doc.DocumentElement;
+                var ChildNodesList = root.ChildNodes;
+                _objBLM = new BibleLearningModel();
+                foreach (dynamic chapterChildNodesList in ChildNodesList)
                 {
-                    XmlElement verserootData = verseChildNodesList; var verseAttrData = verserootData.Attributes["osisID"].Value;
-                    _VerseList.Add(new VerseList { Name = AttrData, Value = verseAttrData });
+                    XmlElement rootData = chapterChildNodesList; var AttrData = rootData.Attributes["osisID"].Value;
+                    _objBLM._ChapterList.Add(new SelectListItem { Text = AttrData, Value = AttrData });
 
+                    foreach (dynamic verseChildNodesList in rootData.ChildNodes)
+                    {
+                        i++;
+                        XmlElement verserootData = verseChildNodesList;
+
+                        //var data = from item in verserootData.Descendants("person")
+                        //           select item;
+
+                        var verseAttrData = verserootData.Attributes["osisID"].Value;
+                        int j = 1;
+
+                        StringBuilder strNodeList = new StringBuilder();
+                        strNodeList.Append(verseAttrData);
+                        string strlemma = string.Empty;
+                        strlemma = "";
+                        var op = verserootData;
+
+
+                        //for (int k = 0; k < verserootData.ChildNodes.Count - 1; k++)
+                        //{
+                        //    try
+                        //    {
+                        //        dynamic chileNode = verserootData.ChildNodes[k];
+                        //        XmlElement rootDataNew = chileNode;
+                        //        if (verserootData.ChildNodes.Count > j)
+                        //        {
+                        //            strNodeList.Append(((System.Xml.XmlElement)chileNode).InnerText + " ");
+                        //            strlemma = rootDataNew.Attributes["lemma"].Value;
+                        //        }
+                        //        j++;
+                        //    }
+                        //    catch (Exception ex)
+                        //    {
+                        //        continue;
+                        //    }
+                        //}
+
+
+                        _objBLM._bookElementsList.Add(new DataModels.bookElements { ElementStrogNo = strlemma, ElementValue = Convert.ToString(strNodeList), SelctedElementValue = _objBLM._VerseList.Count() == 20 ? true : false });                       
+                        _objBLM._VerseList.Add(new SelectListItem { Text = verseAttrData, Value = AttrData });
+                    }
                 }
-                // var DAta = licenName;
             }
+            catch (Exception ex)
+            {
 
+            }
+            finally
+            {
+                GC.SuppressFinalize(this);
+            }
             #region Fetch All the Books 
             //var d1 = document.Root;
             //var d2 = document.Descendants("div");

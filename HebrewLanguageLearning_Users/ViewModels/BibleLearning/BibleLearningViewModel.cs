@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using HebrewLanguageLearning_Users.GenericClasses;
 using HebrewLanguageLearning_Users.Models.DataControllers;
+using HebrewLanguageLearning_Users.Models.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,34 +17,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
     public class BibleLearningViewModel : Conductor<object>
     {
         BibleLearningController _ObjBC = new BibleLearningController();
-        private string _BibleTxtLesson = @"בראשית ברא אלוהים את השמים ואת הארץ.
-והארץ היתה ללא צורה, וריק; ואת החושך על פני המעמקים.ורוח אלוהים נעה על פני המים.
-ויאמר אלהים יהי אור ויהי אור.
-וירא ה 'את האור, כי טוב: ואלוהים חילק את האור מהחושך.
-ואלוהים קרא את יום האור, ואת החושך הוא קרא לילה.והערב והבוקר היו היום הראשון.
-בראשית ברא אלוהים את השמים ואת הארץ.
-והארץ היתה ללא צורה, וריק; ואת החושך על פני המעמקים.ורוח אלוהים נעה על פני המים.
-ויאמר אלהים יהי אור ויהי אור.
-וירא ה 'את האור, כי טוב: ואלוהים חילק את האור מהחושך.
-ואלוהים קרא את יום האור, ואת החושך הוא קרא לילה.והערב והבוקר היו היום הראשון.
-ויאמר אלהים, יהי ברקע בתוך המים, ונתן לו לחלק את המים מן המיםבראשית ברא אלוהים את השמים ואת הארץ.
-והארץ היתה ללא צורה, וריק; ואת החושך על פני המעמקים.ורוח אלוהים נעה על פני המים.
-ויאמר אלהים יהי אור ויהי אור.
-וירא ה 'את האור, כי טוב: ואלוהים חילק את האור מהחושך.
-ואלוהים קרא את יום האור, ואת החושך הוא קרא לילה.והערב והבוקר היו היום הראשון.
-ויאמר אלהים, יהי ברקע בתוך המים, ונתן לו לחלק את המים מן המיםבראשית ברא אלוהים את השמים ואת הארץ.
-והארץ היתה ללא צורה, וריק; ואת החושך על פני המעמקים.ורוח אלוהים נעה על פני המים.
-ויאמר אלהים יהי אור ויהי אור.
-וירא ה 'את האור, כי טוב: ואלוהים חילק את האור מהחושך.
-ואלוהים קרא את יום האור, ואת החושך הוא קרא לילה.והערב והבוקר היו היום הראשון.
-ויאמר אלהים, יהי ברקע בתוך המים, ונתן לו לחלק את המים מן המיםבראשית ברא אלוהים את השמים ואת הארץ.
-והארץ היתה ללא צורה, וריק; ואת החושך על פני המעמקים.ורוח אלוהים נעה על פני המים.
-ויאמר אלהים יהי אור ויהי אור.
-וירא ה 'את האור, כי טוב: ואלוהים חילק את האור מהחושך.
-ואלוהים קרא את יום האור, ואת החושך הוא קרא לילה.והערב והבוקר היו היום הראשון.
-ויאמר אלהים, יהי ברקע בתוך המים, ונתן לו לחלק את המים מן המיםויאמר אלהים, יהי ברקע בתוך המים, ונתן לו לחלק את המים מן המים.";
-
-        public string BibleTxtLesson
+        public static BibleLearningModel ObjBook = new BibleLearningModel();
+        public List<bookElements> _BibleTxtLesson;
+        public List<bookElements> BibleTxtLesson
         {
             get { return _BibleTxtLesson; }
             set
@@ -52,13 +28,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => BibleTxtLesson);
             }
         }
-        private string _bibleTxt = @"בראשית ברא אלוהים את השמים ואת הארץ.
-והארץ היתה ללא צורה, וריק; ואת החושך על פני המעמקים.ורוח אלוהים נעה על פני המים.
-ויאמר אלהים יהי אור ויהי אור.
-וירא ה 'את האור, כי טוב: ואלוהים חילק את האור מהחושך.
-ואלוהים קרא את יום האור, ואת החושך הוא קרא לילה.והערב והבוקר היו היום הראשון.
-ויאמר אלהים, יהי ברקע בתוך המים, ונתן לו לחלק את המים מן המים.";
-        private List<SelectListItem> _ItemBook = EntityConfig._booksTitleList;
+        public string _bibleTxt;
+        public List<SelectListItem> _ItemBook = EntityConfig._booksTitleList;
         public List<SelectListItem> ItemBook
         {
             get { return _ItemBook; }
@@ -68,8 +39,50 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => ItemBook);
             }
         }
+        public List<SelectListItem> _ItemBookChapter = new List<SelectListItem>();
+        public List<SelectListItem> ItemBookChapter
+        {
+            get { return _ItemBookChapter; }
+            set
+            {
+                _ItemBookChapter = value;
+             
+                NotifyOfPropertyChange(() => ItemBookChapter);
+               
+            }
+        }
 
+        private BindableCollection<SelectListItem> _ItemBookChapterSelected = new BindableCollection<SelectListItem>();
+        public BindableCollection<SelectListItem> ItemBookChapterSelected
+        {
+            get { return _ItemBookChapterSelected; }
+            set
+            {
+                _ItemBookChapterSelected = value;
+              
+                NotifyOfPropertyChange(() => ItemBookChapterSelected);
+            }
+        }
 
+        private int _SelectedIndex;
+        public int SelectedIndex {
+            get { return _SelectedIndex; }
+            set
+            {
+                _SelectedIndex = value;
+                NotifyOfPropertyChange(() => SelectedIndex);
+            }
+        }
+        public List<SelectListItem> _ItemBookVerse;
+        public List<SelectListItem> ItemBookVerse
+        {
+            get { return _ItemBookVerse; }
+            set
+            {
+                _ItemBookVerse = value;
+                NotifyOfPropertyChange(() => ItemBookVerse);
+            }
+        }
         public string BibleTxt
         {
             get { return _bibleTxt; }
@@ -79,6 +92,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => BibleTxt);
             }
         }
+        
         protected override void OnActivate()
         {
 
@@ -86,18 +100,48 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
             //MessageBox.Show("Deshboard");//This is for testing - currently doesn't display
         }
+
         public void DDLBookSelect(SelectListItem _ObjList)
         {
+
             string _currentfileName = _ObjList.Value;
             if (!string.IsNullOrEmpty(_currentfileName))
             {
-                _ObjBC.ShowBookData(_currentfileName);
+                ObjBook = _ObjBC.ShowBookData(_currentfileName);
+                //  ItemBookChapter = ObjBook._ChapterList;
+                //  SelectVerse(ObjBook._ChapterList.FirstOrDefault().Value);
+
+                //  var firstValueOfElement = ObjBook._ChapterList.FirstOrDefault().Value;
+                //  ObjBook._bookElementsList.ForEach(x => BibleTxtLesson+= "<LineBreak/>" + x.ElementValue); //Select(z => z.ElementValue);
+                SelectChapter();
+                BibleTxtLesson = ObjBook._bookElementsList.ToList();
             }
         }
-        //BibleLearningViewModel()
-        //{
-        //  //  var ItemBook = EntityConfig._booksTitleList;
-        //}
 
+        public void ItemBookChapterSelectedChange(SelectListItem _ObjList)
+        {
+            if (_ObjList != null)
+            {
+                string _currentfileName = _ObjList.Value;
+                SelectVerse(_currentfileName);
+            }
+        }
+        public void SelectChapter()
+        {
+            ItemBookChapter = ObjBook._ChapterList.ToList();
+            SelectedIndex = 1;
+        }
+        public void ItemBookVerseSelectedChange(SelectListItem _ObjList)
+        {
+            string _currentfileName = _ObjList.Value;
+            SelectVerse(_currentfileName);
+        }
+        public void SelectVerse(string firstValue)
+        {
+            ItemBookVerse = ObjBook._VerseList.Where(z => z.Value == firstValue).ToList();
+          
+        }
+
+        
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using HebrewLanguageLearning_Users.GenericClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,31 +10,15 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
 {
     public class BibleLearningModel
     {
-
-        public List<ChapterList> _chapterList { get; set; }
-        public string C1 { get; set; }
-        public string C2 { get; set; }
-        public string C3 { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
-        //public string MyProperty { get; set; }
+        public List<SelectListItem> _ChapterList = new List<SelectListItem>();
+        public List<SelectListItem> _VerseList = new List<SelectListItem>();
+        public List<bookElements> _bookElementsList = new List<bookElements>();
     }
-    public class ChapterList
+    public class bookElements
     {
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public string ElementStrogNo { get; set; }
+        public string ElementValue { get; set; }
+        public bool SelctedElementValue { get; set; }
     }
-    public class VerseList
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
+  
 }
