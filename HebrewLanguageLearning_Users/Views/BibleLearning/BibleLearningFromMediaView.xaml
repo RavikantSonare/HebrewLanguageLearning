@@ -67,7 +67,7 @@
         </Canvas>
         <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="5" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderThickness="2">
-                <TextBlock x:Name="BibleTxtLesson"  FontSize="20"  Grid.Row="4" Height="Auto" Width="460" TextAlignment="Right" TextWrapping="Wrap"></TextBlock>
+                <TextBlock x:Name="BibleTxtLesson"  FontSize="20" Background="Red" Grid.Row="4" Height="Auto" Width="460" TextAlignment="Right" TextWrapping="Wrap"></TextBlock>
             </ScrollViewer>
         </StackPanel>
 

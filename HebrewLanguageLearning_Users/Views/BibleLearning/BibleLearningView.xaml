@@ -15,6 +15,28 @@
             FontFamily="{DynamicResource MaterialDesignFont}"
       Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top"
       xmlns:cal="http://www.caliburnproject.org">
+    <Page.Resources>
+        <Style x:Key="RedGlowItemContainer" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border  x:Name="IconBorder"  Margin="8,4,8,4" >
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="IconBorder" Property="BitmapEffect">
+                                    <Setter.Value>
+                                        <OuterGlowBitmapEffect GlowColor="Red" GlowSize="5" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20*"/>
@@ -45,34 +67,62 @@
         <!--Grid Column 0 Row 1-->
         <Canvas  Grid.Column="1" Grid.Row="1"  Background="#EFF4F9" HorizontalAlignment="Center" Width="500" Height="100">
             <Label FontSize="15" FontWeight="Bold" Margin="10 0 0 10" >BOOK</Label>
-            <ComboBox Text="Is not open" Width="160" x:Name="_ItemBook" Margin="10 30 0 10" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedIndex="0"  cal:Message.Attach="[Event SelectionChanged] = [Action DDLBookSelect(_ItemBook)]">
+            <ComboBox Text="Is not open" SelectionChanged="_ItemBook_SelectionChanged" Width="160" x:Name="_ItemBook" Margin="10 30 0 10" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedIndex="0">
             </ComboBox>
             <Label FontSize="15" FontWeight="Bold" Margin="200 0 0 10" >CHAPTER</Label>
-            <ComboBox Text="Is not open" Width="100"  x:Name="_ItemBookChapter" Margin="210 30 0 10" DisplayMemberPath="Text" SelectedValuePath="Value" SelectedIndex="{Binding MySelectedIndex,Mode=TwoWay}" cal:Message.Attach="[Event SelectionChanged] = [Action ItemBookChapterSelectedChange(_ItemBookChapter)]" >
+            <ComboBox Text="Is not open" Width="100"  x:Name="_ItemBookChapter" Margin="210 30 0 10" DisplayMemberPath="Text" SelectedValuePath="Value" SelectionChanged="_ItemChapter_SelectionChanged" SelectedIndex="0">
             </ComboBox>
             <Label FontSize="15" FontWeight="Bold" Margin="370 0 0 10">VERSE</Label>
-            <ComboBox Text="Is not open" Width="100" x:Name="_ItemBookVerse" Margin="380 30 0 10" DisplayMemberPath="Text"   SelectedValuePath="Value" SelectedIndex="0" >
+            <ComboBox Text="Is not open" Width="100" x:Name="_ItemBookVerse" Margin="380 30 0 10" DisplayMemberPath="Text"   SelectedValuePath="Value" SelectionChanged="_ItemBookVerse_SelectionChanged" SelectedIndex="0">
             </ComboBox>
         </Canvas>
         <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="5" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
-            <!--<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderThickness="2">
-                <TextBlock x:Name="BibleTxtLesson"  FontSize="20"  Grid.Row="4" Height="Auto" Width="460" TextAlignment="Right" TextWrapping="Wrap"></TextBlock>
-            </ScrollViewer>-->
-            
-            <!--<ListViewItem x:Name="rtr" Background="LightCoral"  Foreground="Red" Content="{Binding ElementValue}" FontSize="20"  Grid.Row="4" Height="Auto" Width="460" BorderThickness="2">-->
-            <!--</ListViewItem>-->
-            <ListBox x:Name="BibleTxtLesson" Background="White"  Foreground="Black" FontSize="20"  Grid.Row="4" Height="Auto" Width="460" BorderThickness="2" SelectedValue="{Binding SelctedElementValue}" >
+
+            <ListBox x:Name="BibleTxtLesson" Background="White"  Foreground="Black" FontSize="20"  Grid.Row="4" Height="Auto" Width="460" BorderThickness="2"  ItemsSource="{Binding _chepterElementsList}" ItemContainerStyle="{StaticResource RedGlowItemContainer}" ScrollViewer.ScrollChanged="BibleTxtLesson_ScrollChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border>
                             <StackPanel>
-                                <!--<TextBlock Text="{Binding Path=ElementStrogNo}" />-->
-                                <TextBlock Text="{Binding Path=ElementValue}" TextWrapping="Wrap" />
+                                <!--<TextBlock Name="txtname" Text="{Binding Chepterval}"/>-->
+                                <ItemsControl  ItemsSource="{Binding verseElementList}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" FlowDirection="RightToLeft" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ItemsControl  Grid.Row="4" Height="Auto" ItemsSource="{Binding wElementList}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate >
+                                                        <!--ElementStrogNo-->
+                                                        <TextBlock  Text="{Binding Path=ElementValue}" Padding="5 5 5 5" Foreground="Black" Tag="{Binding ElementStrogNo}">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property= "Background" Value="Transparent"/>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property ="IsMouseOver" Value="True">
+                                                                            <Setter Property= "Background" Value="#00D5B6"/>
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-
             </ListBox>
         </StackPanel>
         <!--Grid Column 1 Row 1-->
@@ -107,7 +157,6 @@
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Example</TextBlock>
             <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  >Genesis 7.2</TextBlock>
-
         </StackPanel>
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock FontSize="22"  Grid.Row="4" FontWeight="Bold"  >Semantic Domain
@@ -118,6 +167,7 @@
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Dictionary Reference</TextBlock>
             <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  >CBH v3,432</TextBlock>
+
 
         </StackPanel>
 

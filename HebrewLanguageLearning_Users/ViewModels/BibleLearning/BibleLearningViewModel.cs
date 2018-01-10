@@ -46,7 +46,6 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             set
             {
                 _ItemBookChapter = value;
-             
                 NotifyOfPropertyChange(() => ItemBookChapter);
                
             }

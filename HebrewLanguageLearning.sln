@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HebrewLanguageLearning_User
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialMenu", "MaterialMenu\MaterialMenu.csproj", "{DC810FBA-1DC9-429F-A247-35075EA49648}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BiblingoSetup", "BiblingoSetup\BiblingoSetup.vdproj", "{33D04351-392E-4C50-879B-1C451B2325FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,15 @@ Global
 		{DC810FBA-1DC9-429F-A247-35075EA49648}.Release451|Any CPU.Build.0 = Release451|Any CPU
 		{DC810FBA-1DC9-429F-A247-35075EA49648}.Release452|Any CPU.ActiveCfg = Release452|Any CPU
 		{DC810FBA-1DC9-429F-A247-35075EA49648}.Release452|Any CPU.Build.0 = Release452|Any CPU
+		{33D04351-392E-4C50-879B-1C451B2325FB}.Debug|Any CPU.ActiveCfg = Debug
+		{33D04351-392E-4C50-879B-1C451B2325FB}.Debug35|Any CPU.ActiveCfg = Debug
+		{33D04351-392E-4C50-879B-1C451B2325FB}.R46|Any CPU.ActiveCfg = Release
+		{33D04351-392E-4C50-879B-1C451B2325FB}.Release|Any CPU.ActiveCfg = Release
+		{33D04351-392E-4C50-879B-1C451B2325FB}.Release35|Any CPU.ActiveCfg = Release
+		{33D04351-392E-4C50-879B-1C451B2325FB}.Release40|Any CPU.ActiveCfg = Release
+		{33D04351-392E-4C50-879B-1C451B2325FB}.Release45|Any CPU.ActiveCfg = Release
+		{33D04351-392E-4C50-879B-1C451B2325FB}.Release451|Any CPU.ActiveCfg = Release
+		{33D04351-392E-4C50-879B-1C451B2325FB}.Release452|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

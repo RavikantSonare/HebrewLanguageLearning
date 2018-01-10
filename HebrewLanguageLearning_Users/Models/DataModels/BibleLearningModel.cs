@@ -13,6 +13,19 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         public List<SelectListItem> _ChapterList = new List<SelectListItem>();
         public List<SelectListItem> _VerseList = new List<SelectListItem>();
         public List<bookElements> _bookElementsList = new List<bookElements>();
+        public List<chepterElements> _chepterElementsList = new List<chepterElements>();
+    }
+    public class chepterElements
+    {
+        public string ChepterId { get; set; }
+        public string  Chepterval { get; set; }
+        public List<verseElement> verseElementList { get; set; }
+    }
+    public class verseElement
+    {
+        public string verseId { get; set; }
+        public string versValue { get; set; }
+        public List<bookElements> wElementList { get; set; }
     }
     public class bookElements
     {
