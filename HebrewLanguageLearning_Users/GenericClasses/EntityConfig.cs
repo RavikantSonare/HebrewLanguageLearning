@@ -54,10 +54,51 @@ namespace HebrewLanguageLearning_Users.GenericClasses
         };
 
         #endregion
+
+        #region _ProgressBarAssociationList
+        public static List<ProgressBarText> _ProgressBarAssociationList = new List<ProgressBarText>()
+        {
+         new ProgressBarText{ id = 0,  Value="VOCABULARY"}
+        ,new ProgressBarText{ id = 1,  Value="ASSOCIATION"}
+        ,new ProgressBarText{ id = 2,  Value="PASSIVE KNOWLEDGE" }
+        ,new ProgressBarText{ id = 3,  Value="REVIEW GAME" }
+        ,new ProgressBarText{ id = 4,  Value="ACTIVE KNOWLEDGE" }
+        ,new ProgressBarText{ id = 5,  Value="REVIEW GAME" }
+        ,new ProgressBarText{ id = 6,  Value="GRAMMAR" }
+        ,new ProgressBarText{ id = 7,  Value="ASSOCIATION" }
+        ,new ProgressBarText{ id = 8,  Value="ACTIVE KNOWLEDGE" }
+        ,new ProgressBarText{ id = 9,  Value="THE FINAL ACT" }
+        ,new ProgressBarText{ id = 10, Value="APPLICATION" }
+        };
+        #endregion
+
+        #region _ProgressBarAssociationListSecond
+        public static List<ProgressBarText> _ProgressBarAssociationListSecond = new List<ProgressBarText>()
+        {
+         new ProgressBarText{ id = 0,  Value="VOCABULARY"}
+        ,new ProgressBarText{ id = 1,  Value="ASSOCIATION"}
+        ,new ProgressBarText{ id = 2,  Value="PASSIVE KNOWLEDGE" }
+        ,new ProgressBarText{ id = 3,  Value="REVIEW GAME" }
+        ,new ProgressBarText{ id = 4,  Value="ACTIVE KNOWLEDGE" }
+        ,new ProgressBarText{ id = 5,  Value="REVIEW GAME" }
+        ,new ProgressBarText{ id = 6,  Value="GRAMMAR" }
+        ,new ProgressBarText{ id = 7,  Value="ASSOCIATION" }
+        ,new ProgressBarText{ id = 8,  Value="PASSIVE KNOWLEDGE" }
+        ,new ProgressBarText{ id = 9,  Value="ACTIVE KNOWLEDGE" }
+       
+        };
+        #endregion
     }
 
     public class SelectListItem
-    {   public string Text { get; internal set; }
+    {
+        public string Text { get; internal set; }
         public string Value { get; internal set; }
+    }
+    public class ProgressBarText
+    {
+        public int id { get; internal set; }
+        public string Value { get; internal set; }
+        public bool ShowStatus { get; internal set; }
     }
 }

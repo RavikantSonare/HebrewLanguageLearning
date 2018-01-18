@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HebrewLanguageLearning_Users.Views.CommonUserControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,51 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
     /// </summary>
     public partial class BibleLearningFromMediaView : Page
     {
+        int progressStatus=0;
         public BibleLearningFromMediaView()
         {
             InitializeComponent();
+            genList();
+            setProgressBar(ref progressStatus);
         }
+        private void setProgressBar(ref int status )
+        {
+            ProgressBarUC _cuc = new ProgressBarUC();
+            spProgress.Children.Add(_cuc.LoadProgressbar(status));
+        }
+        public class TodoItem
+        {
+            public int Id { get; set; }
+            public string Image { get; set; }
+            public int Type { get; set; }
+        }
+
+
+       public void genList()
+        {
+            List<TodoItem> items = new List<TodoItem>();
+            items.Add(new TodoItem() { Id = 1, Image = @"\Assets\volume.png", Type = 1 });
+            items.Add(new TodoItem() { Id = 2, Image = @"\Assets\volume.png", Type = 2 });
+            items.Add(new TodoItem() { Id = 3, Image = @"\Assets\volume.png", Type = 3 });
+            items.Add(new TodoItem() { Id = 4, Image = @"\Assets\volume.png", Type = 1 });
+            items.Add(new TodoItem() { Id = 5, Image = @"\Assets\volume.png", Type = 2 });
+            items.Add(new TodoItem() { Id = 6, Image = @"\Assets\volume.png", Type = 3 });
+            items.Add(new TodoItem() { Id = 7, Image = @"\Assets\volume.png", Type = 1 });
+            items.Add(new TodoItem() { Id = 8, Image = @"\Assets\volume.png", Type = 2 });
+            items.Add(new TodoItem() { Id = 9, Image = @"\Assets\volume.png", Type = 3 });
+            items.Add(new TodoItem() { Id = 10, Image = @"\Assets\volume.png", Type = 1 });
+            items.Add(new TodoItem() { Id = 11, Image = @"\Assets\volume.png", Type = 2 });
+            items.Add(new TodoItem() { Id = 12, Image = @"\Assets\volume.png", Type = 3 });
+            items.Add(new TodoItem() { Id = 13, Image = @"\Assets\volume.png", Type = 1 });
+            items.Add(new TodoItem() { Id = 14, Image = @"\Assets\volume.png", Type = 2 });
+            items.Add(new TodoItem() { Id = 15, Image = @"\Assets\volume.png", Type = 3 });
+            items.Add(new TodoItem() { Id = 16, Image = @"\Assets\volume.png", Type = 1 });
+            items.Add(new TodoItem() { Id = 17, Image = @"\Assets\volume.png", Type = 2 });
+            items.Add(new TodoItem() { Id = 18, Image = @"\Assets\volume.png", Type = 3 });
+            items.Add(new TodoItem() { Id = 19, Image = @"\Assets\volume.png", Type = 2 });
+            items.Add(new TodoItem() { Id = 20, Image = @"\Assets\volume.png", Type = 3 });
+            itmecontrol.ItemsSource = items;
+        }
+
     }
 }

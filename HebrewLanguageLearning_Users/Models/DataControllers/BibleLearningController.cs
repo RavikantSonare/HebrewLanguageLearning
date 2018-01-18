@@ -52,7 +52,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             try
             {
                 _objBLM = new BibleLearningModel();
-                string _obj_lemma, _chapter_osisID, fileName = fileRootPath + CurrentfileName + ".xml";
+                string _obj_lemma, _chapter_osisID, fileName = fileRootPath + CurrentfileName + ".xml"; int verseNo = 1;
                 XPathDocument xmlPathDoc = new XPathDocument(fileName);
                 XPathNavigator xPathNav = xmlPathDoc.CreateNavigator();
                 xPathNav.MoveToRoot(); xPathNav.MoveToFirstChild(); xPathNav.MoveToFirstChild();
@@ -72,6 +72,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                             {
                                 Text = xPathNav.GetAttribute("osisID", ""),
                                 Value = _chapter_osisID
+                            
                             });
                         xPathNav.MoveToFirstChild();
                         do
@@ -89,11 +90,11 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                         } while (xPathNav.MoveToNext());
 
                    
-                        _tmpVerseElementList.Add(new verseElement { verseId = _objBLM._VerseList.LastOrDefault().Text, versValue = _objBLM._VerseList.LastOrDefault().Value, wElementList = _TempbookElementsList });
+                        _tmpVerseElementList.Add(new verseElement { verseId = _objBLM._VerseList.LastOrDefault().Text, versValue = _objBLM._VerseList.LastOrDefault().Value, wElementList = _TempbookElementsList, verseNo= verseNo }); verseNo++;
                         _TempbookElementsList = new List<bookElements>();
                     } while (xPathNav.MoveToParent() && xPathNav.MoveToNext());
 
-
+                    verseNo = 1;
                     _objBLM._chepterElementsList.Add(new chepterElements { ChepterId = _chapter_osisID, Chepterval = _chapter_osisID, verseElementList = _tmpVerseElementList });
                     _tmpVerseElementList=new List<verseElement>();
                    
@@ -101,6 +102,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
             catch (Exception ex)
             {
+
 
             }
             finally

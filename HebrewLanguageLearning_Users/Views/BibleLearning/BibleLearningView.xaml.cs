@@ -74,9 +74,7 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
 
             if (CurrentIndex != null)
             {
-
                 SetScrollingPossition(CurrentIndex, totalIndex);
-
             }
         }
         public void SelectChapter()
@@ -95,8 +93,7 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
         {
             // BibleTxtLesson.ItemsSource = ObjBook._bookElementsList.ToList();
             BibleTxtLesson.ItemsSource = ObjBook._chepterElementsList.ToList();
-
-
+            
         }
         public void SetScrollingPossition(double Set_Possion, int totalIndex)
         {

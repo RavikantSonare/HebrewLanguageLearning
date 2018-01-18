@@ -24,6 +24,7 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
     public class verseElement
     {
         public string verseId { get; set; }
+        public int verseNo { get; set; }
         public string versValue { get; set; }
         public List<bookElements> wElementList { get; set; }
     }
@@ -32,6 +33,7 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         public string ElementStrogNo { get; set; }
         public string ElementValue { get; set; }
         public bool SelctedElementValue { get; set; }
+       
     }
   
 }

@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="HebrewLanguageLearning_Users.Views.CommonUserControls.ProgressBarUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HebrewLanguageLearning_Users.Views.CommonUserControls"
+             mc:Ignorable="d" >
+    <Grid Name="Gd_ControlHolder">
+        <!--<Image x:Name="myImg" Source="/HebrewLanguageLearning_Users;component/Assets/pink_triangle.png" Height="20" Width="20" />-->
+        <!--<Line HorizontalAlignment="Center" X1="800"  Margin="0" Stroke="#ccc" StrokeThickness="3" />
+        <Line HorizontalAlignment="Left" X1="200"  Margin="-0 -1 0 0" Stroke="#00D5B6" StrokeThickness="3" />-->
+    </Grid>
+</UserControl>

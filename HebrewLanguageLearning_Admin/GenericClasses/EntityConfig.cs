@@ -99,5 +99,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
 
         public static List<SelectListItem> _GrammarPointList = new List<SelectListItem>() { new SelectListItem { Value = "0", Text ="Choose Phases" },
         new SelectListItem{Value = "1", Text ="All Phases" },new SelectListItem{ Value = "2", Text ="Assoc. & Act." },new SelectListItem{ Value = "3",Text ="Assoc. & Pass" },new SelectListItem {Value="4",Text="Pass & Act."  } };
+       
     }
+   
 }

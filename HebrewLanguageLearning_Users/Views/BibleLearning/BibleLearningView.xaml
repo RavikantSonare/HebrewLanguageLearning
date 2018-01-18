@@ -83,25 +83,29 @@
                     <DataTemplate>
                         <Border>
                             <StackPanel>
-                                <!--<TextBlock Name="txtname" Text="{Binding Chepterval}"/>-->
+
                                 <ItemsControl  ItemsSource="{Binding verseElementList}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" FlowDirection="RightToLeft" />
+                                            <WrapPanel Orientation="Vertical" HorizontalAlignment="Right" FlowDirection="RightToLeft" >
+                                            </WrapPanel>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
+                                    
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
+                                            <WrapPanel>
+                                                <TextBlock FontSize="12" Name="versno" Text="{Binding verseNo}"></TextBlock>
                                             <ItemsControl  Grid.Row="4" Height="Auto" ItemsSource="{Binding wElementList}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+                                                        <StackPanel Width="400" Orientation="Horizontal" HorizontalAlignment="Right" />
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate >
                                                         <!--ElementStrogNo-->
-                                                        <TextBlock  Text="{Binding Path=ElementValue}" Padding="5 5 5 5" Foreground="Black" Tag="{Binding ElementStrogNo}">
+                                                            <TextBlock  Text="{Binding Path=ElementValue}" Padding="5 5 5 5" Foreground="Black" Tag="{Binding ElementStrogNo}" FontSize="18">
                                                             <TextBlock.Style>
                                                                 <Style TargetType="TextBlock">
                                                                     <Setter Property= "Background" Value="Transparent"/>
@@ -115,7 +119,8 @@
                                                         </TextBlock>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
+                                                </ItemsControl>
+                                            </WrapPanel>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -124,6 +129,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+           
         </StackPanel>
         <!--Grid Column 1 Row 1-->
         <Canvas Grid.Column="2" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="9"></Canvas>

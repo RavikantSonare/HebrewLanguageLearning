@@ -96,6 +96,7 @@
     <Compile Include="Models\DataModels\BibleLearningModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaViewModel.cs" />
+    <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaWordChoiceViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningViewModel.cs" />
     <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -105,8 +106,14 @@
     <Compile Include="Views\BibleLearning\BibleLearningFromMediaView.xaml.cs">
       <DependentUpon>BibleLearningFromMediaView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BibleLearning\BibleLearningFromMediaWordChoiceView.xaml.cs">
+      <DependentUpon>BibleLearningFromMediaWordChoiceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BibleLearning\BibleLearningView.xaml.cs">
       <DependentUpon>BibleLearningView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CommonUserControls\ProgressBarUC.xaml.cs">
+      <DependentUpon>ProgressBarUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dashboard\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
@@ -157,7 +164,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BibleLearning\BibleLearningFromMediaWordChoiceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BibleLearning\BibleLearningView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CommonUserControls\ProgressBarUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,6 +213,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Media\Pictures\" />
+    <Folder Include="Media\Sounds\" />
     <Folder Include="Models\DataProviders\" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +269,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="bin\Debug\Resource\Book\wlc\XMLFile1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Media\Videos\Matt13.44 - Allthathehas.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
