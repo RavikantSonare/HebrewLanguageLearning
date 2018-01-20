@@ -19,26 +19,34 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
     /// <summary>
     /// Interaction logic for ProgressBarUC.xaml
     /// </summary>
+    /// 
+
+
     public partial class ProgressBarUC : UserControl
     {
         public ProgressBarUC()
         {
             InitializeComponent();
         }
-
-
-        internal Grid LoadProgressbar(int status)
+        static int prgBarId = 0;
+        internal Grid LoadProgressbar(int prgBarIdCallie)
         {
             Grid gd_main = new Grid();
-            // Gd_ControlHolder
             UIElementCollection gd = gd_main.Children;
-            if (status == 0)
+
+
+            prgBarId = prgBarIdCallie;
+            Possition();
+
+            // Line Logic
+
+            if (prgBarId == 0)
             {
-                gd.Add(BlankLine(950, HorizontalAlignment.Center)); gd.Add(FillLine(150, HorizontalAlignment.Left));
+
+                gd.Add(BlankLine(950, HorizontalAlignment.Center,4)); gd.Add(FillLine(150, HorizontalAlignment.Left,4));
             }
             else
             {
-
                 var _VertyLine = new Line
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,//HorizontalAlignment.Left,
@@ -46,36 +54,62 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                     // X1 = 100,
                     Stroke = (SolidColorBrush)new BrushConverter().ConvertFrom("#A9CDDA"),
                     StrokeThickness = 3,
-                    Margin = new Thickness(200, -50, 0, 0),
+                    Margin = new Thickness(180, -49, 0, 0),
                     Y1 = 100,
 
-
                 };
-
-
-                gd.Add(BlankLine(600, HorizontalAlignment.Left)); gd.Add(FillLine(100, HorizontalAlignment.Left));
-                gd.Add(BlankLine(340, HorizontalAlignment.Right)); //gd.Add(FillLine(50, HorizontalAlignment.Right));
+                gd.Add(BlankLine(600, HorizontalAlignment.Left));
+                gd.Add(FillLine(100 * 2, HorizontalAlignment.Left));
+                gd.Add(BlankLine(360, HorizontalAlignment.Right)); 
                 gd.Add(_VertyLine);
             }
+
+            // All Image Logic
+
             gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
-            if (status == 0)
+            if (prgBarId == 0)
             {
                 gd.Add(createImage(0, new Thickness(20, -53, 0, 0)));
                 gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
             }
             gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
-            for (int i = 1; i <= 10; i++)
+
+            if (prgBarId == 0)
             {
-                if (i != 5 && i != 8)
+                for (int i = 1; i <= 9; i++)
                 {
-                    int thinkValue = (i + 1) * 95;
-                    gd.Add(createImage(2, new Thickness(thinkValue, -53, 0, 0)));
+                    if (i != 5 && i != 8)
+                    {
+                        int thinkValue = (i + 1) * 95;
+                        if (i == 1 && prgBarId == 1)
+                        { gd.Add(createImage(1, new Thickness(_dic[i], -53, 0, 0))); }
+                        else
+                        {
+                            gd.Add(createImage(2, new Thickness(_dic[i], -53, 0, 0)));
+                        }
+                    }
                 }
-            }
-            if (status == 0)
-            {
+
                 gd.Add(createImage(0, new Thickness(595, -53, 0, 0)));
                 gd.Add(createImage(0, new Thickness(870, -53, 0, 0)));
+            }
+            else
+            {
+                for (int i = 1; i <= 10; i++)
+                {
+                    if (i != 5 && i != 9)
+                    {
+                        if (i == 1 && prgBarId == 1)
+                        { gd.Add(createImage(1, new Thickness(_dic[i], -53, 0, 0))); }
+                        else
+                        {
+                            gd.Add(createImage(2, new Thickness(_dic[i], -53, 0, 0)));
+                        }
+                    }
+                }
+
+
+
             }
             var _stcPnl = new StackPanel();
             _stcPnl.Orientation = Orientation.Horizontal;
@@ -85,11 +119,11 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             _canPnl.Margin = new Thickness(0, 20, 0, 0);
             int j = 0;
 
-            if (status == 0)
+            if (prgBarId == 0)
             {
                 foreach (var Item in EntityConfig._ProgressBarAssociationList)
                 {
-                    _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, new Thickness(5, 10, 5, 10)));
+                    _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, new Thickness(5, 10, 5, 10), false));
                 }
                 gd.Add(_stcPnl);
             }
@@ -97,21 +131,12 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             {
                 foreach (var Item in EntityConfig._ProgressBarAssociationListSecond)
                 {
-                    _canPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, Item.id == 0 || Item.id == 6 ? new Thickness(Item.id == 0 ? 110 : 650, -96, 5, 10) : new Thickness(j, 10, 5, 10)));
+                    _canPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, Item.id == 0 || Item.id == 6 ? new Thickness(Item.id == 0 ? 110 : 650, -96, 5, 10) : new Thickness(j, 10, 5, 10), Item.id == 2 ? true : false));
                     if (Item.id == 0 || Item.id == 6) { gd.Add(createImage(3, new Thickness(Item.id == 0 ? 190 : 715, -115, 5, 10))); }
                     j += Item.Value.Length * 8;
                 }
                 gd.Add(_canPnl);
             }
-
-            //if (status == 0)
-            //{
-
-            //}
-            //else
-            //{
-
-            //}
 
 
             return gd_main;
@@ -135,7 +160,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
 
             return _redArrowImage;
         }
-        internal static TextBlock createCurrentLesson(int id, string currentTopic, bool status, Thickness mrgnThik,  bool currentValue)
+        internal static TextBlock createCurrentLesson(int id, string currentTopic, bool status, Thickness mrgnThik, bool currentValue)
         {
 
             var _txtBloack = new TextBlock
@@ -153,9 +178,13 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             { _txtBloack.Foreground = Brushes.Black; }
             else
             { _txtBloack.Foreground = Brushes.Gray; }
+
+            if (currentValue)
+            { _txtBloack.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#00D5B6"); }
+
             return _txtBloack;
         }
-        internal Line BlankLine(int lnlenght, HorizontalAlignment HoriAlignment)
+        internal Line BlankLine(int lnlenght, HorizontalAlignment HoriAlignment,int setTopMgn=0)
         {
             var _blankLine = new Line
             {
@@ -163,11 +192,11 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 X1 = lnlenght,
                 Stroke = (SolidColorBrush)new BrushConverter().ConvertFrom("#ccc"),
                 StrokeThickness = 3,
-                Margin = new Thickness(20, 0, 80, 0),
+                Margin = new Thickness(20, setTopMgn, 80, 0),
             };
             return _blankLine;
         }
-        internal Line FillLine(int lnlenght, HorizontalAlignment HoriAlignment)
+        internal Line FillLine(int lnlenght, HorizontalAlignment HoriAlignment,int setTopMgn=0)
         {
             var _FillLine = new Line
             {
@@ -175,9 +204,41 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 X1 = lnlenght,
                 Stroke = (SolidColorBrush)new BrushConverter().ConvertFrom("#00D5B6"),
                 StrokeThickness = 3,
-                Margin = new Thickness(20, 0, 0, 0),
+                Margin = new Thickness(20, setTopMgn, 0, 0),
             };
             return _FillLine;
+        }
+
+        static Dictionary<int, int> _dic = new Dictionary<int, int>();
+        internal void Possition()
+        {
+            if (prgBarId == 0)
+            {
+                _dic.Add(1, 210);
+                _dic.Add(2, 315);
+                _dic.Add(3, 420);
+                _dic.Add(4, 510);
+                _dic.Add(5, 600);
+                _dic.Add(6, 670);
+                _dic.Add(7, 760);
+                _dic.Add(8, 910);
+                _dic.Add(9, 950);
+        
+            }
+            else
+            {
+                _dic.Add(1, 210);
+                _dic.Add(2, 330);
+                _dic.Add(3, 440);
+                _dic.Add(4, 550);
+                _dic.Add(5, 650);
+                _dic.Add(6, 700);
+                _dic.Add(7, 810);
+                _dic.Add(8, 910);
+                _dic.Add(9, 1010);
+                _dic.Add(10, 1110);
+            }
+
         }
     }
 

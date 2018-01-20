@@ -36,6 +36,7 @@ namespace HebrewLanguageLearning_Users
                .PerRequest<ShellViewModel>()
                .PerRequest<ViewModels.Dashboard.DashboardViewModel>()
                .PerRequest<ViewModels.Account.LoginViewModel>()
+               .PerRequest<ViewModels.Account.SettingViewModel>()
                .PerRequest<ViewModels.BibleLearning.BibleLearningViewModel>();
         }
 

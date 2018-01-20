@@ -55,5 +55,10 @@ namespace HebrewLanguageLearning_Users.Views
         {
             StateMenuRight.Toggle(1);
         }
+        private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+
+        }
     }
 }

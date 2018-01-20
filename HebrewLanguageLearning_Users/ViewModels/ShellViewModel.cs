@@ -27,8 +27,10 @@ namespace HebrewLanguageLearning_Users.ViewModels
             navigationService = new FrameAdapter(frame);
 
             container.Instance(navigationService);
-            navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
-            //navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
+            Settings();
+            // navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
+
+            //  navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
             // navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
             // navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
             // navigationService.NavigateToViewModel(typeof(Account.LoginViewModel));
@@ -44,6 +46,7 @@ namespace HebrewLanguageLearning_Users.ViewModels
         }
         public void Settings()
         {
+            navigationService.NavigateToViewModel(typeof(Account.SettingViewModel));
         }
         public void MenuIconOpen()
         {

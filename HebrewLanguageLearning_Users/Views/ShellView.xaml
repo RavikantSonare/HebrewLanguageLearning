@@ -72,7 +72,7 @@
                             <Line X1="200" Margin="20 20 20 20" Stroke="White" StrokeThickness="2" />
                             <materialMenu:MenuButton Text="Profile"></materialMenu:MenuButton>
                             <Line X1="200" Margin="20 20 20 20" Stroke="White" StrokeThickness="2" />
-                            <materialMenu:MenuButton cal:Message.Attach="[Event Click] = [Action Settings()]" Text="Settings"></materialMenu:MenuButton>
+                            <materialMenu:MenuButton MouseDown="Settings_MouseDown"  Text="Settings"></materialMenu:MenuButton>
                             <Line X1="200" Margin="20 20 20 20" Stroke="White" StrokeThickness="2" />
                             <materialMenu:MenuButton MouseDown="LogOut_MouseDown" Text="Log Out"></materialMenu:MenuButton>
                         </StackPanel>

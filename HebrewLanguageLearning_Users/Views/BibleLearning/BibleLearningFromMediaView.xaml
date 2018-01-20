@@ -113,11 +113,21 @@
                 <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Black">
                     <StackPanel Height="400" Width="400">
                         <!--<TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="400" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
-                        <MediaElement  Height="400" Width="400" Source="/HebrewLanguageLearning_Users;component/Media/Videos/Matt13.44 - Allthathehas.mp4" Name="mePlayer" Stretch="None" />
+                        <MediaElement  Height="400" Width="400" Source="/HebrewLanguageLearning_Users;component/Media/Videos/ELL_PART_5_768k.wmv" x:Name="mePlayer" Stretch="None" LoadedBehavior="Manual" />
+
+                       
                     </StackPanel>
+                  
                 </Border>
+                <StackPanel VerticalAlignment="Bottom" Margin="10 0 0 10" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Name="btnPlay" Click="btnPlay_Click">Play</Button>
+                    <Button Name="btnPause" Margin="5,0" Click="btnPause_Click">Pause</Button>
+                    <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
+                </StackPanel>
                 <Image Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"  Width="100" Height="100" Source="/HebrewLanguageLearning_Users;component\Assets\Change_arrow.png"/>
             </Grid>
+            <WrapPanel HorizontalAlignment="Center">
+                          </WrapPanel>
         </StackPanel>
         <StackPanel Grid.Column="1" x:Name="spProgress"  Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
             <!--<CommonUserControls:ProgressBarUC/>-->

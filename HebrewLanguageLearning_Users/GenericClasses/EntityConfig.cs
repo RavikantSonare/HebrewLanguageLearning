@@ -8,6 +8,11 @@ namespace HebrewLanguageLearning_Users.GenericClasses
 {
     public class EntityConfig
     {
+        #region Software Configuration
+       internal static string HostingUri= "http://biblingo.mobi96.org/Home/SyncData";//?UserId="1"//
+
+        #endregion
+
         #region _booksTitleList
         public static List<SelectListItem> _booksTitleList = new List<SelectListItem>()
         {

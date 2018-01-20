@@ -94,7 +94,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.Account
                 return;
             }
         }
-     
+        public void btn_SyncData()
+        {
+
+
+        }
 
     }
    

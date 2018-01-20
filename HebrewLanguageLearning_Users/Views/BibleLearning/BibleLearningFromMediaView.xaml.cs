@@ -22,16 +22,35 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
     public partial class BibleLearningFromMediaView : Page
     {
         int progressStatus=0;
+        string commonUri= @"D:\Ravi\Projects\HLL\HebrewLanguageLearning\HebrewLanguageLearning_Users\Media\";
         public BibleLearningFromMediaView()
         {
             InitializeComponent();
             genList();
             setProgressBar(ref progressStatus);
+            mePlayer.Source = new Uri(commonUri+"Videos/Kat.jpg");  //ELL_PART_5_768k.wmv
+
         }
         private void setProgressBar(ref int status )
         {
             ProgressBarUC _cuc = new ProgressBarUC();
             spProgress.Children.Add(_cuc.LoadProgressbar(status));
+        }
+        
+
+        private void btnPlay_Click(object sender, RoutedEventArgs e)
+        {
+            mePlayer.Play();
+        }
+
+        private void btnPause_Click(object sender, RoutedEventArgs e)
+        {
+            mePlayer.Pause();
+        }
+
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            mePlayer.Stop();
         }
         public class TodoItem
         {

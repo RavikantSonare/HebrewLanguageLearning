@@ -93,8 +93,10 @@
     <Compile Include="GenericClasses\EntityConfig.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\DataControllers\BibleLearningController.cs" />
+    <Compile Include="Models\DataControllers\SettingController.cs" />
     <Compile Include="Models\DataModels\BibleLearningModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Account\SettingViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaWordChoiceViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningViewModel.cs" />
@@ -102,6 +104,12 @@
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\Account\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BibleLearning\ActiveView.xaml.cs">
+      <DependentUpon>ActiveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BibleLearning\BibleLearningFromMediaView.xaml.cs">
       <DependentUpon>BibleLearningFromMediaView.xaml</DependentUpon>
@@ -117,6 +125,12 @@
     </Compile>
     <Compile Include="Views\Dashboard\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\ConquerCityView.xaml.cs">
+      <DependentUpon>ConquerCityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\JerichoGameView.xaml.cs">
+      <DependentUpon>JerichoGameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -160,6 +174,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Account\SettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BibleLearning\ActiveView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BibleLearning\BibleLearningFromMediaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -177,6 +199,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dashboard\DashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\ConquerCityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\JerichoGameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -271,7 +301,9 @@
     <Resource Include="bin\Debug\Resource\Book\wlc\XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Media\Videos\Matt13.44 - Allthathehas.mp4" />
+    <Content Include="Media\Videos\ELL_PART_5_768k.wmv" />
+    <Resource Include="Media\Videos\Kat.jpg" />
+    <Content Include="Media\Videos\Matt1344Allthathehas.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
