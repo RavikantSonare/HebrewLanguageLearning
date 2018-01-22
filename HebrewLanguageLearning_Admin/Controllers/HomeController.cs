@@ -26,5 +26,16 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
             return View();
         }
+
+        [AllowAnonymous]
+        public JsonResult SyncData(string UserId)
+        {
+            if (!string.IsNullOrEmpty(UserId))
+            {
+                GenericClasses.XmlSetter _obj = new GenericClasses.XmlSetter();
+                return Json(_obj.GetDBToXMl(), JsonRequestBehavior.AllowGet);
+            }
+            return null;
+        }
     }
 }

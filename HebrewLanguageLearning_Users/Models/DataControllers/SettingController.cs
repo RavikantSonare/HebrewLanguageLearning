@@ -33,15 +33,17 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 client.BaseAddress = new Uri(CurrentUrl);
 
                 // Add an Accept header for JSON format.
-
                 client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // List data response.
-                HttpResponseMessage response = client.GetAsync("?UserId="+UserId).Result;  // Blocking call!
+                HttpResponseMessage response = client.GetAsync("?UserId=" + UserId).Result;  // Blocking call!
                 if (response.IsSuccessStatusCode)
                 {
                     var products = response.Content.ReadAsStringAsync().Result;
+                    string path = UserDataFolder();
+                    string filename = AppendTimeStamp("Dictionary") + ".json";
+                    System.IO.File.WriteAllText(path + filename, products);
                 }
                 else
                 {
@@ -74,7 +76,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             {
                 isDone = false;
             }
-           
+
             return isDone;
         }
 

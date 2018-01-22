@@ -519,6 +519,7 @@
     </Compile>
     <Compile Include="GenericClasses\EntityConfig.cs" />
     <Compile Include="GenericClasses\FilesUtility.cs" />
+    <Compile Include="GenericClasses\XmlSetter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -51,7 +51,7 @@
         </WrapPanel>
         <!--Grid Column 0 Row 1-->
         <StackPanel  Grid.Column="1" Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="btn_SyncData" Height="50" Width="200" >Sync Data </Button>
+            <Button x:Name="btn_SyncData" Height="50" Width="200" >Sync Data</Button>
         </StackPanel>
         <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
             <ScrollViewer  x:Name="BibleTxtLesson" Background="White"  Foreground="Black" FontSize="20"  Width="200" BorderThickness="2" />
@@ -67,7 +67,10 @@
 
         <!--Grid Column 2 Row 1-->
         <Canvas Grid.Column="3"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="6"></Canvas>
-        <StackPanel Grid.Column="3"  Grid.Row="1"  Background="#E6EAEE" Orientation="Horizontal"  Margin="100,0,192,0"/>
+        <StackPanel Grid.Column="3"  Grid.Row="1"  Background="#E6EAEE" Orientation="Horizontal"  Margin="100,0,192,0">
+            <ProgressBar Height="35" Width="500" Maximum="100" Minimum="0" Value="80" Background="White" Foreground="Green" />
+
+        </StackPanel>
         <StackPanel Grid.Column="3"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
             <Grid>
                 <Grid.RowDefinitions></Grid.RowDefinitions>
