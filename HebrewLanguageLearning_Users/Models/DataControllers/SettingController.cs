@@ -33,6 +33,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 client.BaseAddress = new Uri(CurrentUrl);
 
                 // Add an Accept header for JSON format.
+
                 client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
