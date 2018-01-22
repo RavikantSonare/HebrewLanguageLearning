@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using HebrewLanguageLearning_Admin.Models;
+using System.Text.RegularExpressions;
 
 namespace HebrewLanguageLearning_Admin.GenericClasses
 {
@@ -52,6 +53,14 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             string image = string.Empty;
             try
             {
+                try
+                {
+                    if (base64Img.Contains("data:image")) { 
+                    string Tempbase64File = Regex.Replace(base64Img, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
+                    base64Img = Tempbase64File;
+                    }
+                }
+                catch { }
                 string filePath = string.Empty;
 
                 var path = DateTime.Now;
@@ -95,7 +104,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             string audio = string.Empty;
             try
             {
-
+               
                 var path = DateTime.Now;
                 var data = String.Format("{0:d/M/yyyy HH:mm:ss}", path);
                 data = data.Replace(@"/", "").Trim(); data = data.Replace(@":", "").Trim(); data = data.Replace(" ", String.Empty);

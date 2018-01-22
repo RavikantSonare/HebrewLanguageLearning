@@ -204,7 +204,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(HLL_Media_PicturesModels hLL_Media_PicturesModels)
+        public ActionResult Edit([Bind(Include = "PictureId,Imagefile,MasterTableId,ImgUrl,Title,ActiveStatus,IsActive,IsDelete,UpdatedBy,UpdatedDate")]HLL_Media_PicturesModels hLL_Media_PicturesModels)
         {
             HLL_Media_Pictures DataModel = new HLL_Media_Pictures();
             if (ModelState.IsValid)

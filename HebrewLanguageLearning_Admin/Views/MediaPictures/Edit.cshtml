@@ -10,7 +10,7 @@
 @using (Html.BeginForm("Edit", "MediaPictures", FormMethod.Post, new { enctype = "multipart/form-data", @id = "PicturesEdit" }))
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(model => model.MasterTableId);
     <div class="form-horizontal">
         <h4>Media Pictures</h4>
         <hr />
