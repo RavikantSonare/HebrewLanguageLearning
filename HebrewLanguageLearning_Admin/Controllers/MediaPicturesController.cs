@@ -27,16 +27,37 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: Pictures/Details/5
         public ActionResult Details(string id)
         {
+
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //HLL_Media_Pictures hLL_Media_Pictures = db.HLL_Media_Pictures.Find(id);
+            //if (hLL_Media_Pictures == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(hLL_Media_Pictures);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             HLL_Media_Pictures hLL_Media_Pictures = db.HLL_Media_Pictures.Find(id);
+            HLL_Media_PicturesModels DataModel;
+
+
+
             if (hLL_Media_Pictures == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_Media_Pictures);
+            else
+            {
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_Pictures, HLL_Media_PicturesModels>(); });
+                DataModel = AutoMapper.Mapper.Map<HLL_Media_Pictures, HLL_Media_PicturesModels>(hLL_Media_Pictures);
+
+            }
+            return View(DataModel);
         }
 
         // GET: Pictures/Create
@@ -126,11 +147,12 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 HLLDBContext contextdb = new HLLDBContext();
                 try
                 {
-                   
+
                     foreach (var entityToInsert in hLL_PicturesModelslst)
                     {
                         entityToInsert.PictureId = EntityConfig.getnewid("HLL_Media_Pictures");
-                        if (!string.IsNullOrEmpty(entityToInsert.ImgUrl)) {
+                        if (!string.IsNullOrEmpty(entityToInsert.ImgUrl))
+                        {
                             entityToInsert.ImgUrl = Task.Run(async () => await FilesUtility.base64ToImage(entityToInsert.ImgUrl, entityToInsert.PictureId, "Pictures", entityToInsert.TableRef)).Result;
                         }
 
@@ -140,7 +162,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     contextdb.HLL_Media_Pictures.AddRange(DataModel);
                     contextdb.SaveChanges();
                 }
-                catch(Exception ex) { }
+                catch (Exception ex) { }
                 finally
                 {
                     if (contextdb != null)
@@ -160,11 +182,21 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             HLL_Media_Pictures hLL_Media_Pictures = db.HLL_Media_Pictures.Find(id);
+            HLL_Media_PicturesModels DataModel;
+
+
+
             if (hLL_Media_Pictures == null)
             {
                 return HttpNotFound();
             }
-            return View(hLL_Media_Pictures);
+            else
+            {
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_Pictures, HLL_Media_PicturesModels>(); });
+                DataModel = AutoMapper.Mapper.Map<HLL_Media_Pictures, HLL_Media_PicturesModels>(hLL_Media_Pictures);
+
+            }
+            return View(DataModel);
         }
 
         // POST: Pictures/Edit/5
@@ -172,15 +204,24 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PictureId,Title,ImgUrl,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] HLL_Media_Pictures hLL_Media_Pictures)
+        public ActionResult Edit(HLL_Media_PicturesModels hLL_Media_PicturesModels)
         {
+            HLL_Media_Pictures DataModel = new HLL_Media_Pictures();
             if (ModelState.IsValid)
             {
-                db.Entry(hLL_Media_Pictures).State = EntityState.Modified;
+                UploadFiles _objUploadFile = new UploadFiles();
+                _objUploadFile.physicalFile = hLL_Media_PicturesModels.Imagefile;
+                _objUploadFile.fileName = hLL_Media_PicturesModels.ImgUrl;
+                _objUploadFile.fileType = 1;
+                hLL_Media_PicturesModels.ImgUrl =  FilesUtility.UploadFiles(_objUploadFile).Result;
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_PicturesModels, HLL_Media_Pictures>(); });
+                DataModel = AutoMapper.Mapper.Map<HLL_Media_PicturesModels, HLL_Media_Pictures>(hLL_Media_PicturesModels);
+
+                db.Entry(DataModel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(hLL_Media_Pictures);
+            return View(DataModel);
         }
 
         internal void checkAndDelete(string MasterId)

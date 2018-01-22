@@ -633,6 +633,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Media\Pictures\HLLUSA001-PICTUR00CPicturesHLL_Definition2212018003031.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -871,7 +872,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Media\Pictures\" />
     <Folder Include="Media\Sounds\" />
     <Folder Include="Media\Videos\" />
     <Folder Include="Views\Error\" />

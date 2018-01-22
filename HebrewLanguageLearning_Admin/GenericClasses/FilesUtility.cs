@@ -32,9 +32,11 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                 }
                 if (!string.IsNullOrEmpty(uploadFiles.base64File))
                 {
-
-                    uploadFiles.fileName = uploadFiles.tableName + uploadFiles.tableId + "_" + SI.fileSavedLocation[uploadFiles.fileType] + DateFormat + uploadFiles.fileExtension;
-                    byte[] bytes = System.Convert.FromBase64String(uploadFiles.base64File);
+                    if (string.IsNullOrEmpty(uploadFiles.fileName))
+                    {
+                        uploadFiles.fileName = uploadFiles.tableName + uploadFiles.tableId + "_" + SI.fileSavedLocation[uploadFiles.fileType] + DateFormat + uploadFiles.fileExtension;
+                    }
+                        byte[] bytes = System.Convert.FromBase64String(uploadFiles.base64File);
                     FileStream fs = new FileStream(HostingEnvironment.MapPath("~/Media/" + SI.fileSavedLocation[uploadFiles.fileType] + "/") + uploadFiles.fileName, FileMode.CreateNew, FileAccess.Write, FileShare.None);
                     fs.Write(bytes, 0, bytes.Length);
                     fs.Close();
@@ -159,5 +161,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
 
             return filename;
         }
+
+     
     }
 }

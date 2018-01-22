@@ -1,4 +1,4 @@
-﻿@model HebrewLanguageLearning_Admin.DBContext.HLL_Media_Pictures
+﻿@model HebrewLanguageLearning_Admin.Models.HLL_Media_PicturesModels
 
 @{
     ViewBag.Title = "Edit";
@@ -7,19 +7,19 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "MediaPictures", FormMethod.Post, new { enctype = "multipart/form-data", @id = "PicturesEdit" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>HLL_Media_Pictures</h4>
+        <h4>Media Pictures</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.PictureId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
@@ -27,13 +27,62 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.ImgUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ImgUrl, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.ImgUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ImgUrl, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @Html.LabelFor(model => model.IsDelete, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsDelete)
+                    @Html.ValidationMessageFor(model => model.IsDelete, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <label>Select User Image:</label>
+            </div>
+                <div class="col-md-8">
+                    <div class="controls imgParent">
+                        @Html.TextBoxFor(p => p.Imagefile, null, new { data_val = "false", type = "file", @class = "input-file", name = "file", id = "fileToUpload", accept = "image/*" })
+                        <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
+                        @Html.ValidationMessageFor(n => n.ImgUrl, null, new { @class = "text_danger" })
+                        <div class="col-md-2" id="output"></div>
+                    </div>
+                </div>
+            </div>
+        @*<div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Select User Image:</label>
+                    <div class="controls imgParent">
+                        @Html.TextBoxFor(p => p.Imagefile, null, new { data_val = "false", type = "file", @class = "input-file", name = "file", id = "fileToUpload", accept = "image/*" })
+                        <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
+                        @Html.ValidationMessageFor(n => n.ImgUrl, null, new { @class = "text_danger" })
+                        <div class="col-md-2" id="output"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>*@
+        <div class="form-group">
+            <div class="form-actions text-right">
+                <input type="reset" value="Reset" class="btn btn-danger">
+                <input type="submit" value="    Update    " class="btn btn-success">
+            </div>
+        </div>
+
+        @*<div class="form-group">
             @Html.LabelFor(model => model.ActiveStatus, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
@@ -41,29 +90,8 @@
                     @Html.ValidationMessageFor(model => model.ActiveStatus, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsActive)
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsDelete, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsDelete)
-                    @Html.ValidationMessageFor(model => model.IsDelete, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
+        </div>*@
+        @*<div class="form-group">
             @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
@@ -93,13 +121,9 @@
                 @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+     
     </div>
 }
 
