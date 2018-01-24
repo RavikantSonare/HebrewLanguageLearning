@@ -105,7 +105,7 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate >
                                                         <!--ElementStrogNo-->
-                                                            <TextBlock  Text="{Binding Path=ElementValue}" Padding="5 5 5 5" Foreground="Black" Tag="{Binding ElementStrogNo}" FontSize="18">
+                                                            <TextBlock cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_WordList($source, $eventArgs)]" Text="{Binding Path=ElementValue}" Padding="5 5 5 5" Foreground="Black" Tag="{Binding ElementStrogNo}" FontSize="18">
                                                             <TextBlock.Style>
                                                                 <Style TargetType="TextBlock">
                                                                     <Setter Property= "Background" Value="Transparent"/>
@@ -143,13 +143,13 @@
         <!--Grid Column 2 Row 1-->
         <Canvas Grid.Column="3"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="10"></Canvas>
         <StackPanel Grid.Column="3"  Grid.Row="1"  Background="#E6EAEE" Orientation="Horizontal" HorizontalAlignment="Center" Margin="193,0,192,0">
-            <Label FontSize="20"  Grid.Row="4" FontWeight="Bold"  >כִּתבֵי הַקוֹדֶשׁ</Label>
+            <TextBlock FontSize="20"  x:Name="BibleTxt" Grid.Row="4" FontWeight="Bold"  >כִּתבֵי הַקוֹדֶשׁ</TextBlock>
 
         </StackPanel>
         <StackPanel Grid.Column="3"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
             <!--<Line X1="500" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#00D5B6" StrokeThickness="2" />-->
             <Border BorderThickness="1" BorderBrush="Black">
-                <TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="150" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>
+                <TextBlock x:Name="BibleTxtMedia"  FontSize="20" Grid.Row="4" Height="150" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>
             </Border>
         </StackPanel>
         <!--<StackPanel Grid.Column="3"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,35">
@@ -157,7 +157,7 @@
         </StackPanel>-->
         <StackPanel Height="170" Width="500" Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Description</TextBlock>
-            <TextBlock FontSize="18" Width="400" Height="auto" TextWrapping="Wrap" Grid.Row="4" FontWeight="Bold"  >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</TextBlock>
+            <TextBlock x:Name="DescriptionTxt" FontSize="18" Width="400" Height="auto" TextWrapping="Wrap" Grid.Row="4" FontWeight="Bold"  ></TextBlock>
 
         </StackPanel>
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Top">

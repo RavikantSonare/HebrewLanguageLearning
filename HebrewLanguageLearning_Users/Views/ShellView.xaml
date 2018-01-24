@@ -70,11 +70,13 @@
                     <ScrollViewer VerticalScrollBarVisibility="Hidden"  Background="#788493">
                         <StackPanel Orientation="Vertical">
                             <Line X1="200" Margin="20 20 20 20" Stroke="White" StrokeThickness="2" />
-                            <materialMenu:MenuButton Text="Profile"></materialMenu:MenuButton>
+                            <materialMenu:MenuButton Text="Profile"  cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_Profile($source, $eventArgs)]" >
+                            </materialMenu:MenuButton>
                             <Line X1="200" Margin="20 20 20 20" Stroke="White" StrokeThickness="2" />
-                            <materialMenu:MenuButton MouseDown="Settings_MouseDown"  Text="Settings"></materialMenu:MenuButton>
+                            <!--<Button >Ravi</Button> [Event MouseMove] = [Action MouseMove_Image($source, $eventArgs)] MouseDown="LogOut_MouseDown"-->
+                            <materialMenu:MenuButton cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_Settings($source, $eventArgs)]" Text="Settings"></materialMenu:MenuButton>
                             <Line X1="200" Margin="20 20 20 20" Stroke="White" StrokeThickness="2" />
-                            <materialMenu:MenuButton MouseDown="LogOut_MouseDown" Text="Log Out"></materialMenu:MenuButton>
+                            <materialMenu:MenuButton  Text="LogOut" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_LogOut($source, $eventArgs)]" ></materialMenu:MenuButton>
                         </StackPanel>
                     </ScrollViewer>
                 </materialMenu:SideMenu.Menu>

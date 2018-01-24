@@ -525,6 +525,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DictionaryModel.cs" />
     <Compile Include="Models\HLL_ApplicationModel.cs" />
     <Compile Include="Models\HLL_CommonField.cs" />
     <Compile Include="Models\HLL_DefinitionModel.cs" />

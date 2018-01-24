@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Markup;
 
 namespace HebrewLanguageLearning_Users.ViewModels
@@ -27,27 +28,29 @@ namespace HebrewLanguageLearning_Users.ViewModels
             navigationService = new FrameAdapter(frame);
 
             container.Instance(navigationService);
-            Settings();
-            // navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
+            //  navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
 
-            //  navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
-            // navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
+            // navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
+            navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
             // navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
             // navigationService.NavigateToViewModel(typeof(Account.LoginViewModel));
         }
 
-        public void Logout()
+        public void MouseDown_Settings(object sender, MouseEventArgs e)
         {
-            // Application.Current.Shutdown();
+            navigationService.NavigateToViewModel(typeof(Account.SettingViewModel));
+            // StateMenu.Toggle(0);
         }
-        public void Profile()
+
+        public void MouseDown_LogOut(object sender, MouseEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        public void MouseDown_Profile(object sender, MouseEventArgs e)
         {
 
         }
-        public void Settings()
-        {
-            navigationService.NavigateToViewModel(typeof(Account.SettingViewModel));
-        }
+
         public void MenuIconOpen()
         {
             if (StateValue == "Hidden") { StateValue = "Visible"; }
@@ -68,6 +71,7 @@ namespace HebrewLanguageLearning_Users.ViewModels
             }
         }
 
+        public object StateMenu { get; private set; }
     }
 
 

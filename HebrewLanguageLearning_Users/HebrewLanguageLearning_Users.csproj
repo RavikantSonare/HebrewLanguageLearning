@@ -91,10 +91,12 @@
     </Compile>
     <Compile Include="CommonHelper\ImageDrawHelper.cs" />
     <Compile Include="GenericClasses\EntityConfig.cs" />
+    <Compile Include="GenericClasses\FileSetter.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\DataControllers\BibleLearningController.cs" />
     <Compile Include="Models\DataControllers\SettingController.cs" />
     <Compile Include="Models\DataModels\BibleLearningModel.cs" />
+    <Compile Include="Models\DataModels\DictionaryModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Account\SettingViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaViewModel.cs" />

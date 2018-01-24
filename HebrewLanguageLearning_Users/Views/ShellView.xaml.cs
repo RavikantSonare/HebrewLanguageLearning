@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using HebrewLanguageLearning_Users.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +24,9 @@ namespace HebrewLanguageLearning_Users.Views
         public ShellView()
         {
             InitializeComponent();
-        
-           
-          //  AnimationSpeed = TimeSpan.FromMilliseconds(150);
+
+
+            //  AnimationSpeed = TimeSpan.FromMilliseconds(150);
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -43,9 +45,9 @@ namespace HebrewLanguageLearning_Users.Views
         }
         private void ShadowMouseDown(object sender, MouseButtonEventArgs e)
         {
-           // if (ClosingType == ClosingType.Auto) Hide();
+            // if (ClosingType == ClosingType.Auto) Hide();
         }
-        
+
         private void LogOut_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();
@@ -55,10 +57,6 @@ namespace HebrewLanguageLearning_Users.Views
         {
             StateMenuRight.Toggle(1);
         }
-        private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-
-        }
+       
     }
 }

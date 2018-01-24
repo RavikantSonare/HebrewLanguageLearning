@@ -84,17 +84,18 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
 
         private HLLDBContext db = new HLLDBContext();
         HLL_DictionaryModel DataModelDictionary;
-        public List<HLL_DictionaryModel> GetDBToXMl()
+        public List<DictionaryModel> GetDBToXMl()
         {
-            var DictionaryObj = db.HLL_DictionaryEntries.ToList();
-            List<HLL_DictionaryModel> DataModelDictionary = new List<HLL_DictionaryModel>();
+            // Select(x => new { x.DicEnglish, x.DicHebrew, x.DicStrongNo, x.DictionaryEntriesId }).
+            List<HLL_DictionaryEntries> DictionaryObj = db.HLL_DictionaryEntries.ToList();
+            List<DictionaryModel> DataModelDictionary = new List<DictionaryModel>();
 
             try
             {
                 if (DictionaryObj != null)
                 {
-                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryEntries, HLL_DictionaryModel>(); });
-                    DataModelDictionary = AutoMapper.Mapper.Map<List<HLL_DictionaryEntries>, List<HLL_DictionaryModel>>(DictionaryObj);
+                    AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryEntries, DictionaryModel>(); });
+                    DataModelDictionary = AutoMapper.Mapper.Map<List<HLL_DictionaryEntries>, List<DictionaryModel>>(DictionaryObj);
                 }
 
                 foreach (var Item in DataModelDictionary)
@@ -111,7 +112,10 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                     {
                         var _curDefLst = _currentDef.Select(z => z.DefinitionId).ToList();
                         Item.Count_SemanticDomain = db.HLL_SemanticDomain.Where(x => _curDefLst.Contains(x.MasterTableId)).Count();
-                        Item.Count_Pictures = db.HLL_Media_Pictures.Where(p => _curDefLst.Contains(p.MasterTableId)).Count();
+                        var listData = db.HLL_Media_Pictures.Where(p => _curDefLst.Contains(p.MasterTableId)).Select(z => z.ImgUrl).ToList();
+                        //Item.Count_Pictures = 
+                        Item.ListOfPictures = listData;
+
                     }
                     if (_currentLLD != null)
                     {
@@ -119,6 +123,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                         Item.Count_Example = db.HLL_Example.Where(x => _curLLDLst.Contains(x.MasterTableId)).Count();
                         Item.Count_Pictures = Item.Count_Pictures + db.HLL_Media_Pictures.Where(p => _curLLDLst.Contains(p.MasterTableId)).Count();
                     }
+                    Item.ListOfDefinition = db.HLL_Definition.Where(z => z.DicEntId == Item.DictionaryEntriesId).Select(z => z.Title).ToList();
                 }
 
             }
