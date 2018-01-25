@@ -3,6 +3,7 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Scripts/jquery-1.10.2.js"></script>
 
 <div class="page-content-inner ">
     <br>
@@ -155,7 +156,7 @@
     var OnError = function (e) {
         console.log(e);
     }
-    
+
     function GetDynamicTextBox(value) {
         var div = "";
         if (value == 0) {

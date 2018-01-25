@@ -142,8 +142,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
         public bool InsertMultiplePicture(List<HLL_Media_PicturesModels> hLL_PicturesModelslst)
         {
             bool Status = false;
-            using (TransactionScope scopeImg = new TransactionScope())
-            {
+            //using (TransactionScope scopeImg = new TransactionScope())
+            //{
                 HLLDBContext contextdb = new HLLDBContext();
                 try
                 {
@@ -168,9 +168,9 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     if (contextdb != null)
                         contextdb.Dispose();
                 }
-                scopeImg.Complete();
+                //scopeImg.Complete();
                 Status = true;
-            }
+          //  }
             return Status;
         }
 

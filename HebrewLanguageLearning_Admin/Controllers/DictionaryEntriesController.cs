@@ -33,7 +33,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryEntries, HLL_DictionaryModel>(); });
                     DataModelDictionary = AutoMapper.Mapper.Map<List<HLL_DictionaryEntries>, List<HLL_DictionaryModel>>(DictionaryObj);
                 }
-               
+
                 foreach (var Item in DataModelDictionary)
                 {
 
@@ -57,7 +57,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         Item.Count_Pictures = Item.Count_Pictures + db.HLL_Media_Pictures.Where(p => _curLLDLst.Contains(p.MasterTableId)).Count();
                     }
                 }
-             
+
             }
             catch
             {
@@ -308,31 +308,33 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 var tmpLLDList = db.HLL_LanguageLearningDefinition.Where(h => h.DicEntId.Equals(DataModel.DictionaryEntriesId) && h.IsDelete == false).Select(z => z.LanLernDefId).ToList();
                 i = 0;
                 string LanLernDefId = string.Empty;
-                foreach (var Item in hLL_DictionaryModel.DicLanguageLearningDefinitionDynamicTextBox)
-                {
-                    if (!string.IsNullOrEmpty(Item))
-                    {
-                        LanLernDefId = string.Empty;
-                        if (tmpLLDList.Count() > i)
-                        {
-                            LanLernDefId = tmpLLDList[i];
-                        }
-                        var dicData = db.HLL_LanguageLearningDefinition.Where(p => p.DicEntId == hLL_DictionaryModel.DictionaryEntriesId && p.LanLernDefId == LanLernDefId).FirstOrDefault();
 
-                        if (dicData != null)
+                if (hLL_DictionaryModel.DicLanguageLearningDefinitionDynamicTextBox != null)
+                    foreach (var Item in hLL_DictionaryModel.DicLanguageLearningDefinitionDynamicTextBox)
+                    {
+                        if (!string.IsNullOrEmpty(Item))
                         {
-                            dicData.Title = Item;
-                            _objLLDef.Edit(dicData);
+                            LanLernDefId = string.Empty;
+                            if (tmpLLDList.Count() > i)
+                            {
+                                LanLernDefId = tmpLLDList[i];
+                            }
+                            var dicData = db.HLL_LanguageLearningDefinition.Where(p => p.DicEntId == hLL_DictionaryModel.DictionaryEntriesId && p.LanLernDefId == LanLernDefId).FirstOrDefault();
+
+                            if (dicData != null)
+                            {
+                                dicData.Title = Item;
+                                _objLLDef.Edit(dicData);
+                            }
+                            else
+                            {
+                                _ModelObjDef.DicEntId = hLL_DictionaryModel.DictionaryEntriesId;
+                                _ModelObjDef.Title = Item;
+                                _objLLDef.Create(_ModelObjDef);
+                            }
                         }
-                        else
-                        {
-                            _ModelObjDef.DicEntId = hLL_DictionaryModel.DictionaryEntriesId;
-                            _ModelObjDef.Title = Item;
-                            _objLLDef.Create(_ModelObjDef);
-                        }
+                        i++;
                     }
-                    i++;
-                }
                 return JavaScript("window.location = '/DictionaryEntries/Details/" + hLL_DictionaryModel.DictionaryEntriesId + "'");
                 //return RedirectToAction("Index");
             }

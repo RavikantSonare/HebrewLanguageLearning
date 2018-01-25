@@ -128,8 +128,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
         public bool InsertMultipleExamples(List<HLL_ExampleModels> hLL_ExampleModelslst)
         {
             bool Status = false;
-            using (TransactionScope scope = new TransactionScope())
-            {
+            //using (TransactionScope scope_Eg = new TransactionScope())
+            //{
                 HLLDBContext contextdb = new HLLDBContext();
                 try
                 {
@@ -147,8 +147,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 {
                     if (contextdb != null)
                         contextdb.Dispose();
-                }
-                scope.Complete();
+              //  }
+              //  scope_Eg.Complete();
                 Status = true;
             }
             return Status;

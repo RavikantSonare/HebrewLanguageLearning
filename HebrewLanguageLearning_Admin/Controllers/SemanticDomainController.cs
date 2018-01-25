@@ -134,8 +134,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
         public bool InsertMultipleSemanticDomain(List<HLL_SemanticDomainModels> hLL_SemanticDomainlst)
         {
             bool Status = false;
-            using (TransactionScope scopeSD = new TransactionScope())
-            {
+            //using (TransactionScope scope_SD = new TransactionScope())
+            //{
                 HLLDBContext contextdb = new HLLDBContext();
                 try
                 {
@@ -153,9 +153,9 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     if (contextdb != null)
                         contextdb.Dispose();
                 }
-                scopeSD.Complete();
+               // scope_SD.Complete();
                 Status = true;
-            }
+           // }
             return Status;
         }
 
