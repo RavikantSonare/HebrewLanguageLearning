@@ -149,7 +149,7 @@
         <StackPanel Grid.Column="3"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
             <!--<Line X1="500" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#00D5B6" StrokeThickness="2" />-->
             <Border BorderThickness="1" BorderBrush="Black">
-                <TextBlock x:Name="BibleTxtMedia"  FontSize="20" Grid.Row="4" Height="150" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>
+                <TextBlock x:Name="BibleTxtMediaUrl"  FontSize="20" Grid.Row="4" Height="150" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>
             </Border>
         </StackPanel>
         <!--<StackPanel Grid.Column="3"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,35">
@@ -162,19 +162,16 @@
         </StackPanel>
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Example</TextBlock>
-            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  >Genesis 7.2</TextBlock>
+            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  x:Name="ExampleTxt" >Genesis 7.2</TextBlock>
         </StackPanel>
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock FontSize="22"  Grid.Row="4" FontWeight="Bold"  >Semantic Domain
             </TextBlock>
-            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  >32.42 xx Data</TextBlock>
-
+            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold" x:Name="SemanticDomainTxt" >32.42 xx Data</TextBlock>
         </StackPanel>
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Dictionary Reference</TextBlock>
-            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  >CBH v3,432</TextBlock>
-
-
+            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold" x:Name="DictonaryReference" >CBH v3,432</TextBlock>
         </StackPanel>
 
     </Grid>

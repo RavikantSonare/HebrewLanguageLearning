@@ -44,13 +44,15 @@ namespace HebrewLanguageLearning_Admin.Controllers
                     Item.Count_LLD = _currentLLD.Count();
                     Item.Count_Definition = _currentDef.Count();
 
-                    if (_currentDef != null)
+                    if (_currentDef != null && _currentDef.Count() > 0)
                     {
                         var _curDefLst = _currentDef.Select(z => z.DefinitionId).ToList();
                         Item.Count_SemanticDomain = db.HLL_SemanticDomain.Where(x => _curDefLst.Contains(x.MasterTableId)).Count();
                         Item.Count_Pictures = db.HLL_Media_Pictures.Where(p => _curDefLst.Contains(p.MasterTableId)).Count();
+                        Item.Count_Example = db.HLL_Example.Where(p => _curDefLst.Contains(p.MasterTableId)).Count();
+
                     }
-                    if (_currentLLD != null)
+                    if (_currentLLD != null && _currentLLD.Count() > 0)
                     {
                         var _curLLDLst = _currentLLD.Select(l => l.LanLernDefId).ToList();
                         Item.Count_Example = db.HLL_Example.Where(x => _curLLDLst.Contains(x.MasterTableId)).Count();

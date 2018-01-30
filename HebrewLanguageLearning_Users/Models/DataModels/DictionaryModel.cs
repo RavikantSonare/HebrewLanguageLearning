@@ -24,5 +24,7 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         public string SoundUrl { get; set; }
         public List<string> ListOfDefinition { get; set; }
         public List<string> ListOfPictures { get; set; }
+        public List<string> ListOfSemanticDomain { get; set; }
+        public List<string> ListOfExample { get; set; }
     }
 }

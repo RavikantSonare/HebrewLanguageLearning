@@ -1,10 +1,13 @@
 ﻿using HebrewLanguageLearning_Users.GenericClasses;
 using HebrewLanguageLearning_Users.Models.DataModels;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -18,7 +21,8 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
     {
         //UserId=
         private string urlParameters = "1";
-        private string CurrentUrl = EntityConfig.HostingUri;
+        static private string CurrentUrl = EntityConfig.HostingUri;
+
         internal bool SyncData(string UsersID)
         {
             //FileSetter _OBJ = new GenericClasses.FileSetter();
@@ -34,7 +38,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         private bool GetData(string UserId)
         {
             bool isDone = false;
-
+            string filelocalPath = "";
             try
             {
                 HttpClient client = new HttpClient();
@@ -48,10 +52,12 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 HttpResponseMessage response = client.GetAsync("?UserId=" + UserId).Result;  // Blocking call!
                 if (response.IsSuccessStatusCode)
                 {
-                    var products = response.Content.ReadAsStringAsync().Result;
-                    string path = UserDataFolder("Dictionary");
+                    var listOfWord = response.Content.ReadAsStringAsync().Result;
+                    string path = UserDataFolder("Dictionary", true);
                     string filename = AppendTimeStamp("Dictionary") + ".json";
-                    System.IO.File.WriteAllText(path + filename, products);
+                    System.IO.File.WriteAllText(path + filename, listOfWord);
+                    filelocalPath = listOfWord;
+
                 }
                 else
                 {
@@ -66,28 +72,108 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             {
                 isDone = false;
             }
+            DownloadImages();
+
 
             return isDone;
         }
 
+        private void DownloadImages()
+        {
+            //if (File.Exists(filelocalPath))
+            //{
+            //JObject results = JObject.Parse(filelocalPath);
+            List<DictionaryModel> AllDataObject = new List<DictionaryModel>();
+            NullDataReturn:
+            AllDataObject = getDataFromLocalFile();
+            if (AllDataObject == null && AllDataObject.Count() <= 0) { goto NullDataReturn; }
+            List<string> ImagesNameList = new List<string>();
 
-        private static string UserDataFolder(string isSub)
+            ImagesNameList = AllDataObject.Select(z => z.ListOfPictures.LastOrDefault()).ToList();
+
+            //Process each object
+            try
+            {
+                foreach (dynamic result in ImagesNameList)
+                {
+                    lock (this)
+                    {
+                        if (!string.IsNullOrEmpty(result))
+                        {
+                            var responseWeb = GetMediaData(result).Result;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+        }
+
+        private async Task<bool> GetMediaData(string fileName)
+        {
+            bool isDone = false;
+            string filePath = "";
+            HttpClient client = new HttpClient();
+            try
+            {
+                lock (this)
+                {
+                    // List data response.
+                    HttpResponseMessage response = client.GetAsync(new Uri("http://biblingo.mobi96.org/Media/Pictures/" + fileName)).Result;
+
+                    // Check that response was successful or throw exception
+                    response.EnsureSuccessStatusCode();
+
+                    // Read response asynchronously and save asynchronously to file
+                    filePath = UserDataFolder("Media\\Pictures", false) + fileName;
+                    using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        //copy the content from response to filestream
+                        response.Content.CopyToAsync(fileStream).Wait();
+
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                isDone = false;
+            }
+
+            return isDone;
+        }
+
+        private static string UserDataFolder(string isSub, bool isDelete)
         {
             try
             {
                 string name = Assembly.GetCallingAssembly().GetName().Name;// Assembly.GetEntryAssembly().GetName().Name;
                 string folderBase = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 string dir = string.Format(@"{0}\{1}\", folderBase, name.ToString());
-                return CheckDir(dir, isSub);
+                return CheckDir(dir, isSub, isDelete);
             }
             catch (Exception ex)
             {
                 return "";
             }
         }
-        private static string CheckDir(string dir, string isSub)
+        private static string CheckDir(string dir, string isSub, bool isDelete = true)
         {
-
+            if (!isDelete)
+            {
+                dir = dir + isSub + @"\";
+                if (Directory.Exists(dir))
+                {
+                    return dir;
+                }
+                else
+                {
+                    Directory.CreateDirectory(dir);
+                }
+                return dir;
+            }
 
             if (String.IsNullOrEmpty(isSub))
             {

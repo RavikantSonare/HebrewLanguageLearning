@@ -17,13 +17,14 @@ namespace HebrewLanguageLearning_Users.GenericClasses
             return getFile();
         }
         List<DictionaryModel> getFile()
+
         {
             List<DictionaryModel> _DictionaryModellist = new List<DictionaryModel>();
             try
             {
-                string name = Assembly.GetCallingAssembly().GetName().Name;// Assembly.GetEntryAssembly().GetName().Name;
-                string folderBase = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string dir = string.Format(@"{0}\{1}\", folderBase, name.ToString());
+                //string name = Assembly.GetCallingAssembly().GetName().Name;// Assembly.GetEntryAssembly().GetName().Name;
+                //string folderBase = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string dir = string.Format(@"{0}\{1}\", EntityConfig.FolderBase, EntityConfig.Name.ToString());
                 string Path = dir + "/Dictionary/";
                 DirectoryInfo dic = new DirectoryInfo(Path);
                 var AllfileList = dic.GetFiles("*.json");
@@ -42,5 +43,8 @@ namespace HebrewLanguageLearning_Users.GenericClasses
             }
             return _DictionaryModellist;
         }
+
+
+        
     }
 }

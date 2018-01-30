@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,10 @@ namespace HebrewLanguageLearning_Users.GenericClasses
     public class EntityConfig
     {
         #region Software Configuration
-       internal static string HostingUri= "http://biblingo.mobi96.org/Home/SyncData";//?UserId="1"//
+        internal static string HostingUri = "http://biblingo.mobi96.org/Home/SyncData";//?UserId="1"//     
+        internal static string Name = Assembly.GetCallingAssembly().GetName().Name;// Assembly.GetEntryAssembly().GetName().Name;
+        internal static string FolderBase = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        internal static string MediaUri = @"D:\Ravi\Projects\HLL\HebrewLanguageLearning\HebrewLanguageLearning_Users\Media\";
 
         #endregion
 
@@ -90,7 +94,7 @@ namespace HebrewLanguageLearning_Users.GenericClasses
         ,new ProgressBarText{ id = 7,  Value="ASSOCIATION" }
         ,new ProgressBarText{ id = 8,  Value="PASSIVE KNOWLEDGE" }
         ,new ProgressBarText{ id = 9,  Value="ACTIVE KNOWLEDGE" }
-       
+
         };
         #endregion
     }

@@ -30,8 +30,16 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => BibleTxtLesson);
             }
         }
+
         public string _bibleTxt;
+        public string _bibleTxtMediaUrl;
         public string _descriptionTxt;
+        public string _semanticDomainTxt;
+        public string _exampleTxt;
+        public string _dictonaryReference;
+
+
+
         public List<SelectListItem> _ItemBook = EntityConfig._booksTitleList;
         public List<SelectListItem> ItemBook
         {
@@ -86,6 +94,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => ItemBookVerse);
             }
         }
+
         public string BibleTxt
         {
             get { return _bibleTxt; }
@@ -95,6 +104,17 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => BibleTxt);
             }
         }
+
+        public string BibleTxtMediaUrl
+        {
+            get { return _bibleTxtMediaUrl; }
+            set
+            {
+                _bibleTxtMediaUrl = value;
+                NotifyOfPropertyChange(() => BibleTxtMediaUrl);
+            }
+        }
+
         public string DescriptionTxt
         {
             get { return _descriptionTxt; }
@@ -104,6 +124,34 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => DescriptionTxt);
             }
         }
+        public string SemanticDomainTxt
+        {
+            get { return _semanticDomainTxt; }
+            set
+            {
+                _semanticDomainTxt = value;
+                NotifyOfPropertyChange(() => SemanticDomainTxt);
+            }
+        }
+        public string ExampleTxt
+        {
+            get { return _exampleTxt; }
+            set
+            {
+                _exampleTxt = value;
+                NotifyOfPropertyChange(() => ExampleTxt);
+            }
+        }
+        public string DictonaryReference
+        {
+            get { return _dictonaryReference; }
+            set
+            {
+                _dictonaryReference = value;
+                NotifyOfPropertyChange(() => DictonaryReference);
+            }
+        }
+
         static List<DictionaryModel> _dictionaryModellist = new List<DictionaryModel>();
 
 
@@ -170,7 +218,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         {
             BibileTextList _obj = GetDescription(strongNo);
             BibleTxt = _obj.proBibleTxt;
+            BibleTxtMediaUrl = ""+_obj.proMediaURl;
             DescriptionTxt = _obj.proDescriptionTxt;
+            ExampleTxt = _obj.proExampleTxt;
+            SemanticDomainTxt = _obj.proSemanticDomainTxt;
+            DictonaryReference = _obj.proDictonaryReferenceTxt;
 
         }
         BibileTextList GetDescription(string strongNo)
@@ -179,15 +231,28 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             BibileTextList _obj = new BibileTextList();
             if (DicData != null)
             {
-                _obj.proBibleTxt = DicData.DicEnglish;
+                //_obj.proBibleTxt = DicData.DicEnglish;
+
+                _obj.proBibleTxt = DicData.DicHebrew;
+                _obj.proMediaURl = DicData.ListOfPictures.LastOrDefault();
                 _obj.proDescriptionTxt = DicData.ListOfDefinition.FirstOrDefault();
 
+                _obj.proExampleTxt = DicData.ListOfExample.FirstOrDefault();
+                _obj.proSemanticDomainTxt = DicData.ListOfSemanticDomain.FirstOrDefault();
+
+                _obj.proDictonaryReferenceTxt = "";
+                //Refrence=:
+                // _obj.proDescriptionTxt = DicData.ListOfDefinition.FirstOrDefault();
             }
             else
             {
                 var tempData = _dictionaryModellist.FirstOrDefault();
-                _obj.proBibleTxt = tempData.DicEnglish;
+                _obj.proBibleTxt = tempData.DicHebrew;
                 _obj.proDescriptionTxt = tempData.ListOfDefinition.FirstOrDefault();
+                _obj.proExampleTxt = tempData.ListOfExample.FirstOrDefault();
+                _obj.proSemanticDomainTxt = tempData.ListOfSemanticDomain.FirstOrDefault();
+
+                _obj.proDictonaryReferenceTxt = "";
             }
             return _obj;
         }

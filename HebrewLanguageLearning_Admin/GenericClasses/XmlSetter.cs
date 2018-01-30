@@ -108,16 +108,31 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                     Item.Count_LLD = _currentLLD.Count();
                     Item.Count_Definition = _currentDef.Count();
 
-                    if (_currentDef != null)
+                    //if (_currentDef != null)
+                    //{
+                    //    var _curDefLst = _currentDef.Select(z => z.DefinitionId).ToList();
+                    //    Item.Count_SemanticDomain = db.HLL_SemanticDomain.Where(x => _curDefLst.Contains(x.MasterTableId)).Count();
+                    //    var listData = db.HLL_Media_Pictures.Where(p => _curDefLst.Contains(p.MasterTableId)).Select(z => z.ImgUrl).ToList();
+                    //    //Item.Count_Pictures = 
+                    //    Item.ListOfPictures = listData;
+
+                    //}
+                    //if (_currentLLD != null)
+                    //{
+                    //    var _curLLDLst = _currentLLD.Select(l => l.LanLernDefId).ToList();
+                    //    Item.Count_Example = db.HLL_Example.Where(x => _curLLDLst.Contains(x.MasterTableId)).Count();
+                    //    Item.Count_Pictures = Item.Count_Pictures + db.HLL_Media_Pictures.Where(p => _curLLDLst.Contains(p.MasterTableId)).Count();
+                    //}
+                    if (_currentDef != null && _currentDef.Count() > 0)
                     {
                         var _curDefLst = _currentDef.Select(z => z.DefinitionId).ToList();
-                        Item.Count_SemanticDomain = db.HLL_SemanticDomain.Where(x => _curDefLst.Contains(x.MasterTableId)).Count();
-                        var listData = db.HLL_Media_Pictures.Where(p => _curDefLst.Contains(p.MasterTableId)).Select(z => z.ImgUrl).ToList();
-                        //Item.Count_Pictures = 
-                        Item.ListOfPictures = listData;
+                        Item.ListOfSemanticDomain = db.HLL_SemanticDomain.Where(x => _curDefLst.Contains(x.MasterTableId)).Select(z => z.Title).ToList();
+                        Item.ListOfPictures = db.HLL_Media_Pictures.Where(p => _curDefLst.Contains(p.MasterTableId)).Select(z => z.ImgUrl).ToList();
+                        Item.ListOfDefinition = _currentDef.Select(z => z.Title).ToList();
+                        Item.ListOfExample = db.HLL_Example.Where(p => _curDefLst.Contains(p.MasterTableId)).Select(z => z.Title).ToList();
 
                     }
-                    if (_currentLLD != null)
+                    if (_currentLLD != null && _currentLLD.Count() > 0)
                     {
                         var _curLLDLst = _currentLLD.Select(l => l.LanLernDefId).ToList();
                         Item.Count_Example = db.HLL_Example.Where(x => _curLLDLst.Contains(x.MasterTableId)).Count();

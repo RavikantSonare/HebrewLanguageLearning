@@ -245,7 +245,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Media\Pictures\" />
     <Folder Include="Media\Sounds\" />
     <Folder Include="Models\DataProviders\" />
   </ItemGroup>
@@ -304,7 +303,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Media\Videos\ELL_PART_5_768k.wmv" />
-    <Resource Include="Media\Videos\Kat.jpg" />
+    <Resource Include="Media\Pictures\Kat.jpg" />
     <Content Include="Media\Videos\Matt1344Allthathehas.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
