@@ -20,5 +20,6 @@ namespace HebrewLanguageLearning_Admin.Models
         public List<HLL_Media_PicturesModels>PictureList { get; set; }
         public List<HLL_SemanticDomainModels> SemanticDomainsList { get; set; }
         public List<HLL_ExampleModels> ExampleList { get; set; }
+        public List<HLL_DictionaryReferenceModels> DictionaryReferenceList { get; set; }
     }
 }

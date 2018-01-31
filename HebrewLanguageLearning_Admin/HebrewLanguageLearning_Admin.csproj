@@ -417,6 +417,7 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\DefinitionController.cs" />
     <Compile Include="Controllers\DictionaryEntriesController.cs" />
+    <Compile Include="Controllers\DictionaryReferenceController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
@@ -475,6 +476,9 @@
     <Compile Include="DBContext\HLL_DictionaryEntries.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\HLL_DictionaryReference.cs">
+      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\HLL_Example.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
@@ -530,6 +534,7 @@
     <Compile Include="Models\HLL_CommonField.cs" />
     <Compile Include="Models\HLL_DefinitionModel.cs" />
     <Compile Include="Models\HLL_DictionaryModel.cs" />
+    <Compile Include="Models\HLL_DictionaryReferenceModels.cs" />
     <Compile Include="Models\HLL_ExampleModels.cs" />
     <Compile Include="Models\HLL_GrammarModel.cs" />
     <Compile Include="Models\HLL_HebrewApplicationDataModel.cs" />
@@ -875,6 +880,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Media\Sounds\" />
     <Folder Include="Media\Videos\" />
+    <Folder Include="Views\DictionaryReference\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>

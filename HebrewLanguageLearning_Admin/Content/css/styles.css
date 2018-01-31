@@ -2338,9 +2338,9 @@ body.boxed {
     font-size: 11px;
     color: #777;
     background-color: #fff;
-    
 }
-.Setmargin{
+
+.Setmargin {
     /*added by ravi*/
     margin-left: 250px;
     margin-right: 10px;
@@ -7336,32 +7336,36 @@ li.plupload_droptext {
     .page-condensed .footer {
         display: none;
     }
-  
 }
+
 .imgParent {
- position:relative;
+    position: relative;
 }
-.imgParent .output {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    right: 0;
-    left: 0;
-    margin: auto;
-    top: 0;
+
+    .imgParent .output {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin: auto;
+        top: 0;
+    }
+
+    .imgParent #output {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin: auto;
+        top: 0;
+    }
+
+#output img {
+    max-width: 100%;
 }
- .imgParent #output {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    right: 0;
-    left: 0;
-    margin: auto;
-    top: 0;
-}
-#output img{
- max-width:100%;
-}
+
 .imgParent .input-file {
     opacity: 0;
     z-index: 9;
@@ -7369,6 +7373,7 @@ li.plupload_droptext {
     width: 110px;
     margin-top: 3px;
 }
+
 .imgParent span.fileupload {
     position: absolute;
     border: 1px solid #000;
@@ -7380,6 +7385,7 @@ li.plupload_droptext {
     padding: 5px 5px 5px 7px;
     line-height: 16px;
 }
+
 .fileupload span.icon-upload2 {
     font-size: 12px;
     margin-right: 5px;
@@ -7387,251 +7393,255 @@ li.plupload_droptext {
 
 .btn-arrow-right,
 .btn-arrow-left {
-   position: relative;
-   padding-left: 18px;
-   padding-right: 18px;
+    position: relative;
+    padding-left: 18px;
+    padding-right: 18px;
 }
 
 .btn-arrow-right {
-   padding-left: 36px;
+    padding-left: 36px;
 }
 
 .btn-arrow-left {
-   padding-right: 36px;
+    padding-right: 36px;
 }
 
-.btn-arrow-right:before,
-.btn-arrow-right:after,
-.btn-arrow-left:before,
-.btn-arrow-left:after {
-   /* make two squares (before and after), looking similar to the button */
-   
-   content: "";
-   position: absolute;
-   top: 5px;
-   /* move it down because of rounded corners */
-   
-   width: 22px;
-   /* same as height */
-   
-   height: 22px;
-   /* button_outer_height / sqrt(2) */
-   
-   background: inherit;
-   /* use parent background */
-   
-   border: inherit;
-   /* use parent border */
-   
-   border-left-color: transparent;
-   /* hide left border */
-   
-   border-bottom-color: transparent;
-   /* hide bottom border */
-   
-   border-radius: 0px 4px 0px 0px;
-   /* round arrow corner, the shorthand property doesn't accept "inherit" so it is set to 4px */
-   
-   -webkit-border-radius: 0px 4px 0px 0px;
-   -moz-border-radius: 0px 4px 0px 0px;
-}
+    .btn-arrow-right:before,
+    .btn-arrow-right:after,
+    .btn-arrow-left:before,
+    .btn-arrow-left:after {
+        /* make two squares (before and after), looking similar to the button */
+        content: "";
+        position: absolute;
+        top: 5px;
+        /* move it down because of rounded corners */
+        width: 22px;
+        /* same as height */
+        height: 22px;
+        /* button_outer_height / sqrt(2) */
+        background: inherit;
+        /* use parent background */
+        border: inherit;
+        /* use parent border */
+        border-left-color: transparent;
+        /* hide left border */
+        border-bottom-color: transparent;
+        /* hide bottom border */
+        border-radius: 0px 4px 0px 0px;
+        /* round arrow corner, the shorthand property doesn't accept "inherit" so it is set to 4px */
+        -webkit-border-radius: 0px 4px 0px 0px;
+        -moz-border-radius: 0px 4px 0px 0px;
+    }
 
 .btn-arrow-right:before,
 .btn-arrow-right:after {
-   transform: rotate(45deg);
-   /* rotate right arrow squares 45 deg to point right */
-   
-   -webkit-transform: rotate(45deg);
-   -moz-transform: rotate(45deg);
-   -o-transform: rotate(45deg);
-   -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    /* rotate right arrow squares 45 deg to point right */
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
 }
 
 .btn-arrow-left:before,
 .btn-arrow-left:after {
-   transform: rotate(225deg);
-   /* rotate left arrow squares 225 deg to point left */
-   
-   -webkit-transform: rotate(225deg);
-   -moz-transform: rotate(225deg);
-   -o-transform: rotate(225deg);
-   -ms-transform: rotate(225deg);
+    transform: rotate(225deg);
+    /* rotate left arrow squares 225 deg to point left */
+    -webkit-transform: rotate(225deg);
+    -moz-transform: rotate(225deg);
+    -o-transform: rotate(225deg);
+    -ms-transform: rotate(225deg);
 }
 
 .btn-arrow-right:before,
 .btn-arrow-left:before {
-   /* align the "before" square to the left */
-   
-   left: -11px;
+    /* align the "before" square to the left */
+    left: -11px;
 }
 
 .btn-arrow-right:after,
 .btn-arrow-left:after {
-   /* align the "after" square to the right */
-   
-   right: -11px;
+    /* align the "after" square to the right */
+    right: -11px;
 }
 
 .btn-arrow-right:after,
 .btn-arrow-left:before {
-   /* bring arrow pointers to front */
-   
-   z-index: 1;
+    /* bring arrow pointers to front */
+    z-index: 1;
 }
 
 .btn-arrow-right:before,
 .btn-arrow-left:after {
-   /* hide arrow tails background */
-   
-   background-color: white;
+    /* hide arrow tails background */
+    background-color: white;
 }
+
 .draganddropbutton {
- 
     height: 300px;
-     display:-webkit-flex;
+    display: -webkit-flex;
     -webkit-flex-direction: column;
     -webkit-justify-content: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-   
 }
+
 ul.dropdown-menu li form a {
     display: block;
     padding: 10px 12px 11px 12px;
     color: #333;
-    font-weight:600;
+    font-weight: 600;
 }
-ul.dropdown-menu li form a i {
-        float:right;
-        opacity:0.4;
-}
-ul.dropdown-menu li form a:hover, ul.dropdown-menu li form a> a:focus {
-    color: #ffffff;
-    background-color: #3A4B55;
-    box-shadow: 1px 0 0 #3A4B55, -1px 0 0 #3A4B55;
-    -webkit-box-shadow: 1px 0 0 #3A4B55, -1px 0 0 #3A4B55;
-    -moz-box-shadow: 1px 0 0 #3A4B55, -1px 0 0 #3A4B55;
-}
-ul.dropdown-menu li form a:hover i, ul.dropdown-menu li form a> a:focus i{opacity:1;}
+
+    ul.dropdown-menu li form a i {
+        float: right;
+        opacity: 0.4;
+    }
+
+    ul.dropdown-menu li form a:hover, ul.dropdown-menu li form a > a:focus {
+        color: #ffffff;
+        background-color: #3A4B55;
+        box-shadow: 1px 0 0 #3A4B55, -1px 0 0 #3A4B55;
+        -webkit-box-shadow: 1px 0 0 #3A4B55, -1px 0 0 #3A4B55;
+        -moz-box-shadow: 1px 0 0 #3A4B55, -1px 0 0 #3A4B55;
+    }
+
+        ul.dropdown-menu li form a:hover i, ul.dropdown-menu li form a > a:focus i {
+            opacity: 1;
+        }
 
 /* Absolute Center Spinner */
 .loading {
-  position: fixed;
-  z-index: 999;
-  height: 2em;
-  width: 2em;
-  overflow: show;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
-/* Transparent Overlay */
-.loading:before {
-  content: '';
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.3);
-}
+    /* Transparent Overlay */
+    .loading:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.3);
+    }
 
-/* :not(:required) hides these rules from IE9 and below */
-.loading:not(:required) {
-  /* hide "loading..." text */
-  font: 0/0 a;
-  color: transparent;
-  text-shadow: none;
-  background-color: transparent;
-  border: 0;
-}
+    /* :not(:required) hides these rules from IE9 and below */
+    .loading:not(:required) {
+        /* hide "loading..." text */
+        font: 0/0 a;
+        color: transparent;
+        text-shadow: none;
+        background-color: transparent;
+        border: 0;
+    }
 
-.loading:not(:required):after {
-  content: '';
-  display: block;
-  font-size: 10px;
-  width: 1em;
-  height: 1em;
-  margin-top: -0.5em;
-  -webkit-animation: spinner 1500ms infinite linear;
-  -moz-animation: spinner 1500ms infinite linear;
-  -ms-animation: spinner 1500ms infinite linear;
-  -o-animation: spinner 1500ms infinite linear;
-  animation: spinner 1500ms infinite linear;
-  border-radius: 0.5em;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-}
+        .loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 1500ms infinite linear;
+            -moz-animation: spinner 1500ms infinite linear;
+            -ms-animation: spinner 1500ms infinite linear;
+            -o-animation: spinner 1500ms infinite linear;
+            animation: spinner 1500ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        }
 
 /* Animation */
 
 @-webkit-keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
+
 @-moz-keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
+
 @-o-keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
+
 @keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.table_box td {
+    width: 30%;
+    display: inline-block;
+    height: 22px;
+    margin: 1px !important;
+    padding: 1px !important;
 }

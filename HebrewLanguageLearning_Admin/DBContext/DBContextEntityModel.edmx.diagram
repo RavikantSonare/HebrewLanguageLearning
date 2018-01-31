@@ -30,6 +30,7 @@
         <EntityTypeShape EntityType="Model.HLL_LanguageLearningDefinition" Width="1.5" PointX="15.375" PointY="10.75" />
         <EntityTypeShape EntityType="Model.HLL_Example" Width="1.5" PointX="3.375" PointY="4.75" />
         <EntityTypeShape EntityType="Model.HLL_SemanticDomain" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.HLL_DictionaryReference" Width="1.5" PointX="5.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

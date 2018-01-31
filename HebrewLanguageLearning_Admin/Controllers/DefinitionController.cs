@@ -50,6 +50,17 @@ namespace HebrewLanguageLearning_Admin.Controllers
             catch { }
             return null;
         }
+        internal static List<HLL_DictionaryReferenceModels> Get_HLL_DictionaryReferenceList(string definitionId)
+        {
+            try
+            {
+                var HLL_DictionaryReferenceModels = db.HLL_DictionaryReference.Where(x => x.MasterTableId.Equals(definitionId)).ToList();
+                AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryReference, HLL_DictionaryReferenceModels>(); });
+                return AutoMapper.Mapper.Map<List<HLL_DictionaryReference>, List<HLL_DictionaryReferenceModels>>(HLL_DictionaryReferenceModels);
+            }
+            catch { }
+            return null;
+        }
     }
     public class DefinitionController : Controller
     {
@@ -101,6 +112,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             Def_Obj.PictureList = definitionData.Get_HLL_PictureList(DefinitionId);
             Def_Obj.SemanticDomainsList = definitionData.Get_HLL_SemanticDomainsList(DefinitionId);
             Def_Obj.ExampleList = definitionData.Get_HLL_ExampleList(DefinitionId);
+            Def_Obj.DictionaryReferenceList = definitionData.Get_HLL_DictionaryReferenceList(DefinitionId);
             ModelState.Clear();
             return PartialView("_HLL_Definition_PartialView", Def_Obj);
         }

@@ -149,7 +149,11 @@
         <StackPanel Grid.Column="3"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
             <!--<Line X1="500" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#00D5B6" StrokeThickness="2" />-->
             <Border BorderThickness="1" BorderBrush="Black">
-                <TextBlock x:Name="BibleTxtMediaUrl"  FontSize="20" Grid.Row="4" Height="150" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>
+                <!--<Image HorizontalAlignment="Right" Height="150" Width="400" Source="{Binding BibleTxtMediaUrl}"/>-->
+                <Image  HorizontalAlignment="Left" Source="{Binding BibleTxtMediaUrl}"
+    Margin="0,0,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Bottom" 
+    Grid.Row="8" Width="200" Height="150"  Grid.ColumnSpan="2" />
+                <!--<TextBlock x:Name="BibleTxtMediaUrl"  FontSize="20" Grid.Row="4" Height="150" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
             </Border>
         </StackPanel>
         <!--<StackPanel Grid.Column="3"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,35">

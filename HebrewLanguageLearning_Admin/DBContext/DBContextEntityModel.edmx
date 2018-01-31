@@ -122,6 +122,24 @@
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="HLL_DictionaryReference">
+          <Key>
+            <PropertyRef Name="ExampleId" />
+            <PropertyRef Name="MasterTableId" />
+          </Key>
+          <Property Name="ExampleId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="MasterTableId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="ActiveStatus" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="HLL_Example">
           <Key>
             <PropertyRef Name="ExampleId" />
@@ -464,6 +482,20 @@
           <EntitySet Name="HLL_TagAttachment" EntityType="Self.HLL_TagAttachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Topics" EntityType="Self.HLL_Topics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Vocabulary" EntityType="Self.HLL_Vocabulary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HLL_DictionaryReference" EntityType="Self.HLL_DictionaryReference" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [HLL_DictionaryReference].[ExampleId] AS [ExampleId], 
+    [HLL_DictionaryReference].[MasterTableId] AS [MasterTableId], 
+    [HLL_DictionaryReference].[Title] AS [Title], 
+    [HLL_DictionaryReference].[ActiveStatus] AS [ActiveStatus], 
+    [HLL_DictionaryReference].[IsActive] AS [IsActive], 
+    [HLL_DictionaryReference].[IsDelete] AS [IsDelete], 
+    [HLL_DictionaryReference].[CreatedBy] AS [CreatedBy], 
+    [HLL_DictionaryReference].[CreatedDate] AS [CreatedDate], 
+    [HLL_DictionaryReference].[UpdatedBy] AS [UpdatedBy], 
+    [HLL_DictionaryReference].[UpdatedDate] AS [UpdatedDate]
+    FROM [dbo].[HLL_DictionaryReference] AS [HLL_DictionaryReference]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -539,6 +571,7 @@
           <EntitySet Name="HLL_LanguageLearningDefinition" EntityType="Model.HLL_LanguageLearningDefinition" />
           <EntitySet Name="HLL_Example" EntityType="Model.HLL_Example" />
           <EntitySet Name="HLL_SemanticDomain" EntityType="Model.HLL_SemanticDomain" />
+          <EntitySet Name="HLL_DictionaryReference" EntityType="Model.HLL_DictionaryReference" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -909,6 +942,22 @@
             <PropertyRef Name="SemanticDomainId" />
           </Key>
           <Property Name="SemanticDomainId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MasterTableId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_DictionaryReference">
+          <Key>
+            <PropertyRef Name="ExampleId" />
+            <PropertyRef Name="MasterTableId" />
+          </Key>
+          <Property Name="ExampleId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="MasterTableId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ActiveStatus" Type="Boolean" />
@@ -1309,6 +1358,22 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
                 <ScalarProperty Name="SemanticDomainId" ColumnName="SemanticDomainId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_DictionaryReference">
+            <EntityTypeMapping TypeName="Model.HLL_DictionaryReference">
+              <MappingFragment StoreEntitySet="HLL_DictionaryReference">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
+                <ScalarProperty Name="ExampleId" ColumnName="ExampleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -50,65 +50,115 @@
                 </div>
 
                 <div class="form-group">
-                    <table>
-                        <tbody id="ImageList">
-                            @foreach (var item in Model.PictureList)
-                            {
+                    <div class="table_box">
+                        <table class="table">
+                            <tbody id="ImageList">
                                 <tr>
-                                    <td>
-                                        @item.Title
-                                    </td>
-                                </tr>
-                            }
+                                    @if (Model.PictureList != null)
+                                {
+                                    foreach (var item in Model.PictureList)
+                                    {
+                                        <td>
+                                            @item.Title
+                                        </td>
+                                    }
+                                }
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
-
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label>Semantic Domains</label>
-                            <input type="text" placeholder="Semantic Domains" class="form-control" id="txtSemanticDomains">
-                        </div>
-                        <div class="col-sm-6">
-                            <br />
-
-                            <input type="button" value="+ Add Semantic Domains" onclick="addNewSemanticDomains()" class="btn btn-info">
-                        </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Semantic Domains</label>
+                        <input type="text" placeholder="Semantic Domains" class="form-control" id="txtSemanticDomains">
+                    </div>
+                    <div class="col-sm-6">
+                        <br />
+                        <input type="button" value="+ Add Semantic Domains" onclick="addNewSemanticDomains()" class="btn btn-info">
                     </div>
                 </div>
-                <div class="form-group">
-                    <table>
+            </div>
+            <div class="form-group">
+                <div class="table_box">
+                    <table class="table">
                         <tbody id="SemanticList">
-                            @foreach (var item in Model.SemanticDomainsList)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Title
-                                    </td>
-                                </tr>
-                            }
+                            <tr>
+                                @if (Model.SemanticDomainsList != null)
+                                {
+                                    foreach (var item in Model.SemanticDomainsList)
+                                    {
+                                        <td>
+                                            @item.Title
+                                        </td>
+                                    }
+                                }
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label>Examples</label>
-                            <input type="text" placeholder="Examples" class="form-control" id="txtExamples">
-                        </div>
-                        <div class="col-sm-6">
-                            <br />
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Examples</label>
+                        <input type="text" placeholder="Examples" class="form-control" id="txtExamples">
+                    </div>
+                    <div class="col-sm-6">
+                        <br />
 
-                            <input type="button" value="+ Add Examples" onclick="addNewExamples()" class="btn btn-info">
-                        </div>
+                        <input type="button" value="+ Add Examples" onclick="addNewExamples()" class="btn btn-info">
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <table>
+            <div class="form-group">
+                <div class="table_box">
+                    <table class="table">
                         <tbody id="ExamplesList">
-                            @foreach (var item in Model.ExampleList)
+                            <tr>
+                                @if (Model.ExampleList != null)
+                                {
+                                    foreach (var item in Model.ExampleList)
+                                    {
+
+                                        <td>
+                                            @item.Title
+                                        </td>
+
+                                    }
+                                }
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Dictionary Reference</label>
+                        <input type="text" placeholder="Dictionary Reference" class="form-control" id="txtDictionaryReference">
+                    </div>
+                    <div class="col-sm-6">
+                        <br />
+
+                        <input type="button" value="+ Add Dictionary Reference" onclick="addNewDictionaryReference()" class="btn btn-info">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <table>
+                    <tbody id="DictionaryReferenceList">
+                        @if (Model.DictionaryReferenceList != null)
+                        {
+                            foreach (var item in Model.DictionaryReferenceList)
                             {
                                 <tr>
                                     <td>
@@ -116,21 +166,22 @@
                                     </td>
                                 </tr>
                             }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                <button type="button" onclick="SaveFromData(1)" class="btn btn-primary">Save and Exit</button>
-                <button type="button" onclick="SaveFromDataAndNext()" class="btn btn-success">Save and Go to Next Def</button>
-            </div>
-        </form>
-    </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            <button type="button" onclick="SaveFromData(1)" class="btn btn-primary">Save and Exit</button>
+            <button type="button" onclick="SaveFromDataAndNext()" class="btn btn-success">Save and Go to Next Def</button>
+        </div>
+    </form>
+</div>
 </div>
 
 <script type="text/javascript">
-    var Image_List = [], SemanticDomains_List = [], Examples_List = [];
+    var Image_List = [], SemanticDomains_List = [], Examples_List = []; DictionaryReference_List = [];
     var _masterId = $('#PopUp_LanLernDefId').val(); var TableRefName = "HLL_LanguageLearningDefinition";
     if (_masterId == "") { _masterId = $('#PopUp_DefinitionId').val(); TableRefName = "HLL_Definition"; }
     //var Imagemodel = {
@@ -182,6 +233,20 @@
             Examples_List.push({ Title: ExamplesData, MasterTableId: _masterId });
             $('#txtExamples').val("");
             $('#ExamplesList').append("<tr><td>" + ExamplesData + "</tr></td>");
+        }
+    };
+    addNewDictionaryReference = function () {
+
+        $('#errorMessage').text("");
+        var DictionaryReferenceData = $('#txtDictionaryReference').val();
+
+        if (DictionaryReferenceData == "" || typeof DictionaryReferenceData == 'undefined') {
+            $('#errorMessage').text("Please enter Dictionary Reference Title");
+        } else {
+
+            DictionaryReference_List.push({ Title: DictionaryReferenceData, MasterTableId: _masterId });
+            $('#txtDictionaryReference').val("");
+            $('#DictionaryReferenceList').append("<tr><td>" + DictionaryReferenceData + "</tr></td>");
         }
     };
     var isNext = false;
@@ -258,6 +323,27 @@
                 }
             });
         }
+
+        /* InsertMultipleDictionaryReference  */
+        if (DictionaryReference_List.length > 0) {
+            var async3 = $.ajax({
+                type: "POST",
+                cache: false,
+                url: '@Url.Action("InsertMultipleDictionaryReference", "Example")',
+                dataType: "html",
+                contentType: 'application/json',
+                data: JSON.stringify(DictionaryReference_List),
+                success: function (result) {
+                    Examples_List = [];
+                    action++;
+                    compareValue(target, action);
+                    //    flag.val++;
+                },
+                error: function (result) {
+                    console.log("resultError" + JSON.stringify(result));
+                }
+            });
+        }
         if (stateBehavior == 1) {
             $('#frmloading').show();
 
@@ -284,7 +370,7 @@
                 var ext = $(this).val().split('.').pop().toLowerCase();
                 if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
                     if (ext != '') {
-                     
+
                         $("#output").empty();
                         $("#fileToUpload").val("");
                         $('#headerdiv').removeClass("btn-success").removeClass("btn-info").addClass("btn-danger");
@@ -295,7 +381,7 @@
                     }
 
                 } else {
-                    
+
                     var files = e.target.files,
                     filesLength = files.length;
                     for (var i = 0; i < filesLength ; i++) {

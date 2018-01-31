@@ -14,19 +14,19 @@ namespace HebrewLanguageLearning_Admin.DBContext
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
+    
     public partial class HLLDBContext : DbContext
     {
         public HLLDBContext()
             : base("name=HLLDBContext")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<HLL_Topics> HLL_Topics { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
@@ -49,20 +49,15 @@ namespace HebrewLanguageLearning_Admin.DBContext
         public virtual DbSet<HLL_LanguageLearningDefinition> HLL_LanguageLearningDefinition { get; set; }
         public virtual DbSet<HLL_Example> HLL_Example { get; set; }
         public virtual DbSet<HLL_SemanticDomain> HLL_SemanticDomain { get; set; }
-
+        public virtual DbSet<HLL_DictionaryReference> HLL_DictionaryReference { get; set; }
+    
         public virtual ObjectResult<get_row_id> get_row_id(string t_name, ObjectParameter row_id)
         {
-            retry:
-            try
-            {
-              
-                var t_nameParameter = t_name != null ?
+            var t_nameParameter = t_name != null ?
                 new ObjectParameter("t_name", t_name) :
                 new ObjectParameter("t_name", typeof(string));
-                return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_row_id>("get_row_id", t_nameParameter, row_id);
-            }
-            catch { goto retry; }
-            return null;
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_row_id>("get_row_id", t_nameParameter, row_id);
         }
     }
 }

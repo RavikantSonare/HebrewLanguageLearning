@@ -13,7 +13,7 @@ namespace HebrewLanguageLearning_Users.GenericClasses
         internal static string HostingUri = "http://biblingo.mobi96.org/Home/SyncData";//?UserId="1"//     
         internal static string Name = Assembly.GetCallingAssembly().GetName().Name;// Assembly.GetEntryAssembly().GetName().Name;
         internal static string FolderBase = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        internal static string MediaUri = @"D:\Ravi\Projects\HLL\HebrewLanguageLearning\HebrewLanguageLearning_Users\Media\";
+        internal static string MediaUri = FolderBase+ @"\" +Name + @"\Media\Pictures\";
 
         #endregion
 
