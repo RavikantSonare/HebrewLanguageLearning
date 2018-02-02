@@ -127,7 +127,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                             Item.ExampleList = AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(db.HLL_Example.Where(x => x.MasterTableId.Equals(Item.LanLernDefId)).ToList());
 
                             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryReference, HLL_DictionaryReferenceModels>(); });
-                            Item.DictionaryReferenceList = AutoMapper.Mapper.Map<List<HLL_DictionaryReference>, List<HLL_DictionaryReferenceModels>>(db.HLL_DictionaryReference.Where(x => x.MasterTableId.Equals(Item.DefinitionId)).ToList());
+                            Item.DictionaryReferenceList = AutoMapper.Mapper.Map<List<HLL_DictionaryReference>, List<HLL_DictionaryReferenceModels>>(db.HLL_DictionaryReference.Where(x => x.MasterTableId.Equals(Item.LanLernDefId)).ToList());
 
                         }
                         DataModelDictionary.LngLrngDefinitionList = LLDefinitionList;
@@ -374,9 +374,24 @@ namespace HebrewLanguageLearning_Admin.Controllers
             HLL_DictionaryEntries hLL_DictionaryEntries = db.HLL_DictionaryEntries.Find(id);
             db.HLL_DictionaryEntries.Remove(hLL_DictionaryEntries);
             db.SaveChanges();
+            DeleteClildTable(id);
             return RedirectToAction("Index");
         }
+        public void DeleteClildTable(string DictionaryEntriesId)
+        {
+            try
+            {
+                using (var context = new HLLDBContext())
+                {
+                    var DataList = context.Sp_DictionaryEntriesDeleteChildEntries(DictionaryEntriesId).ToString();
+                }
+            }
+            catch (Exception e)
+            {
+            }
 
+
+        }
         [HttpPost]
         public ActionResult SaveData(string[] DynamicTextBox)
         {

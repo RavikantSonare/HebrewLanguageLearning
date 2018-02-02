@@ -5,33 +5,32 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e4e1bb31c1ef435892325371283b4cc6" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.HLL_Topics" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="Model.AspNetRole" Width="1.5" PointX="13.375" PointY="6.5" />
-        <EntityTypeShape EntityType="Model.AspNetUserClaim" Width="1.5" PointX="17.875" PointY="5" />
-        <EntityTypeShape EntityType="Model.AspNetUserLogin" Width="1.5" PointX="17.875" PointY="7.75" />
-        <EntityTypeShape EntityType="Model.AspNetUser" Width="1.5" PointX="15.625" PointY="5.375" />
+        <EntityTypeShape EntityType="Model.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="Model.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3.625" />
+        <EntityTypeShape EntityType="Model.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="Model.AspNetUser" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="Model.HLL_Application" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Model.HLL_Definition" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Model.HLL_DictionaryEntries" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Model.HLL_DictionaryReference" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.HLL_Example" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.HLL_Grammar" Width="1.5" PointX="8.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Model.HLL_HebrewApplicationData" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.HLL_HebrewGrammarData" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Model.HLL_LanguageLearningDefinition" Width="1.5" PointX="10.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Model.HLL_LessonsGrammar" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Model.HLL_Media_Pictures" Width="1.5" PointX="2.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Model.HLL_Media_Sound" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.HLL_Media_Video" Width="1.5" PointX="12.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.HLL_SemanticDomain" Width="1.5" PointX="4.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Model.HLL_StudentsInfo" Width="1.5" PointX="12.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Model.HLL_TagAttachment" Width="1.5" PointX="6.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Model.HLL_Topics" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.HLL_Vocabulary" Width="1.5" PointX="14.75" PointY="4.75" />
         <AssociationConnector Association="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="Model.AspNetUserRoles" />
-        <EntityTypeShape EntityType="Model.HLL_TagAttachment" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.HLL_StudentsInfo" Width="1.5" PointX="12.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.HLL_Definition" Width="2" PointX="9.375" PointY="4.75" />
-        <EntityTypeShape EntityType="Model.HLL_Application" Width="1.5" PointX="14.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.HLL_HebrewApplicationData" Width="2.5" PointX="2.75" PointY="13.25" />
-        <EntityTypeShape EntityType="Model.HLL_Media_Sound" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.HLL_Media_Video" Width="1.5" PointX="6.375" PointY="12.75" />
-        <EntityTypeShape EntityType="Model.HLL_Media_Pictures" Width="1.5" PointX="3.375" PointY="8.75" />
-        <EntityTypeShape EntityType="Model.HLL_HebrewGrammarData" Width="1.5" PointX="7.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.HLL_Grammar" Width="1.5" PointX="8.375" PointY="14.75" />
-        <EntityTypeShape EntityType="Model.HLL_Vocabulary" Width="1.5" PointX="9.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.HLL_LessonsGrammar" Width="1.5" PointX="10.375" PointY="14.75" />
-        <EntityTypeShape EntityType="Model.HLL_LanguageLearningDefinition" Width="1.5" PointX="15.375" PointY="10.75" />
-        <EntityTypeShape EntityType="Model.HLL_Example" Width="1.5" PointX="3.375" PointY="4.75" />
-        <EntityTypeShape EntityType="Model.HLL_SemanticDomain" Width="1.5" PointX="5.375" PointY="4.75" />
-        <EntityTypeShape EntityType="Model.HLL_DictionaryReference" Width="2.875" PointX="5.375" PointY="8.75" />
-        <EntityTypeShape EntityType="Model.HLL_DictionaryEntries" Width="1.5" PointX="12.375" PointY="14.75" />
-        <EntityTypeShape EntityType="Model.HLL_DictionaryReference1" Width="1.5" PointX="14.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

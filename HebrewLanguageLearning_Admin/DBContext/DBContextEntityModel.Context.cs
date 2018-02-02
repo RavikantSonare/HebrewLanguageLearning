@@ -27,30 +27,29 @@ namespace HebrewLanguageLearning_Admin.DBContext
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<HLL_Topics> HLL_Topics { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<HLL_TagAttachment> HLL_TagAttachment { get; set; }
-        public virtual DbSet<HLL_StudentsInfo> HLL_StudentsInfo { get; set; }
-        public virtual DbSet<HLL_Definition> HLL_Definition { get; set; }
         public virtual DbSet<HLL_Application> HLL_Application { get; set; }
+        public virtual DbSet<HLL_Definition> HLL_Definition { get; set; }
+        public virtual DbSet<HLL_DictionaryEntries> HLL_DictionaryEntries { get; set; }
+        public virtual DbSet<HLL_DictionaryReference> HLL_DictionaryReference { get; set; }
+        public virtual DbSet<HLL_Example> HLL_Example { get; set; }
+        public virtual DbSet<HLL_Grammar> HLL_Grammar { get; set; }
         public virtual DbSet<HLL_HebrewApplicationData> HLL_HebrewApplicationData { get; set; }
+        public virtual DbSet<HLL_HebrewGrammarData> HLL_HebrewGrammarData { get; set; }
+        public virtual DbSet<HLL_LanguageLearningDefinition> HLL_LanguageLearningDefinition { get; set; }
+        public virtual DbSet<HLL_LessonsGrammar> HLL_LessonsGrammar { get; set; }
+        public virtual DbSet<HLL_Media_Pictures> HLL_Media_Pictures { get; set; }
         public virtual DbSet<HLL_Media_Sound> HLL_Media_Sound { get; set; }
         public virtual DbSet<HLL_Media_Video> HLL_Media_Video { get; set; }
-        public virtual DbSet<HLL_Media_Pictures> HLL_Media_Pictures { get; set; }
-        public virtual DbSet<HLL_HebrewGrammarData> HLL_HebrewGrammarData { get; set; }
-        public virtual DbSet<HLL_Grammar> HLL_Grammar { get; set; }
-        public virtual DbSet<HLL_Vocabulary> HLL_Vocabulary { get; set; }
-        public virtual DbSet<HLL_LessonsGrammar> HLL_LessonsGrammar { get; set; }
-        public virtual DbSet<HLL_LanguageLearningDefinition> HLL_LanguageLearningDefinition { get; set; }
-        public virtual DbSet<HLL_Example> HLL_Example { get; set; }
         public virtual DbSet<HLL_SemanticDomain> HLL_SemanticDomain { get; set; }
-        public virtual DbSet<HLL_DictionaryReference> HLL_DictionaryReference { get; set; }
-        public virtual DbSet<HLL_DictionaryEntries> HLL_DictionaryEntries { get; set; }
-        public virtual DbSet<HLL_DictionaryReference1> HLL_DictionaryReference1 { get; set; }
+        public virtual DbSet<HLL_StudentsInfo> HLL_StudentsInfo { get; set; }
+        public virtual DbSet<HLL_TagAttachment> HLL_TagAttachment { get; set; }
+        public virtual DbSet<HLL_Topics> HLL_Topics { get; set; }
+        public virtual DbSet<HLL_Vocabulary> HLL_Vocabulary { get; set; }
     
         public virtual ObjectResult<get_row_id> get_row_id(string t_name, ObjectParameter row_id)
         {
@@ -59,6 +58,15 @@ namespace HebrewLanguageLearning_Admin.DBContext
                 new ObjectParameter("t_name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_row_id>("get_row_id", t_nameParameter, row_id);
+        }
+    
+        public virtual int Sp_DictionaryEntriesDeleteChildEntries(string dictionaryEntriesId)
+        {
+            var dictionaryEntriesIdParameter = dictionaryEntriesId != null ?
+                new ObjectParameter("DictionaryEntriesId", dictionaryEntriesId) :
+                new ObjectParameter("DictionaryEntriesId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Sp_DictionaryEntriesDeleteChildEntries", dictionaryEntriesIdParameter);
         }
     }
 }
