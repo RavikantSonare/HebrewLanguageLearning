@@ -28,6 +28,7 @@ namespace HebrewLanguageLearning_Admin.Models
         public int Count_Dictionaries { get; set; }
         public int Count_LLD { get; set; }
         public int Count_Sound { get; set; }
+        public int Count_DictionaryReference { get; set; }
         public string SoundTitle { get; set; }
         // [Required(ErrorMessage = "Please Upload Sound file in MP3 format ")]
         public HttpPostedFileBase Soundfile { get; set; }

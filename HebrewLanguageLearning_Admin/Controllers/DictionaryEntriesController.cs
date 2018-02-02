@@ -50,6 +50,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         Item.Count_SemanticDomain = db.HLL_SemanticDomain.Where(x => _curDefLst.Contains(x.MasterTableId)).Count();
                         Item.Count_Pictures = db.HLL_Media_Pictures.Where(p => _curDefLst.Contains(p.MasterTableId)).Count();
                         Item.Count_Example = db.HLL_Example.Where(p => _curDefLst.Contains(p.MasterTableId)).Count();
+                        Item.Count_DictionaryReference = db.HLL_DictionaryReference.Where(p => _curDefLst.Contains(p.MasterTableId)).Count();
+
 
                     }
                     if (_currentLLD != null && _currentLLD.Count() > 0)
@@ -101,6 +103,9 @@ namespace HebrewLanguageLearning_Admin.Controllers
                         AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Example, HLL_ExampleModels>(); });
                         Item.ExampleList = AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(db.HLL_Example.Where(x => x.MasterTableId.Equals(Item.DefinitionId)).ToList());
 
+                        AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryReference, HLL_DictionaryReferenceModels>(); });
+                        Item.DictionaryReferenceList = AutoMapper.Mapper.Map<List<HLL_DictionaryReference>, List<HLL_DictionaryReferenceModels>>(db.HLL_DictionaryReference.Where(x => x.MasterTableId.Equals(Item.DefinitionId)).ToList());
+
                     }
                     if (LLDictionaryObj != null)
                     {
@@ -120,6 +125,9 @@ namespace HebrewLanguageLearning_Admin.Controllers
 
                             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Example, HLL_ExampleModels>(); });
                             Item.ExampleList = AutoMapper.Mapper.Map<List<HLL_Example>, List<HLL_ExampleModels>>(db.HLL_Example.Where(x => x.MasterTableId.Equals(Item.LanLernDefId)).ToList());
+
+                            AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_DictionaryReference, HLL_DictionaryReferenceModels>(); });
+                            Item.DictionaryReferenceList = AutoMapper.Mapper.Map<List<HLL_DictionaryReference>, List<HLL_DictionaryReferenceModels>>(db.HLL_DictionaryReference.Where(x => x.MasterTableId.Equals(Item.DefinitionId)).ToList());
 
                         }
                         DataModelDictionary.LngLrngDefinitionList = LLDefinitionList;

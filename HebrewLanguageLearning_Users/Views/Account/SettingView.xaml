@@ -52,14 +52,17 @@
         <!--Grid Column 0 Row 1-->
         <StackPanel  Grid.Column="1" Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="btn_SyncData" Height="50" Width="200" >Sync Data</Button>
+       
         </StackPanel>
-        <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
-            <ScrollViewer  x:Name="BibleTxtLesson" Background="White"  Foreground="Black" FontSize="20"  Width="200" BorderThickness="2" />
+        <StackPanel  Grid.Column="1" Grid.Row="4"  Orientation="Horizontal" HorizontalAlignment="Center">
+               <Button x:Name="btn_close" Height="50" Width="200"  Background="Gray">Close Setting</Button>
+
         </StackPanel>
+        <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center"/>
         <!--Grid Column 1 Row 1-->
-        <Canvas Grid.Column="2" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="4"></Canvas>
-        <Grid Panel.ZIndex="2" Grid.Column="2" Grid.Row="1" Grid.RowSpan="3">
-            <Line Y1="280" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#D9DCDF" StrokeThickness="2" />
+        <Canvas Grid.Column="2" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="6"></Canvas>
+        <Grid Panel.ZIndex="2" Grid.Column="2" Grid.Row="1" Grid.RowSpan="5">
+            <Line Y1="380" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#D9DCDF" StrokeThickness="2" />
         </Grid>
         <!--<Grid Panel.ZIndex="3" Grid.Column="2" Grid.Row="4">
             <Image Height="50" Width="50" x:Name="imageCenter" HorizontalAlignment="Center"  Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png"/>

@@ -55,129 +55,132 @@
                             <tbody id="ImageList">
                                 <tr>
                                     @if (Model.PictureList != null)
-                                {
-                                    foreach (var item in Model.PictureList)
                                     {
-                                        <td>
-                                            @item.Title
-                                        </td>
+                                        foreach (var item in Model.PictureList)
+                                        {
+                                            <td>
+                                                @item.Title
+                                            </td>
+                                        }
                                     }
-                                }
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label>Semantic Domains</label>
-                        <input type="text" placeholder="Semantic Domains" class="form-control" id="txtSemanticDomains">
-                    </div>
-                    <div class="col-sm-6">
-                        <br />
-                        <input type="button" value="+ Add Semantic Domains" onclick="addNewSemanticDomains()" class="btn btn-info">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="table_box">
-                    <table class="table">
-                        <tbody id="SemanticList">
-                            <tr>
-                                @if (Model.SemanticDomainsList != null)
-                                {
-                                    foreach (var item in Model.SemanticDomainsList)
-                                    {
-                                        <td>
-                                            @item.Title
-                                        </td>
-                                    }
-                                }
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label>Examples</label>
-                        <input type="text" placeholder="Examples" class="form-control" id="txtExamples">
-                    </div>
-                    <div class="col-sm-6">
-                        <br />
-
-                        <input type="button" value="+ Add Examples" onclick="addNewExamples()" class="btn btn-info">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="table_box">
-                    <table class="table">
-                        <tbody id="ExamplesList">
-                            <tr>
-                                @if (Model.ExampleList != null)
-                                {
-                                    foreach (var item in Model.ExampleList)
-                                    {
-
-                                        <td>
-                                            @item.Title
-                                        </td>
-
-                                    }
-                                }
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label>Dictionary Reference</label>
-                        <input type="text" placeholder="Dictionary Reference" class="form-control" id="txtDictionaryReference">
-                    </div>
-                    <div class="col-sm-6">
-                        <br />
-
-                        <input type="button" value="+ Add Dictionary Reference" onclick="addNewDictionaryReference()" class="btn btn-info">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <table>
-                    <tbody id="DictionaryReferenceList">
-                        @if (Model.DictionaryReferenceList != null)
-                        {
-                            foreach (var item in Model.DictionaryReferenceList)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Title
-                                    </td>
                                 </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Semantic Domains</label>
+                            <input type="text" placeholder="Semantic Domains" class="form-control" id="txtSemanticDomains">
+                        </div>
+                        <div class="col-sm-6">
+                            <br />
+                            <input type="button" value="+ Add Semantic Domains" onclick="addNewSemanticDomains()" class="btn btn-info">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="table_box">
+                        <table class="table">
+                            <tbody id="SemanticList">
+                                <tr>
+                                    @if (Model.SemanticDomainsList != null)
+                                    {
+                                        foreach (var item in Model.SemanticDomainsList)
+                                        {
+                                            <td>
+                                                @item.Title
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Examples</label>
+                            <input type="text" placeholder="Examples" class="form-control" id="txtExamples">
+                        </div>
+                        <div class="col-sm-6">
+                            <br />
+
+                            <input type="button" value="+ Add Examples" onclick="addNewExamples()" class="btn btn-info">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="table_box">
+                        <table class="table">
+                            <tbody id="ExamplesList">
+                                <tr>
+                                    @if (Model.ExampleList != null)
+                                    {
+                                        foreach (var item in Model.ExampleList)
+                                        {
+
+                                            <td>
+                                                @item.Title
+                                            </td>
+
+                                        }
+                                    }
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Dictionary Reference</label>
+                            <input type="text" placeholder="Dictionary Reference" class="form-control" id="txtDictionaryReference">
+                        </div>
+                        <div class="col-sm-6">
+                            <br />
+
+                            <input type="button" value="+ Add Dictionary Reference" onclick="addNewDictionaryReference()" class="btn btn-info">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="table_box">
+                        <table class="table">
+                            <tbody id="DictionaryReferenceList">
+                                <tr>
+                                    @if (Model.DictionaryReferenceList != null)
+                                    {
+                                        foreach (var item in Model.DictionaryReferenceList)
+                                        {
+                                            <td>
+                                                @item.Title
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                <button type="button" onclick="SaveFromData(1)" class="btn btn-primary">Save and Exit</button>
+                <button type="button" onclick="SaveFromDataAndNext()" class="btn btn-success">Save and Go to Next Def</button>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-            <button type="button" onclick="SaveFromData(1)" class="btn btn-primary">Save and Exit</button>
-            <button type="button" onclick="SaveFromDataAndNext()" class="btn btn-success">Save and Go to Next Def</button>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -263,7 +266,7 @@
     function SaveFromData(stateBehavior) {
         var target = 0; var action = 0;
         debugger;
-        if (Image_List.length > 0) { target++; } if (SemanticDomains_List.length > 0) { target++; } if (Examples_List.length > 0) { target++; }
+        if (Image_List.length > 0) { target++; } if (SemanticDomains_List.length > 0) { target++; } if (Examples_List.length > 0) { target++; } if (DictionaryReference_List.length > 0) { target++; }
         if (Image_List.length > 0) {
             $.ajax({
                 type: "POST",
@@ -329,12 +332,13 @@
             var async3 = $.ajax({
                 type: "POST",
                 cache: false,
-                url: '@Url.Action("InsertMultipleDictionaryReference", "Example")',
+                url: '@Url.Action("InsertMultipleDictionaryReference", "DictionaryReference")',
                 dataType: "html",
                 contentType: 'application/json',
                 data: JSON.stringify(DictionaryReference_List),
                 success: function (result) {
                     Examples_List = [];
+                    debugger;
                     action++;
                     compareValue(target, action);
                     //    flag.val++;

@@ -122,14 +122,11 @@
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="HLL_DictionaryReference">
           <Key>
-            <PropertyRef Name="ExampleId" />
-            <PropertyRef Name="MasterTableId" />
+            <PropertyRef Name="DictionaryReferenceId" />
           </Key>
-          <Property Name="ExampleId" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DictionaryReferenceId" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="MasterTableId" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="250" />
           <Property Name="ActiveStatus" Type="bit" />
@@ -446,6 +443,7 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
           <Parameter Name="t_name" Type="nvarchar" Mode="In" />
           <Parameter Name="row_id" Type="nvarchar" Mode="InOut" />
         </Function>
+        
         <Function Name="IncChar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="strChar" Type="nvarchar" Mode="InOut" />
           <Parameter Name="b_IncChar" Type="nvarchar" Mode="InOut" />
@@ -458,6 +456,7 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
         <Function Name="Update_Id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="strId" Type="nvarchar" Mode="InOut" />
         </Function>
+        
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -468,6 +467,7 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
           <EntitySet Name="HLL_Application" EntityType="Self.HLL_Application" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Definition" EntityType="Self.HLL_Definition" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_DictionaryEntries" EntityType="Self.HLL_DictionaryEntries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HLL_DictionaryReference" EntityType="Self.HLL_DictionaryReference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Example" EntityType="Self.HLL_Example" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Grammar" EntityType="Self.HLL_Grammar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_HebrewApplicationData" EntityType="Self.HLL_HebrewApplicationData" Schema="dbo" store:Type="Tables" />
@@ -482,20 +482,6 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
           <EntitySet Name="HLL_TagAttachment" EntityType="Self.HLL_TagAttachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Topics" EntityType="Self.HLL_Topics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HLL_Vocabulary" EntityType="Self.HLL_Vocabulary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HLL_DictionaryReference" EntityType="Self.HLL_DictionaryReference" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [HLL_DictionaryReference].[ExampleId] AS [ExampleId], 
-    [HLL_DictionaryReference].[MasterTableId] AS [MasterTableId], 
-    [HLL_DictionaryReference].[Title] AS [Title], 
-    [HLL_DictionaryReference].[ActiveStatus] AS [ActiveStatus], 
-    [HLL_DictionaryReference].[IsActive] AS [IsActive], 
-    [HLL_DictionaryReference].[IsDelete] AS [IsDelete], 
-    [HLL_DictionaryReference].[CreatedBy] AS [CreatedBy], 
-    [HLL_DictionaryReference].[CreatedDate] AS [CreatedDate], 
-    [HLL_DictionaryReference].[UpdatedBy] AS [UpdatedBy], 
-    [HLL_DictionaryReference].[UpdatedDate] AS [UpdatedDate]
-    FROM [dbo].[HLL_DictionaryReference] AS [HLL_DictionaryReference]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -558,7 +544,6 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
           <EntitySet Name="HLL_TagAttachment" EntityType="Model.HLL_TagAttachment" />
           <EntitySet Name="HLL_StudentsInfo" EntityType="Model.HLL_StudentsInfo" />
           <EntitySet Name="HLL_Definition" EntityType="Model.HLL_Definition" />
-          <EntitySet Name="HLL_DictionaryEntries" EntityType="Model.HLL_DictionaryEntries" />
           <EntitySet Name="HLL_Application" EntityType="Model.HLL_Application" />
           <EntitySet Name="HLL_HebrewApplicationData" EntityType="Model.HLL_HebrewApplicationData" />
           <EntitySet Name="HLL_Media_Sound" EntityType="Model.HLL_Media_Sound" />
@@ -572,6 +557,8 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
           <EntitySet Name="HLL_Example" EntityType="Model.HLL_Example" />
           <EntitySet Name="HLL_SemanticDomain" EntityType="Model.HLL_SemanticDomain" />
           <EntitySet Name="HLL_DictionaryReference" EntityType="Model.HLL_DictionaryReference" />
+          <EntitySet Name="HLL_DictionaryEntries" EntityType="Model.HLL_DictionaryEntries" />
+          <EntitySet Name="HLL_DictionaryReference1" EntityType="Model.HLL_DictionaryReference1" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -712,29 +699,6 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
           <Property Name="DefinitionId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DicEntId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ActiveStatus" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="HLL_DictionaryEntries">
-          <Key>
-            <PropertyRef Name="DictionaryEntriesId" />
-          </Key>
-          <Property Name="DictionaryEntriesId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DicStrongNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DicEnglish" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DicHebrew" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DicLanguageLearningDefinition" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Count_TagPictures" Type="Int32" />
-          <Property Name="Count_TagVerbalDefinition" Type="Int32" />
-          <Property Name="Count_TagExample" Type="Int32" />
-          <Property Name="Count_TagSemanticDomain" Type="Int32" />
-          <Property Name="Count_TagDictionaries" Type="Int32" />
-          <Property Name="Count_TagSound" Type="Int32" />
           <Property Name="ActiveStatus" Type="Boolean" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsDelete" Type="Boolean" />
@@ -954,10 +918,47 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
         </EntityType>
         <EntityType Name="HLL_DictionaryReference">
           <Key>
-            <PropertyRef Name="ExampleId" />
-            <PropertyRef Name="MasterTableId" />
+            <PropertyRef Name="DictionaryReferenceId" />
           </Key>
-          <Property Name="ExampleId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DictionaryReferenceId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MasterTableId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_DictionaryEntries">
+          <Key>
+            <PropertyRef Name="DictionaryEntriesId" />
+          </Key>
+          <Property Name="DictionaryEntriesId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DicStrongNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DicEnglish" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DicHebrew" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DicLanguageLearningDefinition" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Count_TagPictures" Type="Int32" />
+          <Property Name="Count_TagVerbalDefinition" Type="Int32" />
+          <Property Name="Count_TagExample" Type="Int32" />
+          <Property Name="Count_TagSemanticDomain" Type="Int32" />
+          <Property Name="Count_TagDictionaries" Type="Int32" />
+          <Property Name="Count_TagSound" Type="Int32" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HLL_DictionaryReference1">
+          <Key>
+            <PropertyRef Name="DictionaryReferenceId" />
+          </Key>
+          <Property Name="DictionaryReferenceId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="MasterTableId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ActiveStatus" Type="Boolean" />
@@ -1113,30 +1114,6 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="DicEntId" ColumnName="DicEntId" />
                 <ScalarProperty Name="DefinitionId" ColumnName="DefinitionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HLL_DictionaryEntries">
-            <EntityTypeMapping TypeName="Model.HLL_DictionaryEntries">
-              <MappingFragment StoreEntitySet="HLL_DictionaryEntries">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-                <ScalarProperty Name="Count_TagSound" ColumnName="Count_TagSound" />
-                <ScalarProperty Name="Count_TagDictionaries" ColumnName="Count_TagDictionaries" />
-                <ScalarProperty Name="Count_TagSemanticDomain" ColumnName="Count_TagSemanticDomain" />
-                <ScalarProperty Name="Count_TagExample" ColumnName="Count_TagExample" />
-                <ScalarProperty Name="Count_TagVerbalDefinition" ColumnName="Count_TagVerbalDefinition" />
-                <ScalarProperty Name="Count_TagPictures" ColumnName="Count_TagPictures" />
-                <ScalarProperty Name="DicLanguageLearningDefinition" ColumnName="DicLanguageLearningDefinition" />
-                <ScalarProperty Name="DicHebrew" ColumnName="DicHebrew" />
-                <ScalarProperty Name="DicEnglish" ColumnName="DicEnglish" />
-                <ScalarProperty Name="DicStrongNo" ColumnName="DicStrongNo" />
-                <ScalarProperty Name="DictionaryEntriesId" ColumnName="DictionaryEntriesId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1361,8 +1338,32 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HLL_DictionaryReference">
-            <EntityTypeMapping TypeName="Model.HLL_DictionaryReference">
+          <EntitySetMapping Name="HLL_DictionaryEntries">
+            <EntityTypeMapping TypeName="Model.HLL_DictionaryEntries">
+              <MappingFragment StoreEntitySet="HLL_DictionaryEntries">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Count_TagSound" ColumnName="Count_TagSound" />
+                <ScalarProperty Name="Count_TagDictionaries" ColumnName="Count_TagDictionaries" />
+                <ScalarProperty Name="Count_TagSemanticDomain" ColumnName="Count_TagSemanticDomain" />
+                <ScalarProperty Name="Count_TagExample" ColumnName="Count_TagExample" />
+                <ScalarProperty Name="Count_TagVerbalDefinition" ColumnName="Count_TagVerbalDefinition" />
+                <ScalarProperty Name="Count_TagPictures" ColumnName="Count_TagPictures" />
+                <ScalarProperty Name="DicLanguageLearningDefinition" ColumnName="DicLanguageLearningDefinition" />
+                <ScalarProperty Name="DicHebrew" ColumnName="DicHebrew" />
+                <ScalarProperty Name="DicEnglish" ColumnName="DicEnglish" />
+                <ScalarProperty Name="DicStrongNo" ColumnName="DicStrongNo" />
+                <ScalarProperty Name="DictionaryEntriesId" ColumnName="DictionaryEntriesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HLL_DictionaryReference1">
+            <EntityTypeMapping TypeName="Model.HLL_DictionaryReference1">
               <MappingFragment StoreEntitySet="HLL_DictionaryReference">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -1373,7 +1374,7 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
                 <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="MasterTableId" ColumnName="MasterTableId" />
-                <ScalarProperty Name="ExampleId" ColumnName="ExampleId" />
+                <ScalarProperty Name="DictionaryReferenceId" ColumnName="DictionaryReferenceId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1389,11 +1390,13 @@ warning 6002: The table/view 'mobi96_Concept.dbo.HLL_DictionaryReference' does n
     </Connection>
     <Options>
       <DesignerInfoPropertySet>
-        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="ValidateOnBuild" Value="True" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="True" />
+        <DesignerProperty Name="SynchronizePropertyFacets" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

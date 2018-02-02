@@ -151,8 +151,8 @@
             <Border BorderThickness="1" BorderBrush="Black">
                 <!--<Image HorizontalAlignment="Right" Height="150" Width="400" Source="{Binding BibleTxtMediaUrl}"/>-->
                 <Image  HorizontalAlignment="Left" Source="{Binding BibleTxtMediaUrl}"
-    Margin="0,0,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Bottom" 
-    Grid.Row="8" Width="200" Height="150"  Grid.ColumnSpan="2" />
+    Margin="0,0,0,0" Name="BibleImgMedia" Stretch="Fill" VerticalAlignment="Bottom" 
+    Grid.Row="8" Width="400" Height="150"  Grid.ColumnSpan="2" />
                 <!--<TextBlock x:Name="BibleTxtMediaUrl"  FontSize="20" Grid.Row="4" Height="150" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
             </Border>
         </StackPanel>

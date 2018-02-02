@@ -479,6 +479,9 @@
     <Compile Include="DBContext\HLL_DictionaryReference.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBContext\HLL_DictionaryReference1.cs">
+      <DependentUpon>DBContextEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\HLL_Example.cs">
       <DependentUpon>DBContextEntityModel.tt</DependentUpon>
     </Compile>

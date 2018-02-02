@@ -238,9 +238,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 _obj.proDescriptionTxt = DicData.ListOfDefinition.FirstOrDefault();
                 _obj.proExampleTxt = DicData.ListOfExample.FirstOrDefault();
                 _obj.proSemanticDomainTxt = DicData.ListOfSemanticDomain.FirstOrDefault();
-                _obj.proDictonaryReferenceTxt = "";
-                //Refrence=:
-               
+                _obj.proDictonaryReferenceTxt = string.Join(",", DicData.ListOfDictionaryReference.ToArray()); //  .Select(x => x.Split(',')[0]).ToList();
+
             }
             else
             {
@@ -250,9 +249,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 _obj.proDescriptionTxt = tempData.ListOfDefinition.FirstOrDefault();
                 _obj.proExampleTxt = tempData.ListOfExample.FirstOrDefault();
                 _obj.proSemanticDomainTxt = tempData.ListOfSemanticDomain.FirstOrDefault();
-                _obj.proDictonaryReferenceTxt = "";
-
-                _obj.proDictonaryReferenceTxt = "";
+                _obj.proDictonaryReferenceTxt = tempData.ListOfDictionaryReference.FirstOrDefault();
             }
             return _obj;
         }

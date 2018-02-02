@@ -25,5 +25,6 @@ namespace HebrewLanguageLearning_Admin.Models
         public List<string> ListOfPictures { get; set; }
         public List<string> ListOfSemanticDomain { get; set; }
         public List<string> ListOfExample { get; set; }
+        public List<string> ListOfDictionaryReference { get; set; }
     }
 }

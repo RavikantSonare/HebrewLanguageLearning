@@ -12,7 +12,7 @@ namespace HebrewLanguageLearning_Admin.DBContext
     using System;
     using System.Collections.Generic;
     
-    public partial class HLL_DictionaryReference
+    public partial class HLL_DictionaryReference1
     {
         public string DictionaryReferenceId { get; set; }
         public string MasterTableId { get; set; }

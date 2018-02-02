@@ -122,13 +122,13 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
             _ItemBookChapter.SelectedIndex = Convert.ToInt32(scrollViewer.VerticalOffset);
         }
        
-        void image()
-        {
-            BitmapImage logo = new BitmapImage();
-            logo.BeginInit();
-            logo.UriSource = new Uri(@"C:\Users\MOBIWEB\AppData\Local\HebrewLanguageLearning_Users\Media\Pictures\HLLUSA001-PICTUR00TPicturesHLL_Definition2512018024905.png");
-            logo.EndInit();
-            image1.Source = logo;
-        }
+        //void image()
+        //{
+        //    BitmapImage logo = new BitmapImage();
+        //    logo.BeginInit();
+        //    logo.UriSource = new Uri(@"C:\Users\MOBIWEB\AppData\Local\HebrewLanguageLearning_Users\Media\Pictures\HLLUSA001-PICTUR00TPicturesHLL_Definition2512018024905.png");
+        //    logo.EndInit();
+        //    image1.Source = logo;
+        //}
     }
 }

@@ -20,7 +20,7 @@
 </div>
 
 <p>
-  
+
 </p>
 <div class="panel panel-default">
     <div class="panel-heading"><h6 class="panel-title"><i class="icon-table"></i> Dictionary List</h6></div>
@@ -38,9 +38,8 @@
                         Sound
                     </th>
                     <th>
-                        Language Learning Definition
+                        Lng Lear. Defi.
                     </th>
-
                     <th>
                         Definition
                     </th>
@@ -53,7 +52,9 @@
                     <th>
                         Example(s)
                     </th>
-
+                    <th>
+                        Dic. Reference(s)
+                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -84,6 +85,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Count_Example)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Count_DictionaryReference)
                         </td>
                         <td>
                             @Html.ActionLink("Edit Entry", "Edit", new { id = item.DictionaryEntriesId }) |

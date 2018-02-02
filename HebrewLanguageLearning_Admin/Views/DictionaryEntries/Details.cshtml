@@ -47,44 +47,63 @@
                     <th>
                         Example(s)
                     </th>
-
+                    <th>
+                        Dic Reference(s)
+                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @if (Model.LngLrngDefinitionList != null)
                 {
-                    foreach (var item in Model.LngLrngDefinitionList)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </td>
-                            <td>
-                                @foreach (var itemData in item.PictureList)
-                                {
-                                    @Html.Raw(itemData.Title.ToString() + ",");
-                                }
-                            </td>
-                            <td>
-                                @foreach (var itemData in item.SemanticDomainsList)
-                                {
-                                    @Html.Raw(itemData.Title.ToString() + ",");
-                                }
-                            </td>
-                            <td>
-                                @foreach (var itemData in item.ExampleList)
-                                {
-                                    @Html.Raw(itemData.Title.ToString() + ",");
-                                }
+                foreach (var item in Model.LngLrngDefinitionList)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @if (item.PictureList != null)
+                        {
+                        foreach (var itemData in item.PictureList)
+                        {
+                        @Html.Raw(itemData.Title.ToString() + ",");
+                        }
+                        }
+                    </td>
+                    <td>
+                        @if (item.SemanticDomainsList != null)
+                        {
+                        foreach (var itemData in item.SemanticDomainsList)
+                        {
+                        @Html.Raw(itemData.Title.ToString() + ",");
+                        }
+                        }
+                    </td>
 
-                            </td>
-                            <td>
-                                <a data-toggle="modal" class="btn btn-info" role="button" href="#form_modal_Definition" onclick="SetLLDefinitionModelData('@Html.DisplayFor(modelItem => item.LanLernDefId)')">  Add Content</a>
-
-                            </td>
-                        </tr>
-                    }
+                    <td>
+                        @if (item.ExampleList != null)
+                        {
+                        foreach (var itemData in item.ExampleList)
+                        {
+                        @Html.Raw(itemData.Title.ToString() + ",");
+                        }
+                        }
+                    </td>
+                    <td>
+                        @if (item.DictionaryReferenceList != null)
+                        {
+                        foreach (var itemData in item.DictionaryReferenceList)
+                        {
+                        @Html.Raw(itemData.Title.ToString() + ",");
+                        }
+                        }
+                    </td>
+                    <td>
+                        <a data-toggle="modal" class="btn btn-info" role="button" href="#form_modal_Definition" onclick="SetLLDefinitionModelData('@Html.DisplayFor(modelItem => item.LanLernDefId)')">  Add Content</a>
+                    </td>
+                </tr>
+                }
                 }
             </tbody>
         </table>
@@ -112,44 +131,55 @@
                     <th>
                         Example(s)
                     </th>
-
+                    <th>
+                        Dic Reference(s)
+                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @if (Model.DefinitionList != null)
                 {
-                    foreach (var item in Model.DefinitionList)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </td>
-                            <td>
-                                @foreach (var itemData in item.PictureList)
-                                {
-                                    @Html.Raw(itemData.Title.ToString() + ",");
-                                }
-                            </td>
-                            <td>
-                                @foreach (var itemData in item.SemanticDomainsList)
-                                {
-                                    @Html.Raw(itemData.Title.ToString() + ",");
-                                }
-                            </td>
-                            <td>
-                                @foreach (var itemData in item.ExampleList)
-                                {
-                                    @Html.Raw(itemData.Title.ToString() + ",");
-                                }
+                foreach (var item in Model.DefinitionList)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @foreach (var itemData in item.PictureList)
+                        {
+                        @Html.Raw(itemData.Title.ToString() + ",");
+                        }
+                    </td>
+                    <td>
+                        @foreach (var itemData in item.SemanticDomainsList)
+                        {
+                        @Html.Raw(itemData.Title.ToString() + ",");
+                        }
+                    </td>
+                    <td>
+                        @foreach (var itemData in item.ExampleList)
+                        {
+                        @Html.Raw(itemData.Title.ToString() + ",");
+                        }
 
-                            </td>
-                            <td>
-                                <a data-toggle="modal" class="btn btn-info" role="button" href="#form_modal_Definition" onclick="SetDefinitionModelData('@Html.DisplayFor(modelItem => item.DefinitionId)')">  Add Content</a>
+                    </td>
+                    <td>
+                        @if (item.DictionaryReferenceList != null)
+                        {
+                            foreach (var itemData in item.DictionaryReferenceList)
+                            {
+                                @Html.Raw(itemData.Title.ToString() + ",");
+                            }
+                        }
+                    </td>
+                    <td>
+                        <a data-toggle="modal" class="btn btn-info" role="button" href="#form_modal_Definition" onclick="SetDefinitionModelData('@Html.DisplayFor(modelItem => item.DefinitionId)')">  Add Content</a>
 
-                            </td>
-                        </tr>
-                    }
+                    </td>
+                </tr>
+                }
                 }
             </tbody>
         </table>
@@ -167,6 +197,6 @@
         $('#ModalDiv').html("<div id='form_modal_Definition' class='modal fade' tabindex='-1' role='dialog'></div>");
         $('#form_modal_Definition').load('@Url.Action("GetLLDefinitionView", "Definition")?LLDefinitionId=' + LLDefinitionId + '&Next=0');
     }
-    
-  
+
+
 </script>

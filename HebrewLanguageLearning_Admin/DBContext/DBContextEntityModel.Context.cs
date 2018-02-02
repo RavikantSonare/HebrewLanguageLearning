@@ -36,7 +36,6 @@ namespace HebrewLanguageLearning_Admin.DBContext
         public virtual DbSet<HLL_TagAttachment> HLL_TagAttachment { get; set; }
         public virtual DbSet<HLL_StudentsInfo> HLL_StudentsInfo { get; set; }
         public virtual DbSet<HLL_Definition> HLL_Definition { get; set; }
-        public virtual DbSet<HLL_DictionaryEntries> HLL_DictionaryEntries { get; set; }
         public virtual DbSet<HLL_Application> HLL_Application { get; set; }
         public virtual DbSet<HLL_HebrewApplicationData> HLL_HebrewApplicationData { get; set; }
         public virtual DbSet<HLL_Media_Sound> HLL_Media_Sound { get; set; }
@@ -50,6 +49,8 @@ namespace HebrewLanguageLearning_Admin.DBContext
         public virtual DbSet<HLL_Example> HLL_Example { get; set; }
         public virtual DbSet<HLL_SemanticDomain> HLL_SemanticDomain { get; set; }
         public virtual DbSet<HLL_DictionaryReference> HLL_DictionaryReference { get; set; }
+        public virtual DbSet<HLL_DictionaryEntries> HLL_DictionaryEntries { get; set; }
+        public virtual DbSet<HLL_DictionaryReference1> HLL_DictionaryReference1 { get; set; }
     
         public virtual ObjectResult<get_row_id> get_row_id(string t_name, ObjectParameter row_id)
         {
