@@ -60,5 +60,14 @@ namespace HebrewLanguageLearning_Admin.DBContext
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_row_id>("get_row_id", t_nameParameter, row_id);
         }
+    
+        public virtual int Sp_DictionaryEntriesDeleteChildEntries(string dictionaryEntriesId)
+        {
+            var dictionaryEntriesIdParameter = dictionaryEntriesId != null ?
+                new ObjectParameter("DictionaryEntriesId", dictionaryEntriesId) :
+                new ObjectParameter("DictionaryEntriesId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Sp_DictionaryEntriesDeleteChildEntries", dictionaryEntriesIdParameter);
+        }
     }
 }

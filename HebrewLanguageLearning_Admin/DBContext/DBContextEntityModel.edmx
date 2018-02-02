@@ -443,7 +443,6 @@
           <Parameter Name="t_name" Type="nvarchar" Mode="In" />
           <Parameter Name="row_id" Type="nvarchar" Mode="InOut" />
         </Function>
-        
         <Function Name="IncChar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="strChar" Type="nvarchar" Mode="InOut" />
           <Parameter Name="b_IncChar" Type="nvarchar" Mode="InOut" />
@@ -453,10 +452,12 @@
           <Parameter Name="idx" Type="int" Mode="In" />
           <Parameter Name="b_increment_id" Type="nvarchar" Mode="InOut" />
         </Function>
+        <Function Name="Sp_DictionaryEntriesDeleteChildEntries" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DictionaryEntriesId" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="Update_Id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="strId" Type="nvarchar" Mode="InOut" />
         </Function>
-        
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -559,6 +560,9 @@
           <EntitySet Name="HLL_DictionaryReference" EntityType="Model.HLL_DictionaryReference" />
           <EntitySet Name="HLL_DictionaryEntries" EntityType="Model.HLL_DictionaryEntries" />
           <EntitySet Name="HLL_DictionaryReference1" EntityType="Model.HLL_DictionaryReference1" />
+          <FunctionImport Name="Sp_DictionaryEntriesDeleteChildEntries">
+            <Parameter Name="DictionaryEntriesId" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -1378,6 +1382,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_DictionaryEntriesDeleteChildEntries" FunctionName="Model.Store.Sp_DictionaryEntriesDeleteChildEntries" />
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
