@@ -5,10 +5,102 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HebrewLanguageLearning_Users.Views.Game"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-      Title="JerichoGameView">
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="20"
+            TextOptions.TextFormattingMode="Ideal" 
+            TextOptions.TextRenderingMode="Auto"        
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+      Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top"
+         >
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="193*"/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+
+        <!--Grid Column 0 Row 1-->
+        <WrapPanel  Grid.Column="4" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" >
+            <Label FontSize="25" FontWeight="Normal"  Width="23" Margin="0 0 0 0">
+                <TextBlock FontSize="25" FontWeight="Medium" Foreground="Gray" Margin="0 100 0 0" TextWrapping="Wrap">language       learning</TextBlock>
+            </Label>
+            <!--<Image Height="50"  Margin="20 30 0 0" Width="50" x:Name="imageCenterLeft" HorizontalAlignment="Center"  Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png"/>-->
+            <Image   Margin="20 30 0 0" Height="48" Width="48" x:Name="imageCenterLeft" Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png">
+                <Image.RenderTransform>
+                    <TranslateTransform X="0" Y="10" />
+                </Image.RenderTransform>
+                <Image.Clip>
+                    <RectangleGeometry Rect="0 0 30 250" />
+                </Image.Clip>
+            </Image>
+
+            <Line Y1="830"  HorizontalAlignment="Left"  Margin="-60 0 0 0" Stroke="#00D5B6" StrokeThickness="4" />
+        </WrapPanel>
+        <!--Grid Column 0 Row 1-->
+        <StackPanel Grid.RowSpan="2" Grid.Column="1" Grid.Row="1"  Orientation="Horizontal"  HorizontalAlignment="Left">
+            <Label Margin="120 60 0 0" Content="7 out of 20"/>
+        </StackPanel>
+        <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center"/>
+        <!--Grid Column 1 Row 1-->
+        <!--<Grid Panel.ZIndex="3" Grid.Column="2" Grid.Row="4">
+            <Image Height="50" Width="50" x:Name="imageCenter" HorizontalAlignment="Center"  Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png"/>
+        </Grid>-->
+
+        <!--Grid Column 2 Row 1-->
+        <!--<Canvas Grid.Column="1"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="3"></Canvas>-->
+
+        <StackPanel Grid.Column="1"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
+            <Grid>
+
+                <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Black">
+                    <StackPanel Height="300" Width="300">
+                        <!--<TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="400" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
+                        <MediaElement  Height="300" Width="300" Source="/HebrewLanguageLearning_Users;component/Media/Videos/Matt13.44 - Allthathehas.mp4" Name="mePlayer" Stretch="None" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+        <WrapPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Margin="50 20 50 20"  BorderBrush="Black" Name="MyBorder1"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
+                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
+            </Border>
+            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder2"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
+                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
+            </Border>
+            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder3"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
+                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
+            </Border>
+            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder4"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
+                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
+            </Border>
+            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder5"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
+                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
+            </Border>
+            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder6"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
+                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
+            </Border>
+            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder7"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
+                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
+            </Border>
+            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder8"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
+                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
+            </Border>
+        </WrapPanel>
+        <StackPanel Grid.Column="1" x:Name="spProgress"  Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--<CommonUserControls:ProgressBarUC/>-->
+        </StackPanel>
     </Grid>
 </Page>

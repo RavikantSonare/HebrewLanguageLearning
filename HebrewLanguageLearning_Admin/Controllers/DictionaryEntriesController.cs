@@ -367,6 +367,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         }
 
         // POST: DictionaryEntries/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
@@ -376,6 +377,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
             db.SaveChanges();
             DeleteClildTable(id);
             return RedirectToAction("Index");
+
         }
         public void DeleteClildTable(string DictionaryEntriesId)
         {
