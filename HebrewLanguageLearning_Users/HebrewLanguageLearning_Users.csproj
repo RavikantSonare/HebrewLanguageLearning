@@ -103,6 +103,7 @@
     <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaWordChoiceViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningViewModel.cs" />
     <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\Game\JerichoGameViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\Account\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
