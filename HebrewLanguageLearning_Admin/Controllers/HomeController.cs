@@ -32,10 +32,24 @@ namespace HebrewLanguageLearning_Admin.Controllers
         {
             if (!string.IsNullOrEmpty(UserId))
             {
-                GenericClasses.XmlSetter _obj = new GenericClasses.XmlSetter();
+                SyncTable("HLL_Vocabulary");
+                GenericClasses.XmlSetter _obj = new GenericClasses.XmlSetter(); //"" Need To Open
                 return Json(_obj.GetDBToXMl(), JsonRequestBehavior.AllowGet);
             }
             return null;
         }
+        [AllowAnonymous]
+        public JsonResult SyncTable(string _tablname)
+        {
+          
+            if (!string.IsNullOrEmpty(_tablname))
+            {
+               
+                GenericClasses.XmlSetter _obj = new GenericClasses.XmlSetter();              
+                return Json(_obj.GetDBTable(_tablname), JsonRequestBehavior.AllowGet);
+            }
+            return null;
+        }
     }
+   
 }

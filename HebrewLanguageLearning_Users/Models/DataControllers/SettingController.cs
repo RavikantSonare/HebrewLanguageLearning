@@ -1,5 +1,6 @@
 ﻿using HebrewLanguageLearning_Users.GenericClasses;
 using HebrewLanguageLearning_Users.Models.DataModels;
+using HebrewLanguageLearning_Users.Models.DataProviders;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -27,7 +28,8 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         {
             //FileSetter _OBJ = new GenericClasses.FileSetter();
             //_OBJ.BindClassData();
-            // return true;
+            // return true;  "" Need To Open
+            DBModelSynch();
             return GetData(UsersID);
         }
         public List<DictionaryModel> getDataFromLocalFile()
@@ -200,11 +202,17 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         }
         public static string AppendTimeStamp(string fileName)
         {
+           
             return string.Concat(
                 Path.GetFileNameWithoutExtension(fileName),
                 DateTime.Now.ToString("yyyyMMddHHmmssfff"),
                 Path.GetExtension(fileName)
                 );
+        }
+
+        public void DBModelSynch()
+        {
+            DBModel _obj = new DBModel();
         }
     }
 }

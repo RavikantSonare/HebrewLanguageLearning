@@ -122,7 +122,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                         var _curLLDLst = _currentLLD.Select(l => l.LanLernDefId).ToList();
                         Item.Count_Example = db.HLL_Example.Where(x => _curLLDLst.Contains(x.MasterTableId)).Count();
                         Item.Count_Pictures = Item.Count_Pictures + db.HLL_Media_Pictures.Where(p => _curLLDLst.Contains(p.MasterTableId)).Count();
-                       // Item.ListOfSemanticDomain = db.HLL_DictionaryReference.Where(p => _curDefLst.Contains(p.MasterTableId)).Count();
+                        // Item.ListOfSemanticDomain = db.HLL_DictionaryReference.Where(p => _curDefLst.Contains(p.MasterTableId)).Count();
 
                     }
                     Item.ListOfDefinition = db.HLL_Definition.Where(z => z.DicEntId == Item.DictionaryEntriesId).Select(z => z.Title).ToList();
@@ -134,6 +134,25 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
 
             }
             return DataModelDictionary;
+        }
+
+        public object GetDBTable(string _tblname)
+        {
+            object _objlist = new object();
+            try
+            {
+
+                List<HLL_Vocabulary> VocabularyObj = new List<DBContext.HLL_Vocabulary>();
+                if (_tblname == "HLL_Vocabulary")
+                {
+                    VocabularyObj = db.HLL_Vocabulary.ToList();
+                    _objlist = VocabularyObj;
+                }
+
+            }
+
+            finally { }
+            return _objlist;
         }
     }
 }
