@@ -47,6 +47,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                
                 GenericClasses.XmlSetter _obj = new GenericClasses.XmlSetter();              
                 return Json(_obj.GetDBTable(_tablname), JsonRequestBehavior.AllowGet);
+
             }
             return null;
         }
