@@ -30,13 +30,54 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             //_OBJ.BindClassData();
             // return true;  "" Need To Open
             DBModelSynch();
-            return GetData(UsersID);
+            return true;//GetData(UsersID);  => Need To be open
         }
         public List<DictionaryModel> getDataFromLocalFile()
         {
             FileSetter _OBJ = new GenericClasses.FileSetter();
             return _OBJ.BindClassData();
         }
+
+        private bool GetDataTables(string Tablename)
+        {
+            bool isDone = false;
+          
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(CurrentUrl + EntityConfig.APIList[2]);
+
+                // Add an Accept header for JSON format.
+                client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // List data response.
+                HttpResponseMessage response = client.GetAsync("?_tablename=" + Tablename).Result;  // Blocking call!
+                if (response.IsSuccessStatusCode)
+                {
+                    DBModel obj = new DBModel();
+                    var listOfTable = response.Content.ReadAsStringAsync().Result;
+                    obj.InsertData("HLL_VocabDecks", listOfTable);
+
+                }
+                else
+                {
+                    Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                }
+
+
+                isDone = true;
+
+            }
+            catch (Exception ex)
+            {
+                isDone = false;
+            }
+          
+
+            return isDone;
+        }
+
         private bool GetData(string UserId)
         {
             bool isDone = false;
@@ -44,7 +85,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             try
             {
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(CurrentUrl);
+                client.BaseAddress = new Uri(CurrentUrl + EntityConfig.APIList[1]);
 
                 // Add an Accept header for JSON format.
                 client.DefaultRequestHeaders.Accept.Add(
@@ -86,7 +127,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             //{
             //JObject results = JObject.Parse(filelocalPath);
             List<DictionaryModel> AllDataObject = new List<DictionaryModel>();
-            NullDataReturn:
+        NullDataReturn:
             AllDataObject = getDataFromLocalFile();
             if (AllDataObject == null && AllDataObject.Count() <= 0) { goto NullDataReturn; }
             List<string> ImagesNameList = new List<string>();
@@ -137,7 +178,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -202,7 +243,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         }
         public static string AppendTimeStamp(string fileName)
         {
-           
+
             return string.Concat(
                 Path.GetFileNameWithoutExtension(fileName),
                 DateTime.Now.ToString("yyyyMMddHHmmssfff"),
@@ -213,6 +254,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         public void DBModelSynch()
         {
             DBModel _obj = new DBModel();
+            GetDataTables("HLL_Vocabulary");
         }
     }
 }

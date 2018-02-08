@@ -120,6 +120,7 @@
     <Compile Include="Models\DataControllers\SettingController.cs" />
     <Compile Include="Models\DataModels\BibleLearningModel.cs" />
     <Compile Include="Models\DataModels\DictionaryModel.cs" />
+    <Compile Include="Models\DataModels\VocabularyModel.cs" />
     <Compile Include="Models\DataProviders\DBModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Account\SettingViewModel.cs" />

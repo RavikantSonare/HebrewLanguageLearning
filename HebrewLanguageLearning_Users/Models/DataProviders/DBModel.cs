@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HebrewLanguageLearning_Users.Models.DataModels;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
@@ -17,7 +19,7 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
             if (!File.Exists("./database.biblingoContext"))
             {
                 SQLiteConnection.CreateFile("database.biblingoContext");
-            
+
             }
             CreateTables();
         }
@@ -38,7 +40,6 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
 	            [UpdatedBy][int] NULL,
 	            [UpdatedDate] [datetime] NULL)";
 
-
                 using (SQLiteCommand command = new SQLiteCommand(_TableString, _dbcon))
                 {
                     OpenConnection();
@@ -46,13 +47,14 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                     CloseConnection();
                 }
             }
-            catch (Exception ex){
+            catch (Exception ex)
+            {
                 System.Diagnostics.Debug.WriteLine(ex);
             }
 
         }
         public List<string> _tblList = new List<string>() { "HLL_VocabDecks", "HLL_Configuration", "HLL_Progress" };
-      
+
 
         void OpenConnection()
         {
@@ -75,20 +77,36 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
         /// Insert Table Data
         /// 
 
-        void InsertData(string tableName)
+        internal void InsertData(string tableName, string tableData)
         {
-            string customQuery;
+            StringBuilder customQuery = new StringBuilder();
             switch (tableName)
             {
                 case "HLL_VocabDecks":
-                    customQuery = @"insert into HLL_VocabDecks(VocabularyId, LessonId, 
-DictionaryEntriesId,Description,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate) 
-values('" +""+ "')";
-                        break;
+
+                    var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
+                    foreach (var item in _DictionaryModellist)
+                    {
+                        customQuery.Append(@"insert into HLL_VocabDecks(VocabularyId, LessonId, DictionaryEntriesId,
+Description,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate) 
+values('" + item.VocabularyId + "','" + item.LessonId + "','" + item.DictionaryEntriesId + "', '"
++ item.Description + "','" + item.ActiveStatus + "','" + item.IsActive + "','" +
+item.IsDelete + "','" + item.CreatedBy + "','" + item.CreatedDate + "','" + item.UpdatedBy + "','" + item.UpdatedDate + "')");
+                    }
+
+
+                    break;
             }
-           
+            string Qry = Convert.ToString(customQuery);
+            using (SQLiteCommand command = new SQLiteCommand(Qry, _dbcon))
+            {
+                OpenConnection();
+                command.ExecuteNonQuery();
+                CloseConnection();
+            }
+
         }
-        
-        
+
+
     }
 }

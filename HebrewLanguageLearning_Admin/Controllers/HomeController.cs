@@ -39,14 +39,14 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return null;
         }
         [AllowAnonymous]
-        public JsonResult SyncTable(string _tablname)
+        public JsonResult SyncTable(string _tablename)
         {
           
-            if (!string.IsNullOrEmpty(_tablname))
+            if (!string.IsNullOrEmpty(_tablename))
             {
                
                 GenericClasses.XmlSetter _obj = new GenericClasses.XmlSetter();              
-                return Json(_obj.GetDBTable(_tablname), JsonRequestBehavior.AllowGet);
+                return Json(_obj.GetDBTable(_tablename), JsonRequestBehavior.AllowGet);
 
             }
             return null;

@@ -91,34 +91,34 @@
                                             </WrapPanel>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
-                                    
+
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <WrapPanel>
                                                 <TextBlock FontSize="12" Name="versno" Text="{Binding verseNo}"></TextBlock>
-                                            <ItemsControl  Grid.Row="4" Height="Auto" ItemsSource="{Binding wElementList}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Width="400" Orientation="Horizontal" HorizontalAlignment="Right" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate >
-                                                        <!--ElementStrogNo-->
+                                                <ItemsControl  Grid.Row="4" Height="Auto" ItemsSource="{Binding wElementList}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Width="400" Orientation="Horizontal" HorizontalAlignment="Right" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate >
+                                                            <!--ElementStrogNo-->
                                                             <TextBlock cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_WordList($source, $eventArgs)]" Text="{Binding Path=ElementValue}" Padding="5 5 5 5" Foreground="Black" Tag="{Binding ElementStrogNo}" FontSize="18">
-                                                            <TextBlock.Style>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property= "Background" Value="Transparent"/>
-                                                                    <Style.Triggers>
-                                                                        <Trigger Property ="IsMouseOver" Value="True">
-                                                                            <Setter Property= "Background" Value="#00D5B6"/>
-                                                                        </Trigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </TextBlock.Style>
-                                                        </TextBlock>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Setter Property= "Background" Value="Transparent"/>
+                                                                        <Style.Triggers>
+                                                                            <Trigger Property ="IsMouseOver" Value="True">
+                                                                                <Setter Property= "Background" Value="#00D5B6"/>
+                                                                            </Trigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
                                                 </ItemsControl>
                                             </WrapPanel>
                                         </DataTemplate>
@@ -129,7 +129,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-           
+
         </StackPanel>
         <!--Grid Column 1 Row 1-->
         <Canvas Grid.Column="2" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="9"></Canvas>

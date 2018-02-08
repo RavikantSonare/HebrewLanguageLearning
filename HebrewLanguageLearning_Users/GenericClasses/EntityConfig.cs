@@ -10,11 +10,11 @@ namespace HebrewLanguageLearning_Users.GenericClasses
     public class EntityConfig
     {
         #region Software Configuration
-        internal static string HostingUri = "http://biblingo.mobi96.org/Home/SyncData";//?UserId="1"//     
+        internal static string HostingUri = "http://biblingo.mobi96.org/Home/";//?UserId="1"//     
         internal static string Name = Assembly.GetCallingAssembly().GetName().Name;// Assembly.GetEntryAssembly().GetName().Name;
         internal static string FolderBase = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         internal static string MediaUri = FolderBase+ @"\" +Name + @"\Media\Pictures\";
-
+        internal static Dictionary<int, string> APIList = new Dictionary<int, string>() { {1, "SyncData" }, { 2, "SyncTable" } };
         #endregion
 
         #region _booksTitleList

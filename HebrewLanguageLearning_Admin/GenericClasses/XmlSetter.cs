@@ -21,7 +21,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             {
                 try
                 {
-                    string _obj_lemma, _chapter_osisID; int verseNo = 1;
+                 //   string _obj_lemma, _chapter_osisID; int verseNo = 1;
                     XPathDocument xmlPathDoc = new XPathDocument(filePath);
                     XPathNavigator xPathNav = xmlPathDoc.CreateNavigator();
                     xPathNav.MoveToRoot(); xPathNav.MoveToFirstChild(); xPathNav.MoveToFirstChild();
