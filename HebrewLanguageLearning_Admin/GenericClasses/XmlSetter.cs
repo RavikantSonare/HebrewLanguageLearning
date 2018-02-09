@@ -135,18 +135,30 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             }
             return DataModelDictionary;
         }
-
+        private List<HLL_DictionaryEntries> VocabularyInLessonList = new List<HLL_DictionaryEntries>();
+        private List<HLL_Vocabulary> _ObjHLL_Vocabulary = new List<HLL_Vocabulary>();
         public object GetDBTable(string _tblname)
         {
             object _objlist = new object();
             try
             {
-
-                List<HLL_Vocabulary> VocabularyObj = new List<DBContext.HLL_Vocabulary>();
+              //  List<HLL_Vocabulary> VocabularyObj = new List<DBContext.HLL_Vocabulary>();
                 if (_tblname == "HLL_Vocabulary")
                 {
-                    VocabularyObj = db.HLL_Vocabulary.ToList();
-                    _objlist = VocabularyObj;
+                    
+                    _ObjHLL_Vocabulary = db.HLL_Vocabulary.Where(x => x.IsDelete == false).ToList();
+                    var objVocabularyList = _ObjHLL_Vocabulary.Select(z => z.DictionaryEntriesId).ToList();
+                    VocabularyInLessonList = db.HLL_DictionaryEntries.Where(z => objVocabularyList.Contains(z.DictionaryEntriesId)).ToList();
+
+                    var InLessonList = db.HLL_DictionaryEntries.Where(z => objVocabularyList.Contains(z.DictionaryEntriesId)).Select(x =>
+                                         new SelectListItem()
+                                         {
+                                             Value = x.DictionaryEntriesId,
+                                             Text = x.DicStrongNo + ", " + x.DicHebrew + ", " + x.DicEnglish
+                                         }).ToList();
+                    
+                   // VocabularyObj = db.HLL_Vocabulary.ToList();
+                    _objlist = InLessonList;
                 }
 
             }

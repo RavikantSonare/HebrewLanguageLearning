@@ -41,7 +41,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         private bool GetDataTables(string Tablename)
         {
             bool isDone = false;
-          
+
             try
             {
                 HttpClient client = new HttpClient();
@@ -57,7 +57,9 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 {
                     DBModel obj = new DBModel();
                     var listOfTable = response.Content.ReadAsStringAsync().Result;
-                    obj.InsertData("HLL_VocabDecks", listOfTable);
+                    //  obj.InsertData("HLL_VocabDecks", listOfTable); need to be Open.
+
+                    var Data = obj.SelectData("HLL_VocabDecks");
 
                 }
                 else
@@ -73,7 +75,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             {
                 isDone = false;
             }
-          
+
 
             return isDone;
         }

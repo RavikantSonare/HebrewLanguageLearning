@@ -2,7 +2,9 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,13 +34,11 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 [LessonId] [nvarchar](250) NULL,
                 [DictionaryEntriesId] [nvarchar](250) NULL,
 	            [Description] [nvarchar](500) NULL,	
+                [LessonDecks] [nvarchar](500) NULL,	
+                [CustomeDecks] [nvarchar](500) NULL,	
                 [ActiveStatus] [bit] NULL,
 	            [IsActive] [bit] NULL,
-	            [IsDelete] [bit] NULL,
-	            [CreatedBy] [int] NULL,
-	            [CreatedDate] [datetime] NULL,
-	            [UpdatedBy][int] NULL,
-	            [UpdatedDate] [datetime] NULL)";
+	            [IsDelete] [bit] NULL)";
 
                 using (SQLiteCommand command = new SQLiteCommand(_TableString, _dbcon))
                 {
@@ -79,34 +79,95 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
 
         internal void InsertData(string tableName, string tableData)
         {
-            StringBuilder customQuery = new StringBuilder();
-            switch (tableName)
+            try
             {
-                case "HLL_VocabDecks":
+                StringBuilder customQuery = new StringBuilder();
+                switch (tableName)
+                {
+                    case "HLL_VocabDecks":
 
-                    var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
-                    foreach (var item in _DictionaryModellist)
-                    {
+                        var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
                         customQuery.Append(@"insert into HLL_VocabDecks(VocabularyId, LessonId, DictionaryEntriesId,
 Description,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate) 
-values('" + item.VocabularyId + "','" + item.LessonId + "','" + item.DictionaryEntriesId + "', '"
-+ item.Description + "','" + item.ActiveStatus + "','" + item.IsActive + "','" +
-item.IsDelete + "','" + item.CreatedBy + "','" + item.CreatedDate + "','" + item.UpdatedBy + "','" + item.UpdatedDate + "')");
-                    }
+values");
+                        foreach (var item in _DictionaryModellist)
+                        {
+                            customQuery.Append("('" + item.VocabularyId + "','" + item.LessonId + "','" + item.DictionaryEntriesId + "', '"
+    + item.Description + "','" + item.ActiveStatus + "','" + item.IsActive + "','" +
+    item.IsDelete + "','" + item.CreatedBy + "','" + item.CreatedDate + "','" + item.UpdatedBy + "','" + item.UpdatedDate + "'),");
+                        }
+                        break;
+                }
+                string Qry = Convert.ToString(customQuery);
 
+                Qry = Qry.TrimEnd(',');
+                var result = ExcecuteTheQuery(Qry, "I");
 
-                    break;
             }
-            string Qry = Convert.ToString(customQuery);
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+        internal object SelectData(string tableName)
+        {
+            object result = new object();
+            try
+            {
+                StringBuilder customQuery = new StringBuilder();
+                switch (tableName)
+                {
+                    case "HLL_VocabDecks":
+                        //  var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
+                        customQuery.Append(@"Select VocabDecksId, VocabularyId, LessonId, DictionaryEntriesId,
+Description,ActiveStatus,IsActive,IsDelete from HLL_VocabDecks");
+                        break;
+                }
+                string Qry = Convert.ToString(customQuery);
+                result = ExcecuteTheQuery(Qry, "S");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            return result;
+        }
+        private object ExcecuteTheQuery(string Qry, string OprationType)
+        {
+            SQLiteDataAdapter sqlite_datareader;
+            DataTable dt = new DataTable();
+
+            object result = new object();
             using (SQLiteCommand command = new SQLiteCommand(Qry, _dbcon))
             {
                 OpenConnection();
-                command.ExecuteNonQuery();
+
+                switch (OprationType)
+                {
+                    case "I":
+                        result = command.ExecuteNonQuery();
+                        break;
+                    case "S":
+                        sqlite_datareader = new SQLiteDataAdapter(command);
+                        sqlite_datareader.Fill(dt);
+                        //while (sqlite_datareader.Read())
+                        //{
+                        //    //result += sqlite_datareader.GetString(sqlite_datareader.GetOrdinal("VocabularyId"));
+                        //    result = sqlite_datareader["VocabularyId"];
+                        //}
+
+                        break;
+                    case "U":
+                        result = command.ExecuteScalar();
+                        break;
+                    case "D":
+                        result = command.ExecuteScalar();
+                        break;
+                }
                 CloseConnection();
             }
-
+            return result;
         }
-
-
     }
 }
+

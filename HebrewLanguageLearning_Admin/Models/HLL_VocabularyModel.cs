@@ -11,6 +11,8 @@ namespace HebrewLanguageLearning_Admin.Models
         public string LessonId { get; set; }
         public string DictionaryEntriesId { get; set; }
         public string Description { get; set; }
+        public string LessonDecks { get; set; }
         public string[] VocabularyInLesson { get; set; }
+        
     }
 }
