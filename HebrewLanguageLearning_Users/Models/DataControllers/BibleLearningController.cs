@@ -10,16 +10,19 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using HebrewLanguageLearning_Users.GenericClasses;
 using System.Xml.XPath;
-
-
+using HebrewLanguageLearning_Users.Models.DataProviders;
+using System.Data;
 
 namespace HebrewLanguageLearning_Users.Models.DataControllers
 {
     public class BibleLearningController
     {
         BibleLearningModel _objBLM = new BibleLearningModel();
+        DBModel obj = new DBModel();
+        DataTable dt = new DataTable();
         internal BibleLearningModel ShowBookData(string CurrentfileName)
         {
             return GetBookData(CurrentfileName);
@@ -109,6 +112,52 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             {
                 GC.SuppressFinalize(this);
             }
+        }
+
+        public List<VocabDecksGroupModel> GetVocabDesks()
+        {
+            DBModel obj = new DBModel();
+            DataTable dt = new DataTable();
+            dt = (DataTable)obj.SelectData("HLL_VocabDecks");
+            List<VocabularyModel> tmplist = new List<VocabularyModel>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                tmplist.Add(new VocabularyModel { LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString() });
+
+            }
+            List<VocabDecksGroupModel> tmpVocabDecks = new List<VocabDecksGroupModel>();
+            var tmp = tmplist.GroupBy(x => x.LessonId).
+                Select(y => new
+                {
+                    LessonId = y.Key,
+                    LessonDecks = y.Select(x => x.LessonDecks).ToList()
+                }).ToList();
+            object objTemp;
+            foreach (var item in tmp)
+            {
+
+                List<VocabularyModel> vocabularyModeltmp = new List<VocabularyModel>();
+                objTemp = item.LessonDecks;
+
+                foreach (var itemData in item.LessonDecks)
+                {
+                    vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData });
+                }
+
+                tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = "Lesson " + item.LessonId, vocabularyModel = vocabularyModeltmp });
+            }
+
+            return tmpVocabDecks;
+           
+        }
+
+        public bool SetVocabDesks(VocabularyModel _obj)
+        {
+            var listOfTable = "[" + JToken.FromObject(_obj).ToString() + "]";
+            obj.InsertData("HLL_VocabDecks", listOfTable);
+            return true;
+
         }
     }
 }

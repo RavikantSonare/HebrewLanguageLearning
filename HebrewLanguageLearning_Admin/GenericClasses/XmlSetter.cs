@@ -21,7 +21,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             {
                 try
                 {
-                 //   string _obj_lemma, _chapter_osisID; int verseNo = 1;
+                    //   string _obj_lemma, _chapter_osisID; int verseNo = 1;
                     XPathDocument xmlPathDoc = new XPathDocument(filePath);
                     XPathNavigator xPathNav = xmlPathDoc.CreateNavigator();
                     xPathNav.MoveToRoot(); xPathNav.MoveToFirstChild(); xPathNav.MoveToFirstChild();
@@ -142,23 +142,29 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             object _objlist = new object();
             try
             {
-              //  List<HLL_Vocabulary> VocabularyObj = new List<DBContext.HLL_Vocabulary>();
+              
                 if (_tblname == "HLL_Vocabulary")
                 {
-                    
-                    _ObjHLL_Vocabulary = db.HLL_Vocabulary.Where(x => x.IsDelete == false).ToList();
-                    var objVocabularyList = _ObjHLL_Vocabulary.Select(z => z.DictionaryEntriesId).ToList();
-                    VocabularyInLessonList = db.HLL_DictionaryEntries.Where(z => objVocabularyList.Contains(z.DictionaryEntriesId)).ToList();
 
-                    var InLessonList = db.HLL_DictionaryEntries.Where(z => objVocabularyList.Contains(z.DictionaryEntriesId)).Select(x =>
-                                         new SelectListItem()
+                        _ObjHLL_Vocabulary = db.HLL_Vocabulary.Where(x => x.IsDelete == false).ToList();
+                    var objVocabularyList = _ObjHLL_Vocabulary.Select(z => new { z.DictionaryEntriesId, z.LessonId }).ToList();
+                    var VocabularyInLessonListNew = objVocabularyList.Join(db.HLL_DictionaryEntries, s => s.DictionaryEntriesId, f => f.DictionaryEntriesId, (s, f) => new { s, f }).ToList();
+                    var InLessonList = VocabularyInLessonListNew.Select(x =>
+                                         new
                                          {
-                                             Value = x.DictionaryEntriesId,
-                                             Text = x.DicStrongNo + ", " + x.DicHebrew + ", " + x.DicEnglish
-                                         }).ToList();
+                                             LessonId = x.s.LessonId,
+                                             StrongNo = x.f.DicStrongNo,
+                                             DictionaryEntriesId = x.f.DictionaryEntriesId,
+                                             LessonDecks = x.f.DicStrongNo + ", " + x.f.DicHebrew + ", " + x.f.DicEnglish,
+                                             ActiveStatus = x.f.ActiveStatus,
+                                             IsActive = x.f.IsActive,
+                                             IsDelete = x.f.IsDelete
+                                         }
+
+                                         ).ToList();
                     
-                   // VocabularyObj = db.HLL_Vocabulary.ToList();
-                    _objlist = InLessonList;
+                 _objlist = InLessonList;
+                    
                 }
 
             }

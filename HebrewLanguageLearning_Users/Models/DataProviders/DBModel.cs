@@ -21,7 +21,7 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
             if (!File.Exists("./database.biblingoContext"))
             {
                 SQLiteConnection.CreateFile("database.biblingoContext");
-
+               
             }
             CreateTables();
         }
@@ -30,12 +30,12 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
             try
             {
                 var _TableString = @"CREATE TABLE if not exists HLL_VocabDecks(  VocabDecksId int IDENTITY(1,1) PRIMARY KEY,
-                [VocabularyId][nvarchar](250) NULL,
-                [LessonId] [nvarchar](250) NULL,
+                [LessonId] [nvarchar](50) NULL,
+                [StrongNo] [nvarchar](250) NULL,
                 [DictionaryEntriesId] [nvarchar](250) NULL,
 	            [Description] [nvarchar](500) NULL,	
                 [LessonDecks] [nvarchar](500) NULL,	
-                [CustomeDecks] [nvarchar](500) NULL,	
+                [IsCustomeDecks] [bit] NULL,	
                 [ActiveStatus] [bit] NULL,
 	            [IsActive] [bit] NULL,
 	            [IsDelete] [bit] NULL)";
@@ -87,14 +87,15 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                     case "HLL_VocabDecks":
 
                         var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
-                        customQuery.Append(@"insert into HLL_VocabDecks(VocabularyId, LessonId, DictionaryEntriesId,
-Description,ActiveStatus,IsActive,IsDelete,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate) 
+                        customQuery.Append(@"insert into HLL_VocabDecks(LessonId, StrongNo, DictionaryEntriesId, 
+Description,
+LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete) 
 values");
                         foreach (var item in _DictionaryModellist)
                         {
-                            customQuery.Append("('" + item.VocabularyId + "','" + item.LessonId + "','" + item.DictionaryEntriesId + "', '"
-    + item.Description + "','" + item.ActiveStatus + "','" + item.IsActive + "','" +
-    item.IsDelete + "','" + item.CreatedBy + "','" + item.CreatedDate + "','" + item.UpdatedBy + "','" + item.UpdatedDate + "'),");
+                            customQuery.Append("('" + item.LessonId + "','" + item.StrongNo + "','" + item.DictionaryEntriesId + "', '"
+    + item.Description + "','" + item.LessonDecks + "','" + item.IsCustomeDecks + "','" +
+    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "'),");
                         }
                         break;
                 }
@@ -109,7 +110,7 @@ values");
                 Debug.WriteLine(ex.Message);
             }
         }
-        internal object SelectData(string tableName)
+         internal object SelectData(string tableName)
         {
             object result = new object();
             try
@@ -119,8 +120,8 @@ values");
                 {
                     case "HLL_VocabDecks":
                         //  var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
-                        customQuery.Append(@"Select VocabDecksId, VocabularyId, LessonId, DictionaryEntriesId,
-Description,ActiveStatus,IsActive,IsDelete from HLL_VocabDecks");
+                        customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks");
                         break;
                 }
                 string Qry = Convert.ToString(customQuery);
@@ -150,6 +151,7 @@ Description,ActiveStatus,IsActive,IsDelete from HLL_VocabDecks");
                     case "S":
                         sqlite_datareader = new SQLiteDataAdapter(command);
                         sqlite_datareader.Fill(dt);
+                        result = dt;
                         //while (sqlite_datareader.Read())
                         //{
                         //    //result += sqlite_datareader.GetString(sqlite_datareader.GetOrdinal("VocabularyId"));

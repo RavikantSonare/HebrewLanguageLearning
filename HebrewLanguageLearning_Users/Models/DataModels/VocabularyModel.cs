@@ -11,14 +11,14 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         //VocabDecksId
         public string VocabularyId { get; set; }
         public string LessonId { get; set; }
+        public string StrongNo { get; set; }
         public string DictionaryEntriesId { get; set; }
         public string Description { get; set; }
+        public string LessonDecks { get; set; }
+        public bool IsCustomeDecks { get; set; } = false;
         public bool ActiveStatus { get; set; }
         public bool IsActive { get; set; }
         public bool IsDelete { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int UpdatedBy { get; set; }
-        public DateTime UpdatedDate { get; set; }
+
     }
 }

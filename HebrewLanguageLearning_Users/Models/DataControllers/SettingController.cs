@@ -57,17 +57,15 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 {
                     DBModel obj = new DBModel();
                     var listOfTable = response.Content.ReadAsStringAsync().Result;
-                    //  obj.InsertData("HLL_VocabDecks", listOfTable); need to be Open.
+               obj.InsertData("HLL_VocabDecks", listOfTable);// need to be Open.
 
-                    var Data = obj.SelectData("HLL_VocabDecks");
+                   // var Data = obj.SelectData("HLL_VocabDecks");
 
                 }
                 else
                 {
                     Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
                 }
-
-
                 isDone = true;
 
             }

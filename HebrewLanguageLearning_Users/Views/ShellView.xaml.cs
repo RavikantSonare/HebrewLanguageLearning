@@ -13,19 +13,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using System.ComponentModel;
 
 namespace HebrewLanguageLearning_Users.Views
 {
     /// <summary>
     /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class ShellView : Window
+    public partial class ShellView : Window, INotifyPropertyChanged
     {
         public ShellView()
         {
             InitializeComponent();
-
-
             //  AnimationSpeed = TimeSpan.FromMilliseconds(150);
         }
 
@@ -52,11 +52,66 @@ namespace HebrewLanguageLearning_Users.Views
         {
             Application.Current.Shutdown();
         }
-
+        public int toggleValue = 0;
         private void MenuIconOpenRight_Click(object sender, RoutedEventArgs e)
         {
-            StateMenuRight.Toggle(1);
+            showhide();
+            //  StateMenuRight.Toggle(1);
+            // var Data = obj.SelectData("HLL_VocabDecks");
         }
+        //private void btnRightMenuHide_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ShowHideMenu("sbHideRightMenu", btnRightMenuHide, btnRightMenuShow, pnlRightMenu);
+        //}
+        //private void btnRightMenuShow_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+        public void showhide()
+        {
+            if (toggleValue == 0)
+            {
+
+                toggleValue = 1;
+                ShowHideMenu("sbShowRightMenu", VocabDecksPanel);
+            }
+            else
+            {
+
+                toggleValue = 0;
+                ShowHideMenu("sbHideRightMenu", VocabDecksPanel);
+            }
+        }
+
+      
+        private void ShowHideMenu(string Storyboard, StackPanel pnl)
+        {
+            Storyboard sb = Resources[Storyboard] as Storyboard;
+            sb.Begin(pnl);
+
+            onPropertyChanged("VocabDecksPanel");
+
+
+            //if (Storyboard.Contains("Show"))
+            //{
+            //}
+            //else if (Storyboard.Contains("Hide"))
+            //{
+            //    //btnHide.Visibility = System.Windows.Visibility.Hidden;
+            //    //btnShow.Visibility = System.Windows.Visibility.Visible;
+            //}
+        }
+        public void onPropertyChanged(string property)
+        {
+
+            //if (PropertyChanged != null)
+            //{
+         ///       PropertyChanged(this, new PropertyChangedEventArgs(property));
+           // }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
        
     }
 }
+

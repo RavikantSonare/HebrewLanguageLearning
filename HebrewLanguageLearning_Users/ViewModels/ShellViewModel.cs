@@ -1,6 +1,10 @@
 ﻿using Caliburn.Micro;
+using HebrewLanguageLearning_Users.Models.DataModels;
+using HebrewLanguageLearning_Users.Models.DataProviders;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +22,8 @@ namespace HebrewLanguageLearning_Users.ViewModels
         private readonly SimpleContainer container;
         private INavigationService navigationService;
 
+        public ShellViewModel() { }
+
         public ShellViewModel(SimpleContainer container)
         {
             this.container = container;
@@ -31,8 +37,8 @@ namespace HebrewLanguageLearning_Users.ViewModels
             //  navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
 
             // navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
-            //navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
-            navigationService.NavigateToViewModel(typeof(Game.JerichoGameViewModel));
+             navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
+            //  navigationService.NavigateToViewModel(typeof(Game.JerichoGameViewModel));
             // navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
             // navigationService.NavigateToViewModel(typeof(Account.LoginViewModel));
         }
@@ -73,7 +79,76 @@ namespace HebrewLanguageLearning_Users.ViewModels
         }
 
         public object StateMenu { get; private set; }
+
+        public StackPanel _VocabDecksPanel;
+        public StackPanel VocabDecksPanel
+        {
+            get { return _VocabDecksPanel; }
+            set
+            {
+                _VocabDecksPanel = value;
+                NotifyOfPropertyChange(() => VocabularyLesson);
+            }
+        }
+
+        public List<VocabDecksGroupModel> _VocabularyLesson;
+        public List<VocabDecksGroupModel> VocabularyLesson
+        {
+            get { return _VocabularyLesson; }
+            set
+            {
+                _VocabularyLesson = value;
+                NotifyOfPropertyChange(() => VocabularyLesson);
+            }
+        }
+        
+        public void VocabDecksMenu()
+        {
+            DBModel obj = new DBModel();
+            DataTable dt = new DataTable();
+            dt = (DataTable)obj.SelectData("HLL_VocabDecks");
+            List<VocabularyModel> tmplist = new List<VocabularyModel>();
+            foreach (DataRow row in dt.Rows)
+            {
+                tmplist.Add(new VocabularyModel { LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString() });
+
+            }
+            List<VocabDecksGroupModel> tmpVg = new List<VocabDecksGroupModel>();
+            var tmp = tmplist.GroupBy(x => x.LessonId).
+                Select(y => new
+                {
+                    LessonId = y.Key,
+                    LessonDecks = y.Select(x => x.LessonDecks).ToList()
+                }).ToList();
+            object objTemp;
+            foreach (var item in tmp)
+            {
+
+                List<VocabularyModel> vocabularyModeltmp = new List<VocabularyModel>();
+                objTemp = item.LessonDecks;
+
+                foreach (var itemData in item.LessonDecks)
+                {
+                    vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData });
+                }
+
+                tmpVg.Add(new VocabDecksGroupModel { LessonId = "Lesson "+ item.LessonId, vocabularyModel = vocabularyModeltmp });
+            }
+            // vg = tmp;
+
+            VocabularyLesson = tmpVg;
+
+            //   List<VocabularyModel> lst = dt.AsEnumerable().ToList<VocabularyModel>();
+            //   List<VocabularyModel> list = dt.AsEnumerable().ToList();
+            //   var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(Data.ToString());
+        }
+        
     }
+   //public class VocabDecksGroup
+   // {
+   //     public string LessonId { get; set; }
+   //     public List<VocabularyModel> vocabularyModel { get; set; }
+   // }
 
 
 }

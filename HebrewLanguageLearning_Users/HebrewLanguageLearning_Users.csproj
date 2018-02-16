@@ -113,6 +113,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommonHelper\ImageDrawHelper.cs" />
+    <Compile Include="CommonHelper\RightPanelPropertyChanged.cs" />
     <Compile Include="GenericClasses\EntityConfig.cs" />
     <Compile Include="GenericClasses\FileSetter.cs" />
     <Compile Include="Models\AccountModel.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Models\DataControllers\SettingController.cs" />
     <Compile Include="Models\DataModels\BibleLearningModel.cs" />
     <Compile Include="Models\DataModels\DictionaryModel.cs" />
+    <Compile Include="Models\DataModels\VocabDecksGroupModel.cs" />
     <Compile Include="Models\DataModels\VocabularyModel.cs" />
     <Compile Include="Models\DataProviders\DBModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
@@ -150,6 +152,9 @@
     </Compile>
     <Compile Include="Views\CommonUserControls\ProgressBarUC.xaml.cs">
       <DependentUpon>ProgressBarUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CommonUserControls\VocabDacksUCxaml.xaml.cs">
+      <DependentUpon>VocabDacksUCxaml.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dashboard\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
@@ -223,6 +228,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CommonUserControls\ProgressBarUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CommonUserControls\VocabDacksUCxaml.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

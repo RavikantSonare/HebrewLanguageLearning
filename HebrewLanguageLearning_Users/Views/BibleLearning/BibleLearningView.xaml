@@ -36,6 +36,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Storyboard x:Key="sbShowRightMenu" >
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,-1230,0" To="0,0,0,0" DecelerationRatio=".9" Duration="0:0:0.1" />
+        </Storyboard>
+        <Storyboard x:Key="sbHideRightMenu">
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="0,0,-1230,0" AccelerationRatio=".9" Duration="0:0:0.1" />
+        </Storyboard>
+      
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -142,10 +149,14 @@
 
         <!--Grid Column 2 Row 1-->
         <Canvas Grid.Column="3"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="10"></Canvas>
-        <StackPanel Grid.Column="3"  Grid.Row="1"  Background="#E6EAEE" Orientation="Horizontal" HorizontalAlignment="Center" Margin="193,0,192,0">
-            <TextBlock FontSize="20"  x:Name="BibleTxt" Grid.Row="4" FontWeight="Bold"  >כִּתבֵי הַקוֹדֶשׁ</TextBlock>
-
-        </StackPanel>
+        <Grid Grid.Column="3"  Grid.Row="1"  Background="#E6EAEE" Margin="160,0,160,0"  HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Foreground="Black" x:Name="BibleTxtHebrew" Grid.Column="0" FontWeight="Bold" TextAlignment="Right" >כִּתבֵי הַקוֹדֶשׁ</TextBlock>
+            <Button x:Name="btnAddVocabDecks" BorderBrush="Transparent" Grid.Column="1" Background="Transparent" Margin="-0 -10 0 0" Foreground="Black" Width="50" Height="40" FontSize="30" Click="btnAddVocabDecks_Click"> + </Button>
+        </Grid>
         <StackPanel Grid.Column="3"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
             <!--<Line X1="500" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#00D5B6" StrokeThickness="2" />-->
             <Border BorderThickness="1" BorderBrush="Black">
@@ -177,6 +188,83 @@
             <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Dictionary Reference</TextBlock>
             <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold" x:Name="DictonaryReference" >CBH v3,432</TextBlock>
         </StackPanel>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10" Panel.ZIndex="3">
 
+            <StackPanel Panel.ZIndex="2" x:Name="VocabDecksPanel" Orientation="Horizontal"  HorizontalAlignment="Right" Margin="0,0,-1230,0">
+                <StackPanel Panel.ZIndex="4" x:Name="VocabDecksPanel1" Orientation="Horizontal" Width="830" Height="800" Background="Transparent" HorizontalAlignment="Right" Margin="0,-50,0,0">
+                    <Border BorderBrush="Black" BorderThickness="1" Width="830" Background="Black" Opacity="0.7" >
+                        <StackPanel>
+                            <Button HorizontalAlignment="Left" Margin="30 20 0 0" Width="70" Height="70" Foreground="White" FontSize="40" Background="Transparent" BorderBrush="Transparent" Click="btnAddVocabDecks_Click">x</Button>
+                            <TextBlock x:Name="BibleTxtdocks" Margin="300 100 10 500" HorizontalAlignment="Left" Foreground="White" FontSize="30">Choose a deck to add טֶקסט to -></TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <Border BorderBrush="#A9CDDA" BorderThickness="1" Width="400" Background="#A9CDDA" >
+
+                    <StackPanel Orientation="Vertical" Margin="50 30 20 50">
+                        <TextBlock FontSize="20">Vocab Decks</TextBlock>
+                        <Line X1="120"  Margin="0 10 0 0" Stroke="Black" StrokeThickness="2" />
+                        <TextBlock FontSize="20" Margin="0 12 15 0">+ Words that Need Practice</TextBlock>
+
+                        <TextBlock FontSize="19" Margin="10 20 15 0">Lesson Decks</TextBlock>
+
+                        <ItemsControl ItemsSource="{Binding VocabularyLesson}">
+                            <ItemsControl.ItemTemplate>
+                               
+                                   <DataTemplate >
+                                    
+                                    <TreeViewItem  FontSize="18" Header="{Binding LessonId}">
+                                       
+                                        
+                                        <ListBox  ItemsSource="{Binding vocabularyModel}" Width="auto" BorderThickness="0" >
+                                            <ListBox.ItemTemplate>
+                                               
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock  Text="{Binding Path=LessonDecks}"  FontSize="18"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </TreeViewItem>
+                                   
+                                </DataTemplate>
+                              
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock FontSize="19" Margin="10 20 15 0">Custom Decks</TextBlock>
+
+                        <ItemsControl ItemsSource="{Binding VocabularyLesson}">
+                            <ItemsControl.ItemTemplate>
+
+                                <DataTemplate >
+
+                                    <TreeViewItem  FontSize="18" Header="{Binding LessonId}">
+
+
+                                        <ListBox  ItemsSource="{Binding vocabularyModel}" Width="auto" BorderThickness="0" >
+                                            <ListBox.ItemTemplate>
+
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock  Text="{Binding Path=LessonDecks}"  FontSize="18"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </TreeViewItem>
+
+                                </DataTemplate>
+
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock>></TextBlock>
+                        <TextBox x:Name="BibleTxtVocabdocks" Height="30" Width="200"></TextBox>
+                        <TextBlock cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_CustomDecks($source, $eventArgs)]" FontSize="20">+ Create New Vocab Deck</TextBlock>
+                       
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

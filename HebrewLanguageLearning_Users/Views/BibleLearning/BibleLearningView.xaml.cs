@@ -1,6 +1,8 @@
-﻿using HebrewLanguageLearning_Users.GenericClasses;
+﻿using HebrewLanguageLearning_Users.CommonHelper;
+using HebrewLanguageLearning_Users.GenericClasses;
 using HebrewLanguageLearning_Users.Models.DataControllers;
 using HebrewLanguageLearning_Users.Models.DataModels;
+using HebrewLanguageLearning_Users.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +14,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 namespace HebrewLanguageLearning_Users.Views.BibleLearning
 {
     /// <summary>
@@ -24,6 +24,8 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
     {
         BibleLearningController _ObjBC = new BibleLearningController();
         public static BibleLearningModel ObjBook = new BibleLearningModel();
+        private int toggleValue=0;
+
         public BibleLearningView()
         {
             InitializeComponent();
@@ -56,9 +58,6 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
                     SetScrollingPossition(newValue, totalIndex);
                 }
             }
-
-          
-
             
         }
         private void _ItemChapter_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -73,7 +72,7 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
             int CurrentIndex = _ItemBookChapter.SelectedIndex, totalIndex = BibleTxtLesson.Items.Count;
             //  int CurrentIndexVerse = _ItemBookVerse.SelectedIndex;
 
-            if (CurrentIndex != null)
+            if (CurrentIndex != 0)
             {
                 SetScrollingPossition(CurrentIndex, totalIndex);
             }
@@ -121,14 +120,43 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
             Decorator border = VisualTreeHelper.GetChild(BibleTxtLesson, 0) as Decorator; ScrollViewer scrollViewer = border.Child as ScrollViewer;
             _ItemBookChapter.SelectedIndex = Convert.ToInt32(scrollViewer.VerticalOffset);
         }
-       
-        //void image()
-        //{
-        //    BitmapImage logo = new BitmapImage();
-        //    logo.BeginInit();
-        //    logo.UriSource = new Uri(@"C:\Users\MOBIWEB\AppData\Local\HebrewLanguageLearning_Users\Media\Pictures\HLLUSA001-PICTUR00TPicturesHLL_Definition2512018024905.png");
-        //    logo.EndInit();
-        //    image1.Source = logo;
-        //}
+
+        private void btnAddVocabDecks_Click(object sender, RoutedEventArgs e)
+        {
+            showhide();
+
+            //RightPanelPropertyChanged ObjRP = new RightPanelPropertyChanged();
+            //ObjRP.onPropertyChanged("btnAddVocabDecks");
+
+            //ShellViewModel sm = new ShellViewModel();
+
+            //ShellView sv = new ShellView();
+
+            // sv.showhide();
+        }
+      
+        public void showhide()
+        {
+            if (toggleValue == 0)
+            {
+
+                toggleValue = 1;
+                ShowHideMenu("sbShowRightMenu", VocabDecksPanel);
+            }
+            else
+            {
+
+                toggleValue = 0;
+                ShowHideMenu("sbHideRightMenu", VocabDecksPanel);
+            }
+        }
+
+
+        private void ShowHideMenu(string Storyboard, StackPanel pnl)
+        {
+            Storyboard sb = Resources[Storyboard] as Storyboard;
+            sb.Begin(pnl);
+            
+        }
     }
 }
