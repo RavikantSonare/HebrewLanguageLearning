@@ -98,6 +98,8 @@ values");
     item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "'),");
                         }
                         break;
+
+                 
                 }
                 string Qry = Convert.ToString(customQuery);
 
@@ -119,9 +121,14 @@ values");
                 switch (tableName)
                 {
                     case "HLL_VocabDecks":
-                        //  var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
+                    
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks where IsCustomeDecks='False'");
+                        break;
+                    case "HLL_VocabDecks_Custom":
+                      
+                        customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks where IsCustomeDecks='True'");
                         break;
                 }
                 string Qry = Convert.ToString(customQuery);

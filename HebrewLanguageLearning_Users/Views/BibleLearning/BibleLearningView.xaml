@@ -234,7 +234,7 @@
                         </ItemsControl>
                         <TextBlock FontSize="19" Margin="10 20 15 0">Custom Decks</TextBlock>
 
-                        <ItemsControl ItemsSource="{Binding VocabularyLesson}">
+                        <ItemsControl ItemsSource="{Binding VocabularyLesson_Custom}">
                             <ItemsControl.ItemTemplate>
 
                                 <DataTemplate >

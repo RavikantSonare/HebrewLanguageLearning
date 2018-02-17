@@ -320,10 +320,21 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => VocabularyLesson);
             }
         }
-
+        public List<VocabDecksGroupModel> _VocabularyLesson_Custom;
+        public List<VocabDecksGroupModel> VocabularyLesson_Custom
+        {
+            get { return _VocabularyLesson_Custom; }
+            set
+            {
+                _VocabularyLesson_Custom = value;
+                NotifyOfPropertyChange(() => VocabularyLesson_Custom);
+            }
+        }
+       // HLL_VocabDecks_Custom
         public void VocabDecksMenu()
         {
-            VocabularyLesson = _ObjBC.GetVocabDesks();
+            VocabularyLesson = _ObjBC.GetVocabDesks("HLL_VocabDecks");
+            VocabularyLesson_Custom = _ObjBC.GetVocabDesks("HLL_VocabDecks_Custom");
         }
 
 

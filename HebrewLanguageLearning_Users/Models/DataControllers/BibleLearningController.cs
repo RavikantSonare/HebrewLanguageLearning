@@ -75,7 +75,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                             {
                                 Text = xPathNav.GetAttribute("osisID", ""),
                                 Value = _chapter_osisID
-                            
+
                             });
                         xPathNav.MoveToFirstChild();
                         do
@@ -85,22 +85,22 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                             {
                                 if (xPathNav.MoveToFirstChild())
                                 {
-                                  //  _objBLM._bookElementsList.Add(new DataModels.bookElements { ElementStrogNo = _obj_lemma, ElementValue = xPathNav.Value, SelctedElementValue = _objBLM._VerseList.Count() == 20 ? true : false });
+                                    //  _objBLM._bookElementsList.Add(new DataModels.bookElements { ElementStrogNo = _obj_lemma, ElementValue = xPathNav.Value, SelctedElementValue = _objBLM._VerseList.Count() == 20 ? true : false });
                                     _TempbookElementsList.Add(new DataModels.bookElements { ElementStrogNo = _obj_lemma, ElementValue = xPathNav.Value, SelctedElementValue = _objBLM._VerseList.Count() == 20 ? true : false });
                                     xPathNav.MoveToParent();
                                 }
                             }
                         } while (xPathNav.MoveToNext());
 
-                   
-                        _tmpVerseElementList.Add(new verseElement { verseId = _objBLM._VerseList.LastOrDefault().Text, versValue = _objBLM._VerseList.LastOrDefault().Value, wElementList = _TempbookElementsList, verseNo= verseNo }); verseNo++;
+
+                        _tmpVerseElementList.Add(new verseElement { verseId = _objBLM._VerseList.LastOrDefault().Text, versValue = _objBLM._VerseList.LastOrDefault().Value, wElementList = _TempbookElementsList, verseNo = verseNo }); verseNo++;
                         _TempbookElementsList = new List<bookElements>();
                     } while (xPathNav.MoveToParent() && xPathNav.MoveToNext());
 
                     verseNo = 1;
                     _objBLM._chepterElementsList.Add(new chepterElements { ChepterId = _chapter_osisID, Chepterval = _chapter_osisID, verseElementList = _tmpVerseElementList });
-                    _tmpVerseElementList=new List<verseElement>();
-                   
+                    _tmpVerseElementList = new List<verseElement>();
+
                 } while (xPathNav.MoveToParent() && xPathNav.MoveToNext());
             }
             catch (Exception ex)
@@ -114,11 +114,11 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
         }
 
-        public List<VocabDecksGroupModel> GetVocabDesks()
+        public List<VocabDecksGroupModel> GetVocabDesks(string TableName)
         {
             DBModel obj = new DBModel();
             DataTable dt = new DataTable();
-            dt = (DataTable)obj.SelectData("HLL_VocabDecks");
+            dt = (DataTable)obj.SelectData(TableName); 
             List<VocabularyModel> tmplist = new List<VocabularyModel>();
 
             foreach (DataRow row in dt.Rows)
@@ -149,7 +149,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
 
             return tmpVocabDecks;
-           
+
         }
 
         public bool SetVocabDesks(VocabularyModel _obj)
@@ -160,5 +160,8 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
         }
     }
+
+   
+
 }
 
