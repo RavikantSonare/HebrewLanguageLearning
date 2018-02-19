@@ -337,6 +337,7 @@
     <Resource Include="bin\Debug\Resource\Book\wlc\XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\keyboard-right-arrow-button.png" />
     <Content Include="Media\Videos\ELL_PART_5_768k.wmv" />
     <Resource Include="Media\Pictures\Kat.jpg" />
     <Content Include="Media\Videos\Matt1344Allthathehas.mp4" />

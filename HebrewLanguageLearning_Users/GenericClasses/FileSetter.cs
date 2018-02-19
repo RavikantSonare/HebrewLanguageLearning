@@ -44,7 +44,7 @@ namespace HebrewLanguageLearning_Users.GenericClasses
             return _DictionaryModellist;
         }
 
+        ~FileSetter() { }
 
-        
     }
 }

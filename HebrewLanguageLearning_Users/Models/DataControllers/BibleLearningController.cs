@@ -118,7 +118,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         {
             DBModel obj = new DBModel();
             DataTable dt = new DataTable();
-            dt = (DataTable)obj.SelectData(TableName); 
+            dt = (DataTable)obj.SelectData(TableName);
             List<VocabularyModel> tmplist = new List<VocabularyModel>();
 
             foreach (DataRow row in dt.Rows)
@@ -145,7 +145,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                     vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData });
                 }
 
-                tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = "Lesson " + item.LessonId, vocabularyModel = vocabularyModeltmp });
+                tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = TableName == "HLL_VocabDecks" ? "Lesson " : "" + item.LessonId, vocabularyModel = vocabularyModeltmp });
             }
 
             return tmpVocabDecks;
@@ -161,7 +161,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         }
     }
 
-   
+
 
 }
 

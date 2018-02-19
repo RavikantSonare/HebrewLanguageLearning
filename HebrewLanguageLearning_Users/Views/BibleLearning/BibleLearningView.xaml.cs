@@ -158,5 +158,7 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
             sb.Begin(pnl);
             
         }
+
+       
     }
 }

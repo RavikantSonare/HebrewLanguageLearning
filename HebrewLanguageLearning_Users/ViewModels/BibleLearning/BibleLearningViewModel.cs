@@ -38,6 +38,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public string _bibleTxtVocabdocks;
         public string _strongNo;
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -105,8 +106,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => ItemBookVerse);
             }
         }
-
-
+        
         public string BibleTxtdocks
         {
             get { return _bibleTxtdocks; }
@@ -143,7 +143,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => BibleTxtEnglish);
             }
         }
-
+        
         public string StrongNo
         {
             get { return _strongNo; }
@@ -203,6 +203,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
         static List<DictionaryModel> _dictionaryModellist = new List<DictionaryModel>();
 
+        private readonly INavigationService navigationService;
+        public BibleLearningViewModel(INavigationService navigationService)
+        {
+            this.navigationService = navigationService;
+        }
 
         protected override void OnActivate()
         {
@@ -268,14 +273,14 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             StrongNo = strongNo;
             BibileTextList _obj = GetDescription(strongNo);
             BibleTxtHebrew = _obj.proBibleTxtHebrew;
-            BibleTxtEnglish= _obj.proBibleTxtEnglish;
+            BibleTxtEnglish = _obj.proBibleTxtEnglish;
             BibleTxtMediaUrl = _obj.proMediaURl;
             DescriptionTxt = _obj.proDescriptionTxt;
             ExampleTxt = _obj.proExampleTxt;
             SemanticDomainTxt = _obj.proSemanticDomainTxt;
             DictonaryReference = _obj.proDictonaryReferenceTxt;
 
-            BibleTxtdocks = "Choose a deck to add " + _obj.proBibleTxtHebrew + " ->";
+            BibleTxtdocks = "Choose a deck to add  " + _obj.proBibleTxtHebrew + " ->";
 
         }
         BibileTextList GetDescription(string strongNo)
@@ -309,7 +314,6 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             return _obj;
         }
 
-
         public List<VocabDecksGroupModel> _VocabularyLesson;
         public List<VocabDecksGroupModel> VocabularyLesson
         {
@@ -330,28 +334,82 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => VocabularyLesson_Custom);
             }
         }
-       // HLL_VocabDecks_Custom
+
+        // HLL_VocabDecks_Custom
+
         public void VocabDecksMenu()
         {
             VocabularyLesson = _ObjBC.GetVocabDesks("HLL_VocabDecks");
             VocabularyLesson_Custom = _ObjBC.GetVocabDesks("HLL_VocabDecks_Custom");
         }
 
-
         public void MouseDown_CustomDecks(object sender, MouseEventArgs e)
         {
             VocabularyModel _obj = new VocabularyModel();
+            var ListViewData = String.Empty;
+            if (String.IsNullOrEmpty(BibleTxtVocabdocks))
+            {
+                ListViewData = Convert.ToString(((HeaderedItemsControl)sender).Header);
+            }
+            if (!String.IsNullOrWhiteSpace(BibleTxtVocabdocks) || !String.IsNullOrWhiteSpace(ListViewData))
+            {
+                _obj.StrongNo = StrongNo;
+                _obj.LessonId = String.IsNullOrEmpty(ListViewData) ? BibleTxtVocabdocks : ListViewData;
+                _obj.LessonDecks = StrongNo + ',' + BibleTxtHebrew + ',' + BibleTxtEnglish;
+                _obj.IsCustomeDecks = true;
+                _obj.ActiveStatus = true;
+                _obj.IsActive = true;
+                _obj.IsDelete = false;
+                _ObjBC.SetVocabDesks(_obj);
+            }
+            VocabDecksMenu();
+        }
 
-            _obj.StrongNo = StrongNo;
-            _obj.LessonId = BibleTxtVocabdocks;
-            _obj.LessonDecks = StrongNo+','+ BibleTxtHebrew+','+ BibleTxtEnglish;
-            _obj.IsCustomeDecks = true;
-            _obj.ActiveStatus = true;
-            _obj.IsActive = true;
-            _obj.IsDelete = false;
-            _ObjBC.SetVocabDesks(_obj);
+        public void MouseDown_CustomDecksReview(object sender, MouseEventArgs e)
+        {
+
+            navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+
+            VocabularyModel _obj = new VocabularyModel();
+            var ListViewData = String.Empty;
+            //if (String.IsNullOrEmpty(BibleTxtVocabdocks))
+            //{
+            //    ListViewData = Convert.ToString(((HeaderedItemsControl)sender).Header);
+            //}
+            //if (!String.IsNullOrWhiteSpace(BibleTxtVocabdocks) || !String.IsNullOrWhiteSpace(ListViewData))
+            //{
+            //    _obj.StrongNo = StrongNo;
+            //    _obj.LessonId = String.IsNullOrEmpty(ListViewData) ? BibleTxtVocabdocks : ListViewData;
+            //    _obj.LessonDecks = StrongNo + ',' + BibleTxtHebrew + ',' + BibleTxtEnglish;
+            //    _obj.IsCustomeDecks = true;
+            //    _obj.ActiveStatus = true;
+            //    _obj.IsActive = true;
+            //    _obj.IsDelete = false;
+            //   // _ObjBC.SetVocabDesks(_obj);
+            //}
+            //VocabDecksMenu();
+        }
+        public void MouseDown_CustomDecksDelete(object sender, MouseEventArgs e)
+        {
+            VocabularyModel _obj = new VocabularyModel();
+            var ListViewData = String.Empty;
+            if (String.IsNullOrEmpty(BibleTxtVocabdocks))
+            {
+                ListViewData = Convert.ToString(((HeaderedItemsControl)sender).Header);
+            }
+            if (!String.IsNullOrWhiteSpace(BibleTxtVocabdocks) || !String.IsNullOrWhiteSpace(ListViewData))
+            {
+                _obj.StrongNo = StrongNo;
+                _obj.LessonId = String.IsNullOrEmpty(ListViewData) ? BibleTxtVocabdocks : ListViewData;
+                _obj.LessonDecks = StrongNo + ',' + BibleTxtHebrew + ',' + BibleTxtEnglish;
+                _obj.IsCustomeDecks = true;
+                _obj.ActiveStatus = true;
+                _obj.IsActive = true;
+                _obj.IsDelete = false;
+              //  _ObjBC.SetVocabDesks(_obj);
+            }
+            VocabDecksMenu();
         }
     }
-
-
+    
 }
