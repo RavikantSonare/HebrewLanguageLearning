@@ -104,7 +104,34 @@ namespace HebrewLanguageLearning_Users.CommonHelper
             _border.Child = _canvas;
             return _border;
         }
+       // ref string currentTopic
 
-       
+            // Need To Delete
+        internal static UIElement createWordChoice(string currentTopic)
+        {
+            var _borderboack = new Border
+            {
+                CornerRadius = new CornerRadius(15),
+                Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#A9CDDA")),
+                Height = 58,
+                Width = 140,
+                BorderBrush = Brushes.Black,
+                Margin = new Thickness(50, 20, 50, 20)
+            };
+           
+            var _txtBloack = new TextBlock
+            {
+                TextAlignment = TextAlignment.Center,
+                //Background = Brushes.Transparent,
+                Foreground = Brushes.Black,
+                Text = currentTopic,
+                 //   FontSize = 15,
+                FontWeight = FontWeights.SemiBold
+            };
+            _borderboack.Child = _txtBloack;
+            return _borderboack;
+        }
+
+
     }
 }

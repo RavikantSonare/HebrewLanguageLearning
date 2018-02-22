@@ -50,7 +50,7 @@
         </WrapPanel>
         <!--Grid Column 0 Row 1-->
         <StackPanel Grid.RowSpan="2" Grid.Column="1" Grid.Row="1"  Orientation="Horizontal"  HorizontalAlignment="Left">
-            <Label Margin="120 60 0 0" Content="7 out of 20"/>
+            <Label Margin="120 60 0 0" Name="ReviewCounter" Content="7 out of 20"/>
         </StackPanel>
         <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center"/>
         <!--Grid Column 1 Row 1-->
@@ -67,35 +67,31 @@
                 <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Black">
                     <StackPanel Height="300" Width="300">
                         <!--<TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="400" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
-                        <MediaElement  Height="300" Width="300" Source="/HebrewLanguageLearning_Users;component/Media/Videos/Matt13.44 - Allthathehas.mp4" Name="mePlayer" Stretch="None" />
+                        <!--<MediaElement  Height="300" Width="300" Source="/HebrewLanguageLearning_Users;component/Media/Videos/Matt13.44 - Allthathehas.mp4" Name="mePlayer" Stretch="None" />-->
+                        <Image  HorizontalAlignment="Left" Source="{Binding BibleTxtMediaUrl}"
+    Margin="0,0,0,0" Name="BibleImgMedia" Stretch="Fill" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </Border>
             </Grid>
         </StackPanel>
-        <WrapPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Border Margin="50 20 50 20"  BorderBrush="Black" Name="MyBorder1"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">  <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock> </Border>
-            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder2"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
-                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
-            </Border>
-            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder3"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
-                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
-            </Border>
-            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder4"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
-                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
-            </Border>
-            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder5"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
-                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
-            </Border>
-            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder6"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
-                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
-            </Border>
-            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder7"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
-                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
-            </Border>
-            <Border Margin="50 20 50 20" BorderBrush="Black" Name="MyBorder8"  Height="58" Background="#A9CDDA" Width="140" CornerRadius="20">
-                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
-            </Border>
-        </WrapPanel>
+        <ScrollViewer Margin="20" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="3">
+            <ItemsControl  ItemsSource="{Binding PnlWordChoiceList}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        
+                        <WrapPanel  Orientation="Horizontal" HorizontalAlignment="Right">
+                        </WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="20 10 20 10"  BorderBrush="Black" Name="MyBorder1"  Height="58" Background="#A9CDDA" Width="200" CornerRadius="20">
+                            <TextBlock Foreground="Black" HorizontalAlignment="Center" Tag="{Binding StrongNo}" VerticalAlignment="Center" Text="{Binding LessonDecks}" ></TextBlock>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
         <StackPanel Grid.Column="1" x:Name="spProgress"  Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
             <!--<CommonUserControls:ProgressBarUC/>-->
         </StackPanel>

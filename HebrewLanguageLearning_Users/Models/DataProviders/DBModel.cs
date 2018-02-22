@@ -21,7 +21,7 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
             if (!File.Exists("./database.biblingoContext"))
             {
                 SQLiteConnection.CreateFile("database.biblingoContext");
-               
+
             }
             CreateTables();
         }
@@ -99,7 +99,7 @@ values");
                         }
                         break;
 
-                 
+
                 }
                 string Qry = Convert.ToString(customQuery);
 
@@ -112,7 +112,7 @@ values");
                 Debug.WriteLine(ex.Message);
             }
         }
-         internal object SelectData(string tableName)
+        internal object SelectData(string tableName, string dataFilter = "")
         {
             object result = new object();
             try
@@ -121,15 +121,21 @@ values");
                 switch (tableName)
                 {
                     case "HLL_VocabDecks":
-                    
+
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
 LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks where IsCustomeDecks='False'");
                         break;
                     case "HLL_VocabDecks_Custom":
-                      
+
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
 LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks where IsCustomeDecks='True'");
                         break;
+                    case "HLL_VocabDecksLesson":
+
+                        customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks where LessonId='"+dataFilter+"'");
+                        break;
+
                 }
                 string Qry = Convert.ToString(customQuery);
                 result = ExcecuteTheQuery(Qry, "S");

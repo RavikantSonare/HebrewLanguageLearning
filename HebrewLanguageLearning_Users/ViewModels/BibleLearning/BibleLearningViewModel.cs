@@ -367,27 +367,12 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
         public void MouseDown_CustomDecksReview(object sender, MouseEventArgs e)
         {
-
             navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
-
-            VocabularyModel _obj = new VocabularyModel();
-            var ListViewData = String.Empty;
-            //if (String.IsNullOrEmpty(BibleTxtVocabdocks))
-            //{
-            //    ListViewData = Convert.ToString(((HeaderedItemsControl)sender).Header);
-            //}
-            //if (!String.IsNullOrWhiteSpace(BibleTxtVocabdocks) || !String.IsNullOrWhiteSpace(ListViewData))
-            //{
-            //    _obj.StrongNo = StrongNo;
-            //    _obj.LessonId = String.IsNullOrEmpty(ListViewData) ? BibleTxtVocabdocks : ListViewData;
-            //    _obj.LessonDecks = StrongNo + ',' + BibleTxtHebrew + ',' + BibleTxtEnglish;
-            //    _obj.IsCustomeDecks = true;
-            //    _obj.ActiveStatus = true;
-            //    _obj.IsActive = true;
-            //    _obj.IsDelete = false;
-            //   // _ObjBC.SetVocabDesks(_obj);
-            //}
-            //VocabDecksMenu();
+            if (String.IsNullOrEmpty(BibleTxtVocabdocks))
+            {
+                System.Windows.Application.Current.Properties["WordName"] = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+            }
+           
         }
         public void MouseDown_CustomDecksDelete(object sender, MouseEventArgs e)
         {

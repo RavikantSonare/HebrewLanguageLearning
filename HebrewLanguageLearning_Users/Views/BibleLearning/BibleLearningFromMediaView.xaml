@@ -110,7 +110,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="200"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Black">
+                <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Black" Margin="0,-2,0,2">
                     <StackPanel Height="400" Width="400">
                         <!--<TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="400" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
                         <MediaElement  Height="400" Width="400" Source="/HebrewLanguageLearning_Users;component/Media/Videos/ELL_PART_5_768k.wmv" x:Name="mePlayer" Stretch="None" LoadedBehavior="Manual" />

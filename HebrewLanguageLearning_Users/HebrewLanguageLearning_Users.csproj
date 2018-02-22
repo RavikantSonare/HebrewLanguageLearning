@@ -113,7 +113,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommonHelper\ImageDrawHelper.cs" />
-    <Compile Include="CommonHelper\RightPanelPropertyChanged.cs" />
     <Compile Include="GenericClasses\EntityConfig.cs" />
     <Compile Include="GenericClasses\FileSetter.cs" />
     <Compile Include="Models\AccountModel.cs" />
