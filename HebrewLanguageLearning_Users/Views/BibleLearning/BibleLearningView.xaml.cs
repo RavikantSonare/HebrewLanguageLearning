@@ -30,6 +30,10 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
         {
             InitializeComponent();
             //image();
+            // to Be REMOVE
+            ObjBook = _ObjBC.ShowBookData("1Chr");
+            SelectChapter();
+            SetTextBoxValue();
         }
 
         private void _ItemBook_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -41,8 +45,6 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
                 ObjBook = _ObjBC.ShowBookData(_currentfileName);
                 SelectChapter();
                 SetTextBoxValue();
-
-
             }
         }
         private void _ItemBookVerse_SelectionChanged(object sender, SelectionChangedEventArgs e)

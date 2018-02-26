@@ -38,8 +38,8 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 [IsCustomeDecks] [bit] NULL,	
                 [ActiveStatus] [bit] NULL,
 	            [IsActive] [bit] NULL,
-	            [IsDelete] [bit] NULL)";
-
+	            [IsDelete] [bit] NULL,
+                [IsReview] [bit] NULL)";
                 using (SQLiteCommand command = new SQLiteCommand(_TableString, _dbcon))
                 {
                     OpenConnection();
@@ -89,13 +89,13 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                         var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
                         customQuery.Append(@"insert into HLL_VocabDecks(LessonId, StrongNo, DictionaryEntriesId, 
 Description,
-LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete) 
+LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReview) 
 values");
                         foreach (var item in _DictionaryModellist)
                         {
                             customQuery.Append("('" + item.LessonId + "','" + item.StrongNo + "','" + item.DictionaryEntriesId + "', '"
     + item.Description + "','" + item.LessonDecks + "','" + item.IsCustomeDecks + "','" +
-    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "'),");
+    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False'),");
                         }
                         break;
 
@@ -112,6 +112,13 @@ values");
                 Debug.WriteLine(ex.Message);
             }
         }
+
+        /// <summary>
+        ///  Selete Data
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="dataFilter"></param>
+        /// <returns></returns>
         internal object SelectData(string tableName, string dataFilter = "")
         {
             object result = new object();
@@ -131,9 +138,9 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks 
 LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks where IsCustomeDecks='True'");
                         break;
                     case "HLL_VocabDecksLesson":
-
+                       // IsReview = 'False' and
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks where LessonId='"+dataFilter+"'");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReview from HLL_VocabDecks where LessonId='" + dataFilter + "'");
                         break;
 
                 }
@@ -146,6 +153,64 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks 
             }
             return result;
         }
+
+        /// <summary>
+        /// Update Data
+        /// </summary>
+        /// <param name="Qry"></param>
+        /// <param name="OprationType"></param>
+        /// <returns></returns>
+        /// 
+
+        internal void UpdateData(string tableName, string tableData)
+        {
+            try
+            {
+                StringBuilder customQuery = new StringBuilder();
+                switch (tableName)
+                {
+                    case "HLL_VocabDecksIsReView":
+                        customQuery.Append(@"update HLL_VocabDecks set IsReview='True' where StrongNo='" + tableData.Trim() + "'");
+                        break;
+                }
+                string Qry = Convert.ToString(customQuery);
+                
+                var result = ExcecuteTheQuery(Qry, "U");
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        /// <summary>
+        ///  DeleteLesson
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="tableData"></param>
+        internal void DeleteLesson(string tableName, string tableData)
+        {
+            try
+            {
+                StringBuilder customQuery = new StringBuilder();
+                switch (tableName)
+                {
+                    case "HLL_VocabDecksDeleteLesson":
+                        customQuery.Append(@"delete from HLL_VocabDecks where LessonId='" + tableData.Trim() + "'");
+                        break;
+                }
+                string Qry = Convert.ToString(customQuery);
+
+                var result = ExcecuteTheQuery(Qry, "D");
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
         private object ExcecuteTheQuery(string Qry, string OprationType)
         {
             SQLiteDataAdapter sqlite_datareader;
@@ -165,18 +230,12 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks 
                         sqlite_datareader = new SQLiteDataAdapter(command);
                         sqlite_datareader.Fill(dt);
                         result = dt;
-                        //while (sqlite_datareader.Read())
-                        //{
-                        //    //result += sqlite_datareader.GetString(sqlite_datareader.GetOrdinal("VocabularyId"));
-                        //    result = sqlite_datareader["VocabularyId"];
-                        //}
-
                         break;
                     case "U":
-                        result = command.ExecuteScalar();
+                        result = command.ExecuteNonQuery();
                         break;
                     case "D":
-                        result = command.ExecuteScalar();
+                        result = command.ExecuteNonQuery();
                         break;
                 }
                 CloseConnection();

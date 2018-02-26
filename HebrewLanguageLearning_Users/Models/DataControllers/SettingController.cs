@@ -30,7 +30,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             //_OBJ.BindClassData();
             // return true;  "" Need To Open
             DBModelSynch();
-            return true;//GetData(UsersID);  => Need To be open
+            return GetData(UsersID);  //=> Need To be open
         }
         public List<DictionaryModel> getDataFromLocalFile()
         {
@@ -57,7 +57,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 {
                     DBModel obj = new DBModel();
                     var listOfTable = response.Content.ReadAsStringAsync().Result;
-               obj.InsertData("HLL_VocabDecks", listOfTable);// need to be Open.
+                    obj.InsertData("HLL_VocabDecks", listOfTable);// need to be Open.
 
                    // var Data = obj.SelectData("HLL_VocabDecks");
 
@@ -131,30 +131,44 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             AllDataObject = getDataFromLocalFile();
             if (AllDataObject == null && AllDataObject.Count() <= 0) { goto NullDataReturn; }
             List<string> ImagesNameList = new List<string>();
+            List<string> SoundsNameList = new List<string>();
 
-            ImagesNameList = AllDataObject.Select(z => z.ListOfPictures.LastOrDefault()).ToList();
+
 
             //Process each object
             try
             {
+                ImagesNameList = AllDataObject.Select(z => z.ListOfPictures.LastOrDefault()).ToList();
                 foreach (dynamic result in ImagesNameList)
                 {
                     lock (this)
                     {
                         if (!string.IsNullOrEmpty(result))
                         {
-                            var responseWeb = GetMediaData(result).Result;
+                            var responseWeb = GetMediaData("Pictures", result).Result;
+                        }
+                    }
+                }
+                SoundsNameList = AllDataObject.Select(z => z.SoundUrl).ToList();
+                foreach (dynamic result in SoundsNameList)
+                {
+                    lock (this)
+                    {
+                        if (!string.IsNullOrEmpty(result))
+                        {
+                            var responseWeb = GetMediaData("Sounds", result).Result;
                         }
                     }
                 }
             }
+
             catch (Exception ex)
             {
             }
 
         }
 
-        private async Task<bool> GetMediaData(string fileName)
+        private async Task<bool> GetMediaData(string folderName, string fileName)
         {
             bool isDone = false;
             string filePath = "";
@@ -164,13 +178,13 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 lock (this)
                 {
                     // List data response.
-                    HttpResponseMessage response = client.GetAsync(new Uri("http://biblingo.mobi96.org/Media/Pictures/" + fileName)).Result;
+                    HttpResponseMessage response = client.GetAsync(new Uri("http://biblingo.mobi96.org/Media/" + folderName + "/" + fileName)).Result;
 
                     // Check that response was successful or throw exception
                     response.EnsureSuccessStatusCode();
 
                     // Read response asynchronously and save asynchronously to file
-                    filePath = UserDataFolder("Media\\Pictures", false) + fileName;
+                    filePath = UserDataFolder("Media\\" + folderName, false) + fileName;
                     using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
                         //copy the content from response to filestream

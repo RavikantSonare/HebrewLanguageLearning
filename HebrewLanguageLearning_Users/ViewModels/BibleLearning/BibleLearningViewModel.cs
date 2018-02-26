@@ -215,6 +215,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             base.OnActivate();
             _dictionaryModellist = _ObjSC.getDataFromLocalFile();
             VocabDecksMenu();
+          
             //MessageBox.Show("Deshboard");//This is for testing - currently doesn't display
         }
 
@@ -367,7 +368,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
         public void MouseDown_CustomDecksReview(object sender, MouseEventArgs e)
         {
-            navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+            // navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+            navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
             if (String.IsNullOrEmpty(BibleTxtVocabdocks))
             {
                 System.Windows.Application.Current.Properties["WordName"] = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
@@ -377,21 +379,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public void MouseDown_CustomDecksDelete(object sender, MouseEventArgs e)
         {
             VocabularyModel _obj = new VocabularyModel();
-            var ListViewData = String.Empty;
-            if (String.IsNullOrEmpty(BibleTxtVocabdocks))
+            var VocabDocLessonId = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag); 
+           
+            if (!String.IsNullOrWhiteSpace(VocabDocLessonId))
             {
-                ListViewData = Convert.ToString(((HeaderedItemsControl)sender).Header);
-            }
-            if (!String.IsNullOrWhiteSpace(BibleTxtVocabdocks) || !String.IsNullOrWhiteSpace(ListViewData))
-            {
-                _obj.StrongNo = StrongNo;
-                _obj.LessonId = String.IsNullOrEmpty(ListViewData) ? BibleTxtVocabdocks : ListViewData;
-                _obj.LessonDecks = StrongNo + ',' + BibleTxtHebrew + ',' + BibleTxtEnglish;
-                _obj.IsCustomeDecks = true;
-                _obj.ActiveStatus = true;
-                _obj.IsActive = true;
-                _obj.IsDelete = false;
-              //  _ObjBC.SetVocabDesks(_obj);
+                _ObjBC.DeleteLesson(VocabDocLessonId);
             }
             VocabDecksMenu();
         }

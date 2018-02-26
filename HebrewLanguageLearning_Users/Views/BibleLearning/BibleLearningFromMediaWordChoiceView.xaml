@@ -14,7 +14,7 @@
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="{DynamicResource MaterialDesignFont}"
       Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top"
-         >
+          xmlns:cal="http://www.caliburnproject.org">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -32,7 +32,7 @@
         </Grid.RowDefinitions>
 
         <!--Grid Column 0 Row 1-->
-        <WrapPanel  Grid.Column="4" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" >
+        <WrapPanel  Grid.Column="4" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_RightPanel($source, $eventArgs)]">
             <Label FontSize="25" FontWeight="Normal"  Width="23" Margin="0 0 0 0">
                 <TextBlock FontSize="25" FontWeight="Medium" Foreground="Gray" Margin="0 100 0 0" TextWrapping="Wrap">language       learning</TextBlock>
             </Label>
@@ -60,11 +60,11 @@
 
         <!--Grid Column 2 Row 1-->
         <!--<Canvas Grid.Column="1"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="3"></Canvas>-->
-       
+
         <StackPanel Grid.Column="1"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
             <Grid>
-               
-                <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Black">
+
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black">
                     <StackPanel Height="300" Width="300">
                         <!--<TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="400" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
                         <!--<MediaElement  Height="300" Width="300" Source="/HebrewLanguageLearning_Users;component/Media/Videos/Matt13.44 - Allthathehas.mp4" Name="mePlayer" Stretch="None" />-->
@@ -78,15 +78,15 @@
             <ItemsControl  ItemsSource="{Binding PnlWordChoiceList}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        
+
                         <WrapPanel  Orientation="Horizontal" HorizontalAlignment="Right">
                         </WrapPanel>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="20 10 20 10"  BorderBrush="Black" Name="MyBorder1"  Height="58" Background="#A9CDDA" Width="200" CornerRadius="20">
-                            <TextBlock Foreground="Black" HorizontalAlignment="Center" Tag="{Binding StrongNo}" VerticalAlignment="Center" Text="{Binding LessonDecks}" ></TextBlock>
+                        <Border Margin="20 10 20 10"  BorderBrush="Black" Name="MyBorder1" Tag="{Binding StrongNo}" Height="58" Background="#A9CDDA" Width="200" CornerRadius="20" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_WordClick($source, $eventArgs)]">
+                            <TextBlock  Foreground="Black" HorizontalAlignment="Center" Tag="{Binding StrongNo}" VerticalAlignment="Center" Text="{Binding LessonDecks}"  ></TextBlock>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

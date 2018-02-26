@@ -43,7 +43,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             if (prgBarId == 0)
             {
 
-                gd.Add(BlankLine(950, HorizontalAlignment.Center,4)); gd.Add(FillLine(150, HorizontalAlignment.Left,4));
+                gd.Add(BlankLine(950, HorizontalAlignment.Center, 4)); gd.Add(FillLine(150, HorizontalAlignment.Left, 4));
             }
             else
             {
@@ -60,7 +60,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 };
                 gd.Add(BlankLine(600, HorizontalAlignment.Left));
                 gd.Add(FillLine(100 * 2, HorizontalAlignment.Left));
-                gd.Add(BlankLine(360, HorizontalAlignment.Right)); 
+                gd.Add(BlankLine(360, HorizontalAlignment.Right));
                 gd.Add(_VertyLine);
             }
 
@@ -184,7 +184,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
 
             return _txtBloack;
         }
-        internal Line BlankLine(int lnlenght, HorizontalAlignment HoriAlignment,int setTopMgn=0)
+        internal Line BlankLine(int lnlenght, HorizontalAlignment HoriAlignment, int setTopMgn = 0)
         {
             var _blankLine = new Line
             {
@@ -196,7 +196,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             };
             return _blankLine;
         }
-        internal Line FillLine(int lnlenght, HorizontalAlignment HoriAlignment,int setTopMgn=0)
+        internal Line FillLine(int lnlenght, HorizontalAlignment HoriAlignment, int setTopMgn = 0)
         {
             var _FillLine = new Line
             {
@@ -212,32 +212,33 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
         static Dictionary<int, int> _dic = new Dictionary<int, int>();
         internal void Possition()
         {
-            if (prgBarId == 0)
-            {
-                _dic.Add(1, 210);
-                _dic.Add(2, 315);
-                _dic.Add(3, 420);
-                _dic.Add(4, 510);
-                _dic.Add(5, 600);
-                _dic.Add(6, 670);
-                _dic.Add(7, 760);
-                _dic.Add(8, 910);
-                _dic.Add(9, 950);
-        
-            }
-            else
-            {
-                _dic.Add(1, 210);
-                _dic.Add(2, 330);
-                _dic.Add(3, 440);
-                _dic.Add(4, 550);
-                _dic.Add(5, 650);
-                _dic.Add(6, 700);
-                _dic.Add(7, 810);
-                _dic.Add(8, 910);
-                _dic.Add(9, 1010);
-                _dic.Add(10, 1110);
-            }
+            if (_dic.Count == 0)
+                if (prgBarId == 0)
+                {
+                    _dic.Add(1, 210);
+                    _dic.Add(2, 315);
+                    _dic.Add(3, 420);
+                    _dic.Add(4, 510);
+                    _dic.Add(5, 600);
+                    _dic.Add(6, 670);
+                    _dic.Add(7, 760);
+                    _dic.Add(8, 910);
+                    _dic.Add(9, 950);
+
+                }
+                else
+                {
+                    _dic.Add(1, 210);
+                    _dic.Add(2, 330);
+                    _dic.Add(3, 440);
+                    _dic.Add(4, 550);
+                    _dic.Add(5, 650);
+                    _dic.Add(6, 700);
+                    _dic.Add(7, 810);
+                    _dic.Add(8, 910);
+                    _dic.Add(9, 1010);
+                    _dic.Add(10, 1110);
+                }
 
         }
     }

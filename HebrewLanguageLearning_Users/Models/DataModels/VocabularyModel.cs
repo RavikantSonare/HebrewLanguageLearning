@@ -19,6 +19,7 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         public bool ActiveStatus { get; set; }
         public bool IsActive { get; set; }
         public bool IsDelete { get; set; }
+        public bool IsReview { get; set; }
 
     }
 }

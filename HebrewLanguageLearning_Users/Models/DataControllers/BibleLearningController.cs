@@ -154,7 +154,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
         }
 
-        public List<VocabDecksGroupModel> GetVocabDesksLessonData(string TableName,string LessonId)
+        public List<VocabDecksGroupModel> GetVocabDesksLessonData(string TableName, string LessonId)
         {
             tmpVocabDecks = new List<VocabDecksGroupModel>();
             DBModel obj = new DBModel();
@@ -164,14 +164,14 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
             foreach (DataRow row in dt.Rows)
             {
-                tmplist.Add(new VocabularyModel { LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString() });
+                tmplist.Add(new VocabularyModel { StrongNo = row.ItemArray[2].ToString(), LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString(), IsReview = Convert.ToBoolean(row.ItemArray[10]) });
             }
 
             var tmp = tmplist.GroupBy(x => x.LessonId).
                 Select(y => new
                 {
                     LessonId = y.Key,
-                    LessonDecks = y.Select(x => x.LessonDecks).ToList()
+                    LessonDecks = y.Select(x => new { x.LessonDecks, x.StrongNo, x.IsReview }).ToList()
                 }).ToList();
             object objTemp;
             foreach (var item in tmp)
@@ -182,7 +182,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
                 foreach (var itemData in item.LessonDecks)
                 {
-                    vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData });
+                    vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData.LessonDecks, StrongNo = itemData.StrongNo, IsReview = itemData.IsReview });
                 }
 
                 tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = TableName == "HLL_VocabDecks" ? "Lesson " : "" + item.LessonId, vocabularyModel = vocabularyModeltmp });
@@ -191,12 +191,27 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             return tmpVocabDecks;
 
         }
+
+        // Insert Data 
         public bool SetVocabDesks(VocabularyModel _obj)
         {
             var listOfTable = "[" + JToken.FromObject(_obj).ToString() + "]";
             obj.InsertData("HLL_VocabDecks", listOfTable);
             return true;
 
+        }
+
+        // Update Data
+        public void UpdateReviewData(string TableName, string StrongNo)
+        {
+            DataTable dt = new DataTable();
+            obj.UpdateData(TableName, StrongNo);
+
+        }
+
+        internal void DeleteLesson(string vocabDocLessonId)
+        {
+            obj.DeleteLesson("HLL_VocabDecksDeleteLesson", vocabDocLessonId);
         }
     }
 

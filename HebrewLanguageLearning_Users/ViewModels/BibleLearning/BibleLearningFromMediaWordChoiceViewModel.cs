@@ -9,6 +9,7 @@ using HebrewLanguageLearning_Users.Models.DataModels;
 using HebrewLanguageLearning_Users.CommonHelper;
 using System.Windows.Controls;
 using HebrewLanguageLearning_Users.GenericClasses;
+using System.Windows.Forms;
 
 namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 {
@@ -19,6 +20,19 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         SettingController _ObjSC = new SettingController();
         // Set Current Image
         static VocabularyModel _ObjCurrentImage = new VocabularyModel();
+
+        private readonly INavigationService navigationService;
+        public BibleLearningFromMediaWordChoiceViewModel(INavigationService navigationService)
+        {
+            this.navigationService = navigationService;
+            string LessonId = "3";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+            if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
+        }
+        //public BibleLearningFromMediaWordChoiceViewModel()
+        //{
+        //    string LessonId = "1";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+        //    if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(LessonId.Replace("Lesson ", string.Empty)); };
+        //}
         protected override void OnActivate()
         {
 
@@ -33,7 +47,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public string _bibleTxtHebrew;
         public string _bibleTxtEnglish;
         public List<VocabularyModel> _pnlWordChoiceList;
-        public string _bibleTxtMediaUrl = EntityConfig.MediaUri;
+        public string _bibleTxtMediaUrl;
 
         public string ReviewCounter
         {
@@ -97,35 +111,52 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         #endregion
 
 
-        public BibleLearningFromMediaWordChoiceViewModel(object ObjectData)
-        {
-            string LessonId = "1";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
-            if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(LessonId.Replace("Lesson ", string.Empty)); };
-        }
 
-        public void VocabDecksLesson(string LessonId)
+
+        public void VocabDecksLesson()
         {
+            string LessonId = "3"; //Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
             try
             {
+                int TotalValue;
                 Random random = new Random();
                 List<VocabularyModel> tmpVM = new List<VocabularyModel>();
                 VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
                 var CurrentGroup = VocabularyLesson.SelectMany(p => p.vocabularyModel).ToList();
+                TotalValue = CurrentGroup.Count();
+                CurrentGroup = CurrentGroup.Where(z => z.IsReview == false).ToList();
+                SetCounter(TotalValue - CurrentGroup.Count(), TotalValue);
                 var rand = new Random();
+            _lblCheckAgain:
                 foreach (var item in CurrentGroup)
                 {
-                    if (tmpVM.Count() < 8)
+                    if (tmpVM.Count() < 8 && CurrentGroup.Count > 0)
                     {
-                        tmpVM.Add(CurrentGroup[rand.Next(CurrentGroup.Count)]);
+                        var rndmTmp = CurrentGroup[rand.Next(CurrentGroup.Count)];
+                        if (!tmpVM.Where(z => z.StrongNo == rndmTmp.StrongNo).Any())
+                        {
+                            tmpVM.Add(rndmTmp);
+                        }
                     }
+
                 }
+                if (tmpVM.Count() < CurrentGroup.Count() && tmpVM.Count() < 8) { goto _lblCheckAgain; }
                 PnlWordChoiceList = new List<VocabularyModel>(tmpVM);
-                PnlWordChoiceList.ForEach(z => { var Data = SetWord(z.LessonDecks); z.LessonDecks = Data.Length == 3 ? Data[2] : Data[0]; z.StrongNo = Data[0]; });
-                SetCounter(CurrentGroup.Count());
+                PnlWordChoiceList.ForEach(z => { var Data = SetWord(z.LessonDecks); z.LessonDecks = Data.Length == 3 ? Data[2] : Data[0]; });
+
 
                 // set Rendom Logic
-                _ObjCurrentImage = PnlWordChoiceList[rand.Next(PnlWordChoiceList.Count)];
-                SetImage(_ObjCurrentImage.StrongNo);
+                if (PnlWordChoiceList.Count > 0)
+                {
+                    _ObjCurrentImage = PnlWordChoiceList[rand.Next(PnlWordChoiceList.Count)];
+                    SetImage(_ObjCurrentImage.StrongNo);
+                }
+                else
+                {
+
+                    BibleTxtMediaUrl = "";
+                }
+
             }
             finally { }
             //SetWord(CurrentGroup);
@@ -137,15 +168,15 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             string[] tempArray = currentGroup.Split(',');
             return tempArray;
         }
-
-        void SetCounter(int value)
+        static int tt = 0;
+        void SetCounter(int value, int Totalvalue)
         {
-            ReviewCounter = "1 out of " + value;
+            ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
         }
         void fileData()
         {
-            if(_dictionaryModellist.Count()<1)
-            _dictionaryModellist = _ObjSC.getDataFromLocalFile();
+            if (_dictionaryModellist.Count() < 1)
+                _dictionaryModellist = _ObjSC.getDataFromLocalFile();
         }
         void SetImage(string strongNo)
         {
@@ -153,8 +184,26 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             var DicData = _dictionaryModellist.FirstOrDefault(x => x.DicStrongNo == strongNo);
             if (DicData != null)
             {
-                BibleTxtMediaUrl += DicData.ListOfPictures.LastOrDefault();
+                BibleTxtMediaUrl = EntityConfig.MediaUri + DicData.ListOfPictures.LastOrDefault();
             }
+        }
+        public void MouseDown_WordClick(object sender, MouseEventArgs e)
+        {
+            tt++;
+            string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+            if (StrongNo == _ObjCurrentImage.StrongNo)
+            {
+                _ObjBC.UpdateReviewData("HLL_VocabDecksIsReView", StrongNo);
+
+            }
+            VocabDecksLesson();
+            // HLL_VocabDecks
+            // System.Windows.Application.Current.Shutdown();
+        }
+        // Goto Previes Pages
+        public void MouseDown_RightPanel(object sender, MouseEventArgs e)
+        {
+            navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
         }
     }
 }

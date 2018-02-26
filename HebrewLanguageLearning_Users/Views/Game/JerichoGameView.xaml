@@ -14,7 +14,7 @@
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="{DynamicResource MaterialDesignFont}"
       Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top"
-         >
+          xmlns:cal="http://www.caliburnproject.org">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,14 +25,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="200"/>
             <RowDefinition Height="200*"/>
-            <RowDefinition Height="400"/>
-          
+           
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
 
         <!--Grid Column 0 Row 1-->
-        <WrapPanel  Grid.Column="4" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" >
+        <WrapPanel  Grid.Column="4" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_RightPanel($source, $eventArgs)]">
             <Label FontSize="25" FontWeight="Normal"  Width="23" Margin="0 0 0 0">
                 <TextBlock FontSize="25" FontWeight="Medium" Foreground="Gray" Margin="0 100 0 0" TextWrapping="Wrap">language       learning</TextBlock>
             </Label>
@@ -49,7 +49,9 @@
             <Line Y1="830"  HorizontalAlignment="Left"  Margin="-60 0 0 0" Stroke="#00D5B6" StrokeThickness="4" />
         </WrapPanel>
         <!--Grid Column 0 Row 1-->
-        <StackPanel Grid.RowSpan="2" Grid.Column="1" Grid.Row="1"  Orientation="Horizontal"  HorizontalAlignment="Left"/>
+        <!--<StackPanel Grid.RowSpan="2" Grid.Column="1" Grid.Row="1"  Orientation="Horizontal"  HorizontalAlignment="Left">
+            <Label Margin="120 60 0 0" Name="ReviewCounter" Content="7 out of 20"/>
+        </StackPanel>-->
         <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center"/>
         <!--Grid Column 1 Row 1-->
         <!--<Grid Panel.ZIndex="3" Grid.Column="2" Grid.Row="4">
@@ -60,22 +62,58 @@
         <!--<Canvas Grid.Column="1"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="3"></Canvas>-->
 
         <StackPanel Grid.Column="1"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
-            <Grid Name="gridgame">
+            <Grid>
 
-                <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Black">
-                    <StackPanel Height="300" Width="300">
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black">
+                    <StackPanel Height="250" Width="250">
                         <!--<TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="400" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
+                        <!--<MediaElement  Height="300" Width="300" Source="/HebrewLanguageLearning_Users;component/Media/Videos/Matt13.44 - Allthathehas.mp4" Name="mePlayer" Stretch="None" />-->
+                        <Image  HorizontalAlignment="Left" Source="{Binding BibleTxtMediaUrl}"
+    Margin="0,0,0,0" Name="BibleImgMedia" Stretch="Fill" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </Border>
             </Grid>
         </StackPanel>
-        <WrapPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Name="wpwall">
-            <Border Margin="50 20 50 20"  BorderBrush="#B08244" BorderThickness="2"  Name="MyBorder1"  Height="78" Background="#E0C5A8" Width="240">
-                <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" >Word Choice</TextBlock>
-            </Border>
-        </WrapPanel>
-        <StackPanel Grid.Column="1" x:Name="spProgress"  Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <!--<CommonUserControls:ProgressBarUC/>-->
-        </StackPanel>
+        <ScrollViewer Margin="20" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2">
+            <StackPanel>
+                <Image  HorizontalAlignment="Left" Source="/HebrewLanguageLearning_Users;component/Assets/JerichoGameMen.png"
+    Margin="30,0,0,-100" Width="200" Name="HelloMen" VerticalAlignment="Bottom"/>
+                <StackPanel Orientation="Horizontal">
+                    
+                    <Border BorderBrush="#B08244" BorderThickness="2" Margin="50 0 50 0" Background="#E0C5A8" Width="100" Name="MyBorder1" Height="80" >
+                        <TextBlock  Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding LessonDecks}"  ></TextBlock>
+                    </Border>
+                    <Border BorderBrush="#B08244" BorderThickness="2" Margin="50 0 50 0" Background="#E0C5A8" Width="100" Name="MyBorder2" Tag="{Binding StrongNo}" Height="80" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_WordClick($source, $eventArgs)]">
+                        <TextBlock  Foreground="Black" HorizontalAlignment="Center" Tag="{Binding StrongNo}" VerticalAlignment="Center" Text="{Binding LessonDecks}"  ></TextBlock>
+                    </Border>
+                    <Border BorderBrush="#B08244" BorderThickness="2" Margin="50 0 50 0" Background="#E0C5A8" Width="100" Name="MyBorder3" Tag="{Binding StrongNo}" Height="80" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_WordClick($source, $eventArgs)]">
+                        <TextBlock  Foreground="Black" HorizontalAlignment="Center" Tag="{Binding StrongNo}" VerticalAlignment="Center" Text="{Binding LessonDecks}"  ></TextBlock>
+                    </Border>
+                    <Border BorderBrush="#B08244" BorderThickness="2" Margin="50 0 50 0" Background="#E0C5A8" Width="100" Name="MyBorder4" Tag="{Binding StrongNo}" Height="80" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_WordClick($source, $eventArgs)]">
+                        <TextBlock  Foreground="Black" HorizontalAlignment="Center" Tag="{Binding StrongNo}" VerticalAlignment="Center" Text="{Binding LessonDecks}"  ></TextBlock>
+                    </Border>
+                    <Border BorderBrush="#B08244" BorderThickness="2" Margin="50 0 50 0" Background="#E0C5A8" Width="100" Name="MyBorder5" Tag="{Binding StrongNo}" Height="80" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_WordClick($source, $eventArgs)]">
+                        <TextBlock  Foreground="Black" HorizontalAlignment="Center" Tag="{Binding StrongNo}" VerticalAlignment="Center" Text="{Binding LessonDecks}"  ></TextBlock>
+                    </Border>
+                </StackPanel>
+                <ItemsControl  ItemsSource="{Binding PnlWordChoiceList}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel  Orientation="Horizontal" HorizontalAlignment="Left">
+                        </WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+
+                        <Border BorderBrush="#B08244" BorderThickness="2"  Background="#E0C5A8" Width="{Binding DictionaryEntriesId}" Name="MyBorder1" Tag="{Binding StrongNo}" Height="80" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_WordClick($source, $eventArgs)]">
+                            <TextBlock  Foreground="Black" HorizontalAlignment="Center" Tag="{Binding StrongNo}" VerticalAlignment="Center" Text="{Binding LessonDecks}"  ></TextBlock>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+       
     </Grid>
 </Page>

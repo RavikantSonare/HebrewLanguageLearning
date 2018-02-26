@@ -25,18 +25,18 @@ namespace HebrewLanguageLearning_Users.Views.Game
             InitializeComponent();
         }
 
-        public void Textbox()
-        {
-            var _txtBloack = new TextBlock
-            {
-                TextAlignment = TextAlignment.Center,
-                Background = Brushes.Transparent,
-                Foreground = Brushes.Gray,
-                Text = "Lesson " ,
-                FontSize = 15,
-                FontWeight = FontWeights.SemiBold
-            };
-            wpwall.Children.Add(_txtBloack);
-        }
+        //public void Textbox()
+        //{
+        //    var _txtBloack = new TextBlock
+        //    {
+        //        TextAlignment = TextAlignment.Center,
+        //        Background = Brushes.Transparent,
+        //        Foreground = Brushes.Gray,
+        //        Text = "Lesson " ,
+        //        FontSize = 15,
+        //        FontWeight = FontWeights.SemiBold
+        //    };
+        //    wpwall.Children.Add(_txtBloack);
+        //}
     }
 }
