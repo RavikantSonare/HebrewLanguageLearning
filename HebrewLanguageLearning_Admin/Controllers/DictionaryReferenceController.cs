@@ -11,6 +11,8 @@ namespace HebrewLanguageLearning_Admin.Controllers
 {
     public class DictionaryReferenceController : Controller
     {
+        private HLLDBContext db = new HLLDBContext();
+
         // GET: DictionaryReference
         public ActionResult Index()
         {
@@ -100,7 +102,10 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: DictionaryReference/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            HLL_DictionaryReference hLL_DictionaryReference = db.HLL_DictionaryReference.Find(id);
+            db.HLL_DictionaryReference.Remove(hLL_DictionaryReference);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: DictionaryReference/Delete/5

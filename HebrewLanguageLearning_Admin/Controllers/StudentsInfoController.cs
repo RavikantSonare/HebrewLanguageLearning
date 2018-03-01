@@ -20,6 +20,10 @@ namespace HebrewLanguageLearning_Admin.Controllers
         // GET: StudentsInfo
         public ActionResult Index()
         {
+            // Just For The Server Testing
+            var S = Session.Timeout;// = 60;
+            ViewBag.SessionTO = S.ToString();   //XmlSetter.LogError(S.ToString());
+
             AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_StudentsInfo, HLL_StudentsInfoModel>(); });
             List<HLL_StudentsInfoModel> DataModel = AutoMapper.Mapper.Map<List<HLL_StudentsInfo>, List<HLL_StudentsInfoModel>>(db.HLL_StudentsInfo.ToList());
             var StudentIdList = DataModel.Select(p => p.StudentsId).ToList();

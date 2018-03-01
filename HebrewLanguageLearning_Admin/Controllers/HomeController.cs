@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HebrewLanguageLearning_Admin.GenericClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,10 +7,12 @@ using System.Web.Mvc;
 
 namespace HebrewLanguageLearning_Admin.Controllers
 {
+   
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
+           
             return View();
         }
 

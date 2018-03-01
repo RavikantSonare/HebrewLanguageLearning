@@ -108,43 +108,47 @@ namespace HebrewLanguageLearning_Users.ViewModels
         
         public void VocabDecksMenu()
         {
-            DBModel obj = new DBModel();
-            DataTable dt = new DataTable();
-            dt = (DataTable)obj.SelectData("HLL_VocabDecks");
-            List<VocabularyModel> tmplist = new List<VocabularyModel>();
-            foreach (DataRow row in dt.Rows)
+            try
             {
-                tmplist.Add(new VocabularyModel { LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString() });
-
-            }
-            List<VocabDecksGroupModel> tmpVg = new List<VocabDecksGroupModel>();
-            var tmp = tmplist.GroupBy(x => x.LessonId).
-                Select(y => new
+                DBModel obj = new DBModel();
+                DataTable dt = new DataTable();
+                dt = (DataTable)obj.SelectData("HLL_VocabDecks");
+                List<VocabularyModel> tmplist = new List<VocabularyModel>();
+                foreach (DataRow row in dt.Rows)
                 {
-                    LessonId = y.Key,
-                    LessonDecks = y.Select(x => x.LessonDecks).ToList()
-                }).ToList();
-            object objTemp;
-            foreach (var item in tmp)
-            {
+                    tmplist.Add(new VocabularyModel { LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString() });
 
-                List<VocabularyModel> vocabularyModeltmp = new List<VocabularyModel>();
-                objTemp = item.LessonDecks;
-
-                foreach (var itemData in item.LessonDecks)
-                {
-                    vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData });
                 }
+                List<VocabDecksGroupModel> tmpVg = new List<VocabDecksGroupModel>();
+                var tmp = tmplist.GroupBy(x => x.LessonId).
+                    Select(y => new
+                    {
+                        LessonId = y.Key,
+                        LessonDecks = y.Select(x => x.LessonDecks).ToList()
+                    }).ToList();
+                object objTemp;
+                foreach (var item in tmp)
+                {
 
-                tmpVg.Add(new VocabDecksGroupModel { LessonId = "Lesson "+ item.LessonId, vocabularyModel = vocabularyModeltmp });
+                    List<VocabularyModel> vocabularyModeltmp = new List<VocabularyModel>();
+                    objTemp = item.LessonDecks;
+
+                    foreach (var itemData in item.LessonDecks)
+                    {
+                        vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData });
+                    }
+
+                    tmpVg.Add(new VocabDecksGroupModel { LessonId = "Lesson " + item.LessonId, vocabularyModel = vocabularyModeltmp });
+                }
+                // vg = tmp;
+
+                VocabularyLesson = tmpVg;
+
+                //   List<VocabularyModel> lst = dt.AsEnumerable().ToList<VocabularyModel>();
+                //   List<VocabularyModel> list = dt.AsEnumerable().ToList();
+                //   var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(Data.ToString());
             }
-            // vg = tmp;
-
-            VocabularyLesson = tmpVg;
-
-            //   List<VocabularyModel> lst = dt.AsEnumerable().ToList<VocabularyModel>();
-            //   List<VocabularyModel> list = dt.AsEnumerable().ToList();
-            //   var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(Data.ToString());
+            catch { }
         }
         
     }

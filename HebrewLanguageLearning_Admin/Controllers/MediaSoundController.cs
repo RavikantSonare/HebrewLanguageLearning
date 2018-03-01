@@ -102,7 +102,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
                 _objUploadFile.fileType = 0;
                 if (ModelState.IsValid)
                 {
-                    hLL_Media_SoundModels.SoundId = EntityConfig.getnewid("HLL_Media_Video");
+                    hLL_Media_SoundModels.SoundId = EntityConfig.getnewid("HLL_Media_Sound");
                     _objUploadFile.tableId = hLL_Media_SoundModels.SoundId;
                     hLL_Media_SoundModels.AudioUrl = await FilesUtility.UploadFiles(_objUploadFile);
                     AutoMapper.Mapper.Initialize(c => { c.CreateMap<HLL_Media_SoundModels, HLL_Media_Sound>(); });

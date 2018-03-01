@@ -45,7 +45,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
             catch (Exception ex)
             {
-
+                FileSetter.LogError(ex);
             }
             return _objBLM;
         }
@@ -105,7 +105,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
             catch (Exception ex)
             {
-
+                FileSetter.LogError(ex);
 
             }
             finally
@@ -156,38 +156,41 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
         public List<VocabDecksGroupModel> GetVocabDesksLessonData(string TableName, string LessonId)
         {
-            tmpVocabDecks = new List<VocabDecksGroupModel>();
-            DBModel obj = new DBModel();
-            DataTable dt = new DataTable();
-            dt = (DataTable)obj.SelectData(TableName, LessonId);
-            List<VocabularyModel> tmplist = new List<VocabularyModel>();
-
-            foreach (DataRow row in dt.Rows)
+            try
             {
-                tmplist.Add(new VocabularyModel { StrongNo = row.ItemArray[2].ToString(), LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString(), IsReview = Convert.ToBoolean(row.ItemArray[10]) });
-            }
+                tmpVocabDecks = new List<VocabDecksGroupModel>();
+                DBModel obj = new DBModel();
+                DataTable dt = new DataTable();
+                dt = (DataTable)obj.SelectData(TableName, LessonId);
+                List<VocabularyModel> tmplist = new List<VocabularyModel>();
 
-            var tmp = tmplist.GroupBy(x => x.LessonId).
-                Select(y => new
+                foreach (DataRow row in dt.Rows)
                 {
-                    LessonId = y.Key,
-                    LessonDecks = y.Select(x => new { x.LessonDecks, x.StrongNo, x.IsReview }).ToList()
-                }).ToList();
-            object objTemp;
-            foreach (var item in tmp)
-            {
-
-                List<VocabularyModel> vocabularyModeltmp = new List<VocabularyModel>();
-                objTemp = item.LessonDecks;
-
-                foreach (var itemData in item.LessonDecks)
-                {
-                    vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData.LessonDecks, StrongNo = itemData.StrongNo, IsReview = itemData.IsReview });
+                    tmplist.Add(new VocabularyModel { StrongNo = row.ItemArray[2].ToString(), LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString(), IsReviewAssociation = Convert.ToBoolean(row.ItemArray[10]), IsReviewPassive = Convert.ToBoolean(row.ItemArray[11]) });
                 }
 
-                tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = TableName == "HLL_VocabDecks" ? "Lesson " : "" + item.LessonId, vocabularyModel = vocabularyModeltmp });
-            }
+                var tmp = tmplist.GroupBy(x => x.LessonId).
+                    Select(y => new
+                    {
+                        LessonId = y.Key,
+                        LessonDecks = y.Select(x => new { x.LessonDecks, x.StrongNo, x.IsReviewAssociation, x.IsReviewPassive }).ToList()
+                    }).ToList();
+                object objTemp;
+                foreach (var item in tmp)
+                {
 
+                    List<VocabularyModel> vocabularyModeltmp = new List<VocabularyModel>();
+                    objTemp = item.LessonDecks;
+
+                    foreach (var itemData in item.LessonDecks)
+                    {
+                        vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData.LessonDecks, StrongNo = itemData.StrongNo, IsReviewAssociation = itemData.IsReviewAssociation, IsReviewPassive = itemData.IsReviewPassive });
+                    }
+
+                    tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = TableName == "HLL_VocabDecks" ? "Lesson " : "" + item.LessonId, vocabularyModel = vocabularyModeltmp });
+                }
+            }
+            catch { }
             return tmpVocabDecks;
 
         }

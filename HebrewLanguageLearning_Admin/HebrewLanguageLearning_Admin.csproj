@@ -635,6 +635,7 @@
       <DependentUpon>DBContextEntityModel.edmx</DependentUpon>
       <LastGenOutput>DBContextEntityModel.cs</LastGenOutput>
     </Content>
+    <Content Include="ErrorLog.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -745,7 +746,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -878,6 +881,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="fz3-15198087359590\" />
     <Folder Include="Media\Sounds\" />
     <Folder Include="Media\Videos\" />
     <Folder Include="Views\DictionaryReference\" />
@@ -915,7 +919,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57293</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

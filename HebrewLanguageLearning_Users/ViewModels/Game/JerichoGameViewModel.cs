@@ -132,7 +132,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
                 VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
                 var CurrentGroup = VocabularyLesson.SelectMany(p => p.vocabularyModel).ToList();
                 TotalValue = CurrentGroup.Count();
-                CurrentGroup = CurrentGroup.Where(z => z.IsReview == false).ToList();
+                CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
                 SetCounter(TotalValue - CurrentGroup.Count(), TotalValue);
                 var rand = new Random();
             _lblCheckAgain:

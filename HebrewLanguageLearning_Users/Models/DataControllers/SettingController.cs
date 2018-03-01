@@ -21,7 +21,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
     class SettingController
     {
         //UserId=
-        private string urlParameters = "1";
+       // private string urlParameters = "1";
         static private string CurrentUrl = EntityConfig.HostingUri;
 
         internal bool SyncData(string UsersID)
@@ -71,6 +71,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
             catch (Exception ex)
             {
+                FileSetter.LogError(ex);
                 isDone = false;
             }
 
@@ -113,6 +114,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
             catch (Exception ex)
             {
+                FileSetter.LogError(ex);
                 isDone = false;
             }
             DownloadImages();
@@ -164,6 +166,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
             catch (Exception ex)
             {
+                FileSetter.LogError(ex);
             }
 
         }
@@ -196,6 +199,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
             catch (Exception ex)
             {
+                FileSetter.LogError(ex);
                 isDone = false;
             }
 
@@ -213,6 +217,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
             catch (Exception ex)
             {
+                FileSetter.LogError(ex);
                 return "";
             }
         }
@@ -253,7 +258,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 }
                 return dir;
             }
-            return dir;
+
         }
         public static string AppendTimeStamp(string fileName)
         {

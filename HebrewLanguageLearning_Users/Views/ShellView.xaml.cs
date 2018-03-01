@@ -21,8 +21,8 @@ namespace HebrewLanguageLearning_Users.Views
     /// <summary>
     /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class ShellView : Window, INotifyPropertyChanged
-    {
+    public partial class ShellView : Window
+        {
         public ShellView()
         {
             InitializeComponent();
@@ -89,7 +89,7 @@ namespace HebrewLanguageLearning_Users.Views
             Storyboard sb = Resources[Storyboard] as Storyboard;
             sb.Begin(pnl);
 
-            onPropertyChanged("VocabDecksPanel");
+            //onPropertyChanged("VocabDecksPanel");
 
 
             //if (Storyboard.Contains("Show"))
@@ -101,17 +101,7 @@ namespace HebrewLanguageLearning_Users.Views
             //    //btnShow.Visibility = System.Windows.Visibility.Visible;
             //}
         }
-        public void onPropertyChanged(string property)
-        {
-
-            //if (PropertyChanged != null)
-            //{
-         ///       PropertyChanged(this, new PropertyChangedEventArgs(property));
-           // }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-       
+      
     }
 }
 

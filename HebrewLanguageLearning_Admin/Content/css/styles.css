@@ -7645,3 +7645,12 @@ ul.dropdown-menu li form a {
     margin: 1px !important;
     padding: 1px !important;
 }
+
+.btn_small_Dictionary {
+    border: 0;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    padding: 0;
+    line-height: 20px;
+}

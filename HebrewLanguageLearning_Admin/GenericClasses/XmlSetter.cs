@@ -72,13 +72,37 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                 }
                 catch (Exception ex)
                 {
-
+                    //FileSetter.LogError(ex);
 
                 }
+
                 finally
                 {
                     GC.SuppressFinalize(this);
                 }
+            }
+        }
+        public static void LogError(string ex)
+        {
+            string message = string.Format("Time: {0}", DateTime.UtcNow.ToString("dd/MM/yyyy hh:mm:ss tt"));
+            message += Environment.NewLine;
+            message += "-----------------------------------------------------------";
+            message += Environment.NewLine;
+            message += string.Format("Message: {0}", ex);
+            message += Environment.NewLine;
+            //message += string.Format("StackTrace: {0}", ex.StackTrace);
+            //message += Environment.NewLine;
+            //message += string.Format("Source: {0}", ex.Source);
+            //message += Environment.NewLine;
+            //message += string.Format("TargetSite: {0}", ex.TargetSite.ToString());
+            //message += Environment.NewLine;
+            message += "-----------------------------------------------------------";
+            message += Environment.NewLine;
+            string path = System.Web.HttpContext.Current.Server.MapPath("~/ErrorLog.txt");
+            using (StreamWriter writer = new StreamWriter(path, true))
+            {
+                writer.WriteLine(message);
+                writer.Close();
             }
         }
 

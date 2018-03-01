@@ -199,9 +199,9 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View(hLL_Example);
         }
 
-        // POST: Example/Delete/5
+        // POST: Example/Delete/5   [ValidateAntiForgeryToken]
+
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
             HLL_Example hLL_Example = db.HLL_Example.Find(id);

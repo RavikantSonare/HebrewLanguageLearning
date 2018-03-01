@@ -74,8 +74,8 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                             <WrapPanel>
-                            <Border BorderThickness="2" >
-                                    <TextBlock  Padding="10" Foreground="Black"  Tag="{Binding StrongNo}" Uid="{Binding Description}" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_ImageClick($source, $eventArgs)]">
+                                <Border BorderThickness="2" Background="{Binding DictionaryEntriesId}">
+                                    <TextBlock  Padding="4" Foreground="Black"  Tag="{Binding StrongNo}" Uid="{Binding Description}" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_ImageClick($source, $eventArgs)]">
                                          <Image Tag="{Binding StrongNo}" VerticalAlignment="Center"  Source="{Binding Description}" Height="50" Width="50"/>
                             </TextBlock>
                             <Border.Style>
@@ -110,13 +110,9 @@
         <Canvas Grid.Column="3"  Grid.Row="0"  Grid.RowSpan="4"></Canvas>
         <StackPanel Grid.Column="3"  Grid.Row="1"   Orientation="Horizontal"  Margin="100,0,192,0">
             <Label FontSize="20" VerticalAlignment="Top" FontWeight="Bold">Word</Label>
-            <Image x:Name="image" Style="{StaticResource Sound}" Margin="8" VerticalAlignment="Top"  Width="20" Height="20" Source="/HebrewLanguageLearning_Users;component/Assets\volume.png" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_SoundClick($source, $eventArgs)]">
-               
-
-            </Image>
-            <MediaElement  Height="100" Width="100" Source="/HebrewLanguageLearning_Users;component/Media/Videos/ELL_PART_5_768k.wmv" x:Name="mePlayer" Stretch="None" LoadedBehavior="Manual" />
-            <Button Name="btnPlay" Click="btnPlay_Click">Play</Button>
-
+            <Image x:Name="image" Style="{StaticResource Sound}" Margin="8" VerticalAlignment="Top"  Width="20" Height="20" Source="/HebrewLanguageLearning_Users;component/Assets\volume.png" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_SoundClick($source, $eventArgs)]"/>
+            <MediaElement  Height="0" Width="0" Source="/HebrewLanguageLearning_Users;component/Media/Videos/ELL_PART_5_768k.wmv" x:Name="MediaPlayer" Stretch="None" LoadedBehavior="Manual" />
+            
         </StackPanel>
         <StackPanel Grid.Column="3"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
             <Grid>
@@ -128,7 +124,7 @@
                 <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Black" Margin="0,-2,0,2">
                     <StackPanel Height="350" Width="350">
                         <!--<TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="400" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
-                       
+                      
                         <Image  HorizontalAlignment="Left" Source="{Binding BibleTxtMediaUrl}"
     Margin="0,0,0,0" Name="BibleImgMedia" Stretch="Fill" VerticalAlignment="Bottom"/>
 

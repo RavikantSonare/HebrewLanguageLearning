@@ -16,7 +16,8 @@ namespace HebrewLanguageLearning_Admin
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-           
+          
+
         }
         protected void Application_BeginRequest()
         {
@@ -38,6 +39,12 @@ namespace HebrewLanguageLearning_Admin
                 response.End();
             }
         }
+        //void Session_Start(object sender, EventArgs e)
+        //{
+
+        //    var S = Session.Timeout;
+
+        //}
         //protected void Application_Error(object sender, EventArgs e)
         //{
         //    Exception exception = Server.GetLastError();

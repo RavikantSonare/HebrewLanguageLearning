@@ -149,6 +149,7 @@
     <Compile Include="Views\BibleLearning\BibleLearningView.xaml.cs">
       <DependentUpon>BibleLearningView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BibleLearning\BibleLearningViewModel.cs" />
     <Compile Include="Views\CommonUserControls\ProgressBarUC.xaml.cs">
       <DependentUpon>ProgressBarUC.xaml</DependentUpon>
     </Compile>
@@ -338,6 +339,7 @@
   <ItemGroup>
     <Resource Include="Assets\keyboard-right-arrow-button.png" />
     <Resource Include="Assets\JerichoGameMen.png" />
+    <Resource Include="bin\Debug\Errorfile\ErrorLog.txt" />
     <Content Include="Media\Videos\ELL_PART_5_768k.wmv" />
     <Resource Include="Media\Pictures\Kat.jpg" />
     <Content Include="Media\Videos\Matt1344Allthathehas.mp4" />

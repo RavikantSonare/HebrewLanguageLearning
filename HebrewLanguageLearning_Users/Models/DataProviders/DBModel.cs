@@ -39,7 +39,8 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 [ActiveStatus] [bit] NULL,
 	            [IsActive] [bit] NULL,
 	            [IsDelete] [bit] NULL,
-                [IsReview] [bit] NULL)";
+                [IsReviewAssociation] [bit] NULL,
+                [IsReviewPassive] [bit] NULL)";
                 using (SQLiteCommand command = new SQLiteCommand(_TableString, _dbcon))
                 {
                     OpenConnection();
@@ -89,13 +90,13 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                         var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
                         customQuery.Append(@"insert into HLL_VocabDecks(LessonId, StrongNo, DictionaryEntriesId, 
 Description,
-LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReview) 
+LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive) 
 values");
                         foreach (var item in _DictionaryModellist)
                         {
                             customQuery.Append("('" + item.LessonId + "','" + item.StrongNo + "','" + item.DictionaryEntriesId + "', '"
     + item.Description + "','" + item.LessonDecks + "','" + item.IsCustomeDecks + "','" +
-    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False'),");
+    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False'),");
                         }
                         break;
 
@@ -130,17 +131,17 @@ values");
                     case "HLL_VocabDecks":
 
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks where IsCustomeDecks='False'");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive from HLL_VocabDecks where IsCustomeDecks='False'");
                         break;
                     case "HLL_VocabDecks_Custom":
 
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete from HLL_VocabDecks where IsCustomeDecks='True'");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive from HLL_VocabDecks where IsCustomeDecks='True'");
                         break;
                     case "HLL_VocabDecksLesson":
                        // IsReview = 'False' and
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReview from HLL_VocabDecks where LessonId='" + dataFilter + "'");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive from HLL_VocabDecks where LessonId='" + dataFilter + "'");
                         break;
 
                 }
@@ -169,8 +170,11 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReview from HLL_V
                 StringBuilder customQuery = new StringBuilder();
                 switch (tableName)
                 {
-                    case "HLL_VocabDecksIsReView":
-                        customQuery.Append(@"update HLL_VocabDecks set IsReview='True' where StrongNo='" + tableData.Trim() + "'");
+                    case "HLL_VocabDecksIsReviewAssociation":
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewAssociation='True' where StrongNo='" + tableData.Trim() + "'");
+                        break;
+                    case "HLL_VocabDecksIsReviewPassive":
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewPassive='True' where StrongNo='" + tableData.Trim() + "'");
                         break;
                 }
                 string Qry = Convert.ToString(customQuery);

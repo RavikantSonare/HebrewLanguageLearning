@@ -247,15 +247,16 @@ namespace HebrewLanguageLearning_Admin.Controllers
             }
             return View(hLL_Media_Pictures);
         }
-
+        
+        // [ValidateAntiForgeryToken]
         // POST: Pictures/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
             HLL_Media_Pictures hLL_Media_Pictures = db.HLL_Media_Pictures.Find(id);
             db.HLL_Media_Pictures.Remove(hLL_Media_Pictures);
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

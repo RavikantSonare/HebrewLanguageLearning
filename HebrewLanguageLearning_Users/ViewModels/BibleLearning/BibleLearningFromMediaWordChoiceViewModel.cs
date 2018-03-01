@@ -124,7 +124,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
                 var CurrentGroup = VocabularyLesson.SelectMany(p => p.vocabularyModel).ToList();
                 TotalValue = CurrentGroup.Count();
-                CurrentGroup = CurrentGroup.Where(z => z.IsReview == false).ToList();
+                CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
                 SetCounter(TotalValue - CurrentGroup.Count(), TotalValue);
                 var rand = new Random();
             _lblCheckAgain:
@@ -193,7 +193,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
             if (StrongNo == _ObjCurrentImage.StrongNo)
             {
-                _ObjBC.UpdateReviewData("HLL_VocabDecksIsReView", StrongNo);
+                _ObjBC.UpdateReviewData("HLL_VocabDecksIsReviewPassive", StrongNo);
 
             }
             VocabDecksLesson();

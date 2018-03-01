@@ -205,9 +205,9 @@ namespace HebrewLanguageLearning_Admin.Controllers
             return View(hLL_SemanticDomain);
         }
 
+        //[ValidateAntiForgeryToken]
         // POST: SemanticDomain/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
             HLL_SemanticDomain hLL_SemanticDomain = db.HLL_SemanticDomain.Find(id);
