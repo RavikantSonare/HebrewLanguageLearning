@@ -37,7 +37,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                     {
                         uploadFiles.fileName = uploadFiles.tableName + uploadFiles.tableId + "_" + SI.fileSavedLocation[uploadFiles.fileType] + DateFormat + uploadFiles.fileExtension;
                     }
-                        byte[] bytes = System.Convert.FromBase64String(uploadFiles.base64File);
+                    byte[] bytes = System.Convert.FromBase64String(uploadFiles.base64File);
                     FileStream fs = new FileStream(HostingEnvironment.MapPath("~/Media/" + SI.fileSavedLocation[uploadFiles.fileType] + "/") + uploadFiles.fileName, FileMode.CreateNew, FileAccess.Write, FileShare.None);
                     fs.Write(bytes, 0, bytes.Length);
                     fs.Close();
@@ -55,9 +55,10 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             {
                 try
                 {
-                    if (base64Img.Contains("data:image")) { 
-                    string Tempbase64File = Regex.Replace(base64Img, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
-                    base64Img = Tempbase64File;
+                    if (base64Img.Contains("data:image"))
+                    {
+                        string Tempbase64File = Regex.Replace(base64Img, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
+                        base64Img = Tempbase64File;
                     }
                 }
                 catch { }
@@ -104,7 +105,7 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             string audio = string.Empty;
             try
             {
-               
+
                 var path = DateTime.Now;
                 var data = String.Format("{0:d/M/yyyy HH:mm:ss}", path);
                 data = data.Replace(@"/", "").Trim(); data = data.Replace(@":", "").Trim(); data = data.Replace(" ", String.Empty);
@@ -170,7 +171,25 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
 
             return filename;
         }
+        public static string GetFileExtension(string base64String)
+        {
+            var data = base64String.Substring(0, 15); //data: audio / wav
 
-     
+            switch (data.ToUpper())
+            {
+                case "DATA:AUDIO/WAV;":
+                    return ".wav";
+                case "DATA:AUDIO/MP3;":
+                    return ".mp3";
+                case "AAAAF":
+                    return "mp4";
+                case "//M4x":
+                    return "pdf";
+                default:
+                    return string.Empty;
+            }
+
+
+        }
     }
 }
