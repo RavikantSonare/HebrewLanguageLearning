@@ -34,23 +34,38 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
         }
 
-        public BibleLearningFromMediaViewModel()
+
+        // temp
+
+        private MediaElement _mediaElementObject;
+
+        public MediaElement MediaElementObject
         {
-            string LessonId = "3";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
-            if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
-           
+            get { return _mediaElementObject; }
+            set
+            {
+                _mediaElementObject = value;
+                NotifyOfPropertyChange(() => MediaElementObject);
+            }
         }
 
+        //tempEnd
 
 
-
+        //public BibleLearningFromMediaViewModel()
+        //{
+        //    string LessonId = "3";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+        //    if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
+           
+        //}
+        
         protected override void OnActivate()
         {
 
             base.OnActivate();
             fileData();
-            BibleLearningFromMediaView bv = new BibleLearningFromMediaView();
-            bv.setPlayerData();
+            //BibleLearningFromMediaView bv = new BibleLearningFromMediaView();
+            //bv.setPlayerData();
         }
 
         #region Property
@@ -249,25 +264,21 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         {
             navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
         }
-        public event EventHandler PlayRequested;
         public void MouseDown_SoundClick(object sender, MouseEventArgs e)
         {
 
             BibleSoundMediaUrl = "ELL_PART_5_768k.wmv";
-            if (this.PlayRequested != null)
+           
+            MediaElementObject = new MediaElement()
             {
-                this.PlayRequested(this, EventArgs.Empty);
-            }
+                LoadedBehavior = MediaState.Manual,
+            };
+            string commonUri = @"D:\Ravi\Project\HLL\HebrewLanguageLearning\HebrewLanguageLearning_Users\Media\Videos\";
+            MediaElementObject.Source = new Uri(commonUri + BibleSoundMediaUrl);// "ELL_PART_5_768k.wmv");  //ELL_PART_5_768k.wmv
 
-            //MediaPlayer = new MediaElement()
-            //{
-            //    LoadedBehavior = MediaState.Manual,
-            //};
-            //string commonUri = @"D:\Ravi\Project\HLL\HebrewLanguageLearning\HebrewLanguageLearning_Users\Media\Videos\";
-            //MediaPlayer.Source = new Uri(commonUri + "ELL_PART_5_768k.wmv");  //ELL_PART_5_768k.wmv
+            MediaElementObject.Play();
 
-            //MediaPlayer.Play();
-
+            //MediaElementObject = tmpMediaPlayer;
 
         }
 

@@ -11,14 +11,13 @@ using System.Windows.Forms;
 
 namespace HebrewLanguageLearning_Users.GenericClasses
 {
-  public  class FileSetter
+    public class FileSetter
     {
-        public List<DictionaryModel> BindClassData()
+        internal List<DictionaryModel> BindClassData()
         {
             return getFile();
         }
         List<DictionaryModel> getFile()
-
         {
             List<DictionaryModel> _DictionaryModellist = new List<DictionaryModel>();
             try
@@ -36,7 +35,7 @@ namespace HebrewLanguageLearning_Users.GenericClasses
             }
             catch (Exception ex)
             {
-                 LogError(ex);
+                LogError(ex);
             }
             finally
             {

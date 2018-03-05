@@ -111,8 +111,8 @@
         <StackPanel Grid.Column="3"  Grid.Row="1"   Orientation="Horizontal"  Margin="100,0,192,0">
             <Label FontSize="20" VerticalAlignment="Top" FontWeight="Bold">Word</Label>
             <Image x:Name="image" Style="{StaticResource Sound}" Margin="8" VerticalAlignment="Top"  Width="20" Height="20" Source="/HebrewLanguageLearning_Users;component/Assets\volume.png" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_SoundClick($source, $eventArgs)]"/>
-            <MediaElement  Height="0" Width="0" Source="/HebrewLanguageLearning_Users;component/Media/Videos/ELL_PART_5_768k.wmv" x:Name="MediaPlayer" Stretch="None" LoadedBehavior="Manual" />
-            
+            <!--<MediaElement  Height="0" Width="0" Source="/HebrewLanguageLearning_Users;component/Media/Videos/ELL_PART_5_768k.wmv" x:Name="MediaPlayer" Stretch="None" LoadedBehavior="Manual" />-->
+            <ContentControl  Height="0" Width="0" Content="{Binding MediaElementObject}"/>
         </StackPanel>
         <StackPanel Grid.Column="3"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
             <Grid>

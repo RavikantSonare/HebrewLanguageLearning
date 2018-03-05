@@ -10,8 +10,8 @@ namespace HebrewLanguageLearning_Users.GenericClasses
     public class EntityConfig
     {
         #region Software Configuration
-        //internal static string HostingUri = "http://biblingo.mobi96.org/Home/";//?UserId="1"//   
-        internal static string HostingUri = "http://localhost:57293/Home/";//?UserId="1"//     
+        internal static string HostingUri = "http://biblingo.mobi96.org/Home/";//?UserId="1"//   
+        //internal static string HostingUri = "http://localhost:57293/Home/";//?UserId="1"//     
         internal static string Name = Assembly.GetCallingAssembly().GetName().Name;// Assembly.GetEntryAssembly().GetName().Name;
         internal static string FolderBase = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         internal static string MediaUri = FolderBase+ @"\" +Name + @"\Media\Pictures\";

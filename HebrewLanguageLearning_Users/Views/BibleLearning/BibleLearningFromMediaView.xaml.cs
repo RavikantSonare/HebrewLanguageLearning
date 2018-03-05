@@ -33,26 +33,12 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
         public BibleLearningFromMediaView()
         {
             InitializeComponent();
-           // genList();
+          
             setProgressBar(ref progressStatus);
-            // MediaPlayer.Source = new Uri(commonUri+ "ELL_PART_5_768k.wmv");  //ELL_PART_5_768k.wmv
-            //  MediaPlayer.Play();
-
-            setPlayerData();
-
-
+           
         }
 
-        public void setPlayerData()
-        {
-            BibleLearningFromMediaViewModel vm = new BibleLearningFromMediaViewModel(null);
-            this.DataContext = vm;
-            vm.PlayRequested += (sender, e) =>
-            {
-                this.MediaPlayer.Source = new Uri(commonUri + vm.BibleSoundMediaUrl);
-                this.MediaPlayer.Play();
-            };
-        }
+       
         private void setProgressBar(ref int status )
         {
             ProgressBarUC _cuc = new ProgressBarUC();
@@ -60,20 +46,20 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
         }
         
 
-        private void btnPlay_Click(object sender, RoutedEventArgs e)
-        {
-            MediaPlayer.Play();
-        }
+        //private void btnPlay_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MediaPlayer.Play();
+        //}
 
-        private void btnPause_Click(object sender, RoutedEventArgs e)
-        {
-            MediaPlayer.Pause();
-        }
+        //private void btnPause_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MediaPlayer.Pause();
+        //}
 
-        private void btnStop_Click(object sender, RoutedEventArgs e)
-        {
-            MediaPlayer.Stop();
-        }
+        //private void btnStop_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MediaPlayer.Stop();
+        //}
         public class TodoItem
         {
             public int Id { get; set; }

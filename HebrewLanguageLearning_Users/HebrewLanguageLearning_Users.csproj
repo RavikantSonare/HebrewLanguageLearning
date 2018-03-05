@@ -149,7 +149,6 @@
     <Compile Include="Views\BibleLearning\BibleLearningView.xaml.cs">
       <DependentUpon>BibleLearningView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BibleLearning\BibleLearningViewModel.cs" />
     <Compile Include="Views\CommonUserControls\ProgressBarUC.xaml.cs">
       <DependentUpon>ProgressBarUC.xaml</DependentUpon>
     </Compile>

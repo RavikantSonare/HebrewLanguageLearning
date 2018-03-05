@@ -17,11 +17,7 @@ namespace HebrewLanguageLearning_Users
         {
             Initialize();
         }
-        //protected override void OnStartup(object sender, StartupEventArgs e)
-        //{
-        //    DisplayRootViewFor<ShellViewModel>();
-        //}
-
+       
         protected override void Configure()
         {
             container = new SimpleContainer();
@@ -38,11 +34,10 @@ namespace HebrewLanguageLearning_Users
                .PerRequest<ViewModels.Account.LoginViewModel>()
                .PerRequest<ViewModels.Account.SettingViewModel>()
                .PerRequest<ViewModels.BibleLearning.BibleLearningViewModel>()
-                .PerRequest<ViewModels.BibleLearning.BibleLearningFromMediaViewModel>()
+               .PerRequest<ViewModels.BibleLearning.BibleLearningFromMediaViewModel>()
                .PerRequest<ViewModels.BibleLearning.BibleLearningFromMediaWordChoiceViewModel>()
-               .PerRequest<ViewModels.Game.JerichoGameViewModel>(); 
-            
-        }
+               .PerRequest<ViewModels.Game.JerichoGameViewModel>();
+             }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
