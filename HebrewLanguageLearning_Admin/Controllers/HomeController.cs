@@ -35,7 +35,7 @@ namespace HebrewLanguageLearning_Admin.Controllers
         {
             if (!string.IsNullOrEmpty(UserId))
             {
-                SyncTable("HLL_Vocabulary");
+                //SyncTable("HLL_Vocabulary");
                 GenericClasses.XmlSetter _obj = new GenericClasses.XmlSetter(); //"" Need To Open
                 return Json(_obj.GetDBToXMl(), JsonRequestBehavior.AllowGet);
             }

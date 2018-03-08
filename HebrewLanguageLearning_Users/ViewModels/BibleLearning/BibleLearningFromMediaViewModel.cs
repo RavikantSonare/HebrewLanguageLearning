@@ -35,8 +35,6 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         }
 
 
-        // temp
-
         private MediaElement _mediaElementObject;
 
         public MediaElement MediaElementObject
@@ -49,23 +47,13 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             }
         }
 
-        //tempEnd
 
-
-        //public BibleLearningFromMediaViewModel()
-        //{
-        //    string LessonId = "3";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
-        //    if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
-           
-        //}
-        
         protected override void OnActivate()
         {
 
             base.OnActivate();
             fileData();
-            //BibleLearningFromMediaView bv = new BibleLearningFromMediaView();
-            //bv.setPlayerData();
+
         }
 
         #region Property
@@ -210,7 +198,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                     var tmpData1 = tmpData.ListOfPictures.LastOrDefault();
                     if (tmpData1.Any())
                     {
-                        return EntityConfig.MediaUri + tmpData1;
+                        return EntityConfig.MediaUriPictures + tmpData1;
                     }
                 }
 
@@ -235,13 +223,19 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             if (_dictionaryModellist.Count() < 1)
                 _dictionaryModellist = _ObjSC.getDataFromLocalFile();
         }
-        void SetImage(string strongNo)
+        public void SetImage(string strongNo)
         {
             fileData();
             var DicData = _dictionaryModellist.FirstOrDefault(x => x.DicStrongNo == strongNo);
             if (DicData != null && string.IsNullOrEmpty(BibleTxtMediaUrl))
             {
-                BibleTxtMediaUrl = EntityConfig.MediaUri + DicData.ListOfPictures.LastOrDefault();
+                BibleTxtMediaUrl = EntityConfig.MediaUriPictures + DicData.ListOfPictures.LastOrDefault();
+                BibleSoundMediaUrl = EntityConfig.MediaUriSounds + DicData.SoundUrl;//EntityConfig.MediaUriSounds +
+            }
+            else
+            {
+                BibleTxtMediaUrl = @"" + EntityConfig.MediaUriPictures + DicData.ListOfPictures.LastOrDefault();
+                BibleSoundMediaUrl = @"" + EntityConfig.MediaUriSounds + DicData.SoundUrl;
             }
         }
         public void MouseDown_ImageClick(object sender, MouseEventArgs e)
@@ -249,13 +243,14 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
             string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
             string ImageUrl = Convert.ToString(((System.Windows.FrameworkElement)sender).Uid);
+            //BibleTxtMediaUrl = ImageUrl;
+            //BibleSoundMediaUrl = @"C:\Users\mobiweb\AppData\Local\HebrewLanguageLearning_Users\Media\Sounds\DictionaryEntriesHLLUSA001-SOUND00R_Sounds532018105917.wav";
 
-            BibleTxtMediaUrl = ImageUrl;
             _ObjBC.UpdateReviewData("HLL_VocabDecksIsReviewAssociation", StrongNo);
-            // SetImage(StrongNo);
+            SetImage(StrongNo);
 
 
-            VocabDecksLesson();
+            // VocabDecksLesson();
             // HLL_VocabDecks
             // System.Windows.Application.Current.Shutdown();
         }
@@ -266,19 +261,21 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         }
         public void MouseDown_SoundClick(object sender, MouseEventArgs e)
         {
-
-            BibleSoundMediaUrl = "ELL_PART_5_768k.wmv";
-           
+            string SoundName = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+            if (SoundName != null)
+            {
+                BibleSoundMediaUrl = SoundName;
+            }
+            else
+            {
+                BibleSoundMediaUrl = EntityConfig.MediaUriSounds + @"DictionaryEntriesHLLUSA001-SOUND00B_Sounds532018102038.wav";//"C:\Users\mobiweb\AppData\Local\HebrewLanguageLearning_Users\Media\Sounds\DictionaryEntriesHLLUSA001-SOUND00B_Sounds532018102038.wav"//@"DictionaryEntriesHLLUSA001-SOUND00B_Sounds532018102038.wav";//"ELL_PART_5_768k.wmv";
+            }
             MediaElementObject = new MediaElement()
             {
                 LoadedBehavior = MediaState.Manual,
             };
-            string commonUri = @"D:\Ravi\Project\HLL\HebrewLanguageLearning\HebrewLanguageLearning_Users\Media\Videos\";
-            MediaElementObject.Source = new Uri(commonUri + BibleSoundMediaUrl);// "ELL_PART_5_768k.wmv");  //ELL_PART_5_768k.wmv
-
+            MediaElementObject.Source = new Uri(BibleSoundMediaUrl);// "ELL_PART_5_768k.wmv");  //ELL_PART_5_768k.wmv
             MediaElementObject.Play();
-
-            //MediaElementObject = tmpMediaPlayer;
 
         }
 

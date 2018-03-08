@@ -115,10 +115,13 @@
     <Compile Include="CommonHelper\ImageDrawHelper.cs" />
     <Compile Include="GenericClasses\EntityConfig.cs" />
     <Compile Include="GenericClasses\FileSetter.cs" />
-    <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\DataControllers\AccountController.cs" />
+    <Compile Include="Models\DataControllers\DashboardController.cs" />
+    <Compile Include="Models\DataModels\AccountModel.cs" />
     <Compile Include="Models\DataControllers\BibleLearningController.cs" />
     <Compile Include="Models\DataControllers\SettingController.cs" />
     <Compile Include="Models\DataModels\BibleLearningModel.cs" />
+    <Compile Include="Models\DataModels\DashboardModel.cs" />
     <Compile Include="Models\DataModels\DictionaryModel.cs" />
     <Compile Include="Models\DataModels\VocabDecksGroupModel.cs" />
     <Compile Include="Models\DataModels\VocabularyModel.cs" />
@@ -136,9 +139,6 @@
     </Compile>
     <Compile Include="Views\Account\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BibleLearning\ActiveView.xaml.cs">
-      <DependentUpon>ActiveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BibleLearning\BibleLearningFromMediaView.xaml.cs">
       <DependentUpon>BibleLearningFromMediaView.xaml</DependentUpon>
@@ -207,10 +207,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Account\SettingView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BibleLearning\ActiveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

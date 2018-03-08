@@ -387,6 +387,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             }
             VocabDecksMenu();
         }
+
+        public void MouseDown_LeftPanel()
+        {
+            navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
+        }
     }
     
 }

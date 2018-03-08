@@ -1,4 +1,6 @@
 ﻿using HebrewLanguageLearning_Users.CommonHelper;
+using HebrewLanguageLearning_Users.Models.DataControllers;
+using HebrewLanguageLearning_Users.Models.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,22 +23,63 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
     /// </summary>
     public partial class DashboardView : Page
     {
+        DashboardController ObjDC = new DashboardController();
+        DashboardModel _objModel = new DashboardModel();
         public DashboardView()
         {
-            InitializeComponent();
-            CompleteLessonStatusSeter(100);
-            RectingleChildControllerAdd_Loaded();
 
+            InitializeComponent();
+            SetControl();
         }
 
-        private void CompleteLessonStatusSeter(int CurrentPossion)
+        public void SetControl()
         {
+            //Where you left off on December 12,2017
+            _objModel = ObjDC.getUserProgress();
+            var LeftData = Convert.ToDateTime(_objModel.LeftDate);
+            LastLeftDate.Text = "Where you left off on " + LeftData.ToString("MMMM dd, yyyy"); ;
+            int _CurrentLevel = _objModel.completedLesson;
+            CompleteLessonStatusSeter(100, _CurrentLevel);
+            RectingleChildControllerAdd_Loaded(_objModel.completedLesson);
+        }
+        private void CompleteLessonStatusSeter(int CurrentPossion, int _CurrentLevel)
+        {
+
+            ////////********************/////////////////// Set Level  //////////////****************////////////
+            var data = 45 / 50;
+            _CurrentLevel = (_CurrentLevel / 50);
+            switch (_CurrentLevel)
+            {
+                case 1:
+                    imageLevel1.Visibility = Visibility.Visible;
+                    ribbon1.Visibility= Visibility.Visible;
+                    break;
+                case 2:
+                    imageLevel2.Visibility = Visibility.Visible;
+                    ribbon2.Visibility = Visibility.Visible;
+                    break;
+                case 3:
+                    imageLevel3.Visibility = Visibility.Visible;
+                    ribbon3.Visibility = Visibility.Visible;
+                    break;
+                case 4:
+                    imageLevel4.Visibility = Visibility.Visible;
+                    ribbon4.Visibility = Visibility.Visible;
+                    break;
+                case 5:
+                    imageLevel5.Visibility = Visibility.Visible;
+                    ribbon5.Visibility = Visibility.Visible;
+                    break;
+
+            }
+
             Point Point1 = new Point(5, 0);
             Point Point2 = new Point(10, 10);
             Point Point3 = new Point(0, 10);
             var TriangleSet = ImageDrawHelper.createTriangle(Point1, Point2, Point3, "#00D5B6", "#00D5B6");
             Canvas.SetLeft(TriangleSet, CurrentPossion + 60);
             Canvas.SetTop(TriangleSet, -1);
+
             CompleteLessonStatus.Children.Add(TriangleSet);
 
             var _border = new Border();
@@ -47,6 +90,7 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
             _border.Width = 120;
             Canvas.SetLeft(_border, CurrentPossion);
             Canvas.SetTop(_border, 15);
+
             CompleteLessonStatus.Children.Add(_border);
             var _txtBloack = new TextBlock
             {
@@ -54,18 +98,20 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
             };
             _txtBloack.Height = 25;
             _txtBloack.Width = 140;
-            _txtBloack.Text = "9 % Complete";
+            _txtBloack.Text = "2 % Complete";
             Canvas.SetLeft(_txtBloack, CurrentPossion);
             Canvas.SetTop(_txtBloack, 10);
             CompleteLessonStatus.Children.Add(_txtBloack);
+
+
         }
 
-        private void RectingleChildControllerAdd_Loaded()
+        private void RectingleChildControllerAdd_Loaded(int _completedLesson)
         {
             int SetColomnHeight = 0; int SetRowWidht = 0;
             int _currentTopicNo = 5;
             string _currentTopicName = "Culture";
-            int _completedLesson = 35;
+            //int _completedLesson = 35;
             int tooltip = _completedLesson + 3;
             string _currentLessonNo = Convert.ToString(_completedLesson + 1);
             for (int i = 0; i < 50; i++)
@@ -84,8 +130,8 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                     {
                         _txtBloack.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#9DE8E1"));
                         var tooltipData = ImageDrawHelper.nextTooltipLocationIndicator(5, "7", "Traditions");
-                        Canvas.SetLeft(tooltipData, SetRowWidht-10);
-                        Canvas.SetTop(tooltipData, SetColomnHeight-50);
+                        Canvas.SetLeft(tooltipData, SetRowWidht - 10);
+                        Canvas.SetTop(tooltipData, SetColomnHeight - 50);
                         RectingleController.Children.Add(tooltipData);
                         Point Point1 = new Point(0, 0);
                         Point Point2 = new Point(7, 6);
@@ -161,9 +207,6 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
 
             }
         }
-
-        
-
 
     }
     //public class rectelgleProp

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HebrewLanguageLearning_Users.Models
+namespace HebrewLanguageLearning_Users.Models.DataModels
 {
     public class AccountModel : Screen
     {

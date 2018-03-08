@@ -16,7 +16,7 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
     {
         public string proBibleTxtHebrew { get; set; }
         public string proBibleTxtEnglish { get; set; }
-        public string proMediaURl { get; set; } = EntityConfig.MediaUri;
+        public string proMediaURl { get; set; } //= EntityConfig.MediaUri;
         public string proDescriptionTxt { get; set; }
         public string proExampleTxt { get; set; }
         public string proSemanticDomainTxt { get; set; }

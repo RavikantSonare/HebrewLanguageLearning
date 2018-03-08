@@ -184,7 +184,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             var DicData = _dictionaryModellist.FirstOrDefault(x => x.DicStrongNo == strongNo);
             if (DicData != null)
             {
-                BibleTxtMediaUrl = EntityConfig.MediaUri + DicData.ListOfPictures.LastOrDefault();
+                BibleTxtMediaUrl = EntityConfig.MediaUriPictures + DicData.ListOfPictures.LastOrDefault();
             }
         }
         public void MouseDown_WordClick(object sender, MouseEventArgs e)

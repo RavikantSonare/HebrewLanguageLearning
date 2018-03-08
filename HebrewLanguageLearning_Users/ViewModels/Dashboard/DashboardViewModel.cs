@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using HebrewLanguageLearning_Users.Models.DataControllers;
+using HebrewLanguageLearning_Users.Models.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,6 +16,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
 {
     public class DashboardViewModel : Conductor<object>
     {
+        DashboardController ObjDC = new DashboardController();
+        DashboardModel _objModel = new DashboardModel();
         private readonly INavigationService navigationService;
         public DashboardViewModel(INavigationService navigationService)
         {
@@ -51,23 +55,17 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
 
             //MessageBox.Show("Deshboard");//This is for testing - currently doesn't display
         }
-        public void btn_continue_passage(int i)
+        public void btn_continue_passage()
         {
-            if (i == 1)
-            {
-                navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
-            }
-           
+            navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
         }
-        public void btn_continue_lesson(int i)
+        public void btn_continue_lesson()
         {
-            if (i == 1)
-            {
-                navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
-            }
-
+            navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
         }
 
+
+       
 
     }
 }

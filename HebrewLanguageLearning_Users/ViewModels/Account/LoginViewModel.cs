@@ -1,5 +1,7 @@
 ﻿using Caliburn.Micro;
 using HebrewLanguageLearning_Users.Models;
+using HebrewLanguageLearning_Users.Models.DataControllers;
+using HebrewLanguageLearning_Users.Models.DataModels;
 using HebrewLanguageLearning_Users.Views.Account;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Account
 {
     public class LoginViewModel : Screen
     {
-      
+
         #region Property
         private string _userName;
         private string _password;
@@ -60,6 +62,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Account
         }
         #endregion
 
+        AccountController objAC = new AccountController();
         private readonly INavigationService navigationService;
         public LoginViewModel(INavigationService navigationService)
         {
@@ -67,16 +70,16 @@ namespace HebrewLanguageLearning_Users.ViewModels.Account
         }
         public void btn_Login()
         {
-
+            AccountModel objAM = new AccountModel();
+          
             if (!string.IsNullOrEmpty(UserName) || !string.IsNullOrEmpty(Password))
-
             {
-                if (UserName=="1" || Password=="1")
+                objAM.UserName = UserName; objAM.Password = Password;
+                var result = objAC.getAuthentication(objAM);
+                //if (UserName == "1" || Password == "1")
+                if(result)
                 {
-                    
-              
                     navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
-                  
                 }
                 else
                 {
@@ -94,9 +97,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.Account
                 return;
             }
         }
-     
+
     }
-   
+
 
 
 }

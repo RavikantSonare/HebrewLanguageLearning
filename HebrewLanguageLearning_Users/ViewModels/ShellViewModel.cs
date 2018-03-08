@@ -34,17 +34,20 @@ namespace HebrewLanguageLearning_Users.ViewModels
             navigationService = new FrameAdapter(frame);
 
             container.Instance(navigationService);
+
+            // navigationService.NavigateToViewModel(typeof(Account.LoginViewModel));
+             navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
             //  navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
 
             // navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
-            navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
+            //navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
             // navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
             //  navigationService.NavigateToViewModel(typeof(Game.JerichoGameViewModel));
             //navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
 
             //  navigationService.NavigateToViewModel(typeof(Game.JerichoGameViewModel));
-            // navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
-            // navigationService.NavigateToViewModel(typeof(Account.LoginViewModel));
+
+
         }
 
         public void MouseDown_Settings(object sender, MouseEventArgs e)
@@ -104,8 +107,7 @@ namespace HebrewLanguageLearning_Users.ViewModels
                 _VocabularyLesson = value;
                 NotifyOfPropertyChange(() => VocabularyLesson);
             }
-        }
-        
+        }        
         public void VocabDecksMenu()
         {
             try

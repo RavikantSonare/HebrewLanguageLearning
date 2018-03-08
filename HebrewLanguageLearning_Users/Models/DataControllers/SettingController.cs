@@ -21,7 +21,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
     class SettingController
     {
         //UserId=
-       // private string urlParameters = "1";
+        // private string urlParameters = "1";
         static private string CurrentUrl = EntityConfig.HostingUri;
 
         internal bool SyncData(string UsersID)
@@ -29,8 +29,12 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             //FileSetter _OBJ = new GenericClasses.FileSetter();
             //_OBJ.BindClassData();
             // return true;  "" Need To Open
+
             DBModelSynch();
-            return GetData(UsersID);  //=> Need To be open
+            var status = GetData(UsersID);
+            DownloadFiles();
+            return status;
+            //=> Need To be open
         }
         public List<DictionaryModel> getDataFromLocalFile()
         {
@@ -59,7 +63,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                     var listOfTable = response.Content.ReadAsStringAsync().Result;
                     obj.InsertData("HLL_VocabDecks", listOfTable);// need to be Open.
 
-                   // var Data = obj.SelectData("HLL_VocabDecks");
+                    // var Data = obj.SelectData("HLL_VocabDecks");
 
                 }
                 else
@@ -107,23 +111,18 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 {
                     Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
                 }
-
-
                 isDone = true;
-
             }
             catch (Exception ex)
             {
                 FileSetter.LogError(ex);
                 isDone = false;
             }
-            DownloadImages();
-
 
             return isDone;
         }
 
-        private void DownloadImages()
+        private void DownloadFiles()
         {
             //if (File.Exists(filelocalPath))
             //{
@@ -134,8 +133,6 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             if (AllDataObject == null && AllDataObject.Count() <= 0) { goto NullDataReturn; }
             List<string> ImagesNameList = new List<string>();
             List<string> SoundsNameList = new List<string>();
-
-
 
             //Process each object
             try
@@ -151,7 +148,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                         }
                     }
                 }
-                SoundsNameList = AllDataObject.Select(z => z.SoundUrl).ToList();
+                SoundsNameList = AllDataObject.Where(n => n.SoundUrl != null).Select(z => z.SoundUrl).ToList();
                 foreach (dynamic result in SoundsNameList)
                 {
                     lock (this)

@@ -64,7 +64,7 @@
         </Grid.RowDefinitions>
 
         <!--Grid Column 0 Row 1-->
-        <WrapPanel  Grid.Column="0" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" >
+        <WrapPanel  Grid.Column="0" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_LeftPanel()]">
             <Label FontSize="25" FontWeight="Normal"  Width="23" Margin="0 0 10 0">
                 <TextBlock FontSize="25" FontWeight="Medium" Foreground="Gray" Margin="0 100 0 0" TextWrapping="Wrap">language       learning</TextBlock>
             </Label>

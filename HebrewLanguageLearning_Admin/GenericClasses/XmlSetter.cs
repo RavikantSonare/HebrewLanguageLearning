@@ -113,6 +113,9 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             // Select(x => new { x.DicEnglish, x.DicHebrew, x.DicStrongNo, x.DictionaryEntriesId }).
             List<HLL_DictionaryEntries> DictionaryObj = db.HLL_DictionaryEntries.ToList();
             List<DictionaryModel> DataModelDictionary = new List<DictionaryModel>();
+            // for Sound
+            List<HLL_Media_Sound> _Media_SoundList = db.HLL_Media_Sound.ToList();
+
 
             try
             {
@@ -128,7 +131,6 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                     var _currentDef = db.HLL_Definition.Where(x => x.DicEntId.Equals(Item.DictionaryEntriesId)).ToList();
                     var _currentLLD = db.HLL_LanguageLearningDefinition.Where(x => x.DicEntId.Equals(Item.DictionaryEntriesId)).ToList();
 
-                    Item.Count_Sound = db.HLL_Media_Sound.Where(x => x.MasterTableId.Equals(Item.DictionaryEntriesId)).Count();
                     Item.Count_LLD = _currentLLD.Count();
                     Item.Count_Definition = _currentDef.Count();
 
@@ -140,6 +142,12 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                         Item.ListOfDefinition = _currentDef.Select(z => z.Title).ToList();
                         Item.ListOfExample = db.HLL_Example.Where(p => _curDefLst.Contains(p.MasterTableId)).Select(z => z.Title).ToList();
                         Item.ListOfDictionaryReference = db.HLL_DictionaryReference.Where(p => _curDefLst.Contains(p.MasterTableId)).Select(z => z.Title).ToList();
+
+                        var chkSound = _Media_SoundList.FirstOrDefault(x => x.MasterTableId.Equals(Item.DictionaryEntriesId));
+                        if (chkSound != null)
+                        {
+                            Item.SoundUrl = chkSound.AudioUrl;
+                        }
                     }
                     if (_currentLLD != null && _currentLLD.Count() > 0)
                     {
@@ -166,11 +174,11 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
             object _objlist = new object();
             try
             {
-              
+
                 if (_tblname == "HLL_Vocabulary")
                 {
 
-                        _ObjHLL_Vocabulary = db.HLL_Vocabulary.Where(x => x.IsDelete == false).ToList();
+                    _ObjHLL_Vocabulary = db.HLL_Vocabulary.Where(x => x.IsDelete == false).ToList();
                     var objVocabularyList = _ObjHLL_Vocabulary.Select(z => new { z.DictionaryEntriesId, z.LessonId }).ToList();
                     var VocabularyInLessonListNew = objVocabularyList.Join(db.HLL_DictionaryEntries, s => s.DictionaryEntriesId, f => f.DictionaryEntriesId, (s, f) => new { s, f }).ToList();
                     var InLessonList = VocabularyInLessonListNew.Select(x =>
@@ -186,9 +194,9 @@ namespace HebrewLanguageLearning_Admin.GenericClasses
                                          }
 
                                          ).ToList();
-                    
-                 _objlist = InLessonList;
-                    
+
+                    _objlist = InLessonList;
+
                 }
 
             }

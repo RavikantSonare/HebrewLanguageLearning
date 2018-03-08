@@ -60,7 +60,7 @@
                 <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18" Canvas.Left="1">
                Level 1: <LineBreak /> Book
                 </TextBlock>
-                <Image  x:Name="ribbon" Margin="0,0 0 0" HorizontalAlignment="Center"  VerticalAlignment="Center" Source="/HebrewLanguageLearning_Users;component/Assets/ribbon.png"/>
+                <Image  Visibility="Hidden" x:Name="ribbon1" Margin="0,0 0 0" HorizontalAlignment="Center"  VerticalAlignment="Center" Source="/HebrewLanguageLearning_Users;component/Assets/ribbon.png"/>
 
                 <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
             </Canvas>
@@ -71,7 +71,7 @@
                 <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18">
                Level 2: <LineBreak /> Deepn
                 </TextBlock>
-                <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
+                <Image Visibility="Hidden" x:Name="ribbon2" Margin="0,0 0 0" HorizontalAlignment="Center"  VerticalAlignment="Center" Source="/HebrewLanguageLearning_Users;component/Assets/ribbon.png"/>
             </Canvas>
             <Canvas Grid.Column="1" Margin="10" Width="70">
                 <Image  x:Name="imageLevel3" HorizontalAlignment="Right"  Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
@@ -79,7 +79,8 @@
                 <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18">
                Level 3: <LineBreak /> Name
                 </TextBlock>
-                <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
+                <Image  Visibility="Hidden" x:Name="ribbon3" Margin="0,0 0 0" HorizontalAlignment="Center"  VerticalAlignment="Center" Source="/HebrewLanguageLearning_Users;component/Assets/ribbon.png"/>
+
             </Canvas>
             <Canvas Grid.Column="1" Margin="10" Width="70">
                 <Image  x:Name="imageLevel4" HorizontalAlignment="Right"  Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
@@ -87,8 +88,9 @@
                 <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18">
                Level 4: <LineBreak /> Name
                 </TextBlock>
-                
-                
+                <Image Visibility="Hidden" x:Name="ribbon4" Margin="0,0 0 0" HorizontalAlignment="Center"  VerticalAlignment="Center" Source="/HebrewLanguageLearning_Users;component/Assets/ribbon.png"/>
+
+
                 <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
             </Canvas>
             <Canvas Grid.Column="1" Margin="10" Width="70">
@@ -97,6 +99,7 @@
                 <TextBlock Foreground="White" FontSize="16" TextAlignment="Center" Height="80" Width="80" Canvas.Top="18">
                Level 5: <LineBreak /> Name
                 </TextBlock>
+                <Image Visibility="Hidden" x:Name="ribbon5" Margin="0,0 0 0" HorizontalAlignment="Center"  VerticalAlignment="Center" Source="/HebrewLanguageLearning_Users;component/Assets/ribbon.png"/>
                 <!--<TextBlock Text="Deepn" Canvas.Top="30" Canvas.Left="30"/>-->
             </Canvas>
             <!--<Image Grid.Column="1"  x:Name="imageLevel3" HorizontalAlignment="Right" Margin="10" Source="/HebrewLanguageLearning_Users;component/Assets/gray_circle.png"/>
@@ -179,11 +182,11 @@
             </Canvas>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image  Height="50"  Width="500" x:Name="imageCL"  Source="/HebrewLanguageLearning_Users;component/Assets/continue_lesson.png"/>
+            <Image  Height="50"  Width="500" x:Name="imageCL"  Source="/HebrewLanguageLearning_Users;component/Assets/continue_lesson.png"  cal:Message.Attach="[Event MouseDown] = [Action btn_continue_lesson()]" />
         </StackPanel>
       
         <!--Grid Column 1 Row 1-->
-        <Canvas Grid.Column="1" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="6"></Canvas>
+        <Canvas Grid.Column="1" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="7"></Canvas>
         <Grid Panel.ZIndex="2" Grid.Column="1" Grid.Row="1" Grid.RowSpan="4">
         <Line Y1="1000" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#D9DCDF" StrokeThickness="2" />
         </Grid>
@@ -192,7 +195,7 @@
         </Grid>
 
         <!--Grid Column 2 Row 1-->
-        <Canvas Grid.Column="2"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="6"></Canvas>
+        <Canvas Grid.Column="2"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="7"></Canvas>
         <StackPanel Grid.Column="2"  Grid.Row="1"  Background="#E6EAEE" Orientation="Horizontal" HorizontalAlignment="Center">
             <Label FontSize="25"  Grid.Row="4" FontWeight="Bold"  >BIBLE READING</Label>
             
@@ -202,12 +205,12 @@
             <TextBlock x:Name="BibleTxt" FontSize="20" Grid.Row="4" Height="300" Width="500" Background="White" TextWrapping="Wrap"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Column="2"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock x:Name="LastLeftDate" FontSize="25"  FontWeight="Bold" >Where you left off on December 12,2017</TextBlock>
+            <TextBlock x:Name="LastLeftDate" FontSize="25"  FontWeight="Bold" ></TextBlock>
         </StackPanel>
         <StackPanel  Height="50" Width="500" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Background="Transparent" cal:Message.Attach="btn_continue_passage(1)" BorderThickness="0" Height="50" Width="500">
-                <Image  Margin="-50 -50" cal:Message.Attach="[Event MouseEnter] = [Action btn_continue_passage(1)]" x:Name="btn_continue_passage" Height="50" Width="500"  Source="/HebrewLanguageLearning_Users;component/Assets/cuntinue_passage.png"/>
-            </Button>
+
+            <Image  Margin="0 0"  x:Name="btn_continue" Height="50" Width="500"  Source="/HebrewLanguageLearning_Users;component/Assets/cuntinue_passage.png" cal:Message.Attach="[Event MouseDown] = [Action btn_continue_passage()]"/>
+           
         </StackPanel>
 
        

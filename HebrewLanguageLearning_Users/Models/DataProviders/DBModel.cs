@@ -14,22 +14,47 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
 {
     class DBModel
     {
-        public SQLiteConnection _dbcon;
-        public DBModel()
+        public static SQLiteConnection _dbcon;
+        static DBModel()
         {
             _dbcon = new SQLiteConnection("Data Source=database.biblingoContext");
+            DBModel obj = new DBModel();
             if (!File.Exists("./database.biblingoContext"))
             {
                 SQLiteConnection.CreateFile("database.biblingoContext");
-
             }
-            CreateTables();
+            obj.CreateTables();
+
         }
         public void CreateTables()
         {
             try
             {
-                var _TableString = @"CREATE TABLE if not exists HLL_VocabDecks(  VocabDecksId int IDENTITY(1,1) PRIMARY KEY,
+                /* --------- Create HLL_AuthenticateUser And Insert Table --------- */
+                #region AuthenticateUser
+
+                var _TableString = @"CREATE TABLE if not exists HLL_AuthenticateUser(UserId INTEGER PRIMARY KEY ,
+                [UserName] [nvarchar](200) NULL,
+                [Password] [nvarchar](200) NULL,
+                [EmailId] [nvarchar](200) NULL,
+                [ActiveStatus] [bit] NULL,
+	            [Date] [nvarchar](100) NULL,
+	            [IsActive] [bit] NULL,
+	            [IsDelete] [bit] NULL)";
+                ExcecuteTheQuery(_TableString, "I");
+                object _obj = SelectData("HLL_AuthenticateUser");
+                DataTable _dt = _obj as DataTable;
+                if (_dt.Rows.Count <= 0)
+                {
+                    InsertData("HLL_AuthenticateUser", "");
+                }
+                #endregion
+
+                /* --------- Create HLL_VocabDecks Table --------- */
+                #region VocabDecks
+
+
+                _TableString = @"CREATE TABLE if not exists HLL_VocabDecks(  VocabDecksId INTEGER PRIMARY KEY,
                 [LessonId] [nvarchar](50) NULL,
                 [StrongNo] [nvarchar](250) NULL,
                 [DictionaryEntriesId] [nvarchar](250) NULL,
@@ -41,12 +66,30 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
 	            [IsDelete] [bit] NULL,
                 [IsReviewAssociation] [bit] NULL,
                 [IsReviewPassive] [bit] NULL)";
-                using (SQLiteCommand command = new SQLiteCommand(_TableString, _dbcon))
+                ExcecuteTheQuery(_TableString, "I");
+                #endregion
+
+                /* --------- Create HLL_ProgressOfUser  Table --------- */
+                #region ProgressOfUser
+
+                _TableString = @"CREATE TABLE if not exists HLL_ProgressOfUser(ProgressId INTEGER PRIMARY KEY ,
+                [completedLesson] [INTEGER] NULL,
+                [completedPhases] [INTEGER] NULL,
+                [completedParagraph] [INTEGER] NULL,
+                [LeftDate] [nvarchar](200) NULL,
+	            [IsActive] [bit] NULL,
+	            [IsDelete] [bit] NULL)";
+                ExcecuteTheQuery(_TableString, "I");
+                 _obj = SelectData("HLL_ProgressOfUser");
+                 _dt = _obj as DataTable;
+                if (_dt.Rows.Count <= 0)
                 {
-                    OpenConnection();
-                    command.ExecuteNonQuery();
-                    CloseConnection();
+                    InsertData("HLL_ProgressOfUser", "");
                 }
+
+                #endregion
+
+
             }
             catch (Exception ex)
             {
@@ -54,6 +97,9 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
             }
 
         }
+
+
+
         public List<string> _tblList = new List<string>() { "HLL_VocabDecks", "HLL_Configuration", "HLL_Progress" };
 
 
@@ -99,9 +145,16 @@ values");
     item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False'),");
                         }
                         break;
+                        case "HLL_AuthenticateUser":
+                        customQuery.Append(@"insert into HLL_AuthenticateUser(UserName, Password, EmailId, ActiveStatus, Date, IsActive, IsDelete) 
+values ('user','user@123','User@hll.com', 'True','" + DateTime.UtcNow + "','True','False')");
+                        break;
+                    case "HLL_ProgressOfUser":
+                        customQuery.Append(@"insert into HLL_ProgressOfUser(completedLesson, completedPhases, completedParagraph, LeftDate, IsActive, IsDelete) 
+values (0,0,1,'" + DateTime.UtcNow + "','True','False')");
 
-
-                }
+                        break;
+                         }
                 string Qry = Convert.ToString(customQuery);
 
                 Qry = Qry.TrimEnd(',');
@@ -139,9 +192,17 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
 LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive from HLL_VocabDecks where IsCustomeDecks='True'");
                         break;
                     case "HLL_VocabDecksLesson":
-                       // IsReview = 'False' and
+                        // IsReview = 'False' and
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
 LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive from HLL_VocabDecks where LessonId='" + dataFilter + "'");
+                        break;
+
+                    case "HLL_AuthenticateUser":
+                        // IsReview = 'False' and
+                        customQuery.Append(@"Select UserName, Password FROM HLL_AuthenticateUser ");
+                        break;
+                    case "HLL_ProgressOfUser":
+                        customQuery.Append(@"Select completedLesson, completedPhases, completedParagraph, LeftDate FROM HLL_ProgressOfUser ");
                         break;
 
                 }
@@ -178,7 +239,7 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                         break;
                 }
                 string Qry = Convert.ToString(customQuery);
-                
+
                 var result = ExcecuteTheQuery(Qry, "U");
 
             }
@@ -187,7 +248,6 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                 Debug.WriteLine(ex.Message);
             }
         }
-
         /// <summary>
         ///  DeleteLesson
         /// </summary>
