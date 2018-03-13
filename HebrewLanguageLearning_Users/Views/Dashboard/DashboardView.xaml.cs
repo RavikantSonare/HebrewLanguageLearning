@@ -23,6 +23,8 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
     /// </summary>
     public partial class DashboardView : Page
     {
+        public static BibleLearningModel ObjBook = new BibleLearningModel();
+        BibleLearningController _ObjBLC = new BibleLearningController();
         DashboardController ObjDC = new DashboardController();
         DashboardModel _objModel = new DashboardModel();
         public DashboardView()
@@ -38,37 +40,77 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
             _objModel = ObjDC.getUserProgress();
             var LeftData = Convert.ToDateTime(_objModel.LeftDate);
             LastLeftDate.Text = "Where you left off on " + LeftData.ToString("MMMM dd, yyyy"); ;
-            int _CurrentLevel = _objModel.completedLesson;
-            CompleteLessonStatusSeter(100, _CurrentLevel);
+            int _CurrentLevel = (_objModel.completedLesson / 50) + 1;
+            CompleteLessonStatusSeter(5, _CurrentLevel, _objModel.completedLesson % 50 * 2);
             RectingleChildControllerAdd_Loaded(_objModel.completedLesson);
+
+            // Set Last Topic Data
+            getchapterForUserProgress(_objModel.currentBookAndchapterId);
         }
-        private void CompleteLessonStatusSeter(int CurrentPossion, int _CurrentLevel)
+        private void CompleteLessonStatusSeter(int CurrentPossion, int _CurrentLevel, int _PercentOfComplete)
         {
 
             ////////********************/////////////////// Set Level  //////////////****************////////////
-            var data = 45 / 50;
-            _CurrentLevel = (_CurrentLevel / 50);
+
+            // _CurrentLevel = ;
             switch (_CurrentLevel)
             {
                 case 1:
                     imageLevel1.Visibility = Visibility.Visible;
-                    ribbon1.Visibility= Visibility.Visible;
+
                     break;
                 case 2:
-                    imageLevel2.Visibility = Visibility.Visible;
-                    ribbon2.Visibility = Visibility.Visible;
+                    imageLevelDark2.Visibility = Visibility.Visible;
+                    imageLevelLight2.Visibility = Visibility.Collapsed;
+
+                    ribbon1.Visibility = Visibility.Visible;
+                    CurrentPossion = CurrentPossion + 90;
                     break;
                 case 3:
-                    imageLevel3.Visibility = Visibility.Visible;
-                    ribbon3.Visibility = Visibility.Visible;
+
+                    imageLevelDark2.Visibility = Visibility.Visible;
+                    imageLevelLight2.Visibility = Visibility.Collapsed;
+
+                    imageLevelDark3.Visibility = Visibility.Visible;
+                    imageLevelLight3.Visibility = Visibility.Collapsed;
+                    ribbon1.Visibility = Visibility.Visible;
+                    ribbon2.Visibility = Visibility.Visible;
+                    CurrentPossion = CurrentPossion + 180;
                     break;
                 case 4:
-                    imageLevel4.Visibility = Visibility.Visible;
-                    ribbon4.Visibility = Visibility.Visible;
+                    imageLevelDark2.Visibility = Visibility.Visible;
+                    imageLevelLight2.Visibility = Visibility.Collapsed;
+
+                    imageLevelDark3.Visibility = Visibility.Visible;
+                    imageLevelLight3.Visibility = Visibility.Collapsed;
+
+                    imageLevelDark4.Visibility = Visibility.Visible;
+                    imageLevelLight4.Visibility = Visibility.Collapsed;
+
+                    ribbon1.Visibility = Visibility.Visible;
+                    ribbon2.Visibility = Visibility.Visible;
+                    ribbon3.Visibility = Visibility.Visible;
+                    CurrentPossion = CurrentPossion + 280;
                     break;
                 case 5:
-                    imageLevel5.Visibility = Visibility.Visible;
-                    ribbon5.Visibility = Visibility.Visible;
+                    imageLevelDark2.Visibility = Visibility.Visible;
+                    imageLevelLight2.Visibility = Visibility.Collapsed;
+
+                    imageLevelDark3.Visibility = Visibility.Visible;
+                    imageLevelLight3.Visibility = Visibility.Collapsed;
+
+                    imageLevelDark4.Visibility = Visibility.Visible;
+                    imageLevelLight4.Visibility = Visibility.Collapsed;
+
+                    imageLevelDark5.Visibility = Visibility.Visible;
+                    imageLevelLight5.Visibility = Visibility.Collapsed;
+
+
+                    ribbon1.Visibility = Visibility.Visible;
+                    ribbon2.Visibility = Visibility.Visible;
+                    ribbon3.Visibility = Visibility.Visible;
+                    ribbon4.Visibility = Visibility.Visible;
+                    CurrentPossion = CurrentPossion + 360;
                     break;
 
             }
@@ -98,7 +140,7 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
             };
             _txtBloack.Height = 25;
             _txtBloack.Width = 140;
-            _txtBloack.Text = "2 % Complete";
+            _txtBloack.Text = _PercentOfComplete + " % Complete";
             Canvas.SetLeft(_txtBloack, CurrentPossion);
             Canvas.SetTop(_txtBloack, 10);
             CompleteLessonStatus.Children.Add(_txtBloack);
@@ -206,6 +248,40 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                 }
 
             }
+        }
+
+        private void getchapterForUserProgress(string BookAndChapterId)
+        {
+            string[] tmpBookAndChapterId = BookAndChapterId.Split(',');
+
+            ObjBook = _ObjBLC.ShowBookData(tmpBookAndChapterId[0]);
+            var Chepter = ObjBook._chepterElementsList.Where(p => p.ChepterId == tmpBookAndChapterId[1]).ToList();
+            string tmpTxt = string.Empty;
+            if (Chepter != null)
+            {
+                var tmpChepter = Chepter.SelectMany(x => x.verseElementList).ToList();
+                int i = 0;
+                foreach (var itemChecpter in tmpChepter)
+                {
+                    //tmpTxt = "_"+Convert.ToString(i+" ");
+                    foreach (var item in itemChecpter.wElementList)
+                    {
+                        tmpTxt += item.ElementValue+" ";
+                    }
+                    BibleTxt.Text += tmpTxt+ "\n";
+                    
+                     tmpTxt = string.Empty;
+                    if (i >= 5)
+                    {
+                        break;
+                    }
+                     i++;
+                }
+                
+            }
+
+
+            // BibleTxt.Text = "";
         }
 
     }

@@ -32,15 +32,13 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
         internal BibleLearningModel GetBookData(string CurrentfileName)
         {
-            ObjectToXML(CurrentfileName);
-            BibleLearningModel _examqueanslist = new BibleLearningModel();
+        
             try
             {
-                CurrentfileName = "Ok";
+               
                 if (CurrentfileName != null)
                 {
-                    string fileName = fileRootPath + CurrentfileName + ".xml";
-                    XDocument document = XDocument.Load(fileName);
+                    ObjectToXML(CurrentfileName);
                 }
             }
             catch (Exception ex)
@@ -86,7 +84,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                                 if (xPathNav.MoveToFirstChild())
                                 {
                                     //  _objBLM._bookElementsList.Add(new DataModels.bookElements { ElementStrogNo = _obj_lemma, ElementValue = xPathNav.Value, SelctedElementValue = _objBLM._VerseList.Count() == 20 ? true : false });
-                                    _TempbookElementsList.Add(new DataModels.bookElements { ElementStrogNo = _obj_lemma, ElementValue = xPathNav.Value, SelctedElementValue = _objBLM._VerseList.Count() == 20 ? true : false });
+                                    _TempbookElementsList.Add(new DataModels.bookElements { ElementStrogNo = _obj_lemma, ElementValue = xPathNav.Value, SelctedElementValue = _objBLM._VerseList.Count() == 20 ? true : false,currentBookAndchapterId= CurrentfileName+","+_chapter_osisID+"," +_objBLM._VerseList.LastOrDefault().Text });
                                     xPathNav.MoveToParent();
                                 }
                             }
@@ -125,7 +123,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
             foreach (DataRow row in dt.Rows)
             {
-                tmplist.Add(new VocabularyModel { LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString() });
+                tmplist.Add(new VocabularyModel { LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString(), IsReviewAssociation = Convert.ToBoolean(row.ItemArray[10].ToString()), IsReviewPassive = Convert.ToBoolean(row.ItemArray[11].ToString()) });
 
             }
 
@@ -215,6 +213,38 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         internal void DeleteLesson(string vocabDocLessonId)
         {
             obj.DeleteLesson("HLL_VocabDecksDeleteLesson", vocabDocLessonId);
+        }
+
+        public int getIsReviewAssociationCount(string LessonId)
+        {
+            DashboardModel _objModel = new DashboardModel();
+            try
+            {
+                {
+                    object _obj = obj.SelectData("HLL_VocabDecks_IsReviewAssociationCount", LessonId);
+                    DataTable _dt = _obj as DataTable;
+                    foreach (DataRow row in _dt.Rows)
+                    {
+                        return Convert.ToInt32(row.ItemArray[0].ToString());
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return 0;
+
+        }
+
+        public int setProgressOfUserChapter(string BookAndChapter)
+        {
+            try
+            {
+                obj.UpdateData("HLL_ProgressOfUserChapter", BookAndChapter);
+            }
+            catch { }
+            return 0;
         }
     }
 

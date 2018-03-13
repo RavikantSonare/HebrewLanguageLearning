@@ -3,34 +3,39 @@ using HebrewLanguageLearning_Users.Models.DataControllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HebrewLanguageLearning_Users.Models.DataModels;
-using HebrewLanguageLearning_Users.CommonHelper;
 using System.Windows.Controls;
 using HebrewLanguageLearning_Users.GenericClasses;
 using System.Windows.Forms;
-using System.Windows;
-using System.Windows.Media;
-using HebrewLanguageLearning_Users.Views.BibleLearning;
+
 
 namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 {
-    //
+    // This Is 10 association v2
+
     public class BibleLearningFromMediaViewModel : Conductor<object>
     {
         BibleLearningController _ObjBC = new BibleLearningController();
         static List<DictionaryModel> _dictionaryModellist = new List<DictionaryModel>();
         SettingController _ObjSC = new SettingController();
+
+        // Getting Data From Database
+        DashboardController ObjDC = new DashboardController();
+        DashboardModel _objModel = new DashboardModel();
+
+        // Set Lesson Id
+        static string LessonId = string.Empty;
+
         // Set Current Image
         static VocabularyModel _ObjCurrentImage = new VocabularyModel();
 
         private readonly INavigationService navigationService;
         public BibleLearningFromMediaViewModel(INavigationService navigationService)
         {
+            GetDataFromDataBase();
             if (navigationService != null)
                 this.navigationService = navigationService;
-            string LessonId = "3";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+            //string LessonId = "3";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
             if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
         }
 
@@ -131,12 +136,16 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         }
         #endregion
 
+        public void GetDataFromDataBase()
+        {
+            _objModel = ObjDC.getUserProgress(); LessonId = Convert.ToString(_objModel.completedLesson + 1);
 
-
+        }
 
         public void VocabDecksLesson()
         {
-            string LessonId = "3"; //Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+            GetDataFromDataBase();
+            //string LessonId = "3"; //Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
             try
             {
                 int TotalValue;
@@ -196,7 +205,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 if (tmpData != null)
                 {
                     var tmpData1 = tmpData.ListOfPictures.LastOrDefault();
-                    if (tmpData1.Any())
+                    if (tmpData1 != null)
                     {
                         return EntityConfig.MediaUriPictures + tmpData1;
                     }
@@ -212,11 +221,22 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             return tempArray;
         }
 
+        public void SetDataFromDataBase(string completedLesson)
+        {
+            var Data = ObjDC.SetUserProgress(completedLesson);
+            LessonId = Convert.ToString(_objModel.completedLesson + 1);
+        }
+
         void SetCounter(int value, int Totalvalue)
         {
-            ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
-                                                            //  navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
-                                                            // Setting Of Data
+            ReviewCounter = value + " out of " + Totalvalue;
+
+            if (value == Totalvalue) { SetDataFromDataBase(LessonId); }
+
+
+            // + "(:=> " + tt;
+            //  navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+            // Setting Of Data
         }
         void fileData()
         {
@@ -229,8 +249,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             var DicData = _dictionaryModellist.FirstOrDefault(x => x.DicStrongNo == strongNo);
             if (DicData != null && string.IsNullOrEmpty(BibleTxtMediaUrl))
             {
-                BibleTxtMediaUrl = EntityConfig.MediaUriPictures + DicData.ListOfPictures.LastOrDefault();
-                BibleSoundMediaUrl = EntityConfig.MediaUriSounds + DicData.SoundUrl;//EntityConfig.MediaUriSounds +
+                BibleTxtMediaUrl = @"" + EntityConfig.MediaUriPictures + DicData.ListOfPictures.LastOrDefault();
+                BibleSoundMediaUrl = @"" + EntityConfig.MediaUriSounds + DicData.SoundUrl;//EntityConfig.MediaUriSounds +
             }
             else
             {

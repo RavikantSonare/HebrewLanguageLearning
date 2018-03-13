@@ -25,22 +25,18 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
     {
         
         int progressStatus=0;
-        string commonUri = @"D:\Ravi\Project\HLL\HebrewLanguageLearning\HebrewLanguageLearning_Users\Media\Videos\";
-        private  readonly INavigationService navigationService;
-        
-      
-
         public BibleLearningFromMediaView()
         {
-            InitializeComponent();
-          
-            setProgressBar(ref progressStatus);
-           
+            InitializeComponent();        
+            setProgressBar(ref progressStatus);           
         }
-
-       
+        
         private void setProgressBar(ref int status )
         {
+            if (Convert.ToInt32(Application.Current.Properties["CurretRedirection"])!=null)
+            {
+                progressStatus = Convert.ToInt32(Application.Current.Properties["CurretRedirection"]);
+            }
             ProgressBarUC _cuc = new ProgressBarUC();
             spProgress.Children.Add(_cuc.LoadProgressbar(status));
         }

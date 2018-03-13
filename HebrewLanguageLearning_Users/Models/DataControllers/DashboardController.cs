@@ -25,8 +25,9 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                         _objModel.completedLesson = Convert.ToInt32(row.ItemArray[0].ToString());
                         _objModel.completedPhases = Convert.ToInt32(row.ItemArray[1].ToString());
                         _objModel.completedParagraph = Convert.ToInt32(row.ItemArray[2].ToString());
-                        _objModel.LeftDate = row.ItemArray[3].ToString();
-                      
+                        _objModel.currentBookAndchapterId = row.ItemArray[3].ToString();
+                        _objModel.LeftDate = row.ItemArray[4].ToString();
+
                         //if (row.ItemArray[0].ToString() == _accountModel.UserName && row.ItemArray[1].ToString() == _accountModel.Password)
                         //{
                         //    loginStatus = true;
@@ -41,5 +42,20 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             return _objModel;
 
         }
+
+        internal bool SetUserProgress(string completedLesson)
+        {
+            try
+            {
+              _dbobj.UpdateData("HLL_ProgressOfUser", completedLesson);
+                return true;
+            }
+            catch
+            {
+
+            }
+            return true;
+        }
+       
     }
 }

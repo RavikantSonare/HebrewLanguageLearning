@@ -11,6 +11,7 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         public int completedLesson { get; set; }
         public int completedPhases { get; set; }
         public int completedParagraph { get; set; }
+        public string currentBookAndchapterId { get; set; }
         public string LeftDate { get; set; }
       
     }

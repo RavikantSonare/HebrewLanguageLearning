@@ -76,6 +76,7 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 [completedLesson] [INTEGER] NULL,
                 [completedPhases] [INTEGER] NULL,
                 [completedParagraph] [INTEGER] NULL,
+                [currentBookAndchapterId] [nvarchar](200) NULL,
                 [LeftDate] [nvarchar](200) NULL,
 	            [IsActive] [bit] NULL,
 	            [IsDelete] [bit] NULL)";
@@ -97,9 +98,6 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
             }
 
         }
-
-
-
         public List<string> _tblList = new List<string>() { "HLL_VocabDecks", "HLL_Configuration", "HLL_Progress" };
 
 
@@ -117,8 +115,7 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
             {
                 _dbcon.Close();
             }
-
-
+            
         }
 
         /// Insert Table Data
@@ -150,8 +147,8 @@ values");
 values ('user','user@123','User@hll.com', 'True','" + DateTime.UtcNow + "','True','False')");
                         break;
                     case "HLL_ProgressOfUser":
-                        customQuery.Append(@"insert into HLL_ProgressOfUser(completedLesson, completedPhases, completedParagraph, LeftDate, IsActive, IsDelete) 
-values (0,0,1,'" + DateTime.UtcNow + "','True','False')");
+                        customQuery.Append(@"insert into HLL_ProgressOfUser(completedLesson, completedPhases, completedParagraph, currentBookAndchapterId, LeftDate, IsActive, IsDelete) 
+values (0,0,1,'1Chr,1Chr.1','" + DateTime.UtcNow + "','True','False')");
 
                         break;
                          }
@@ -191,6 +188,10 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
 LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive from HLL_VocabDecks where IsCustomeDecks='True'");
                         break;
+                    case "HLL_VocabDecks_IsReviewAssociationCount":
+
+                        customQuery.Append(@"Select count() from HLL_VocabDecks where IsReviewAssociation='True' and LessonId='"+ dataFilter + "'");
+                        break;
                     case "HLL_VocabDecksLesson":
                         // IsReview = 'False' and
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
@@ -202,7 +203,7 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                         customQuery.Append(@"Select UserName, Password FROM HLL_AuthenticateUser ");
                         break;
                     case "HLL_ProgressOfUser":
-                        customQuery.Append(@"Select completedLesson, completedPhases, completedParagraph, LeftDate FROM HLL_ProgressOfUser ");
+                        customQuery.Append(@"Select completedLesson, completedPhases, completedParagraph, currentBookAndchapterId, LeftDate FROM HLL_ProgressOfUser ");
                         break;
 
                 }
@@ -237,6 +238,12 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                     case "HLL_VocabDecksIsReviewPassive":
                         customQuery.Append(@"update HLL_VocabDecks set IsReviewPassive='True' where StrongNo='" + tableData.Trim() + "'");
                         break;
+                    case "HLL_ProgressOfUser":
+                        customQuery.Append(@"update HLL_ProgressOfUser set completedLesson=" + tableData.Trim() + "");
+                        break;
+                    case "HLL_ProgressOfUserChapter":
+                        customQuery.Append(@"update HLL_ProgressOfUser set currentBookAndchapterId='" + tableData.Trim() + "'");
+                        break;
                 }
                 string Qry = Convert.ToString(customQuery);
 
@@ -247,6 +254,7 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
             {
                 Debug.WriteLine(ex.Message);
             }
+            
         }
         /// <summary>
         ///  DeleteLesson

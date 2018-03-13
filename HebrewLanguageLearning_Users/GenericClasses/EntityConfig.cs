@@ -80,7 +80,7 @@ namespace HebrewLanguageLearning_Users.GenericClasses
         ,new ProgressBarText{ id = 7,  Value="ASSOCIATION" }
         ,new ProgressBarText{ id = 8,  Value="ACTIVE KNOWLEDGE" }
         ,new ProgressBarText{ id = 9,  Value="THE FINAL ACT" }
-        ,new ProgressBarText{ id = 10, Value="APPLICATION" }
+        //,new ProgressBarText{ id = 10, Value="APPLICATION" }
         };
         #endregion
 

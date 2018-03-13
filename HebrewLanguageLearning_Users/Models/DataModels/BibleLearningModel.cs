@@ -32,6 +32,7 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
     {
         public string ElementStrogNo { get; set; }
         public string ElementValue { get; set; }
+        public string currentBookAndchapterId { get; set; }
         public bool SelctedElementValue { get; set; }
        
     }

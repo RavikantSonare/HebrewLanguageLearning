@@ -14,8 +14,7 @@
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="{DynamicResource MaterialDesignFont}"
       Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top"
-       xmlns:cal="http://www.caliburnproject.org"
-          >
+       xmlns:cal="http://www.caliburnproject.org" >
     <Page.Resources>
         <Style x:Key="Sound" TargetType="{x:Type Image}">
             <Style.Triggers>

@@ -10,37 +10,55 @@ using HebrewLanguageLearning_Users.CommonHelper;
 using System.Windows.Controls;
 using HebrewLanguageLearning_Users.GenericClasses;
 using System.Windows.Forms;
+using HebrewLanguageLearning_Users.Views.CommonUserControls;
 
 namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 {
+   
     public class BibleLearningFromMediaWordChoiceViewModel : Conductor<object>
     {
         BibleLearningController _ObjBC = new BibleLearningController();
         static List<DictionaryModel> _dictionaryModellist = new List<DictionaryModel>();
         SettingController _ObjSC = new SettingController();
+
+        // Getting Data From Database
+        DashboardController ObjDC = new DashboardController();
+        DashboardModel _objModel = new DashboardModel();
+
+        // Set Lesson Id
+        static string LessonId = string.Empty;
+
         // Set Current Image
         static VocabularyModel _ObjCurrentImage = new VocabularyModel();
+
+       
 
         private readonly INavigationService navigationService;
         public BibleLearningFromMediaWordChoiceViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
-            string LessonId = "3";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
-            if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
+            GetDataFromDataBase();
+            // Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+            //string LessonId = Convert.ToString(System.Windows.Application.Current.Properties["WordLessonId"]);
+            //if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
         }
-        //public BibleLearningFromMediaWordChoiceViewModel()
-        //{
-        //    string LessonId = "1";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
-        //    if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(LessonId.Replace("Lesson ", string.Empty)); };
-        //}
+        public void GetDataFromDataBase()
+        {
+            _objModel = ObjDC.getUserProgress(); LessonId = Convert.ToString(_objModel.completedLesson + 1);
+            VocabDecksLesson();
+        }
+        public void SetDataFromDataBase(string completedLesson)
+        {
+            var Data = ObjDC.SetUserProgress(completedLesson);
+            LessonId = Convert.ToString(_objModel.completedLesson + 1);
+        }
         protected override void OnActivate()
         {
-
             base.OnActivate();
             fileData();
-
         }
 
+        
         #region Property
         public string _reviewCounter;
         public string _bibleTxtVocabdocks;
@@ -107,15 +125,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             }
         }
 
-
         #endregion
-
-
-
-
+       
         public void VocabDecksLesson()
         {
-            string LessonId = "3"; //Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+            //string LessonId = "3"; //Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
             try
             {
                 int TotalValue;
@@ -158,6 +172,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 }
 
             }
+            catch (Exception ex) { }
             finally { }
             //SetWord(CurrentGroup);
             // SetWord(s.LessonDecks); PnlWordChoiceList
@@ -172,6 +187,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         void SetCounter(int value, int Totalvalue)
         {
             ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
+            if (value== Totalvalue) { SetDataFromDataBase(LessonId); }
         }
         void fileData()
         {

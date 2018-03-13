@@ -78,7 +78,6 @@
             <ItemsControl  ItemsSource="{Binding PnlWordChoiceList}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-
                         <WrapPanel  Orientation="Horizontal" HorizontalAlignment="Right">
                         </WrapPanel>
                     </ItemsPanelTemplate>

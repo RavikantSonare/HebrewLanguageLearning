@@ -29,6 +29,7 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
         }
         private void setProgressBar(ref int status)
         {
+           
             ProgressBarUC _cuc = new ProgressBarUC();
             spProgress.Children.Add(_cuc.LoadProgressbar(progressStatus));
         }

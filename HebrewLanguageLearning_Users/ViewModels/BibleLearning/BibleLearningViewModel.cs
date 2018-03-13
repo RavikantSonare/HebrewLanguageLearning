@@ -17,7 +17,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 {
     public class BibleLearningViewModel : Conductor<object>
     {
-        BibleLearningController _ObjBC = new BibleLearningController();
+        BibleLearningController _ObjBLC = new BibleLearningController();
         SettingController _ObjSC = new SettingController();
         public static BibleLearningModel ObjBook = new BibleLearningModel();
         public List<bookElements> _BibleTxtLesson;
@@ -31,6 +31,13 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             }
         }
 
+
+        // Getting Data From Database
+        DashboardController ObjDC = new DashboardController();
+        DashboardModel _objModel = new DashboardModel();
+
+        // Set Lesson Id
+        static string LessonId = string.Empty;
 
         //for Right Panel and overleap screen.
 
@@ -106,7 +113,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => ItemBookVerse);
             }
         }
-        
+
         public string BibleTxtdocks
         {
             get { return _bibleTxtdocks; }
@@ -143,7 +150,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => BibleTxtEnglish);
             }
         }
-        
+
         public string StrongNo
         {
             get { return _strongNo; }
@@ -215,7 +222,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             base.OnActivate();
             _dictionaryModellist = _ObjSC.getDataFromLocalFile();
             VocabDecksMenu();
-          
+
             //MessageBox.Show("Deshboard");//This is for testing - currently doesn't display
         }
 
@@ -225,7 +232,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             string _currentfileName = _ObjList.Value;
             if (!string.IsNullOrEmpty(_currentfileName))
             {
-                ObjBook = _ObjBC.ShowBookData(_currentfileName);
+                ObjBook = _ObjBLC.ShowBookData(_currentfileName);
                 //  ItemBookChapter = ObjBook._ChapterList;
                 //  SelectVerse(ObjBook._ChapterList.FirstOrDefault().Value);
 
@@ -265,7 +272,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             if (sender != null)
             {
                 var strongNo = ((System.Windows.FrameworkElement)sender).Tag;
+                var BookAndChapterId = ((System.Windows.FrameworkElement)sender).ToolTip;
                 SetRightSideData(Convert.ToString(strongNo));
+                setchapterForUserProgress(Convert.ToString(BookAndChapterId));
             }
 
         }
@@ -275,7 +284,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             BibileTextList _obj = GetDescription(strongNo);
             BibleTxtHebrew = _obj.proBibleTxtHebrew;
             BibleTxtEnglish = _obj.proBibleTxtEnglish;
-            BibleTxtMediaUrl = _obj.proMediaURl;
+            BibleTxtMediaUrl = EntityConfig.MediaUriPictures + _obj.proMediaURl;
             DescriptionTxt = _obj.proDescriptionTxt;
             ExampleTxt = _obj.proExampleTxt;
             SemanticDomainTxt = _obj.proSemanticDomainTxt;
@@ -340,8 +349,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
         public void VocabDecksMenu()
         {
-            VocabularyLesson = _ObjBC.GetVocabDesks("HLL_VocabDecks");
-            VocabularyLesson_Custom = _ObjBC.GetVocabDesks("HLL_VocabDecks_Custom");
+            VocabularyLesson = _ObjBLC.GetVocabDesks("HLL_VocabDecks");
+            VocabularyLesson_Custom = _ObjBLC.GetVocabDesks("HLL_VocabDecks_Custom");
         }
 
         public void MouseDown_CustomDecks(object sender, MouseEventArgs e)
@@ -361,29 +370,45 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 _obj.ActiveStatus = true;
                 _obj.IsActive = true;
                 _obj.IsDelete = false;
-                _ObjBC.SetVocabDesks(_obj);
+                _ObjBLC.SetVocabDesks(_obj);
             }
             VocabDecksMenu();
         }
 
         public void MouseDown_CustomDecksReview(object sender, MouseEventArgs e)
         {
+
             // navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
-            navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
+
             if (String.IsNullOrEmpty(BibleTxtVocabdocks))
             {
-                System.Windows.Application.Current.Properties["WordName"] = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+                //System.Windows.Application.Current.Properties["WordName"] = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+                System.Windows.Application.Current.Properties["CurretRedirection"] = 3;
+                var Id = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+                if (Id != null)
+                {
+                    Id = Id.Replace("Lesson ", string.Empty);
+                }
+                var GetLessonStatus = GetDataFromDataBase(Id);
+                if (!GetLessonStatus)
+                {
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
+                }
+                else
+                {
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+                }
             }
-           
+
         }
         public void MouseDown_CustomDecksDelete(object sender, MouseEventArgs e)
         {
             VocabularyModel _obj = new VocabularyModel();
-            var VocabDocLessonId = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag); 
-           
+            var VocabDocLessonId = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+
             if (!String.IsNullOrWhiteSpace(VocabDocLessonId))
             {
-                _ObjBC.DeleteLesson(VocabDocLessonId);
+                _ObjBLC.DeleteLesson(VocabDocLessonId);
             }
             VocabDecksMenu();
         }
@@ -392,6 +417,34 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         {
             navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
         }
+
+        /// <summary>
+        /// Get Data From Database for Assocciations Or passive 
+        /// </summary>
+        /// <param name="CurrentLessionId"></param>
+        /// <returns></returns>
+
+        public bool GetDataFromDataBase(string CurrentLessionId)
+        {
+            var total_Cnt = VocabularyLesson.Where(p => p.LessonId == "Lesson " + CurrentLessionId).FirstOrDefault().vocabularyModel.Count();
+            var totalTrue_Cnt = _ObjBLC.getIsReviewAssociationCount(CurrentLessionId);
+
+            LessonId = Convert.ToString(_objModel.completedLesson);
+
+            //if (Convert.ToInt32(CurrentLessionId) <= Convert.ToInt32(LessonId))
+            if (total_Cnt == totalTrue_Cnt)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        void setchapterForUserProgress(string BookAndChapterId)
+        {
+            _ObjBLC.setProgressOfUserChapter(BookAndChapterId);
+        }
     }
-    
+
 }
