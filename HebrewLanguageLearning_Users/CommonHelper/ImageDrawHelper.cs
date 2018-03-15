@@ -74,7 +74,12 @@ namespace HebrewLanguageLearning_Users.CommonHelper
             _border.Child = _canvas;
             return _border;
         }
-
+        /// <summary>
+        ///  Current Status Locator.
+        /// </summary>
+        /// <param name="MarginPro"></param>
+        /// <param name="CurrentTopicNo"></param>
+        /// <returns></returns>
         internal static Border currentLocationIndicator(double MarginPro, int CurrentTopicNo)
         {
             var _border = new Border();

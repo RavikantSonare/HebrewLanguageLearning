@@ -36,8 +36,11 @@ namespace HebrewLanguageLearning_Users.ViewModels
             container.Instance(navigationService);
 
             // navigationService.NavigateToViewModel(typeof(Account.LoginViewModel));
-             navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
+            // navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
             //  navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
+
+            navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningWordTypingViewModel));
+            
 
             // navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
             //navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));

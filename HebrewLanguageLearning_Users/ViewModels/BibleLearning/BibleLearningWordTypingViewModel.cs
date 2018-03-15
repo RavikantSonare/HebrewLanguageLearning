@@ -1,21 +1,21 @@
 ﻿using Caliburn.Micro;
+using HebrewLanguageLearning_Users.GenericClasses;
 using HebrewLanguageLearning_Users.Models.DataControllers;
+using HebrewLanguageLearning_Users.Models.DataModels;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HebrewLanguageLearning_Users.Models.DataModels;
-using HebrewLanguageLearning_Users.CommonHelper;
+using System.Windows;
 using System.Windows.Controls;
-using HebrewLanguageLearning_Users.GenericClasses;
 using System.Windows.Forms;
-using HebrewLanguageLearning_Users.Views.CommonUserControls;
+using System.Windows.Media;
 
 namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 {
-
-    public class BibleLearningFromMediaWordChoiceViewModel : Conductor<object>
+    public class BibleLearningWordTypingViewModel : Conductor<object>
     {
         BibleLearningController _ObjBC = new BibleLearningController();
         static List<DictionaryModel> _dictionaryModellist = new List<DictionaryModel>();
@@ -30,24 +30,21 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
         // Set Current Image
         static VocabularyModel _ObjCurrentImage = new VocabularyModel();
-
-
-
         private readonly INavigationService navigationService;
-        public BibleLearningFromMediaWordChoiceViewModel(INavigationService navigationService)
+        public BibleLearningWordTypingViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
             GetDataFromDataBase();
             // Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
-            //string LessonId = Convert.ToString(System.Windows.Application.Current.Properties["WordLessonId"]);
-            //if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
+            // string LessonId = Convert.ToString(System.Windows.Application.Current.Properties["WordLessonId"]);
+            // if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
         }
         public void GetDataFromDataBase()
         {
             _objModel = ObjDC.getUserProgress(); LessonId = Convert.ToString(_objModel.completedLesson + 1);
             VocabDecksLesson();
         }
-        public void SetDataFromDataBase(string completedLesson,string completed_Screen_Status)
+        public void SetDataFromDataBase(string completedLesson, string completed_Screen_Status)
         {
             var Data = ObjDC.SetUserProgress(completedLesson, completed_Screen_Status);
             LessonId = Convert.ToString(_objModel.completedLesson + 1);
@@ -62,11 +59,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         #region Property
         public string _reviewCounter;
         public string _bibleTxtVocabdocks;
+        public string _rightWorldTextBlock;
         public string _bibleTxtHebrew;
         public string _bibleTxtEnglish;
         public List<VocabularyModel> _pnlWordChoiceList;
         public string _bibleTxtMediaUrl;
-
         public string ReviewCounter
         {
             get { return _reviewCounter; }
@@ -103,6 +100,15 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => BibleTxtEnglish);
             }
         }
+        public string RightWorldTextBlock
+        {
+            get { return _rightWorldTextBlock; }
+            set
+            {
+                _rightWorldTextBlock = value;
+                NotifyOfPropertyChange(() => RightWorldTextBlock);
+            }
+        }
 
         public List<VocabularyModel> PnlWordChoiceList
         {
@@ -114,7 +120,6 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             }
         }
         public List<VocabDecksGroupModel> VocabularyLesson { get; private set; }
-
         public string BibleTxtMediaUrl
         {
             get { return _bibleTxtMediaUrl; }
@@ -161,7 +166,6 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 PnlWordChoiceList = new List<VocabularyModel>(tmpVM);
                 PnlWordChoiceList.ForEach(z => { var Data = SetWord(z.LessonDecks); z.LessonDecks = Data.Length == 3 ? Data[2] : Data[0]; });
 
-
                 // set Rendom Logic
                 if (PnlWordChoiceList.Count > 0)
                 {
@@ -177,7 +181,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             }
             catch (Exception ex) { }
             finally { }
-            //SetWord(CurrentGroup);
+            // SetWord(CurrentGroup);
             // SetWord(s.LessonDecks); PnlWordChoiceList
         }
 
@@ -186,7 +190,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             string[] tempArray = currentGroup.Split(',');
             return tempArray;
         }
-        static int tt = 0;
+
         void SetCounter(int value, int Totalvalue)
         {
             string completed_Screen_Status = "1";
@@ -209,7 +213,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         }
         public void MouseDown_WordClick(object sender, MouseEventArgs e)
         {
-            tt++;
+
             string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
             if (StrongNo == _ObjCurrentImage.StrongNo)
             {
@@ -220,10 +224,25 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             // HLL_VocabDecks
             // System.Windows.Application.Current.Shutdown();
         }
+        /// <summary>
+        /// D
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void MouseDown_submit(object sender, MouseEventArgs e)
+        {
+            // RightWorldTextBlock;
+            if (RightWorldTextBlock.ToUpper().Trim() == _ObjCurrentImage.LessonDecks.ToUpper().Trim())
+            {
+                _ObjBC.UpdateReviewData("HLL_ProgressOfUserIsActiveKnowledge", _ObjCurrentImage.StrongNo);
+            }
+            VocabDecksLesson();
+        }
         // Goto Previes Pages
         public void MouseDown_RightPanel(object sender, MouseEventArgs e)
         {
             navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
         }
+
     }
 }

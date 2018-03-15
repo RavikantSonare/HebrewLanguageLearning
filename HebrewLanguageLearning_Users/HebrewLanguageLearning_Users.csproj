@@ -131,6 +131,7 @@
     <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaWordChoiceViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningViewModel.cs" />
+    <Compile Include="ViewModels\BibleLearning\BibleLearningWordTypingViewModel.cs" />
     <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
     <Compile Include="ViewModels\Game\JerichoGameViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -148,6 +149,9 @@
     </Compile>
     <Compile Include="Views\BibleLearning\BibleLearningView.xaml.cs">
       <DependentUpon>BibleLearningView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BibleLearning\BibleLearningWordTypingView.xaml.cs">
+      <DependentUpon>BibleLearningWordTypingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CommonUserControls\ProgressBarUC.xaml.cs">
       <DependentUpon>ProgressBarUC.xaml</DependentUpon>
@@ -219,6 +223,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BibleLearning\BibleLearningView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BibleLearning\BibleLearningWordTypingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

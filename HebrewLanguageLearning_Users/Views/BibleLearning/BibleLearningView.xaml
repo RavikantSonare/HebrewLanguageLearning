@@ -253,7 +253,7 @@
                                             <TreeViewItem.Header>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Width="200" FontSize="18" Text="{Binding LessonId}"  cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecks($source, $eventArgs)]"/>
-                                                    <TextBlock Margin="4"  FontSize="12" HorizontalAlignment="Right" Tag="{Binding LessonId}" Text="Review" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksReview($source, $eventArgs)]"/>
+                                                    <TextBlock Margin="4"  FontSize="12" HorizontalAlignment="Right" Tag="{Binding LessonId}" Text="Learn" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksReview($source, $eventArgs)]"/>
                                                     <TextBlock Margin="4 4 4 0" Tag="{Binding LessonId}" FontSize="12" HorizontalAlignment="Right" Text="X" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksDelete($source, $eventArgs)]"/>
                                                 </StackPanel>
                                             </TreeViewItem.Header>

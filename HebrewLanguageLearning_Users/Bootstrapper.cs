@@ -36,6 +36,7 @@ namespace HebrewLanguageLearning_Users
                .PerRequest<ViewModels.BibleLearning.BibleLearningViewModel>()
                .PerRequest<ViewModels.BibleLearning.BibleLearningFromMediaViewModel>()
                .PerRequest<ViewModels.BibleLearning.BibleLearningFromMediaWordChoiceViewModel>()
+               .PerRequest<ViewModels.BibleLearning.BibleLearningWordTypingViewModel>()
                .PerRequest<ViewModels.Game.JerichoGameViewModel>();
              }
 

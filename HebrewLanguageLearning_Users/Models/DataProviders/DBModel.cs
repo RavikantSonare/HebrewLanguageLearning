@@ -65,7 +65,10 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
 	            [IsActive] [bit] NULL,
 	            [IsDelete] [bit] NULL,
                 [IsReviewAssociation] [bit] NULL,
-                [IsReviewPassive] [bit] NULL)";
+                [IsReviewPassive] [bit] NULL,
+                [IsReviewGameA] [bit] NULL,
+                [IsActiveKnowledge] [bit] NULL,
+                [IsReviewGameB] [bit] NULL)";
                 ExcecuteTheQuery(_TableString, "I");
                 #endregion
 
@@ -77,6 +80,7 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 [completedPhases] [INTEGER] NULL,
                 [completedParagraph] [INTEGER] NULL,
                 [currentBookAndchapterId] [nvarchar](200) NULL,
+                [currentScreenStatus] [INTEGER] NULL,
                 [LeftDate] [nvarchar](200) NULL,
 	            [IsActive] [bit] NULL,
 	            [IsDelete] [bit] NULL)";
@@ -129,17 +133,15 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 switch (tableName)
                 {
                     case "HLL_VocabDecks":
-
                         var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
-                        customQuery.Append(@"insert into HLL_VocabDecks(LessonId, StrongNo, DictionaryEntriesId, 
-Description,
-LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive) 
+                        customQuery.Append(@"insert into HLL_VocabDecks(LessonId, StrongNo, DictionaryEntriesId, Description,
+LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB) 
 values");
                         foreach (var item in _DictionaryModellist)
                         {
                             customQuery.Append("('" + item.LessonId + "','" + item.StrongNo + "','" + item.DictionaryEntriesId + "', '"
     + item.Description + "','" + item.LessonDecks + "','" + item.IsCustomeDecks + "','" +
-    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False'),");
+    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False','False','False','False'),");
                         }
                         break;
                         case "HLL_AuthenticateUser":
@@ -147,8 +149,8 @@ values");
 values ('user','user@123','User@hll.com', 'True','" + DateTime.UtcNow + "','True','False')");
                         break;
                     case "HLL_ProgressOfUser":
-                        customQuery.Append(@"insert into HLL_ProgressOfUser(completedLesson, completedPhases, completedParagraph, currentBookAndchapterId, LeftDate, IsActive, IsDelete) 
-values (0,0,1,'1Chr,1Chr.1','" + DateTime.UtcNow + "','True','False')");
+                        customQuery.Append(@"insert into HLL_ProgressOfUser(completedLesson, completedPhases, completedParagraph, currentBookAndchapterId, currentScreenStatus, LeftDate, IsActive, IsDelete) 
+values (0,0,1,'1Chr,1Chr.1',1,'" + DateTime.UtcNow + "','True','False')");
 
                         break;
                          }
@@ -203,7 +205,7 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                         customQuery.Append(@"Select UserName, Password FROM HLL_AuthenticateUser ");
                         break;
                     case "HLL_ProgressOfUser":
-                        customQuery.Append(@"Select completedLesson, completedPhases, completedParagraph, currentBookAndchapterId, LeftDate FROM HLL_ProgressOfUser ");
+                        customQuery.Append(@"Select completedLesson, completedPhases, completedParagraph, currentScreenStatus, currentBookAndchapterId, LeftDate FROM HLL_ProgressOfUser ");
                         break;
 
                 }
@@ -243,6 +245,12 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                         break;
                     case "HLL_ProgressOfUserChapter":
                         customQuery.Append(@"update HLL_ProgressOfUser set currentBookAndchapterId='" + tableData.Trim() + "'");
+                        break;
+                    case "HLL_ProgressOfUsercurrentScreenStatus":
+                        customQuery.Append(@"update HLL_ProgressOfUser set currentScreenStatus='" + tableData.Trim() + "'");
+                        break;
+                    case "HLL_ProgressOfUserIsActiveKnowledge":
+                        customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledge='True' where StrongNo='" + tableData.Trim() + "'");
                         break;
                 }
                 string Qry = Convert.ToString(customQuery);

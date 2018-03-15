@@ -38,7 +38,7 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
                 progressStatus = Convert.ToInt32(Application.Current.Properties["CurretRedirection"]);
             }
             ProgressBarUC _cuc = new ProgressBarUC();
-            spProgress.Children.Add(_cuc.LoadProgressbar(status));
+            spProgress.Children.Add(_cuc.LoadProgressbar(status,1));
         }
         
 

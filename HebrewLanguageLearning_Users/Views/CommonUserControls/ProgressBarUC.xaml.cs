@@ -29,7 +29,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             InitializeComponent();
         }
         static int prgBarId = 0;
-        internal Grid LoadProgressbar(int prgBarIdCallie)
+        internal Grid LoadProgressbar(int prgBarIdCallie, int prgBarProgressNumber)
         {
             Grid gd_main = new Grid();
             UIElementCollection gd = gd_main.Children;
@@ -59,7 +59,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
 
                 };
                 gd.Add(BlankLine(600, HorizontalAlignment.Left));
-                gd.Add(FillLine(100 * 2, HorizontalAlignment.Left));
+                gd.Add(FillLine(110 * (prgBarProgressNumber + 1), HorizontalAlignment.Left));
                 gd.Add(BlankLine(360, HorizontalAlignment.Right));
                 gd.Add(_VertyLine);
             }
@@ -102,12 +102,15 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                     //gd.Add(createImage(0, new Thickness(870, -53, 0, 0)));
                     break;
                 default:
-                    for (int i = 1; i <= 9; i++)
+                    for (int i = 1; i <= 10; i++)
                     {
                         if (i != 5 && i != 9)
                         {
-                            if (i == 1 && prgBarId == 1)
-                            { gd.Add(createImage(1, new Thickness(_dic[i], -53, 0, 0))); }
+                            // i == 1 && prgBarId == 1
+                            if (i <= prgBarProgressNumber)
+                            {
+                                gd.Add(createImage(1, new Thickness(_dic[i], -53, 0, 0)));
+                            }
                             else
                             {
                                 gd.Add(createImage(2, new Thickness(_dic[i], -53, 0, 0)));
@@ -136,7 +139,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                     gd.Add(_stcPnl);
                     break;
                 case 3:
-                    int i = 1;  Dictionary<int, int> _dicTmp = new Dictionary<int, int>();
+                    int i = 1; Dictionary<int, int> _dicTmp = new Dictionary<int, int>();
                     _dicTmp.Add(1, 90);
                     _dicTmp.Add(2, 200);
                     _dicTmp.Add(3, 200);
@@ -153,7 +156,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 default:
                     foreach (var Item in EntityConfig._ProgressBarAssociationListSecond)
                     {
-                        _canPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, Item.id == 0 || Item.id == 6 ? new Thickness(Item.id == 0 ? 110 : 650, -96, 5, 10) : new Thickness(j, 10, 5, 10), Item.id == 2 ? true : false));
+                        _canPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, Item.id == 0 || Item.id == 6 ? new Thickness(Item.id == 0 ? 110 : 650, -96, 5, 10) : new Thickness(j, 10, 5, 10), Item.id == (prgBarProgressNumber + 1) ? true : false));
                         if (Item.id == 0 || Item.id == 6) { gd.Add(createImage(3, new Thickness(Item.id == 0 ? 190 : 715, -115, 5, 10))); }
                         j += Item.Value.Length * 8;
                     }
@@ -271,15 +274,6 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                         break;
                 }
 
-            if (prgBarId == 0)
-            {
-
-
-            }
-            else
-            {
-
-            }
 
         }
     }

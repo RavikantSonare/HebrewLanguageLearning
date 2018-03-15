@@ -221,17 +221,17 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             return tempArray;
         }
 
-        public void SetDataFromDataBase(string completedLesson)
+        public void SetDataFromDataBase(string completedLesson, string completed_Screen_Status)
         {
-            var Data = ObjDC.SetUserProgress(completedLesson);
+            var Data = ObjDC.SetUserProgress(completedLesson, completed_Screen_Status);
             LessonId = Convert.ToString(_objModel.completedLesson + 1);
         }
 
         void SetCounter(int value, int Totalvalue)
         {
             ReviewCounter = value + " out of " + Totalvalue;
-
-            if (value == Totalvalue) { SetDataFromDataBase(LessonId); }
+            string completed_Screen_Status = "2";
+            if (value == Totalvalue) { SetDataFromDataBase(LessonId, completed_Screen_Status); }
 
 
             // + "(:=> " + tt;

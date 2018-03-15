@@ -41,13 +41,13 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
             var LeftData = Convert.ToDateTime(_objModel.LeftDate);
             LastLeftDate.Text = "Where you left off on " + LeftData.ToString("MMMM dd, yyyy"); ;
             int _CurrentLevel = (_objModel.completedLesson / 50) + 1;
-            CompleteLessonStatusSeter(5, _CurrentLevel, _objModel.completedLesson % 50 * 2);
-            RectingleChildControllerAdd_Loaded(_objModel.completedLesson);
+            CompleteLesson_level_StatusSeter(5, _CurrentLevel, _objModel.completedLesson % 50 * 2);
+            RectingleChildControllerAdd_Loaded_Left(_objModel.completedLesson, _objModel.currentScreenStatus);
 
             // Set Last Topic Data
-            getchapterForUserProgress(_objModel.currentBookAndchapterId);
+            getchapterForUserProgressRight(_objModel.currentBookAndchapterId);
         }
-        private void CompleteLessonStatusSeter(int CurrentPossion, int _CurrentLevel, int _PercentOfComplete)
+        private void CompleteLesson_level_StatusSeter(int CurrentPossion, int _CurrentLevel, int _PercentOfComplete)
         {
 
             ////////********************/////////////////// Set Level  //////////////****************////////////
@@ -148,10 +148,10 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
 
         }
 
-        private void RectingleChildControllerAdd_Loaded(int _completedLesson)
+        private void RectingleChildControllerAdd_Loaded_Left(int _completedLesson, int _current_Screen_TopicNo)
         {
             int SetColomnHeight = 0; int SetRowWidht = 0;
-            int _currentTopicNo = 5;
+            //int _current_Screen_TopicNo = 5;
             string _currentTopicName = "Culture";
             //int _completedLesson = 35;
             int tooltip = _completedLesson + 3;
@@ -224,7 +224,7 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                 }
                 else
                 {
-                    var CurrentLocator = ImageDrawHelper.currentLocationIndicator(1, _currentTopicNo);
+                    var CurrentScreenLocator = ImageDrawHelper.currentLocationIndicator(1, _current_Screen_TopicNo);
                     Point Point1 = new Point(-5, 0);
                     Point Point2 = new Point(5, 12);
                     Point Point3 = new Point(15, 0);
@@ -234,15 +234,15 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                     Canvas.SetLeft(CurrentLessonLable, SetRowWidht);
                     Canvas.SetTop(CurrentLessonLable, SetColomnHeight - 45);
 
-                    Canvas.SetLeft(TriangleSet, SetRowWidht + 9 * _currentTopicNo);
+                    Canvas.SetLeft(TriangleSet, _current_Screen_TopicNo * (SetRowWidht + 9.7));
                     Canvas.SetTop(TriangleSet, SetColomnHeight - 25);
 
-                    Canvas.SetLeft(CurrentLocator, SetRowWidht);
-                    Canvas.SetTop(CurrentLocator, SetColomnHeight);
+                    Canvas.SetLeft(CurrentScreenLocator, SetRowWidht);
+                    Canvas.SetTop(CurrentScreenLocator, SetColomnHeight);
 
                     RectingleController.Children.Add(CurrentLessonLable);
                     RectingleController.Children.Add(TriangleSet);
-                    RectingleController.Children.Add(CurrentLocator);
+                    RectingleController.Children.Add(CurrentScreenLocator);
 
                     SetRowWidht = SetRowWidht + 78;
                 }
@@ -250,7 +250,7 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
             }
         }
 
-        private void getchapterForUserProgress(string BookAndChapterId)
+        private void getchapterForUserProgressRight(string BookAndChapterId)
         {
             string[] tmpBookAndChapterId = BookAndChapterId.Split(',');
 
@@ -266,18 +266,17 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                     //tmpTxt = "_"+Convert.ToString(i+" ");
                     foreach (var item in itemChecpter.wElementList)
                     {
-                        tmpTxt += item.ElementValue+" ";
+                        tmpTxt += item.ElementValue + " ";
                     }
-                    BibleTxt.Text += tmpTxt+ "\n";
-                    
-                     tmpTxt = string.Empty;
+                    BibleTxt.Text += tmpTxt + "\n";
+                    tmpTxt = string.Empty;
                     if (i >= 5)
                     {
                         break;
                     }
-                     i++;
+                    i++;
                 }
-                
+
             }
 
 

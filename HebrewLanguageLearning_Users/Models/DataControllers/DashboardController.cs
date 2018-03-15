@@ -9,7 +9,7 @@ using HebrewLanguageLearning_Users.Models.DataModels;
 
 namespace HebrewLanguageLearning_Users.Models.DataControllers
 {
-  public class DashboardController
+    public class DashboardController
     {
         DBModel _dbobj = new DBModel();
         public DashboardModel getUserProgress()
@@ -25,8 +25,9 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                         _objModel.completedLesson = Convert.ToInt32(row.ItemArray[0].ToString());
                         _objModel.completedPhases = Convert.ToInt32(row.ItemArray[1].ToString());
                         _objModel.completedParagraph = Convert.ToInt32(row.ItemArray[2].ToString());
-                        _objModel.currentBookAndchapterId = row.ItemArray[3].ToString();
-                        _objModel.LeftDate = row.ItemArray[4].ToString();
+                        _objModel.currentScreenStatus = Convert.ToInt32(row.ItemArray[3].ToString());
+                        _objModel.currentBookAndchapterId = row.ItemArray[4].ToString();
+                        _objModel.LeftDate = row.ItemArray[5].ToString();
 
                         //if (row.ItemArray[0].ToString() == _accountModel.UserName && row.ItemArray[1].ToString() == _accountModel.Password)
                         //{
@@ -43,11 +44,12 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
         }
 
-        internal bool SetUserProgress(string completedLesson)
+        internal bool SetUserProgress(string completedLesson, string completed_Screen_Status)
         {
             try
             {
-              _dbobj.UpdateData("HLL_ProgressOfUser", completedLesson);
+                _dbobj.UpdateData("HLL_ProgressOfUser", completedLesson);
+                _dbobj.UpdateData("HLL_ProgressOfUsercurrentScreenStatus", completed_Screen_Status);
                 return true;
             }
             catch
@@ -56,6 +58,6 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
             return true;
         }
-       
+
     }
 }
