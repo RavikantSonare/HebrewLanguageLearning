@@ -61,6 +61,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 gd.Add(BlankLine(600, HorizontalAlignment.Left));
                 gd.Add(FillLine(110 * (prgBarProgressNumber + 1), HorizontalAlignment.Left));
                 gd.Add(BlankLine(360, HorizontalAlignment.Right));
+                gd.Add(FillLine(110 * (prgBarProgressNumber - 4), HorizontalAlignment.Left));
                 gd.Add(_VertyLine);
             }
 

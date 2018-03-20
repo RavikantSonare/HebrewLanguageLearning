@@ -143,7 +143,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
                 var CurrentGroup = VocabularyLesson.SelectMany(p => p.vocabularyModel).ToList();
                 TotalValue = CurrentGroup.Count();
-                CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
+                CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledge == false).ToList();
                 SetCounter(TotalValue - CurrentGroup.Count(), TotalValue);
                 int totalCheck = 0;
                 var rand = new Random();
@@ -195,8 +195,18 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         {
             string completed_Screen_Status = "1";
             ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
-            if (value == Totalvalue) { SetDataFromDataBase(LessonId, completed_Screen_Status); }
+
+            if (value == Totalvalue) {
+                SetScreenNoInDataBase("5");
+                //SetDataFromDataBase(LessonId, completed_Screen_Status); 
+            }
         }
+
+        private void SetScreenNoInDataBase(string screenNo)
+        {
+           ObjDC.SetUserProgressScreen(screenNo);
+        }
+
         void fileData()
         {
             if (_dictionaryModellist.Count() < 1)
@@ -211,31 +221,21 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 BibleTxtMediaUrl = EntityConfig.MediaUriPictures + DicData.ListOfPictures.LastOrDefault();
             }
         }
-        public void MouseDown_WordClick(object sender, MouseEventArgs e)
-        {
-
-            string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
-            if (StrongNo == _ObjCurrentImage.StrongNo)
-            {
-                _ObjBC.UpdateReviewData("HLL_VocabDecksIsReviewPassive", StrongNo);
-
-            }
-            VocabDecksLesson();
-            // HLL_VocabDecks
-            // System.Windows.Application.Current.Shutdown();
-        }
+       
         /// <summary>
-        /// D
+        /// Active Know
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void MouseDown_submit(object sender, MouseEventArgs e)
         {
             // RightWorldTextBlock;
-            if (RightWorldTextBlock.ToUpper().Trim() == _ObjCurrentImage.LessonDecks.ToUpper().Trim())
+
+            if (!string.IsNullOrEmpty(RightWorldTextBlock) && RightWorldTextBlock.ToUpper().Trim() == _ObjCurrentImage.LessonDecks.ToUpper().Trim())
             {
                 _ObjBC.UpdateReviewData("HLL_ProgressOfUserIsActiveKnowledge", _ObjCurrentImage.StrongNo);
             }
+            RightWorldTextBlock = "";
             VocabDecksLesson();
         }
         // Goto Previes Pages

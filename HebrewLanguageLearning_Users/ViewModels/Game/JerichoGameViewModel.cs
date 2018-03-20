@@ -44,6 +44,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         public string _bibleTxtEnglish;
         public List<VocabularyModel> _pnlWordChoiceList;
         public string _bibleTxtMediaUrl;
+      
+        
 
         public string ReviewCounter
         {
@@ -81,6 +83,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
                 NotifyOfPropertyChange(() => BibleTxtEnglish);
             }
         }
+
+       
 
         public List<VocabularyModel> PnlWordChoiceList
         {
@@ -177,13 +181,14 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
 
                     BibleTxtMediaUrl = "";
                 }
-
+               
             }
             finally { }
             //SetWord(CurrentGroup);
             // SetWord(s.LessonDecks); PnlWordChoiceList
         }
 
+       
         private string[] SetWord(string currentGroup)
         {
             string[] tempArray = currentGroup.Split(',');

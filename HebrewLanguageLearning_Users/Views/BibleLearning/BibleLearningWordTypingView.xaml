@@ -79,10 +79,10 @@
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Image Height="50"  Margin="20 30 0 0" Width="50" x:Name="imageLeftQuestion" HorizontalAlignment="Left"  Source="/HebrewLanguageLearning_Users;component/Assets/qustion.png"/>
                 <Border Background="Gainsboro" BorderBrush="Black" BorderThickness="3">
-                <StackPanel Margin="10">
-                    <TextBox x:Name="RightWorldTextBlock" Width="700" FontSize="70">Text Block</TextBox>
-                 </StackPanel>
-            </Border>
+                    <StackPanel Margin="10">
+                        <TextBox x:Name="RightWorldTextBlock" Width="700" FontSize="70">Text Block</TextBox>
+                    </StackPanel>
+                </Border>
                 <Image Height="50"  Margin="20 30 0 0" Width="50" x:Name="imageRightArrow" HorizontalAlignment="Left"  Source="/HebrewLanguageLearning_Users;component/Assets/left_arrow.png" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_submit($source, $eventArgs)]" />
 
             </StackPanel>
@@ -106,4 +106,5 @@
             <!--<CommonUserControls:ProgressBarUC/>-->
         </StackPanel>
     </Grid>
+
 </Page>

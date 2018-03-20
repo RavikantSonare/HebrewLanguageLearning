@@ -21,6 +21,11 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         public bool IsDelete { get; set; }
         public bool IsReviewAssociation { get; set; }
         public bool IsReviewPassive { get; set; }
+        public bool IsReviewGameA { get; set; }
+        public bool IsActiveKnowledge { get; set; }
+        public bool IsReviewGameB { get; set; }
+
+        
 
     }
 }

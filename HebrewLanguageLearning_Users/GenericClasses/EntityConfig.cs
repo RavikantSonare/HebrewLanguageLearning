@@ -17,6 +17,7 @@ namespace HebrewLanguageLearning_Users.GenericClasses
         internal static string MediaUriPictures = FolderBase + @"\" + Name + @"\Media\Pictures\";
         internal static string MediaUriSounds = FolderBase + @"\" + Name + @"\Media\Sounds\";
         internal static string MediaUriVideos = FolderBase + @"\" + Name + @"\Media\Videos\";
+        internal static string LocalfileRootPath = System.AppDomain.CurrentDomain.BaseDirectory;
         internal static Dictionary<int, string> APIList = new Dictionary<int, string>() { { 1, "SyncData" }, { 2, "SyncTable" } };
         #endregion
 

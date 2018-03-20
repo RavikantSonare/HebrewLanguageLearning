@@ -1,0 +1,127 @@
+﻿<Page x:Class="HebrewLanguageLearning_Users.Views.Game.ConquerCityGameView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HebrewLanguageLearning_Users.Views.Game"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="20"
+            TextOptions.TextFormattingMode="Ideal" 
+            TextOptions.TextRenderingMode="Auto"        
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+      Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top"
+       xmlns:cal="http://www.caliburnproject.org" >
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="193*"/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+
+        <!--Grid Column 0 Row 1-->
+        <WrapPanel  Grid.Column="4" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_RightPanel($source, $eventArgs)]">
+            <Label FontSize="25" FontWeight="Normal"  Width="23" Margin="0 0 0 0">
+                <TextBlock FontSize="25" FontWeight="Medium" Foreground="Gray" Margin="0 100 0 0" TextWrapping="Wrap">language       learning</TextBlock>
+            </Label>
+            <!--<Image Height="50"  Margin="20 30 0 0" Width="50" x:Name="imageCenterLeft" HorizontalAlignment="Center"  Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png"/>-->
+            <Image   Margin="20 30 0 0" Height="48" Width="48" x:Name="imageCenterLeft" Source="/HebrewLanguageLearning_Users;component/Assets/page_change.png">
+                <Image.RenderTransform>
+                    <TranslateTransform X="0" Y="10" />
+                </Image.RenderTransform>
+                <Image.Clip>
+                    <RectangleGeometry Rect="0 0 30 250" />
+                </Image.Clip>
+            </Image>
+
+            <Line Y1="830" HorizontalAlignment="Left"  Margin="-60 0 0 0" Stroke="#00D5B6" StrokeThickness="4" />
+        </WrapPanel>
+        <!--Grid Column 0 Row 1-->
+        <!--//Orientation="Horizontal"-->
+
+        <Canvas Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" >
+            <Image Height="600"  Margin="20 20 0 0" Width="500" x:Name="imageRightMap" HorizontalAlignment="Left"  Source="/HebrewLanguageLearning_Users;component/Assets/map-1.png"/>
+          
+            <ItemsControl  ItemsSource="{Binding MapImageList}" Height="600" Width="400" Margin="0" Canvas.Top="10" Canvas.Left="10">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas>
+                        </Canvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left" Value="{Binding ImgLeft}" />
+                        <Setter Property="Canvas.Top" Value="{Binding ImgTop}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Image Height="{Binding ImgHeight}"  Width="{Binding ImgWidth}" Source="{Binding ImgSource}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Height="32" Margin="750 60 0 0">
+                <!--<Label  Name="ReviewCounterGreenName" Content="1" Width="150" HorizontalAlignment="Right" Foreground="White" Background="Red" />
+                <Label  Name="ReviewCounterRed" Content="3" Width="150" HorizontalAlignment="Right" Foreground="White" Background="Green" />-->
+                <TextBlock x:Name="ReviewCounterRed" TextAlignment="Left" Width="180" Padding="2" Text="1" Foreground="White" Background="Red"></TextBlock>
+                <TextBlock x:Name="ReviewCounterGreen" TextAlignment="Right" Width="180" Padding="2" Text="3" Foreground="White" Background="Green"></TextBlock>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Height="32" Margin="750 30 0 0">
+
+                <TextBlock TextAlignment="Left" Width="180" Text="Caananites"></TextBlock>
+                <TextBlock TextAlignment="Right" Width="180" Text="You"></TextBlock>
+
+            </StackPanel>
+
+        </Canvas>
+        <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Column="1"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="39,10,40,22">
+            <Grid>
+                <StackPanel Height="300" Width="400" Orientation="Horizontal">
+                    <TextBlock Margin="50 -260 20 1" Width="120" x:Name="ReviewCounter" Height="40" Text="20 cities left!"></TextBlock>
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Gray" CornerRadius="5" BorderThickness="3" >
+                        <StackPanel Height="300" Width="200" Orientation="Vertical">
+                            <!--<TextBlock x:Name="BibleTxt"  FontSize="20" Grid.Row="4" Height="400" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
+                            <!--<MediaElement  Height="300" Width="300" Source="/HebrewLanguageLearning_Users;component/Media/Videos/Matt13.44 - Allthathehas.mp4" Name="mePlayer" Stretch="None" />-->
+
+                            <Image Height="220" Width="200"  HorizontalAlignment="Left" Source="{Binding BibleTxtMediaUrl}"
+    Margin="0,0,0,0" Name="BibleImgMedia" Stretch="Fill" VerticalAlignment="Bottom"/>
+                            <Border Background="Gainsboro" BorderBrush="Gray" BorderThickness="3">
+                                <StackPanel Margin="10">
+                                    <TextBox x:Name="RightWorldTextBlock" Width="200" FontSize="40">Text Block</TextBox>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Margin="1 -100 10 10" Orientation="Horizontal" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Width="120" Height="80">
+            <!--<Image Height="50"  Margin="20 30 0 0" Width="50" x:Name="imageLeftQuestion" HorizontalAlignment="Left"  Source="/HebrewLanguageLearning_Users;component/Assets/qustion.png"/>-->
+            <Image Height="50"  Margin="40 -30 0 0" Width="50" x:Name="imageRightArrow" HorizontalAlignment="Right"  Source="/HebrewLanguageLearning_Users;component/Assets/left_arrow.png" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_submit($source, $eventArgs)]" />
+
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="1" x:Name="spProgress"  Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--<CommonUserControls:ProgressBarUC/>-->
+        </StackPanel>
+    </Grid>
+</Page>

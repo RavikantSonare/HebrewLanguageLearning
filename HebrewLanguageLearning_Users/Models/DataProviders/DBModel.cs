@@ -197,7 +197,7 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                     case "HLL_VocabDecksLesson":
                         // IsReview = 'False' and
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive from HLL_VocabDecks where LessonId='" + dataFilter + "'");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB from HLL_VocabDecks where LessonId='" + dataFilter + "'");
                         break;
 
                     case "HLL_AuthenticateUser":
@@ -252,6 +252,13 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                     case "HLL_ProgressOfUserIsActiveKnowledge":
                         customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledge='True' where StrongNo='" + tableData.Trim() + "'");
                         break;
+                    case "HLL_VocabDecksIsReviewGameA":
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewGameA='True' where StrongNo='" + tableData.Trim() + "'");
+                        break;
+                    case "HLL_VocabDecksIsReviewGameB":
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewGameB='True' where StrongNo='" + tableData.Trim() + "'");
+                        break;
+                        
                 }
                 string Qry = Convert.ToString(customQuery);
 

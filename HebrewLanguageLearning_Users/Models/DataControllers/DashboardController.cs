@@ -49,7 +49,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             try
             {
                 _dbobj.UpdateData("HLL_ProgressOfUser", completedLesson);
-                _dbobj.UpdateData("HLL_ProgressOfUsercurrentScreenStatus", completed_Screen_Status);
+                SetUserProgressScreen(completed_Screen_Status);
                 return true;
             }
             catch
@@ -58,6 +58,9 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             }
             return true;
         }
-
+        internal void SetUserProgressScreen(string screenNo)
+        {
+            _dbobj.UpdateData("HLL_ProgressOfUsercurrentScreenStatus", screenNo);
+        }
     }
 }

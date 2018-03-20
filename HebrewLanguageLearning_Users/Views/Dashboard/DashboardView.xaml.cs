@@ -43,7 +43,8 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
             int _CurrentLevel = (_objModel.completedLesson / 50) + 1;
             CompleteLesson_level_StatusSeter(5, _CurrentLevel, _objModel.completedLesson % 50 * 2);
             RectingleChildControllerAdd_Loaded_Left(_objModel.completedLesson, _objModel.currentScreenStatus);
-
+            // Set Current Page Session
+            System.Windows.Application.Current.Properties["CurretPage"] = _objModel.currentScreenStatus;
             // Set Last Topic Data
             getchapterForUserProgressRight(_objModel.currentBookAndchapterId);
         }
