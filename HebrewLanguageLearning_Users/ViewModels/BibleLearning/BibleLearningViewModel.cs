@@ -429,7 +429,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             var total_Cnt = VocabularyLesson.Where(p => p.LessonId == "Lesson " + CurrentLessionId).FirstOrDefault().vocabularyModel.Count();
             var totalTrue_Cnt = _ObjBLC.getIsReviewAssociationCount(CurrentLessionId);
 
-            LessonId = Convert.ToString(_objModel.completedLesson);
+            //   LessonId = Convert.ToString(_objModel.completedLesson);
+            LessonId = Convert.ToString(_objModel.completedLesson + 1);
 
             //if (Convert.ToInt32(CurrentLessionId) <= Convert.ToInt32(LessonId))
             if (total_Cnt == totalTrue_Cnt)

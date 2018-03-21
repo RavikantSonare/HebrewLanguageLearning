@@ -289,7 +289,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         void SetCounter(int value, int Totalvalue)
         {
             ReviewCounter = Totalvalue - value + "  cities left! ";
-            if (value == Totalvalue)
+            if (value != 0 && value == Totalvalue)
             {
                 SetScreenNoInDataBase("6");
                 //SetDataFromDataBase(LessonId, completed_Screen_Status); 

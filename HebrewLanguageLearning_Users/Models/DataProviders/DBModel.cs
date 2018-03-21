@@ -68,7 +68,10 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 [IsReviewPassive] [bit] NULL,
                 [IsReviewGameA] [bit] NULL,
                 [IsActiveKnowledge] [bit] NULL,
-                [IsReviewGameB] [bit] NULL)";
+                [IsReviewGameB] [bit] NULL,
+                [IsReviewAssociationGrammar] [bit] NULL,
+                [IsPassiveKnowledgeGrammar] [bit] NULL,
+                [IsActiveKnowledgeGrammar] [bit] NULL)";
                 ExcecuteTheQuery(_TableString, "I");
                 #endregion
 
@@ -85,8 +88,8 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
 	            [IsActive] [bit] NULL,
 	            [IsDelete] [bit] NULL)";
                 ExcecuteTheQuery(_TableString, "I");
-                 _obj = SelectData("HLL_ProgressOfUser");
-                 _dt = _obj as DataTable;
+                _obj = SelectData("HLL_ProgressOfUser");
+                _dt = _obj as DataTable;
                 if (_dt.Rows.Count <= 0)
                 {
                     InsertData("HLL_ProgressOfUser", "");
@@ -119,7 +122,7 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
             {
                 _dbcon.Close();
             }
-            
+
         }
 
         /// Insert Table Data
@@ -135,16 +138,16 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                     case "HLL_VocabDecks":
                         var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
                         customQuery.Append(@"insert into HLL_VocabDecks(LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB) 
+LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar) 
 values");
                         foreach (var item in _DictionaryModellist)
                         {
                             customQuery.Append("('" + item.LessonId + "','" + item.StrongNo + "','" + item.DictionaryEntriesId + "', '"
     + item.Description + "','" + item.LessonDecks + "','" + item.IsCustomeDecks + "','" +
-    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False','False','False','False'),");
+    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False','False','False','False','False','False','False'),");
                         }
                         break;
-                        case "HLL_AuthenticateUser":
+                    case "HLL_AuthenticateUser":
                         customQuery.Append(@"insert into HLL_AuthenticateUser(UserName, Password, EmailId, ActiveStatus, Date, IsActive, IsDelete) 
 values ('user','user@123','User@hll.com', 'True','" + DateTime.UtcNow + "','True','False')");
                         break;
@@ -153,7 +156,7 @@ values ('user','user@123','User@hll.com', 'True','" + DateTime.UtcNow + "','True
 values (0,0,1,'1Chr,1Chr.1',1,'" + DateTime.UtcNow + "','True','False')");
 
                         break;
-                         }
+                }
                 string Qry = Convert.ToString(customQuery);
 
                 Qry = Qry.TrimEnd(',');
@@ -192,12 +195,12 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                         break;
                     case "HLL_VocabDecks_IsReviewAssociationCount":
 
-                        customQuery.Append(@"Select count() from HLL_VocabDecks where IsReviewAssociation='True' and LessonId='"+ dataFilter + "'");
+                        customQuery.Append(@"Select count() from HLL_VocabDecks where IsReviewAssociation='True' and LessonId='" + dataFilter + "'");
                         break;
                     case "HLL_VocabDecksLesson":
                         // IsReview = 'False' and
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB from HLL_VocabDecks where LessonId='" + dataFilter + "'");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar from HLL_VocabDecks where LessonId='" + dataFilter + "'");
                         break;
 
                     case "HLL_AuthenticateUser":
@@ -258,7 +261,16 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                     case "HLL_VocabDecksIsReviewGameB":
                         customQuery.Append(@"update HLL_VocabDecks set IsReviewGameB='True' where StrongNo='" + tableData.Trim() + "'");
                         break;
-                        
+                    case "HLL_ProgressOfUserIsReviewAssociationGrammar":
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewAssociationGrammar='True' where StrongNo='" + tableData.Trim() + "'");
+                        break;
+                    case "HLL_VocabDecksIsPassiveKnowledgeGrammar":
+                        customQuery.Append(@"update HLL_VocabDecks set IsPassiveKnowledgeGrammar='True' where StrongNo='" + tableData.Trim() + "'");
+                        break;
+                    case "HLL_VocabDecksIsActiveKnowledgeGrammar":
+                        customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledgeGrammar='True' where StrongNo='" + tableData.Trim() + "'");
+                        break;
+
                 }
                 string Qry = Convert.ToString(customQuery);
 
@@ -269,7 +281,7 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
             {
                 Debug.WriteLine(ex.Message);
             }
-            
+
         }
         /// <summary>
         ///  DeleteLesson

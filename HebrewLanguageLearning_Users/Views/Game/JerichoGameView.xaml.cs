@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HebrewLanguageLearning_Users.Views.CommonUserControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,23 +21,17 @@ namespace HebrewLanguageLearning_Users.Views.Game
     /// </summary>
     public partial class JerichoGameView : Page
     {
+        int GreenDotstatus = 2; int TypeOfProgressBar = 2;
         public JerichoGameView()
         {
             InitializeComponent();
+            setProgressBar(GreenDotstatus);
         }
 
-        //public void Textbox()
-        //{
-        //    var _txtBloack = new TextBlock
-        //    {
-        //        TextAlignment = TextAlignment.Center,
-        //        Background = Brushes.Transparent,
-        //        Foreground = Brushes.Gray,
-        //        Text = "Lesson " ,
-        //        FontSize = 15,
-        //        FontWeight = FontWeights.SemiBold
-        //    };
-        //    wpwall.Children.Add(_txtBloack);
-        //}
+        private void setProgressBar(int GreenDotstatus)
+        {
+            ProgressBarUC _cuc = new ProgressBarUC();
+            spProgress.Children.Add(_cuc.LoadProgressbar(TypeOfProgressBar, GreenDotstatus));
+        }
     }
 }

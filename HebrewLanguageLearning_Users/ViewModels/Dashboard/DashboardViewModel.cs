@@ -71,19 +71,19 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
             switch (ScreenNo)
             {
                 case 1:
-                    navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
+                    navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
                     break;
                 case 2:
                     navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
                     break;
                 case 3:
-                    navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
+                    navigationService.NavigateToViewModel(typeof(Game.JerichoGameViewModel));
                     break;
                 case 4:
-                    navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
+                    navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningWordTypingViewModel));
                      break;
                 case 5:
-                    navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
+                    navigationService.NavigateToViewModel(typeof(Game.ConquerCityGameViewModel));
                     break;
                 case 6:
                     navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaViewModel));
@@ -92,7 +92,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
                     navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
                     break;
                 case 8:
-                    navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
+                    navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningWordTypingViewModel));
                     break;
                 default:
                     navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));

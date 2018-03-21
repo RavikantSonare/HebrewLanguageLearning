@@ -23,11 +23,11 @@
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="180"/>
             <RowDefinition Height="200*"/>
-           
+            <RowDefinition Height="80"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
 
@@ -114,6 +114,8 @@
             </ItemsControl>
             </StackPanel>
         </ScrollViewer>
-       
+        <StackPanel Grid.Column="1" x:Name="spProgress"  Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--<CommonUserControls:ProgressBarUC/>-->
+        </StackPanel>
     </Grid>
 </Page>

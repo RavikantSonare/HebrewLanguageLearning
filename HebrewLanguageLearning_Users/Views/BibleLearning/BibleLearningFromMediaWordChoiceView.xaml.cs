@@ -21,17 +21,37 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
     /// </summary>
     public partial class BibleLearningFromMediaWordChoiceView : Page
     {
-        int progressStatus = 1;
+        int GreenDotstatus = 1;
         public BibleLearningFromMediaWordChoiceView()
         {
             InitializeComponent();
-            setProgressBar(ref progressStatus);
+            setProgressBar(GreenDotstatus);
         }
-        private void setProgressBar(ref int status)
+       
+        private void setProgressBar(int GreenDotstatus)
         {
-           
+
+            var ScreenTemp = Application.Current.Properties["CurretPage"];
+            int ScreenNo = 3;
+            int TypeOfProgressBar = 1;
+            if (ScreenTemp != null)
+            {
+                ScreenNo = Convert.ToInt32(ScreenTemp);
+                if (ScreenNo == 7)
+                {
+                    TypeOfProgressBar = 4;
+                    GreenDotstatus = 7;
+                }
+            }
+            else
+            {
+                TypeOfProgressBar = 1;
+            }
+
+
             ProgressBarUC _cuc = new ProgressBarUC();
-            spProgress.Children.Add(_cuc.LoadProgressbar(progressStatus,1));
+            spProgress.Children.Add(_cuc.LoadProgressbar(TypeOfProgressBar, GreenDotstatus));
         }
+
     }
 }

@@ -21,16 +21,36 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
     /// </summary>
     public partial class BibleLearningWordTypingView : Page
     {
-        int progressStatus = 1;
+        int GreenDotstatus = 3;
         public BibleLearningWordTypingView()
         {
             InitializeComponent();
-            setProgressBar(ref progressStatus);
+            setProgressBar(GreenDotstatus);
         }
-        private void setProgressBar(ref int status)
+        private void setProgressBar(int GreenDotstatus)
         {
+
+            var ScreenTemp = Application.Current.Properties["CurretPage"];
+            int ScreenNo = 4;
+            int TypeOfProgressBar = 1;
+            if (ScreenTemp != null)
+            {
+
+                ScreenNo = Convert.ToInt32(ScreenTemp);
+                if (ScreenNo == 8)
+                {
+                    TypeOfProgressBar = 4;
+                    GreenDotstatus = 8;
+                }
+            }
+            else
+            {
+                TypeOfProgressBar = 1;
+            }
+
+
             ProgressBarUC _cuc = new ProgressBarUC();
-            spProgress.Children.Add(_cuc.LoadProgressbar(progressStatus, 3));
+            spProgress.Children.Add(_cuc.LoadProgressbar(TypeOfProgressBar, GreenDotstatus));
         }
     }
 }

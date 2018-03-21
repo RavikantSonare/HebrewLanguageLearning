@@ -1,10 +1,11 @@
 ﻿using Caliburn.Micro;
 using HebrewLanguageLearning_Users.Models.DataControllers;
 using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Linq;
 using HebrewLanguageLearning_Users.Models.DataModels;
-using System.Windows.Controls;
 using HebrewLanguageLearning_Users.GenericClasses;
 using System.Windows.Forms;
 
@@ -69,6 +70,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public List<VocabularyModel> _pnlWordChoiceList;
         public string _bibleTxtMediaUrl;
         public string _bibleSoundMediaUrl;
+        public string _currentBibleStrongNo;
+
 
         public string ReviewCounter
         {
@@ -134,6 +137,16 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 NotifyOfPropertyChange(() => BibleSoundMediaUrl);
             }
         }
+        public string CurrentBibleStrongNo
+        {
+            get { return _currentBibleStrongNo; }
+            set
+            {
+                _currentBibleStrongNo = value;
+                NotifyOfPropertyChange(() => CurrentBibleStrongNo);
+            }
+        }
+
         #endregion
 
         public void GetDataFromDataBase()
@@ -175,25 +188,26 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 PnlWordChoiceList = new List<VocabularyModel>(CurrentGroup);
                 PnlWordChoiceList.ForEach(z =>
                 {
-                    var Data = SetWord(z.LessonDecks); z.LessonDecks = Data.Length == 3 ? Data[2] : Data[0]; z.Description = _getImageUrl(z.StrongNo);
+                    var Data = SetWord(z.LessonDecks); z.LessonDecks = Data.Length == 3 ? Data[1] : Data[0]; z.Description = _getImageUrl(z.StrongNo);
                     if (z.IsReviewAssociation == true) { z.DictionaryEntriesId = "#909090"; } else { z.DictionaryEntriesId = "#eaeaea"; }
                 });
                 // set Rendom Logic
                 if (PnlWordChoiceList.Count > 0)
                 {
-                    _ObjCurrentImage = PnlWordChoiceList.FirstOrDefault();
-                    SetImage(_ObjCurrentImage.StrongNo);
+                    _ObjCurrentImage = PnlWordChoiceList.Where(z => z.IsReviewAssociation == false).FirstOrDefault();
+                    if (_ObjCurrentImage != null)
+                        BibleTxtHebrew = _ObjCurrentImage.LessonDecks;
+                        SetImage(_ObjCurrentImage.StrongNo);
                 }
                 else
                 {
-
                     BibleTxtMediaUrl = "";
                 }
 
             }
             finally { }
             //SetWord(CurrentGroup);
-            // SetWord(s.LessonDecks); PnlWordChoiceList
+            //SetWord(s.LessonDecks); PnlWordChoiceList
         }
 
         private string _getImageUrl(string strongNo)
@@ -224,14 +238,28 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public void SetDataFromDataBase(string completedLesson, string completed_Screen_Status)
         {
             var Data = ObjDC.SetUserProgress(completedLesson, completed_Screen_Status);
-            LessonId = Convert.ToString(_objModel.completedLesson + 1);
+            LessonId = Convert.ToString(_objModel.completedLesson);
         }
 
-        void SetCounter(int value, int Totalvalue)
+        public void SetCounter(int value, int Totalvalue)
         {
             ReviewCounter = value + " out of " + Totalvalue;
-            string completed_Screen_Status = "2";
-            if (value == Totalvalue) { SetDataFromDataBase(LessonId, completed_Screen_Status); }
+            string completed_Screen_Status = "3";
+            if (value != 0 && value == Totalvalue)
+            {
+
+                var ScreenTemp = System.Windows.Application.Current.Properties["CurretPage"];
+                if (ScreenTemp != null)
+                {
+                    int ScreenTempNew = Convert.ToInt32(ScreenTemp);
+                    if (ScreenTempNew == 6)
+                    {
+                        completed_Screen_Status = Convert.ToString(ScreenTempNew + 1);
+                    }
+                }
+                SetDataFromDataBase(LessonId, completed_Screen_Status);
+
+            }
 
 
             // + "(:=> " + tt;
@@ -243,10 +271,17 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             if (_dictionaryModellist.Count() < 1)
                 _dictionaryModellist = _ObjSC.getDataFromLocalFile();
         }
-        public void SetImage(string strongNo)
+        public void SetImage(string strongNo, bool isNext = false)
         {
+            CurrentBibleStrongNo = strongNo;
             fileData();
             var DicData = _dictionaryModellist.FirstOrDefault(x => x.DicStrongNo == strongNo);
+            if (isNext)
+            {
+                DicData = GetNext(_dictionaryModellist, DicData); //_dictionaryModellist.next(x => x.DicStrongNo == strongNo);
+                CurrentBibleStrongNo = DicData.DicStrongNo;
+            }
+
             if (DicData != null && string.IsNullOrEmpty(BibleTxtMediaUrl))
             {
                 BibleTxtMediaUrl = @"" + EntityConfig.MediaUriPictures + DicData.ListOfPictures.LastOrDefault();
@@ -256,6 +291,18 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             {
                 BibleTxtMediaUrl = @"" + EntityConfig.MediaUriPictures + DicData.ListOfPictures.LastOrDefault();
                 BibleSoundMediaUrl = @"" + EntityConfig.MediaUriSounds + DicData.SoundUrl;
+            }
+        }
+        public static T GetNext<T>(IList<T> collection, T value)
+        {
+            int nextIndex = collection.IndexOf(value) + 1;
+            if (nextIndex < collection.Count)
+            {
+                return collection[nextIndex];
+            }
+            else
+            {
+                return value; //Or throw an exception
             }
         }
         public void MouseDown_ImageClick(object sender, MouseEventArgs e)
@@ -270,10 +317,18 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             SetImage(StrongNo);
 
 
-            // VocabDecksLesson();
+            VocabDecksLesson();
             // HLL_VocabDecks
             // System.Windows.Application.Current.Shutdown();
         }
+        public void MouseDown_LeftArrowImageClick(object sender, MouseEventArgs e)
+        {
+            _ObjBC.UpdateReviewData("HLL_VocabDecksIsReviewAssociation", CurrentBibleStrongNo);
+
+            SetImage(CurrentBibleStrongNo, true);
+            VocabDecksLesson();
+        }
+
         // Goto Previes Pages
         public void MouseDown_RightPanel(object sender, MouseEventArgs e)
         {

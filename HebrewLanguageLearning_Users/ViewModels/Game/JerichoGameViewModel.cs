@@ -198,6 +198,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         void SetCounter(int value, int Totalvalue)
         {
             ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
+            //value != 0 &&
         }
         void fileData()
         {

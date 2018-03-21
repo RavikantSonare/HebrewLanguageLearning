@@ -39,10 +39,8 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             Possition();
 
             // Line Logic
-
             if (prgBarId == 0 || prgBarId == 3)
             {
-
                 gd.Add(BlankLine(950, HorizontalAlignment.Center, 4)); gd.Add(FillLine(150, HorizontalAlignment.Left, 4));
             }
             else
@@ -61,7 +59,10 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 gd.Add(BlankLine(600, HorizontalAlignment.Left));
                 gd.Add(FillLine(110 * (prgBarProgressNumber + 1), HorizontalAlignment.Left));
                 gd.Add(BlankLine(360, HorizontalAlignment.Right));
-                gd.Add(FillLine(110 * (prgBarProgressNumber - 4), HorizontalAlignment.Left));
+                if (prgBarProgressNumber >= 5)
+                {
+                    gd.Add(FillLine(110 * (prgBarProgressNumber - 5), HorizontalAlignment.Left, 610));
+                }
                 gd.Add(_VertyLine);
             }
 
@@ -224,7 +225,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             };
             return _blankLine;
         }
-        internal Line FillLine(int lnlenght, HorizontalAlignment HoriAlignment, int setTopMgn = 0)
+        internal Line FillLine(int lnlenght, HorizontalAlignment HoriAlignment, int setLeftMgn = 20, int setTopMgn = 0)
         {
             var _FillLine = new Line
             {
@@ -232,7 +233,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 X1 = lnlenght,
                 Stroke = (SolidColorBrush)new BrushConverter().ConvertFrom("#00D5B6"),
                 StrokeThickness = 3,
-                Margin = new Thickness(20, setTopMgn, 0, 0),
+                Margin = new Thickness(setLeftMgn, setTopMgn, 0, 0),
             };
             return _FillLine;
         }

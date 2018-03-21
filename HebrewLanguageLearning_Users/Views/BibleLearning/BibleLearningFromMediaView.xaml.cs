@@ -2,10 +2,6 @@
 using HebrewLanguageLearning_Users.ViewModels.BibleLearning;
 using HebrewLanguageLearning_Users.Views.CommonUserControls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -40,8 +36,11 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
             if (ScreenTemp != null)
             {
                 ScreenNo = Convert.ToInt32(ScreenTemp);
-                TypeOfProgressBar = 4;
-                GreenDotstatus = 6;
+                if (ScreenNo == 6)
+                {
+                    TypeOfProgressBar = 4;
+                    GreenDotstatus = 6;
+                }
             }
             else
             {

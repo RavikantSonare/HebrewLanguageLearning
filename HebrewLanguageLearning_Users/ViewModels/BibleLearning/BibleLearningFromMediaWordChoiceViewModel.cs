@@ -28,6 +28,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         // Set Lesson Id
         static string LessonId = string.Empty;
 
+        // Set Currunt Screen
+        static int CurruntScreenNo = 2;
+
         // Set Current Image
         static VocabularyModel _ObjCurrentImage = new VocabularyModel();
 
@@ -37,6 +40,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public BibleLearningFromMediaWordChoiceViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+            var ScreenTemp = System.Windows.Application.Current.Properties["CurretPage"];
+            if (ScreenTemp != null)
+            {
+                CurruntScreenNo = Convert.ToInt32(ScreenTemp);
+            }
             GetDataFromDataBase();
             // Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
             //string LessonId = Convert.ToString(System.Windows.Application.Current.Properties["WordLessonId"]);
@@ -47,10 +55,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             _objModel = ObjDC.getUserProgress(); LessonId = Convert.ToString(_objModel.completedLesson + 1);
             VocabDecksLesson();
         }
-        public void SetDataFromDataBase(string completedLesson,string completed_Screen_Status)
+        public void SetDataFromDataBase(string completedLesson, string completed_Screen_Status)
         {
-            var Data = ObjDC.SetUserProgress(completedLesson, completed_Screen_Status);
-            LessonId = Convert.ToString(_objModel.completedLesson + 1);
+            //  var Data = ObjDC.SetUserProgress(completedLesson, completed_Screen_Status);
+            var Data = ObjDC.SetUserProgressScreen(completed_Screen_Status);
+            LessonId = Convert.ToString(_objModel.completedLesson);
         }
         protected override void OnActivate()
         {
@@ -138,7 +147,20 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
                 var CurrentGroup = VocabularyLesson.SelectMany(p => p.vocabularyModel).ToList();
                 TotalValue = CurrentGroup.Count();
-                CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
+
+                switch (CurruntScreenNo)
+                {
+                    case 2:
+                        CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
+                        break;
+                    case 7:
+                        CurrentGroup = CurrentGroup.Where(z => z.IsPassiveKnowledgeGrammar == false).ToList();
+                        break;
+                    default:
+                        CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
+                        break;
+                }
+
                 SetCounter(TotalValue - CurrentGroup.Count(), TotalValue);
                 int totalCheck = 0;
                 var rand = new Random();
@@ -186,13 +208,32 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             string[] tempArray = currentGroup.Split(',');
             return tempArray;
         }
-        static int tt = 0;
-        void SetCounter(int value, int Totalvalue)
+
+        //void SetCounter(int value, int Totalvalue)
+        //{
+        //    string completed_Screen_Status = "1";
+        //    ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
+        //    if (value != 0 && value == Totalvalue)
+        //    {
+        //        SetDataFromDataBase(LessonId, completed_Screen_Status);
+        //    }
+        //}
+        public void SetCounter(int value, int Totalvalue)
         {
-            string completed_Screen_Status = "1";
-            ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
-            if (value == Totalvalue) { SetDataFromDataBase(LessonId, completed_Screen_Status); }
+            ReviewCounter = value + " out of " + Totalvalue;
+            string completed_Screen_Status = "2";
+            if (value != 0 && value == Totalvalue)
+            {
+                if (CurruntScreenNo == 7)
+                {
+                    completed_Screen_Status = Convert.ToString(CurruntScreenNo + 1);
+                }
+                SetDataFromDataBase(LessonId, completed_Screen_Status);
+            }
+
         }
+
+
         void fileData()
         {
             if (_dictionaryModellist.Count() < 1)
@@ -209,7 +250,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         }
         public void MouseDown_WordClick(object sender, MouseEventArgs e)
         {
-            tt++;
+
             string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
             if (StrongNo == _ObjCurrentImage.StrongNo)
             {

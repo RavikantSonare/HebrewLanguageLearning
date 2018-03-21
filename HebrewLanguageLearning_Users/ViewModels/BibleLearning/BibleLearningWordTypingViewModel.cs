@@ -28,12 +28,20 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         // Set Lesson Id
         static string LessonId = string.Empty;
 
+        // Set Currunt Screen
+        static int CurruntScreenNo = 4;
+
         // Set Current Image
         static VocabularyModel _ObjCurrentImage = new VocabularyModel();
         private readonly INavigationService navigationService;
         public BibleLearningWordTypingViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+            var ScreenTemp = System.Windows.Application.Current.Properties["CurretPage"];
+            if (ScreenTemp != null)
+            {
+                CurruntScreenNo = Convert.ToInt32(ScreenTemp);
+            }
             GetDataFromDataBase();
             // Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
             // string LessonId = Convert.ToString(System.Windows.Application.Current.Properties["WordLessonId"]);
@@ -143,7 +151,21 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
                 var CurrentGroup = VocabularyLesson.SelectMany(p => p.vocabularyModel).ToList();
                 TotalValue = CurrentGroup.Count();
-                CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledge == false).ToList();
+               // CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledge == false).ToList();
+
+                switch (CurruntScreenNo)
+                {
+                    case 4:
+                        CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledge == false).ToList();
+                        break;
+                    case 8:
+                        CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledgeGrammar == false).ToList();
+                        break;
+                    default:
+                        CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledge == false).ToList();
+                        break;
+                }
+
                 SetCounter(TotalValue - CurrentGroup.Count(), TotalValue);
                 int totalCheck = 0;
                 var rand = new Random();
@@ -191,15 +213,20 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             return tempArray;
         }
 
-        void SetCounter(int value, int Totalvalue)
+       
+        public void SetCounter(int value, int Totalvalue)
         {
-            string completed_Screen_Status = "1";
-            ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
-
-            if (value == Totalvalue) {
-                SetScreenNoInDataBase("5");
-                //SetDataFromDataBase(LessonId, completed_Screen_Status); 
+            ReviewCounter = value + " out of " + Totalvalue;
+            string completed_Screen_Status = "4";
+            if (value != 0 && value == Totalvalue)
+            {
+                if (CurruntScreenNo == 7)
+                {
+                    completed_Screen_Status = Convert.ToString(CurruntScreenNo + 1);
+                }
+                SetDataFromDataBase(LessonId, completed_Screen_Status);
             }
+
         }
 
         private void SetScreenNoInDataBase(string screenNo)
