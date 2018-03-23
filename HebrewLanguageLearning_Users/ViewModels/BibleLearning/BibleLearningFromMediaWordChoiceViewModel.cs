@@ -221,19 +221,25 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public void SetCounter(int value, int Totalvalue)
         {
             ReviewCounter = value + " out of " + Totalvalue;
-            string completed_Screen_Status = "2";
+            string completed_Screen_Status = "3";
             if (value != 0 && value == Totalvalue)
             {
                 if (CurruntScreenNo == 7)
                 {
                     completed_Screen_Status = Convert.ToString(CurruntScreenNo + 1);
                 }
-                SetDataFromDataBase(LessonId, completed_Screen_Status);
+                int tempLessonId = Convert.ToInt32(LessonId) - 1;
+                SetDataFromDataBase(Convert.ToString(tempLessonId), completed_Screen_Status);
+                showPopup();
             }
 
         }
 
+        public void showPopup()
+        {
+            navigationService.NavigateToViewModel(typeof(CustomPopupViewModel));
 
+        }
         void fileData()
         {
             if (_dictionaryModellist.Count() < 1)
@@ -254,9 +260,16 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
             if (StrongNo == _ObjCurrentImage.StrongNo)
             {
-                _ObjBC.UpdateReviewData("HLL_VocabDecksIsReviewPassive", StrongNo);
-
+                if (CurruntScreenNo == 2)
+                {
+                    _ObjBC.UpdateReviewData("HLL_VocabDecksIsReviewPassive", StrongNo);
+                }else
+                {
+                    _ObjBC.UpdateReviewData("HLL_VocabDecksIsPassiveKnowledgeGrammar", StrongNo);
+                   // IsPassiveKnowledgeGrammar
+                }
             }
+
             VocabDecksLesson();
             // HLL_VocabDecks
             // System.Windows.Application.Current.Shutdown();

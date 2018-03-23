@@ -177,6 +177,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                         IsReviewAssociationGrammar = Convert.ToBoolean(row.ItemArray[15]),
                         IsPassiveKnowledgeGrammar = Convert.ToBoolean(row.ItemArray[16]),
                         IsActiveKnowledgeGrammar = Convert.ToBoolean(row.ItemArray[17]),
+                        TheFinalActApplication = Convert.ToBoolean(row.ItemArray[18]),
                     });
                 }
 
@@ -184,7 +185,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                     Select(y => new
                     {
                         LessonId = y.Key,
-                        LessonDecks = y.Select(x => new { x.LessonDecks, x.StrongNo, x.IsReviewAssociation, x.IsReviewPassive, x.IsReviewGameA, x.IsActiveKnowledge, x.IsReviewGameB, x.IsReviewAssociationGrammar, x.IsPassiveKnowledgeGrammar, x.IsActiveKnowledgeGrammar }).ToList()
+                        LessonDecks = y.Select(x => new { x.LessonDecks, x.StrongNo, x.IsReviewAssociation, x.IsReviewPassive, x.IsReviewGameA, x.IsActiveKnowledge, x.IsReviewGameB, x.IsReviewAssociationGrammar, x.IsPassiveKnowledgeGrammar, x.IsActiveKnowledgeGrammar, x.TheFinalActApplication }).ToList()
                     }).ToList();
                 object objTemp;
                 foreach (var item in tmp)
@@ -195,11 +196,19 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
                     foreach (var itemData in item.LessonDecks)
                     {
-                        vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData.LessonDecks, StrongNo = itemData.StrongNo, IsReviewAssociation = itemData.IsReviewAssociation, IsReviewPassive = itemData.IsReviewPassive,
-                            IsReviewGameA = itemData.IsReviewGameA, IsActiveKnowledge = itemData.IsActiveKnowledge, IsReviewGameB = itemData.IsReviewGameB,
+                        vocabularyModeltmp.Add(new VocabularyModel
+                        {
+                            LessonDecks = itemData.LessonDecks,
+                            StrongNo = itemData.StrongNo,
+                            IsReviewAssociation = itemData.IsReviewAssociation,
+                            IsReviewPassive = itemData.IsReviewPassive,
+                            IsReviewGameA = itemData.IsReviewGameA,
+                            IsActiveKnowledge = itemData.IsActiveKnowledge,
+                            IsReviewGameB = itemData.IsReviewGameB,
                             IsReviewAssociationGrammar = itemData.IsReviewAssociationGrammar,
                             IsPassiveKnowledgeGrammar = itemData.IsPassiveKnowledgeGrammar,
-                            IsActiveKnowledgeGrammar = itemData.IsActiveKnowledgeGrammar
+                            IsActiveKnowledgeGrammar = itemData.IsActiveKnowledgeGrammar,
+                            TheFinalActApplication = itemData.TheFinalActApplication
                         });
                     }
                     tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = TableName == "HLL_VocabDecks" ? "Lesson " : "" + item.LessonId, vocabularyModel = vocabularyModeltmp });

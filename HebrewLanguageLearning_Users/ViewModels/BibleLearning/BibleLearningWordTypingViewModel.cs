@@ -52,10 +52,10 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             _objModel = ObjDC.getUserProgress(); LessonId = Convert.ToString(_objModel.completedLesson + 1);
             VocabDecksLesson();
         }
-        public void SetDataFromDataBase(string completedLesson, string completed_Screen_Status)
+        public void SetDataFromDataBase(string completed_Screen_Status)
         {
-            var Data = ObjDC.SetUserProgress(completedLesson, completed_Screen_Status);
-            LessonId = Convert.ToString(_objModel.completedLesson + 1);
+            var Data = ObjDC.SetUserProgressScreen(completed_Screen_Status);
+            // LessonId = Convert.ToString(_objModel.completedLesson + 1);
         }
         protected override void OnActivate()
         {
@@ -161,6 +161,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                     case 8:
                         CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledgeGrammar == false).ToList();
                         break;
+                    case 9:
+                        CurrentGroup = CurrentGroup.Where(z => z.TheFinalActApplication == false).ToList();
+                        break;
                     default:
                         CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledge == false).ToList();
                         break;
@@ -186,7 +189,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
                 if (tmpVM.Count() < CurrentGroup.Count() && tmpVM.Count() < 8) { if (totalCheck <= CurrentGroup.Count) { goto _lblCheckAgain; totalCheck++; } }
                 PnlWordChoiceList = new List<VocabularyModel>(tmpVM);
-                PnlWordChoiceList.ForEach(z => { var Data = SetWord(z.LessonDecks); z.LessonDecks = Data.Length == 3 ? Data[2] : Data[0]; });
+                //for the English Data[2]
+                PnlWordChoiceList.ForEach(z => { var Data = SetWord(z.LessonDecks); z.LessonDecks = Data.Length == 3 ? Data[1] : Data[0]; }); 
 
                 // set Rendom Logic
                 if (PnlWordChoiceList.Count > 0)
@@ -217,16 +221,35 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public void SetCounter(int value, int Totalvalue)
         {
             ReviewCounter = value + " out of " + Totalvalue;
-            string completed_Screen_Status = "4";
+          
             if (value != 0 && value == Totalvalue)
             {
-                if (CurruntScreenNo == 7)
+              
+                switch (CurruntScreenNo)
                 {
-                    completed_Screen_Status = Convert.ToString(CurruntScreenNo + 1);
+                    case 4:
+                        SetDataFromDataBase("5");
+                        break;
+                    case 8:
+                        SetDataFromDataBase("9");
+                        break;
+                    case 9:
+                        SetDataFromDataBase("1");
+                        ObjDC.SetUserProgressLesson(LessonId);
+                        break;
+                    default:
+                        SetDataFromDataBase( "4");
+                        break;
                 }
-                SetDataFromDataBase(LessonId, completed_Screen_Status);
-            }
 
+                showPopup();
+            }
+           
+
+        }
+        public void showPopup()
+        {
+            navigationService.NavigateToViewModel(typeof(CustomPopupViewModel));
         }
 
         private void SetScreenNoInDataBase(string screenNo)
@@ -260,8 +283,24 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
             if (!string.IsNullOrEmpty(RightWorldTextBlock) && RightWorldTextBlock.ToUpper().Trim() == _ObjCurrentImage.LessonDecks.ToUpper().Trim())
             {
-                _ObjBC.UpdateReviewData("HLL_ProgressOfUserIsActiveKnowledge", _ObjCurrentImage.StrongNo);
+                switch (CurruntScreenNo)
+                {
+                    case 4:
+                        _ObjBC.UpdateReviewData("HLL_ProgressOfUserIsActiveKnowledge", _ObjCurrentImage.StrongNo);
+                        break;
+                    case 8:
+                        _ObjBC.UpdateReviewData("HLL_VocabDecksIsActiveKnowledgeGrammar", _ObjCurrentImage.StrongNo);
+                        break;
+                    case 9:
+                        _ObjBC.UpdateReviewData("HLL_VocabDecksTheFinalActApplication", _ObjCurrentImage.StrongNo);
+                        break;
+                    default:
+                        _ObjBC.UpdateReviewData("HLL_ProgressOfUserIsActiveKnowledge", _ObjCurrentImage.StrongNo);
+                        break;
+                }
+               
             }
+           
             RightWorldTextBlock = "";
             VocabDecksLesson();
         }

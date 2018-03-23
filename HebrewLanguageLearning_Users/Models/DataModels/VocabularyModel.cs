@@ -27,7 +27,8 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         public bool IsReviewAssociationGrammar { get; set; }
         public bool IsPassiveKnowledgeGrammar { get; set; }
         public bool IsActiveKnowledgeGrammar { get; set; }
-
+        public bool TheFinalActApplication { get; set; }
+     
 
 
     }

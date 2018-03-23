@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using HebrewLanguageLearning_Users.GenericClasses;
 using System.Windows.Forms;
 using HebrewLanguageLearning_Users.Models.DataControllers;
+using HebrewLanguageLearning_Users.ViewModels.BibleLearning;
 
 namespace HebrewLanguageLearning_Users.ViewModels.Game
 {
@@ -21,11 +22,18 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         // Set Current Image
         static VocabularyModel _ObjCurrentImage = new VocabularyModel();
 
+        // Set Current Screen
+        DashboardController ObjDC = new DashboardController();
+        DashboardModel _objModel = new DashboardModel();
+        // Set Lesson Id
+        static string LessonId = string.Empty;
+
         private readonly INavigationService navigationService;
         public JerichoGameViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
-            string LessonId = "3";//Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+            GetDataFromDataBase();
+            //string LessonId = Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
             if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
         }
 
@@ -44,8 +52,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         public string _bibleTxtEnglish;
         public List<VocabularyModel> _pnlWordChoiceList;
         public string _bibleTxtMediaUrl;
-      
-        
+
+
 
         public string ReviewCounter
         {
@@ -84,7 +92,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
             }
         }
 
-       
+
 
         public List<VocabularyModel> PnlWordChoiceList
         {
@@ -108,8 +116,13 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         }
 
 
-        #endregion  
+        #endregion
 
+        public void GetDataFromDataBase()
+        {
+            _objModel = ObjDC.getUserProgress(); LessonId = Convert.ToString(_objModel.completedLesson + 1);
+
+        }
         public static List<T> Randomize<T>(List<T> list)
         {
             List<T> randomizedList = new List<T>();
@@ -127,7 +140,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         List<string> WidthList = new List<string>() { "150", "180", "200", "240", "130", "100" };
         public void VocabDecksLesson()
         {
-            string LessonId = "3"; //Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+            //Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
             try
             {
                 int TotalValue;
@@ -135,13 +148,14 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
                 List<VocabularyModel> tmpVM = new List<VocabularyModel>();
                 VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
                 var CurrentGroup = VocabularyLesson.SelectMany(p => p.vocabularyModel).ToList();
+                var AllListData = new List<VocabularyModel>(CurrentGroup);
                 TotalValue = CurrentGroup.Count();
-                CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
+                CurrentGroup = CurrentGroup.Where(z => z.IsReviewGameA == false).ToList();
                 SetCounter(TotalValue - CurrentGroup.Count(), TotalValue);
                 var rand = new Random();
             _lblCheckAgain:
 
-                
+
                 foreach (var item in CurrentGroup)
                 {
                     if (tmpVM.Count() < 18 && CurrentGroup.Count > 0)
@@ -155,50 +169,62 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
 
                 }
                 if (tmpVM.Count() < CurrentGroup.Count() && tmpVM.Count() < 18) { goto _lblCheckAgain; }
+                int cTempListCount = tmpVM.Count();
+                //if (cTempListCount < 18)
+                //{
+                //    var NewTemp = AllListData.Take(18-cTempListCount).ToList();
+                //    tmpVM.AddRange(NewTemp);
+                //}
+
                 PnlWordChoiceList = new List<VocabularyModel>(tmpVM);
+
+
                 int i = 0;
-                PnlWordChoiceList.ForEach(z => 
-                { var Data = SetWord(z.LessonDecks); z.LessonDecks =  Convert.ToInt16(WidthList[i])>180? Data.Length == 3 ? Data[2] : Data[0]:""; z.DictionaryEntriesId = WidthList[i];
-                   
-                    if ((i+1)%6==0)
+                PnlWordChoiceList.ForEach(z =>
+                {
+                    var Data = SetWord(z.LessonDecks); z.LessonDecks = 
+                    Convert.ToInt16(WidthList[i]) > 180 || PnlWordChoiceList.Count==1 ? Data.Length == 3 ? Data[2] : Data[0] : "";
+                    z.DictionaryEntriesId = WidthList[i];
+
+                    if ((i + 1) % 6 == 0)
                     {
                         i = 0;
                         WidthList = Randomize(WidthList);
 
-                    }else { i++; }
-                   
+                    }
+                    else { i++; }
+
                 });
 
 
                 // set Rendom Logic
                 if (PnlWordChoiceList.Count > 0)
                 {
-                    _ObjCurrentImage = PnlWordChoiceList[rand.Next(PnlWordChoiceList.Count)];
-                    SetImage(_ObjCurrentImage.StrongNo);
+                    var tmpItemList = new List<VocabularyModel>(PnlWordChoiceList.Where(d => d.LessonDecks != "" && d.IsReviewGameA == false)).ToList();
+                    if (tmpItemList.Count > 0)
+                    {
+                        _ObjCurrentImage = tmpItemList[rand.Next(tmpItemList.Count)];
+                        SetImage(_ObjCurrentImage.StrongNo);
+                    }
+
                 }
                 else
                 {
 
                     BibleTxtMediaUrl = "";
                 }
-               
+
             }
             finally { }
             //SetWord(CurrentGroup);
             // SetWord(s.LessonDecks); PnlWordChoiceList
         }
 
-       
+
         private string[] SetWord(string currentGroup)
         {
             string[] tempArray = currentGroup.Split(',');
             return tempArray;
-        }
-        static int tt = 0;
-        void SetCounter(int value, int Totalvalue)
-        {
-            ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
-            //value != 0 &&
         }
         void fileData()
         {
@@ -216,16 +242,35 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         }
         public void MouseDown_WordClick(object sender, MouseEventArgs e)
         {
-            tt++;
+
             string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
             if (StrongNo == _ObjCurrentImage.StrongNo)
             {
-                //_ObjBC.UpdateReviewData("HLL_VocabDecksIsReView", StrongNo);
+                _ObjBC.UpdateReviewData("HLL_VocabDecksIsReviewGameA", StrongNo);
 
             }
             VocabDecksLesson();
-            // HLL_VocabDecks
-            // System.Windows.Application.Current.Shutdown();
+        }
+        public void SetDataFromDataBase(string completed_Screen_Status)
+        {
+            var Data = ObjDC.SetUserProgressScreen(completed_Screen_Status);
+        }
+        public void SetCounter(int value, int Totalvalue)
+        {
+            ReviewCounter = value + " out of " + Totalvalue;
+            string completed_Screen_Status = "4";
+            if (value != 0 && value == Totalvalue)
+            {
+                SetDataFromDataBase(completed_Screen_Status);
+                showPopup();
+            }
+
+        }
+
+        public void showPopup()
+        {
+            navigationService.NavigateToViewModel(typeof(CustomPopupViewModel));
+
         }
         // Goto Previes Pages
         public void MouseDown_RightPanel(object sender, MouseEventArgs e)

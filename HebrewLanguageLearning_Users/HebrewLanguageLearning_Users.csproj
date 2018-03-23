@@ -16,6 +16,22 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\mobiweb\Desktop\Bib\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +51,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>58E4C6DE97B19EFE4F869E9ADFC9412164B60C41</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>HebrewLanguageLearning_Users_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
@@ -132,6 +160,7 @@
     <Compile Include="ViewModels\BibleLearning\BibleLearningFromMediaWordChoiceViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningViewModel.cs" />
     <Compile Include="ViewModels\BibleLearning\BibleLearningWordTypingViewModel.cs" />
+    <Compile Include="ViewModels\BibleLearning\CustomPopupViewModel.cs" />
     <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
     <Compile Include="ViewModels\Game\ConquerCityGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ImagesModelList.cs" />
@@ -154,6 +183,9 @@
     </Compile>
     <Compile Include="Views\BibleLearning\BibleLearningWordTypingView.xaml.cs">
       <DependentUpon>BibleLearningWordTypingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BibleLearning\CustomPopupView.xaml.cs">
+      <DependentUpon>CustomPopupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CommonUserControls\ProgressBarUC.xaml.cs">
       <DependentUpon>ProgressBarUC.xaml</DependentUpon>
@@ -194,6 +226,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Assets\HEBREW_Admin.ep" />
+    <None Include="HebrewLanguageLearning_Users_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -229,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BibleLearning\BibleLearningWordTypingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BibleLearning\CustomPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -346,84 +383,6 @@
     <Resource Include="Assets\JerichoGameMen.png" />
     <Resource Include="bin\Debug\Errorfile\ErrorLog.txt" />
     <Resource Include="Assets\map-1.png" />
-    <Resource Include="Assets\MapImages\MapGreen_1.png" />
-    <Resource Include="Assets\MapImages\MapGreen_10.png" />
-    <Resource Include="Assets\MapImages\MapGreen_11.png" />
-    <Resource Include="Assets\MapImages\MapGreen_12.png" />
-    <Resource Include="Assets\MapImages\MapGreen_13.png" />
-    <Resource Include="Assets\MapImages\MapGreen_14.png" />
-    <Resource Include="Assets\MapImages\MapGreen_15.png" />
-    <Resource Include="Assets\MapImages\MapGreen_16.png" />
-    <Resource Include="Assets\MapImages\MapGreen_17.png" />
-    <Resource Include="Assets\MapImages\MapGreen_18.png" />
-    <Resource Include="Assets\MapImages\MapGreen_19.png" />
-    <Resource Include="Assets\MapImages\MapGreen_2.png" />
-    <Resource Include="Assets\MapImages\MapGreen_20.png" />
-    <Resource Include="Assets\MapImages\MapGreen_21.png" />
-    <Resource Include="Assets\MapImages\MapGreen_22.png" />
-    <Resource Include="Assets\MapImages\MapGreen_23.png" />
-    <Resource Include="Assets\MapImages\MapGreen_24.png" />
-    <Resource Include="Assets\MapImages\MapGreen_25.png" />
-    <Resource Include="Assets\MapImages\MapGreen_26.png" />
-    <Resource Include="Assets\MapImages\MapGreen_27.png" />
-    <Resource Include="Assets\MapImages\MapGreen_28.png" />
-    <Resource Include="Assets\MapImages\MapGreen_29.png" />
-    <Resource Include="Assets\MapImages\MapGreen_3.png" />
-    <Resource Include="Assets\MapImages\MapGreen_30.png" />
-    <Resource Include="Assets\MapImages\MapGreen_31.png" />
-    <Resource Include="Assets\MapImages\MapGreen_32.png" />
-    <Resource Include="Assets\MapImages\MapGreen_33.png" />
-    <Resource Include="Assets\MapImages\MapGreen_34.png" />
-    <Resource Include="Assets\MapImages\MapGreen_35.png" />
-    <Resource Include="Assets\MapImages\MapGreen_36.png" />
-    <Resource Include="Assets\MapImages\MapGreen_37.png" />
-    <Resource Include="Assets\MapImages\MapGreen_38.png" />
-    <Resource Include="Assets\MapImages\MapGreen_39.png" />
-    <Resource Include="Assets\MapImages\MapGreen_4.png" />
-    <Resource Include="Assets\MapImages\MapGreen_5.png" />
-    <Resource Include="Assets\MapImages\MapGreen_6.png" />
-    <Resource Include="Assets\MapImages\MapGreen_7.png" />
-    <Resource Include="Assets\MapImages\MapGreen_8.png" />
-    <Resource Include="Assets\MapImages\MapGreen_9.png" />
-    <Resource Include="Assets\MapImages\Mapred_1.png" />
-    <Resource Include="Assets\MapImages\Mapred_10.png" />
-    <Resource Include="Assets\MapImages\Mapred_11.png" />
-    <Resource Include="Assets\MapImages\Mapred_12.png" />
-    <Resource Include="Assets\MapImages\Mapred_13.png" />
-    <Resource Include="Assets\MapImages\Mapred_14.png" />
-    <Resource Include="Assets\MapImages\Mapred_15.png" />
-    <Resource Include="Assets\MapImages\Mapred_16.png" />
-    <Resource Include="Assets\MapImages\Mapred_17.png" />
-    <Resource Include="Assets\MapImages\Mapred_18.png" />
-    <Resource Include="Assets\MapImages\Mapred_19.png" />
-    <Resource Include="Assets\MapImages\Mapred_2.png" />
-    <Resource Include="Assets\MapImages\Mapred_20.png" />
-    <Resource Include="Assets\MapImages\Mapred_21.png" />
-    <Resource Include="Assets\MapImages\Mapred_22.png" />
-    <Resource Include="Assets\MapImages\Mapred_23.png" />
-    <Resource Include="Assets\MapImages\Mapred_24.png" />
-    <Resource Include="Assets\MapImages\Mapred_25.png" />
-    <Resource Include="Assets\MapImages\Mapred_26.png" />
-    <Resource Include="Assets\MapImages\Mapred_27.png" />
-    <Resource Include="Assets\MapImages\Mapred_28.png" />
-    <Resource Include="Assets\MapImages\Mapred_29.png" />
-    <Resource Include="Assets\MapImages\Mapred_3.png" />
-    <Resource Include="Assets\MapImages\Mapred_30.png" />
-    <Resource Include="Assets\MapImages\Mapred_31.png" />
-    <Resource Include="Assets\MapImages\Mapred_32.png" />
-    <Resource Include="Assets\MapImages\Mapred_33.png" />
-    <Resource Include="Assets\MapImages\Mapred_34.png" />
-    <Resource Include="Assets\MapImages\Mapred_35.png" />
-    <Resource Include="Assets\MapImages\Mapred_36.png" />
-    <Resource Include="Assets\MapImages\Mapred_37.png" />
-    <Resource Include="Assets\MapImages\Mapred_38.png" />
-    <Resource Include="Assets\MapImages\Mapred_39.png" />
-    <Resource Include="Assets\MapImages\Mapred_4.png" />
-    <Resource Include="Assets\MapImages\Mapred_5.png" />
-    <Resource Include="Assets\MapImages\Mapred_6.png" />
-    <Resource Include="Assets\MapImages\Mapred_7.png" />
-    <Resource Include="Assets\MapImages\Mapred_8.png" />
-    <Resource Include="Assets\MapImages\Mapred_9.png" />
     <Resource Include="bin\Debug\MapImages\MapGreen_1.png" />
     <Resource Include="bin\Debug\MapImages\MapGreen_10.png" />
     <Resource Include="bin\Debug\MapImages\MapGreen_11.png" />
@@ -437,26 +396,7 @@
     <Resource Include="bin\Debug\MapImages\MapGreen_19.png" />
     <Resource Include="bin\Debug\MapImages\MapGreen_2.png" />
     <Resource Include="bin\Debug\MapImages\MapGreen_20.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_21.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_22.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_23.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_24.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_25.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_26.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_27.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_28.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_29.png" />
     <Resource Include="bin\Debug\MapImages\MapGreen_3.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_30.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_31.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_32.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_33.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_34.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_35.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_36.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_37.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_38.png" />
-    <Resource Include="bin\Debug\MapImages\MapGreen_39.png" />
     <Resource Include="bin\Debug\MapImages\MapGreen_4.png" />
     <Resource Include="bin\Debug\MapImages\MapGreen_5.png" />
     <Resource Include="bin\Debug\MapImages\MapGreen_6.png" />
@@ -476,35 +416,29 @@
     <Resource Include="bin\Debug\MapImages\Mapred_19.png" />
     <Resource Include="bin\Debug\MapImages\Mapred_2.png" />
     <Resource Include="bin\Debug\MapImages\Mapred_20.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_21.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_22.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_23.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_24.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_25.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_26.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_27.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_28.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_29.png" />
     <Resource Include="bin\Debug\MapImages\Mapred_3.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_30.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_31.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_32.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_33.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_34.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_35.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_36.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_37.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_38.png" />
-    <Resource Include="bin\Debug\MapImages\Mapred_39.png" />
     <Resource Include="bin\Debug\MapImages\Mapred_4.png" />
     <Resource Include="bin\Debug\MapImages\Mapred_5.png" />
     <Resource Include="bin\Debug\MapImages\Mapred_6.png" />
     <Resource Include="bin\Debug\MapImages\Mapred_7.png" />
     <Resource Include="bin\Debug\MapImages\Mapred_8.png" />
     <Resource Include="bin\Debug\MapImages\Mapred_9.png" />
+    <Resource Include="Assets\Main_map.png" />
     <Content Include="Media\Videos\ELL_PART_5_768k.wmv" />
     <Resource Include="Media\Pictures\Kat.jpg" />
     <Content Include="Media\Videos\Matt1344Allthathehas.mp4" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.107.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.107.0\build\net451\System.Data.SQLite.Core.targets')" />

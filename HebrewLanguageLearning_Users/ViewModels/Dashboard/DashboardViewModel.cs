@@ -94,6 +94,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
                 case 8:
                     navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningWordTypingViewModel));
                     break;
+                case 9:
+                    navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningWordTypingViewModel));
+                    break;
                 default:
                     navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
                     break;

@@ -21,7 +21,7 @@ namespace HebrewLanguageLearning_Users.Views.Game
     /// </summary>
     public partial class JerichoGameView : Page
     {
-        int GreenDotstatus = 2; int TypeOfProgressBar = 2;
+        int GreenDotstatus = 2; int TypeOfProgressBar = 0;
         public JerichoGameView()
         {
             InitializeComponent();

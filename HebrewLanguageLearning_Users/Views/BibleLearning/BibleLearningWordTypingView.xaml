@@ -19,7 +19,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="193*"/>
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
@@ -75,7 +75,7 @@
                 </Border>
             </Grid>
         </StackPanel>
-        <ScrollViewer Margin="20" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="3">
+        <ScrollViewer HorizontalAlignment="Center" Margin="20" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="3">
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Image Height="50"  Margin="20 30 0 0" Width="50" x:Name="imageLeftQuestion" HorizontalAlignment="Left"  Source="/HebrewLanguageLearning_Users;component/Assets/qustion.png"/>
                 <Border Background="Gainsboro" BorderBrush="Black" BorderThickness="3">
@@ -102,7 +102,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>-->
         </ScrollViewer>
-        <StackPanel Grid.Column="1" x:Name="spProgress"  Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Margin="-30 0 0 0"  Grid.Column="1" x:Name="spProgress"  Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
             <!--<CommonUserControls:ProgressBarUC/>-->
         </StackPanel>
     </Grid>

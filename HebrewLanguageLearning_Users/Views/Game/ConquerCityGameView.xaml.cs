@@ -26,7 +26,7 @@ namespace HebrewLanguageLearning_Users.Views.Game
         public ConquerCityGameView()
         {
             InitializeComponent();
-            setProgressBar(5);
+            setProgressBar(4);
         }
 
         private void setProgressBar(int status)
@@ -36,7 +36,7 @@ namespace HebrewLanguageLearning_Users.Views.Game
                 progressStatus = Convert.ToInt32(Application.Current.Properties["CurretRedirection"]);
             }
             ProgressBarUC _cuc = new ProgressBarUC();
-            spProgress.Children.Add(_cuc.LoadProgressbar(status, 4));
+            spProgress.Children.Add(_cuc.LoadProgressbar(0,status));
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using HebrewLanguageLearning_Users.GenericClasses;
 using System.Windows.Forms;
 using HebrewLanguageLearning_Users.Models.DataControllers;
+using HebrewLanguageLearning_Users.ViewModels.BibleLearning;
 
 namespace HebrewLanguageLearning_Users.ViewModels.Game
 {
@@ -200,58 +201,38 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
 
                     BibleTxtMediaUrl = "";
                 }
-
-                // ImagesListBind(true, "1", "2");
-
+                
             }
             catch (Exception ex) { }
             finally { }
-            // SetWord(CurrentGroup);
-            // SetWord(s.LessonDecks); PnlWordChoiceList
+           
         }
-        //string data(int i)
-        //{
-        //    var rand = new Random();
-        //    string[] str= { "green.png", "red.png", "red-gray.png" };
-        //    var pic = str[rand.Next(str.Count())];
-        //    return pic;
-        //}
+       
         static List<ImagesModelList> _dicList = new List<ImagesModelList>()
         {
                  new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "0", ImgLeft = "0" } ,
-                 new ImagesModelList { ImgHeight = "80", ImgWidth = "80", ImgTop = "42", ImgLeft = "177" } ,
-                 new ImagesModelList { ImgHeight = "50", ImgWidth = "50", ImgTop = "65", ImgLeft = "217" } ,
-                 new ImagesModelList { ImgHeight = "87", ImgWidth = "82", ImgTop = "78", ImgLeft = "152" } ,
-                 new ImagesModelList { ImgHeight = "80", ImgWidth = "74", ImgTop = "80", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "80", ImgWidth = "68", ImgTop = "111", ImgLeft = "195" } ,
-                 new ImagesModelList { ImgHeight = "84", ImgWidth = "82", ImgTop = "130", ImgLeft = "140" } ,
-                 new ImagesModelList { ImgHeight = "65", ImgWidth = "65", ImgTop = "157", ImgLeft = "196" } ,
-                 new ImagesModelList { ImgHeight = "40", ImgWidth = "40", ImgTop = "186", ImgLeft = "176" } ,
-                 new ImagesModelList { ImgHeight = "40", ImgWidth = "54", ImgTop = "205", ImgLeft = "192" } ,
-                 new ImagesModelList { ImgHeight = "61", ImgWidth = "48", ImgTop = "186", ImgLeft = "140" } ,
-                 new ImagesModelList { ImgHeight = "75", ImgWidth = "109", ImgTop = "212", ImgLeft = "134" } ,
-                 new ImagesModelList { ImgHeight = "60", ImgWidth = "100", ImgTop = "264", ImgLeft = "97" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "74", ImgTop = "243", ImgLeft = "170" } ,
-              
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "100", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "125", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "150", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "175", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "200", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "225", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "250", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "275", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "300", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "325", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "350", ImgLeft = "210" } ,
-                 new ImagesModelList { ImgHeight = "100", ImgWidth = "100", ImgTop = "375", ImgLeft = "210" } ,
+                 new ImagesModelList { ImgHeight = "101", ImgWidth = "72", ImgTop = "43", ImgLeft = "170" } ,//1//
+                 new ImagesModelList { ImgHeight = "87", ImgWidth = "42", ImgTop = "130", ImgLeft = "163" } ,//2//
+                 new ImagesModelList { ImgHeight = "87", ImgWidth = "78", ImgTop = "68", ImgLeft = "200" } ,//3//
+                 new ImagesModelList { ImgHeight = "79", ImgWidth = "74", ImgTop = "137", ImgLeft = "191" } ,//4//
+                 new ImagesModelList { ImgHeight = "39", ImgWidth = "39", ImgTop = "187", ImgLeft = "178" } ,//5//
+                 new ImagesModelList { ImgHeight = "50", ImgWidth = "50", ImgTop = "202", ImgLeft = "195" } ,//6//
+                 new ImagesModelList { ImgHeight = "133", ImgWidth = "124", ImgTop = "190", ImgLeft = "100" } ,//7//
+                 new ImagesModelList { ImgHeight = "137", ImgWidth = "136", ImgTop = "227", ImgLeft = "150" } ,//8//
+                 new ImagesModelList { ImgHeight = "91", ImgWidth = "91", ImgTop = "290", ImgLeft = "138" } ,//9//
+                 new ImagesModelList { ImgHeight = "90", ImgWidth = "68", ImgTop = "309", ImgLeft = "109" } ,//10//
+                 new ImagesModelList { ImgHeight = "55", ImgWidth = "73", ImgTop = "346", ImgLeft = "169" } ,//11//
+                 new ImagesModelList { ImgHeight = "130", ImgWidth = "190", ImgTop = "373", ImgLeft = "70" } ,//12//
+                 new ImagesModelList { ImgHeight = "100", ImgWidth = "75", ImgTop = "442", ImgLeft = "147" } ,//13//
+                 new ImagesModelList { ImgHeight = "95", ImgWidth = "90", ImgTop = "438", ImgLeft = "81" } ,//14//
+                 new ImagesModelList { ImgHeight = "110", ImgWidth = "106", ImgTop = "499", ImgLeft = "58" } ,//15//
+                 new ImagesModelList { ImgHeight = "101", ImgWidth = "109", ImgTop = "174", ImgLeft = "284" } ,//16//
+                 new ImagesModelList { ImgHeight = "165", ImgWidth = "175", ImgTop = "205", ImgLeft = "230" } ,//17//
+                 new ImagesModelList { ImgHeight = "97", ImgWidth = "97", ImgTop = "294", ImgLeft = "247" } ,//18//
+                 new ImagesModelList { ImgHeight = "100", ImgWidth = "60", ImgTop = "344", ImgLeft = "248" } ,//19//
+                 new ImagesModelList { ImgHeight = "100", ImgWidth = "60", ImgTop = "380", ImgLeft = "248" } ,//20//
             };
-       
-        //static Dictionary<ImagesModelList> _dicTopLeft = new Dictionary<ImagesModelList>() { { "10", "10" },
-        //         { "50", "150" },  { "150", "100" },  { "175", "100" },  { "200", "100" },  { "225", "100" },
-        //         { "250", "100" }, { "275", "100" }, { "300", "100" }, { "325", "100" }, { "350", "100" },
-        //         { "126", "200" }, { "151", "200" }, { "176", "200" }, { "201", "200" }, { "226", "200" },
-        //         { "251", "200" }, { "276", "200" }, { "301", "200" }, { "326", "200" }, { "351", "200" }};
+
 
         private void ImagesListBind(bool ImageStatus, string ReviewCounterGreen, string ReviewCounterRed)
         {
@@ -292,10 +273,13 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
             if (value != 0 && value == Totalvalue)
             {
                 SetScreenNoInDataBase("6");
-                //SetDataFromDataBase(LessonId, completed_Screen_Status); 
+                showPopup();
             }
         }
-
+        public void showPopup()
+        {
+            navigationService.NavigateToViewModel(typeof(CustomPopupViewModel));
+        }
         private void SetScreenNoInDataBase(string screenNo)
         {
             ObjDC.SetUserProgressScreen(screenNo);

@@ -43,7 +43,19 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
             return _objModel;
 
         }
+        internal bool SetUserProgressLesson(string completedLesson)
+        {
+            try
+            {
+                _dbobj.UpdateData("HLL_ProgressOfUser", completedLesson);
+                return true;
+            }
+            catch
+            {
 
+            }
+            return true;
+        }
         internal bool SetUserProgress(string completedLesson, string completed_Screen_Status)
         {
             try

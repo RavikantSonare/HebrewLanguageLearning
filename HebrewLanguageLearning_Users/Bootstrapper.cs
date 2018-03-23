@@ -38,7 +38,8 @@ namespace HebrewLanguageLearning_Users
                .PerRequest<ViewModels.BibleLearning.BibleLearningFromMediaWordChoiceViewModel>()
                .PerRequest<ViewModels.BibleLearning.BibleLearningWordTypingViewModel>()
                .PerRequest<ViewModels.Game.JerichoGameViewModel>()
-               .PerRequest<ViewModels.Game.ConquerCityGameViewModel>();
+               .PerRequest<ViewModels.Game.ConquerCityGameViewModel>()
+               .PerRequest<ViewModels.BibleLearning.CustomPopupViewModel>();
              }
 
         protected override void OnStartup(object sender, StartupEventArgs e)

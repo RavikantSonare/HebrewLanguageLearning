@@ -41,7 +41,8 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             // Line Logic
             if (prgBarId == 0 || prgBarId == 3)
             {
-                gd.Add(BlankLine(950, HorizontalAlignment.Center, 4)); gd.Add(FillLine(150, HorizontalAlignment.Left, 4));
+                gd.Add(BlankLine(1020, HorizontalAlignment.Center, 4)); gd.Add(FillLine(110 * (prgBarProgressNumber+1), HorizontalAlignment.Left,20, 4));
+                if (prgBarProgressNumber >= 5) { prgBarProgressNumber++; }
             }
             else
             {
@@ -68,33 +69,37 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
 
             // All Image Logic
 
-            gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
+            // gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
             if (prgBarId == 0)
             {
                 gd.Add(createImage(0, new Thickness(20, -53, 0, 0)));
                 gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
             }
-            gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
-
+            else
+            {
+                gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
+            }
             switch (prgBarId)
             {
                 case 0:
-                    for (int i = 1; i <= 9; i++)
+                    for (int i = 1; i <= 10; i++)
                     {
-                        if (i != 5 && i != 8)
+                        if (i != 5 && i != 9)
                         {
-                            int thinkValue = (i + 1) * 95;
-                            if (i == 1 && prgBarId == 1)
-                            { gd.Add(createImage(1, new Thickness(_dic[i], -53, 0, 0))); }
+                            if (i <= prgBarProgressNumber)
+                            {
+                                gd.Add(createImage(1, new Thickness(_dic[i], -53, 0, 0)));
+                            }
                             else
                             {
                                 gd.Add(createImage(2, new Thickness(_dic[i], -53, 0, 0)));
                             }
                         }
                     }
-                    gd.Add(createImage(0, new Thickness(595, -53, 0, 0)));
-                    gd.Add(createImage(0, new Thickness(870, -53, 0, 0)));
+                    gd.Add(createImage(0, new Thickness(575, -53, 0, 0)));
+                    gd.Add(createImage(0, new Thickness(960, -53, 0, 0)));
                     break;
+               
                 case 3:
                     for (int i = 2; i <= 3; i++)
                     {
@@ -136,7 +141,8 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 case 0:
                     foreach (var Item in EntityConfig._ProgressBarAssociationList)
                     {
-                        _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, new Thickness(5, 10, 5, 10), false));
+                      //  _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, Item.id == 0 || Item.id == 6 ? new Thickness(Item.id == 0 ? 110 : 5, 10, 5, 10) : new Thickness(5, 10, 5, 10), Item.id == (prgBarProgressNumber + 1) ? true : false));
+                        _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 10 ? true : false, new Thickness(5, 10, 5, 10), Item.id == (prgBarProgressNumber + 1) ? true : false));
                     }
                     gd.Add(_stcPnl);
                     break;
@@ -197,7 +203,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 TextAlignment = TextAlignment.Left,
                 Background = Brushes.Transparent,
                 Text = currentTopic,
-                FontSize = 11,
+                FontSize = 10.6,
                 FontWeight = FontWeights.SemiBold,
                 Margin = mrgnThik,//new Thickness(5, 10, 5, 10),
                 Height = 20
@@ -230,7 +236,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             var _FillLine = new Line
             {
                 HorizontalAlignment = HoriAlignment,//HorizontalAlignment.Left,
-                X1 = lnlenght,
+                X1 = (lnlenght>1000?1025:lnlenght),
                 Stroke = (SolidColorBrush)new BrushConverter().ConvertFrom("#00D5B6"),
                 StrokeThickness = 3,
                 Margin = new Thickness(setLeftMgn, setTopMgn, 0, 0),
@@ -248,13 +254,14 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                     case 0:
                         _dic.Add(1, 210);
                         _dic.Add(2, 315);
-                        _dic.Add(3, 420);
-                        _dic.Add(4, 510);
-                        _dic.Add(5, 600);
-                        _dic.Add(6, 670);
-                        _dic.Add(7, 760);
-                        _dic.Add(8, 910);
-                        _dic.Add(9, 950);
+                        _dic.Add(3, 400);
+                        _dic.Add(4, 490);
+                        _dic.Add(5, 550);
+                        _dic.Add(6, 650);
+                        _dic.Add(7, 730);
+                        _dic.Add(8, 850);
+                        _dic.Add(9, 850);
+                        _dic.Add(10, 1030);
                         break;
 
                     case 3:

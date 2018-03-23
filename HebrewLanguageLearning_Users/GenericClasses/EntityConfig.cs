@@ -79,9 +79,10 @@ namespace HebrewLanguageLearning_Users.GenericClasses
         ,new ProgressBarText{ id = 5,  Value="REVIEW GAME" }
         ,new ProgressBarText{ id = 6,  Value="GRAMMAR" }
         ,new ProgressBarText{ id = 7,  Value="ASSOCIATION" }
-        ,new ProgressBarText{ id = 8,  Value="ACTIVE KNOWLEDGE" }
-        ,new ProgressBarText{ id = 9,  Value="THE FINAL ACT" }
-        //,new ProgressBarText{ id = 10, Value="APPLICATION" }
+        ,new ProgressBarText{ id = 8,  Value="PASSIVE KNOWLEDGE" }
+        ,new ProgressBarText{ id = 9,  Value="ACTIVE KNOWLEDGE" }
+        ,new ProgressBarText{ id = 10,  Value="THE FINAL ACT" }
+        ,new ProgressBarText{ id = 11, Value="APPLICATION" }
         };
         #endregion
 

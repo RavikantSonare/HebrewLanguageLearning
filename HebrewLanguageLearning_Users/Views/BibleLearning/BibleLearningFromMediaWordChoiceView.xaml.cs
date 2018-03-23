@@ -33,20 +33,17 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
 
             var ScreenTemp = Application.Current.Properties["CurretPage"];
             int ScreenNo = 3;
-            int TypeOfProgressBar = 1;
+            int TypeOfProgressBar = 0;
             if (ScreenTemp != null)
             {
                 ScreenNo = Convert.ToInt32(ScreenTemp);
                 if (ScreenNo == 7)
                 {
-                    TypeOfProgressBar = 4;
-                    GreenDotstatus = 7;
+                   // TypeOfProgressBar = 4;
+                    GreenDotstatus = 6;
                 }
             }
-            else
-            {
-                TypeOfProgressBar = 1;
-            }
+           
 
 
             ProgressBarUC _cuc = new ProgressBarUC();

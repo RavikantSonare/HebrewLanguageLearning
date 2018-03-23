@@ -71,7 +71,8 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 [IsReviewGameB] [bit] NULL,
                 [IsReviewAssociationGrammar] [bit] NULL,
                 [IsPassiveKnowledgeGrammar] [bit] NULL,
-                [IsActiveKnowledgeGrammar] [bit] NULL)";
+                [IsActiveKnowledgeGrammar] [bit] NULL,
+                [TheFinalActApplication] [bit] NULL)";
                 ExcecuteTheQuery(_TableString, "I");
                 #endregion
 
@@ -137,14 +138,16 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 {
                     case "HLL_VocabDecks":
                         var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
-                        customQuery.Append(@"insert into HLL_VocabDecks(LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar) 
+                        customQuery.Append(@"INSERT OR REPLACE INTO HLL_VocabDecks(VocabDecksId,LessonId, StrongNo, DictionaryEntriesId, Description,
+LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar,TheFinalActApplication) 
 values");
+                        int tempValue = 1;
                         foreach (var item in _DictionaryModellist)
                         {
-                            customQuery.Append("('" + item.LessonId + "','" + item.StrongNo + "','" + item.DictionaryEntriesId + "', '"
+                            customQuery.Append("("+ tempValue +", '" + item.LessonId + "','" + item.StrongNo + "','" + item.DictionaryEntriesId + "', '"
     + item.Description + "','" + item.LessonDecks + "','" + item.IsCustomeDecks + "','" +
-    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False','False','False','False','False','False','False'),");
+    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False','False','False','False','False','False','False','False'),");
+                            tempValue++;
                         }
                         break;
                     case "HLL_AuthenticateUser":
@@ -200,7 +203,7 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                     case "HLL_VocabDecksLesson":
                         // IsReview = 'False' and
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar from HLL_VocabDecks where LessonId='" + dataFilter + "'");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar,TheFinalActApplication from HLL_VocabDecks where LessonId='" + dataFilter + "'");
                         break;
 
                     case "HLL_AuthenticateUser":
@@ -270,7 +273,10 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                     case "HLL_VocabDecksIsActiveKnowledgeGrammar":
                         customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledgeGrammar='True' where StrongNo='" + tableData.Trim() + "'");
                         break;
-
+                    case "HLL_VocabDecksTheFinalActApplication":
+                        customQuery.Append(@"update HLL_VocabDecks set TheFinalActApplication='True' where StrongNo='" + tableData.Trim() + "'");
+                        break;
+                        
                 }
                 string Qry = Convert.ToString(customQuery);
 
