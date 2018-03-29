@@ -26,6 +26,12 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Storyboard x:Key="sbShowRightMenu" >
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,-1230,0" To="0,0,0,0" DecelerationRatio=".9" Duration="0:0:0.1" />
+        </Storyboard>
+        <Storyboard x:Key="sbHideRightMenu">
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="0,0,-1230,0" AccelerationRatio=".9" Duration="0:0:0.1" />
+        </Storyboard>
     </Page.Resources>
    
     <Grid>
@@ -200,6 +206,9 @@
         </Grid>
 
         <!--Grid Column 2 Row 1-->
+        <Grid Panel.ZIndex="4" Grid.Row="0" Grid.Column="1" Background="Transparent" Margin="0,0,0,0" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Top" Width="95" >
+            <Image Panel.ZIndex="5" x:Name="VocabDecksMenu" HorizontalAlignment="Right" Margin="0 20 0 0" Source="/HebrewLanguageLearning_Users;component/Assets/pages.png" MouseDown="btnAddVocabDecks_Click"/>
+        </Grid>
         <Canvas Grid.Column="2"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="7"></Canvas>
         <StackPanel Grid.Column="2"  Grid.Row="1"  Background="#E6EAEE" Orientation="Horizontal" HorizontalAlignment="Center">
             <Label FontSize="25"  Grid.Row="4" FontWeight="Bold"  >BIBLE READING</Label>
@@ -217,47 +226,103 @@
             <Image  Margin="0 0"  x:Name="btn_continue" Height="50" Width="500"  Source="/HebrewLanguageLearning_Users;component/Assets/cuntinue_passage.png" cal:Message.Attach="[Event MouseDown] = [Action btn_continue_passage()]"/>
            
         </StackPanel>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10" Panel.ZIndex="3">
 
-       
-        <!-- Grid Row 2-->
-        <!--
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <materialDesign:PackIcon VerticalAlignment="Center" Kind="Account" Height="24" Width="24" Foreground="{Binding ElementName=UserName,Path=BorderBrush}" />
-            <TextBlock VerticalAlignment="Center" Text="User Name" Width="100"></TextBlock>
-            <TextBox x:Name="UserName" VerticalAlignment="Center" Width="300" FontSize="16" FontStyle="Italic" Margin="10 0 0 0" materialDesign:HintAssist.Hint="       Please Enter User Name"></TextBox>
-        </StackPanel>
+            <StackPanel Panel.ZIndex="2" x:Name="VocabDecksPanel" Orientation="Horizontal"  HorizontalAlignment="Right" Margin="0,0,-1230,0">
+                <StackPanel Panel.ZIndex="4" x:Name="VocabDecksPanel1" Orientation="Horizontal" Width="830" Height="800" Background="Transparent" HorizontalAlignment="Right" Margin="0,-50,0,0">
+                    <Border BorderBrush="Black" BorderThickness="1" Width="830" Background="Black" Opacity="0.7" >
+                        <StackPanel>
+                            <Button HorizontalAlignment="Left" Margin="30 20 0 0" Width="70" Height="70" Foreground="White" FontSize="40" Background="Transparent" BorderBrush="Transparent" Click="btnAddVocabDecks_Click">x</Button>
+                            <TextBlock x:Name="BibleTxtdocks" Margin="300 100 10 500" HorizontalAlignment="Left" Foreground="White" FontSize="30"></TextBlock> <!--Choose a deck to add טֶקסט to ->-->
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <Border BorderBrush="#A9CDDA" BorderThickness="1" Width="400" Background="#A9CDDA" >
 
-        -->
-        <!-- Grid Row 3-->
-        <!--
-        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <materialDesign:PackIcon VerticalAlignment="Center" Kind="Settings" Foreground="{Binding ElementName=Password,Path=BorderBrush}" Height="24" Width="24"/>
-            <TextBlock VerticalAlignment="Center" Width="100" Text="Password"></TextBlock>
-            <PasswordBox x:Name="UserPassword" PasswordChanged="PasswordBox_PasswordChanged" VerticalAlignment="Center" Width="300" FontSize="16" FontStyle="Italic" Margin="10 0 0 0" materialDesign:HintAssist.Hint="       Please Enter User Password"></PasswordBox>
-        </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="50 30 20 50">
+                        <TextBlock FontSize="20">Vocab Decks</TextBlock>
+                        <Line X1="120"  Margin="0 10 0 0" Stroke="Black" StrokeThickness="2" />
+                        <TextBlock Background="#bcdce4" Height="50" Padding="10" FontSize="20" Margin="0 12 15 0">+ Words that Need Practice</TextBlock>
 
-        -->
-        <!-- Grid Row 4-->
-        <!--
-        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 0">
-            -->
-        <!--<materialDesign:PackIcon VerticalAlignment="Center" Kind="Alert"  Foreground="Red" Height="24" Width="24"/>-->
-        <!--
-            <TextBlock Foreground="Red"  Name="Error" VerticalAlignment="Center" Width="auto" Text=""></TextBlock>
-        </StackPanel>
-        -->
-        <!-- Grid Row 5-->
-        <!--
-        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 0">
-            <Button x:Name="btn_Login" BorderThickness="1" BorderBrush="#4E5E74" FontSize="25" Background="#788494" 
-                    Style="{DynamicResource MaterialDesignRaisedButton}"  Width="150" Height="45" Content="Login"></Button>
-        </StackPanel>
-        -->
-        <!-- Grid Row 6-->
-        <!--
-        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Margin="0 60 0 0">
-            <CheckBox x:Name="RememberMe" Content="Remider Me!"/>
-            <TextBlock Margin="180 10 10 1">I Forgot My Password</TextBlock>
-        </StackPanel>-->
+                        <TextBlock FontSize="19" Margin="10 20 15 0">Lesson Decks</TextBlock>
+
+                        <ItemsControl ItemsSource="{Binding VocabularyLesson}">
+                            <ItemsControl.ItemTemplate>
+
+                                <DataTemplate >
+
+                                    <TreeViewItem MouseUp="_treeView1_MouseUp">
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Width="200" FontSize="18" Text="{Binding LessonId}"  cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecks($source, $eventArgs)]"/>
+                                                <TextBlock Margin="4"  FontSize="12" HorizontalAlignment="Right" Tag="{Binding LessonId}" Text="Review" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksReview($source, $eventArgs)]"/>
+                                                <!--<TextBlock Margin="4 4 4 0"  FontSize="12" HorizontalAlignment="Right" Text="X" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksDelete($source, $eventArgs)]"/>-->
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+
+                                        <ListBox  ItemsSource="{Binding vocabularyModel}" Width="auto" BorderThickness="0" >
+                                            <ListBox.ItemTemplate>
+
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock  Text="{Binding Path=LessonDecks}"  FontSize="18"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </TreeViewItem>
+
+                                </DataTemplate>
+
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <StackPanel Background="#bcdce4" >
+
+
+                            <TextBlock FontSize="19" Padding="10" Margin="10 0 15 0">Custom Decks</TextBlock>
+
+                            <ItemsControl ItemsSource="{Binding VocabularyLesson_Custom}">
+                                <ItemsControl.ItemTemplate>
+
+                                    <DataTemplate >
+
+                                        <TreeViewItem>
+                                            <TreeViewItem.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Width="200" FontSize="18" Text="{Binding LessonId}"  cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecks($source, $eventArgs)]"/>
+                                                    <TextBlock Margin="4"  FontSize="12" HorizontalAlignment="Right" Tag="{Binding LessonId}" Text="Learn" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksReview($source, $eventArgs)]"/>
+                                                    <TextBlock Margin="4 4 4 0" Tag="{Binding LessonId}" FontSize="12" HorizontalAlignment="Right" Text="X" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksDelete($source, $eventArgs)]"/>
+                                                </StackPanel>
+                                            </TreeViewItem.Header>
+
+                                            <ListBox  ItemsSource="{Binding vocabularyModel}" Width="auto" BorderThickness="0" >
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock  Text="{Binding Path=LessonDecks}"  FontSize="18"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </TreeViewItem>
+
+                                    </DataTemplate>
+
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <!--<TextBlock>D:\Ravi\Project\HLL\HebrewLanguageLearning\HebrewLanguageLearning_Users\Assets\keyboard-right-arrow-button.png</TextBlock>-->
+
+                            <!--<StackPanel Orientation="Vertical" >
+                                <Image Height="10" Margin="10 10 0 0" Width="10" x:Name="imageTextBox" HorizontalAlignment="Left"  Source="/HebrewLanguageLearning_Users;component/Assets/keyboard-right-arrow-button.png"/>
+                                <TextBox x:Name="BibleTxtVocabdocks"  Margin="-60 -20 0 10" Height="30" Width="200"></TextBox>
+                            </StackPanel>-->
+                        </StackPanel>
+                        <!--<TextBlock Margin="1 20 0 0" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_CustomDecks($source, $eventArgs)]" FontSize="20">+ Create New Vocab Deck</TextBlock>-->
+
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

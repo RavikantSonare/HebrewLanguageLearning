@@ -39,9 +39,23 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             Possition();
 
             // Line Logic
-            if (prgBarId == 0 || prgBarId == 3)
+            if (prgBarId == 0 || prgBarId == 3 || prgBarId == 4)
             {
-                gd.Add(BlankLine(1020, HorizontalAlignment.Center, 4)); gd.Add(FillLine(110 * (prgBarProgressNumber+1), HorizontalAlignment.Left,20, 4));
+                gd.Add(BlankLine(1020, HorizontalAlignment.Center, 4));
+                if (prgBarIdCallie == 3 || prgBarIdCallie == 4 && prgBarProgressNumber > 1)
+                {
+                    if (prgBarIdCallie == 3)
+                    {
+                        gd.Add(FillLine(220 * (prgBarProgressNumber + 1), HorizontalAlignment.Left, 20, 4));
+                    }else
+                    {
+                        gd.Add(FillLine(420 * (prgBarProgressNumber + 1), HorizontalAlignment.Left, 20, 4));
+                    }
+                }
+                else
+                {
+                    gd.Add(FillLine(110 * (prgBarProgressNumber + 1), HorizontalAlignment.Left, 20, 4));
+                }
                 if (prgBarProgressNumber >= 5) { prgBarProgressNumber++; }
             }
             else
@@ -70,14 +84,22 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             // All Image Logic
 
             // gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
-            if (prgBarId == 0)
+
+            switch (prgBarId)
             {
-                gd.Add(createImage(0, new Thickness(20, -53, 0, 0)));
-                gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
-            }
-            else
-            {
-                gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
+                case 0:
+                    gd.Add(createImage(0, new Thickness(20, -53, 0, 0)));
+                    gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
+                    break;
+                case 3:
+                    gd.Add(createImage(1, new Thickness(180, -53, 0, 0)));
+                    break;
+                case 4:
+                    gd.Add(createImage(1, new Thickness(180, -53, 0, 0)));
+                    break;
+                default:
+                    gd.Add(createImage(1, new Thickness(120, -53, 0, 0)));
+                    break;
             }
             switch (prgBarId)
             {
@@ -99,14 +121,36 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                     gd.Add(createImage(0, new Thickness(575, -53, 0, 0)));
                     gd.Add(createImage(0, new Thickness(960, -53, 0, 0)));
                     break;
-               
+
                 case 3:
                     for (int i = 2; i <= 3; i++)
                     {
-                        gd.Add(createImage(2, new Thickness(_dic[i], -53, 0, 0)));
+                        if (i <= prgBarProgressNumber)
+                        {
+                            gd.Add(createImage(1, new Thickness(_dic[i], -53, 0, 0)));
+                        }
+                        else
+                        {
+                            gd.Add(createImage(2, new Thickness(_dic[i], -53, 0, 0)));
+                        }
+                        // gd.Add(createImage(2, new Thickness(_dic[i], -53, 0, 0)));
                     }
-                    //gd.Add(createImage(0, new Thickness(595, -53, 0, 0)));
-                    //gd.Add(createImage(0, new Thickness(870, -53, 0, 0)));
+                  
+                    break;
+                case 4:
+                    for (int i = 2; i <= 2; i++)
+                    {
+                        if (i <= prgBarProgressNumber)
+                        {
+                            gd.Add(createImage(1, new Thickness(_dic[i], -53, 0, 0)));
+                        }
+                        else
+                        {
+                            gd.Add(createImage(2, new Thickness(_dic[i], -53, 0, 0)));
+                        }
+                       
+                    }
+                    
                     break;
                 default:
                     for (int i = 1; i <= 10; i++)
@@ -141,22 +185,37 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
                 case 0:
                     foreach (var Item in EntityConfig._ProgressBarAssociationList)
                     {
-                      //  _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, Item.id == 0 || Item.id == 6 ? new Thickness(Item.id == 0 ? 110 : 5, 10, 5, 10) : new Thickness(5, 10, 5, 10), Item.id == (prgBarProgressNumber + 1) ? true : false));
+                        //  _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, Item.id == 0 || Item.id == 6 ? new Thickness(Item.id == 0 ? 110 : 5, 10, 5, 10) : new Thickness(5, 10, 5, 10), Item.id == (prgBarProgressNumber + 1) ? true : false));
                         _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 10 ? true : false, new Thickness(5, 10, 5, 10), Item.id == (prgBarProgressNumber + 1) ? true : false));
                     }
                     gd.Add(_stcPnl);
                     break;
                 case 3:
                     int i = 1; Dictionary<int, int> _dicTmp = new Dictionary<int, int>();
-                    _dicTmp.Add(1, 90);
-                    _dicTmp.Add(2, 200);
-                    _dicTmp.Add(3, 200);
+                    _dicTmp.Add(1, 150);
+                    _dicTmp.Add(2, 250);
+                    _dicTmp.Add(3, 250);
                     foreach (var Item in EntityConfig._ProgressBarAssociationList)
                     {
-                        if (Item.id != 0 && Item.id != 3 && Item.id != 5 && Item.id != 6 && Item.id != 7 && Item.id != 8 && Item.id != 9 && Item.id != 10)
+                        if (Item.id != 0 && Item.id != 3 && Item.id != 5 && Item.id != 6 && Item.id != 7 && Item.id != 8 && Item.id != 9 && Item.id != 10 && Item.id != 11)
                         {
                             _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, new Thickness(_dicTmp[i], 10, 5, 10), false));
                             i++;
+                        }
+                    }
+                    gd.Add(_stcPnl);
+                    break;
+                case 4:
+                    int k = 1; Dictionary<int, int> _dicTmp4 = new Dictionary<int, int>();
+                    _dicTmp4.Add(1, 130);
+                    _dicTmp4.Add(2, 600);
+                
+                    foreach (var Item in EntityConfig._ProgressBarAssociationList)
+                    {
+                        if (Item.id != 0 && Item.id !=1  && Item.id != 3 && Item.id != 5 && Item.id != 6 && Item.id != 7 && Item.id != 8 && Item.id != 9 && Item.id != 10 && Item.id != 11)
+                        {
+                            _stcPnl.Children.Add(createCurrentLesson(Item.id, Item.Value, Item.id == 0 || Item.id == 6 || Item.id == 9 ? true : false, new Thickness(_dicTmp4[k], 10, 5, 10), false));
+                            k++;
                         }
                     }
                     gd.Add(_stcPnl);
@@ -236,7 +295,7 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
             var _FillLine = new Line
             {
                 HorizontalAlignment = HoriAlignment,//HorizontalAlignment.Left,
-                X1 = (lnlenght>1000?1025:lnlenght),
+                X1 = (lnlenght > 1000 ? 1025 : lnlenght),
                 Stroke = (SolidColorBrush)new BrushConverter().ConvertFrom("#00D5B6"),
                 StrokeThickness = 3,
                 Margin = new Thickness(setLeftMgn, setTopMgn, 0, 0),
@@ -247,41 +306,45 @@ namespace HebrewLanguageLearning_Users.Views.CommonUserControls
         static Dictionary<int, int> _dic = new Dictionary<int, int>();
         internal void Possition()
         {
+            _dic.Clear();
+            // if (_dic.Count == 0)
+            switch (prgBarId)
+            {
+                case 0:
+                    _dic.Add(1, 210);
+                    _dic.Add(2, 315);
+                    _dic.Add(3, 400);
+                    _dic.Add(4, 490);
+                    _dic.Add(5, 550);
+                    _dic.Add(6, 650);
+                    _dic.Add(7, 730);
+                    _dic.Add(8, 850);
+                    _dic.Add(9, 850);
+                    _dic.Add(10, 1030);
+                    break;
 
-            if (_dic.Count == 0)
-                switch (prgBarId)
-                {
-                    case 0:
-                        _dic.Add(1, 210);
-                        _dic.Add(2, 315);
-                        _dic.Add(3, 400);
-                        _dic.Add(4, 490);
-                        _dic.Add(5, 550);
-                        _dic.Add(6, 650);
-                        _dic.Add(7, 730);
-                        _dic.Add(8, 850);
-                        _dic.Add(9, 850);
-                        _dic.Add(10, 1030);
-                        break;
-
-                    case 3:
-                        _dic.Add(1, 210);
-                        _dic.Add(2, 415);
-                        _dic.Add(3, 720);
-                        break;
-                    default:
-                        _dic.Add(1, 210);
-                        _dic.Add(2, 330);
-                        _dic.Add(3, 440);
-                        _dic.Add(4, 550);
-                        _dic.Add(5, 650);
-                        _dic.Add(6, 700);
-                        _dic.Add(7, 810);
-                        _dic.Add(8, 910);
-                        _dic.Add(9, 1010);
-                        _dic.Add(10, 1110);
-                        break;
-                }
+                case 3:
+                    _dic.Add(1, 350);
+                    _dic.Add(2, 520);
+                    _dic.Add(3, 880);
+                    break;
+                case 4:
+                    _dic.Add(1, 350);
+                    _dic.Add(2, 880);
+                break;
+                default:
+                    _dic.Add(1, 210);
+                    _dic.Add(2, 330);
+                    _dic.Add(3, 440);
+                    _dic.Add(4, 550);
+                    _dic.Add(5, 650);
+                    _dic.Add(6, 700);
+                    _dic.Add(7, 810);
+                    _dic.Add(8, 910);
+                    _dic.Add(9, 1010);
+                    _dic.Add(10, 1110);
+                    break;
+            }
 
 
         }

@@ -39,18 +39,24 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
                 ScreenNo = Convert.ToInt32(ScreenTemp);
                 if (ScreenNo == 8)
                 {
-                   // TypeOfProgressBar = 4;
+
                     GreenDotstatus = 7;
                 }
                 if (ScreenNo == 9)
                 {
-                    // TypeOfProgressBar = 4;
+
                     GreenDotstatus = 9;
                 }
+                var tmpProgress = Application.Current.Properties["CurretProgressbar"];
+                var tmpGreenDot = Application.Current.Properties["CurretGreenDot"];
+                if (tmpProgress != null && tmpGreenDot != null)
+                {
+                    TypeOfProgressBar = Convert.ToInt32(tmpProgress);
+                    GreenDotstatus = 4;
+                  
+                }
             }
-           
-
-
+            
             ProgressBarUC _cuc = new ProgressBarUC();
             spProgress.Children.Add(_cuc.LoadProgressbar(TypeOfProgressBar, GreenDotstatus));
         }

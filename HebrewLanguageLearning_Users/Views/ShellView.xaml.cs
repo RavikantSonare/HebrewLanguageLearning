@@ -55,7 +55,7 @@ namespace HebrewLanguageLearning_Users.Views
         public int toggleValue = 0;
         private void MenuIconOpenRight_Click(object sender, RoutedEventArgs e)
         {
-            showhide();
+            //showhide();
             //  StateMenuRight.Toggle(1);
             // var Data = obj.SelectData("HLL_VocabDecks");
         }
@@ -67,21 +67,21 @@ namespace HebrewLanguageLearning_Users.Views
         //{
 
         //}
-        public void showhide()
-        {
-            if (toggleValue == 0)
-            {
+        //public void showhide()
+        //{
+        //    if (toggleValue == 0)
+        //    {
 
-                toggleValue = 1;
-                ShowHideMenu("sbShowRightMenu", VocabDecksPanel);
-            }
-            else
-            {
+        //        toggleValue = 1;
+        //        ShowHideMenu("sbShowRightMenu", VocabDecksPanel);
+        //    }
+        //    else
+        //    {
 
-                toggleValue = 0;
-                ShowHideMenu("sbHideRightMenu", VocabDecksPanel);
-            }
-        }
+        //        toggleValue = 0;
+        //        ShowHideMenu("sbHideRightMenu", VocabDecksPanel);
+        //    }
+        //}
 
       
         private void ShowHideMenu(string Storyboard, StackPanel pnl)

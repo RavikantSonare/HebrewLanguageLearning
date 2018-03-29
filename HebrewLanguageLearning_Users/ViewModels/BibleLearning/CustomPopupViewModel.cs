@@ -10,10 +10,34 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
     public class CustomPopupViewModel : Conductor<object>
     {
         private readonly INavigationService navigationService;
+        private int appCurrentphase;
         public CustomPopupViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
 
+            var tmpPhase = Application.Current.Properties["Currentphase"];
+            if (tmpPhase != null)
+            {
+                appCurrentphase = Convert.ToInt32(tmpPhase);
+                switch (appCurrentphase)
+                {
+                    case 2:
+                        Continue_lessonPhase2();
+                        break;
+
+                    case 3:
+                        Continue_lessonPhase3();
+                        break;
+
+                    default:
+                        Continue_lessonPhase1();
+                        break;
+                }
+            }
+            else
+            {
+                Continue_lessonPhase1();
+            }
         }
         public void btn_Dash()
         {
@@ -21,10 +45,12 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         }
         public void btn_Next()
         {
-            Continue_lesson();
+            Continue_lessonPhase1();
         }
-        public void Continue_lesson()
+        public void Continue_lessonPhase1()
         {
+
+
             DashboardController ObjDC = new DashboardController();
             DashboardModel _objModel = new DashboardModel();
             _objModel = ObjDC.getUserProgress();
@@ -68,6 +94,64 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 default:
                     navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningFromMediaWordChoiceViewModel));
                     break;
+            }
+        }
+        public void Continue_lessonPhase2()
+        {
+
+
+            DashboardController ObjDC = new DashboardController();
+            DashboardModel _objModel = new DashboardModel();
+            _objModel = ObjDC.getUserProgress();
+            Application.Current.Properties["CurretPage"] = _objModel.IsReviewProgress;
+            var ScreenTemp = Application.Current.Properties["CurretPage"];
+            int ScreenNo = 1;
+            if (ScreenTemp != null)
+            {
+                ScreenNo = Convert.ToInt32(ScreenTemp);
+            }
+
+            switch (ScreenNo)
+            {
+                case 1:
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
+                    break;
+                case 2:
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+                    break;
+                //case 3:
+                //    navigationService.NavigateToViewModel(typeof(BibleLearningWordTypingViewModel));
+                //    break;
+                
+            }
+        }
+        public void Continue_lessonPhase3()
+        {
+
+
+            DashboardController ObjDC = new DashboardController();
+            DashboardModel _objModel = new DashboardModel();
+            _objModel = ObjDC.getUserProgress();
+            Application.Current.Properties["CurretPage"] = _objModel.IsLearnProgress;
+            var ScreenTemp = Application.Current.Properties["CurretPage"];
+            int ScreenNo = 1;
+            if (ScreenTemp != null)
+            {
+                ScreenNo = Convert.ToInt32(ScreenTemp);
+            }
+
+            switch (ScreenNo)
+            {
+                case 1:
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
+                    break;
+                case 2:
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+                    break;
+                case 3:
+                    navigationService.NavigateToViewModel(typeof(BibleLearningWordTypingViewModel));
+                    break;
+
             }
         }
     }

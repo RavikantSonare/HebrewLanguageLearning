@@ -14,6 +14,9 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         public string currentBookAndchapterId { get; set; }
         public int currentScreenStatus { get; set; }
         public string LeftDate { get; set; }
-      
+        public int IsReviewProgress { get; set; }
+        public int IsLearnProgress { get; set; }
+        
+
     }
 }

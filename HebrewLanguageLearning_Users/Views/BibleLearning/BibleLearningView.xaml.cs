@@ -161,6 +161,22 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
             
         }
 
-       
+        private void _treeView1_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem item = sender as TreeViewItem;
+            if (item != null)
+            {
+                if (item.IsExpanded) { item.IsExpanded = false; } else { item.IsExpanded = true; }
+              
+                e.Handled = true;
+            }
+        }
+
+        private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            showhide();
+        }
     }
+
+   
 }

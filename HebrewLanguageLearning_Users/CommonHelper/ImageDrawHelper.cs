@@ -19,7 +19,7 @@ namespace HebrewLanguageLearning_Users.CommonHelper
                 TextAlignment = TextAlignment.Center,
                 Background = Brushes.Transparent,
                 Foreground = Brushes.Gray,
-                Text = "Lesson " + currentLessonNo + ":" + currentTopic,
+                Text = "Lesson " + currentLessonNo, //+ ":" + currentTopic,
                 FontSize = 15,
                 FontWeight = FontWeights.SemiBold
             };

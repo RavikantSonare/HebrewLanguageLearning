@@ -19,20 +19,20 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
     /// </summary>
     public partial class BibleLearningFromMediaView : Page
     {
-        
-        int GreenDotstatus = 0;
+
+        int GreenDotstatus = 0; int TypeOfProgressBar = 0;
         public BibleLearningFromMediaView()
         {
-            InitializeComponent();        
-            setProgressBar(GreenDotstatus);           
+            InitializeComponent();
+            setProgressBar(GreenDotstatus);
         }
-        
+
         private void setProgressBar(int GreenDotstatus)
         {
 
             var ScreenTemp = Application.Current.Properties["CurretPage"];
             int ScreenNo = 1;
-            int TypeOfProgressBar=0;
+
             if (ScreenTemp != null)
             {
                 ScreenNo = Convert.ToInt32(ScreenTemp);
@@ -41,13 +41,25 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
                     GreenDotstatus = 5;
                 }
             }
-           
 
-            
+            // Second Section Review Lesson
+            var tmpProgress = Application.Current.Properties["CurretProgressbar"];
+            var tmpGreenDot = Application.Current.Properties["CurretGreenDot"];
+            if (tmpProgress != null && tmpGreenDot != null)
+            {
+                TypeOfProgressBar = Convert.ToInt32(tmpProgress);
+                GreenDotstatus = Convert.ToInt32(tmpGreenDot);
+                Application.Current.Properties["CurretProgressbar"] = null;
+                Application.Current.Properties["CurretGreenDot"] = null;
+              
+            }
+
+
+
             ProgressBarUC _cuc = new ProgressBarUC();
             spProgress.Children.Add(_cuc.LoadProgressbar(TypeOfProgressBar, GreenDotstatus));
         }
-        
+
 
         //private void btnPlay_Click(object sender, RoutedEventArgs e)
         //{
@@ -69,8 +81,8 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
             public string Image { get; set; }
             public int Type { get; set; }
         }
-        
-     }
 
     }
+
+}
 

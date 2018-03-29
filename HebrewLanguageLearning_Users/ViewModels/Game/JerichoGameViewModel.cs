@@ -91,9 +91,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
                 NotifyOfPropertyChange(() => BibleTxtEnglish);
             }
         }
-
-
-
+        
         public List<VocabularyModel> PnlWordChoiceList
         {
             get { return _pnlWordChoiceList; }
@@ -104,7 +102,6 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
             }
         }
         public List<VocabDecksGroupModel> VocabularyLesson { get; private set; }
-
         public string BibleTxtMediaUrl
         {
             get { return _bibleTxtMediaUrl; }
@@ -116,6 +113,17 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         }
 
 
+        public string _showPapUp = "Collapsed";
+
+        public string ShowPapUp
+        {
+            get { return _showPapUp; }
+            set
+            {
+                _showPapUp = value;
+                NotifyOfPropertyChange(() => ShowPapUp);
+            }
+        }
         #endregion
 
         public void GetDataFromDataBase()
@@ -137,7 +145,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
         }
 
 
-        List<string> WidthList = new List<string>() { "150", "180", "200", "240", "130", "100" };
+        List<string> WidthList = new List<string>() { "170", "200", "220", "247", "120" };
         public void VocabDecksLesson()
         {
             //Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
@@ -153,12 +161,12 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
                 CurrentGroup = CurrentGroup.Where(z => z.IsReviewGameA == false).ToList();
                 SetCounter(TotalValue - CurrentGroup.Count(), TotalValue);
                 var rand = new Random();
+
+                int _maxItration = 0;
             _lblCheckAgain:
-
-
                 foreach (var item in CurrentGroup)
                 {
-                    if (tmpVM.Count() < 18 && CurrentGroup.Count > 0)
+                    if (tmpVM.Count() < 15 && CurrentGroup.Count > 0)
                     {
                         var rndmTmp = CurrentGroup[rand.Next(CurrentGroup.Count)];
                         if (!tmpVM.Where(z => z.StrongNo == rndmTmp.StrongNo).Any())
@@ -168,7 +176,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
                     }
 
                 }
-                if (tmpVM.Count() < CurrentGroup.Count() && tmpVM.Count() < 18) { goto _lblCheckAgain; }
+                if (tmpVM.Count() < CurrentGroup.Count() && tmpVM.Count() < 15 && CurrentGroup.Count() > _maxItration) { _maxItration++; goto _lblCheckAgain;  }
                 int cTempListCount = tmpVM.Count();
                 //if (cTempListCount < 18)
                 //{
@@ -182,11 +190,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
                 int i = 0;
                 PnlWordChoiceList.ForEach(z =>
                 {
-                    var Data = SetWord(z.LessonDecks); z.LessonDecks = 
-                    Convert.ToInt16(WidthList[i]) > 180 || PnlWordChoiceList.Count==1 ? Data.Length == 3 ? Data[2] : Data[0] : "";
+                    var Data = SetWord(z.LessonDecks); z.LessonDecks =
+                    Convert.ToInt16(WidthList[i]) > 180 || PnlWordChoiceList.Count <= 5 ? Data.Length == 3 ? Data[2] : Data[0] : "";
                     z.DictionaryEntriesId = WidthList[i];
 
-                    if ((i + 1) % 6 == 0)
+                    if ((i + 1) % 5 == 0)
                     {
                         i = 0;
                         WidthList = Randomize(WidthList);
@@ -266,11 +274,19 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
             }
 
         }
-
+        
         public void showPopup()
         {
-            navigationService.NavigateToViewModel(typeof(CustomPopupViewModel));
+            ShowPapUp = "Visible";
 
+        }
+        public void btn_Dash()
+        {
+            navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
+        }
+        public void btn_Next()
+        {
+            navigationService.NavigateToViewModel(typeof(CustomPopupViewModel));
         }
         // Goto Previes Pages
         public void MouseDown_RightPanel(object sender, MouseEventArgs e)

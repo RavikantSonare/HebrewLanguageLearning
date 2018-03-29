@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HebrewLanguageLearning_User
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialMenu", "MaterialMenu\MaterialMenu.csproj", "{DC810FBA-1DC9-429F-A247-35075EA49648}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BiblingoSetup", "BiblingoSetup\BiblingoSetup.vdproj", "{33D04351-392E-4C50-879B-1C451B2325FB}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "HLLSetup", "HLLSetup\HLLSetup.vdproj", "{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,15 +98,15 @@ Global
 		{DC810FBA-1DC9-429F-A247-35075EA49648}.Release451|Any CPU.Build.0 = Release451|Any CPU
 		{DC810FBA-1DC9-429F-A247-35075EA49648}.Release452|Any CPU.ActiveCfg = Release452|Any CPU
 		{DC810FBA-1DC9-429F-A247-35075EA49648}.Release452|Any CPU.Build.0 = Release452|Any CPU
-		{33D04351-392E-4C50-879B-1C451B2325FB}.Debug|Any CPU.ActiveCfg = Debug
-		{33D04351-392E-4C50-879B-1C451B2325FB}.Debug35|Any CPU.ActiveCfg = Debug
-		{33D04351-392E-4C50-879B-1C451B2325FB}.R46|Any CPU.ActiveCfg = Release
-		{33D04351-392E-4C50-879B-1C451B2325FB}.Release|Any CPU.ActiveCfg = Release
-		{33D04351-392E-4C50-879B-1C451B2325FB}.Release35|Any CPU.ActiveCfg = Release
-		{33D04351-392E-4C50-879B-1C451B2325FB}.Release40|Any CPU.ActiveCfg = Release
-		{33D04351-392E-4C50-879B-1C451B2325FB}.Release45|Any CPU.ActiveCfg = Release
-		{33D04351-392E-4C50-879B-1C451B2325FB}.Release451|Any CPU.ActiveCfg = Release
-		{33D04351-392E-4C50-879B-1C451B2325FB}.Release452|Any CPU.ActiveCfg = Release
+		{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}.Debug|Any CPU.ActiveCfg = Debug
+		{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}.Debug35|Any CPU.ActiveCfg = Debug
+		{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}.R46|Any CPU.ActiveCfg = Release
+		{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}.Release|Any CPU.ActiveCfg = Release
+		{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}.Release35|Any CPU.ActiveCfg = Release
+		{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}.Release40|Any CPU.ActiveCfg = Release
+		{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}.Release45|Any CPU.ActiveCfg = Release
+		{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}.Release451|Any CPU.ActiveCfg = Release
+		{D72FADB9-2C75-4D9D-BCAF-AEB6FD343415}.Release452|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

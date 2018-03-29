@@ -15,7 +15,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-    Title="Biblingo" Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
+    Title="Biblingo" Height="824" Width="1210" HorizontalAlignment="Center" VerticalAlignment="Top" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen">
     <Window.Resources>
 
         <Style x:Key="toggelButton" TargetType="{x:Type Image}">
@@ -47,22 +47,20 @@
 
         <!--<ContentControl Grid.Row="1" Grid.ColumnSpan="3" x:Name="ActiveItem"/>-->
 
-        <Frame Grid.Row="1" Grid.ColumnSpan="3" cal:Message.Attach="RegisterFrame($source)" DataContext="{x:Null}" NavigationUIVisibility="Hidden"/>
+        <Frame Grid.Row="1" Margin="0 -20 0 0" Grid.ColumnSpan="3" cal:Message.Attach="RegisterFrame($source)" DataContext="{x:Null}" NavigationUIVisibility="Hidden"/>
 
         <Grid Panel.ZIndex="2" Grid.Row="0" Grid.Column="0" Background="Transparent" VerticalAlignment="Top" Grid.ColumnSpan="3">
-            <StackPanel HorizontalAlignment="Left"  Background="#788493" Height="70" Width="1200" Grid.ColumnSpan="3">
+            <StackPanel HorizontalAlignment="Left"  Background="#788493" Height="62" Width="2200" Grid.ColumnSpan="3">
                 <Button x:Name="MenuIconOpen" BorderThickness="0" Height="65" HorizontalAlignment="Left" Margin="0,-2,0,0" Style="{DynamicResource MaterialDesignRaisedButton}"  BorderBrush="Transparent" Background="Transparent" 
                         Click="MenuIconOpen_Click">
                     <Image x:Name="toggelButton" Style="{StaticResource toggelButton}" Width="40" Height="50"></Image>
                 </Button>
             </StackPanel>
-            <Image Panel.ZIndex="1" x:Name="logo" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="50" Margin="0 0 0 0" Source="/HebrewLanguageLearning_Users;component/Assets/biblingo.png"/>
+            <Image Panel.ZIndex="1" x:Name="logo" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="40" Margin="0 0 0 0" Source="/HebrewLanguageLearning_Users;component/Assets/biblingo.png"/>
 
 
         </Grid>
-        <Grid Panel.ZIndex="4" Grid.Row="0" Grid.Column="0" Background="Transparent" Margin="0,0,0,0" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Top" Width="95" >
-            <Image Panel.ZIndex="5" x:Name="VocabDecksMenu" MouseDown="MenuIconOpenRight_Click" HorizontalAlignment="Right" Margin="0 -3 0 0" Source="/HebrewLanguageLearning_Users;component/Assets/pages.png"/>
-        </Grid>
+       
 
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Panel.ZIndex="1">
             <materialMenu:SideMenu HorizontalAlignment="Left" x:Name="StateMenu"  MenuWidth="300"
@@ -88,7 +86,7 @@
             </materialMenu:SideMenu>
         </Grid>
 
-        <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Panel.ZIndex="3">
+        <!--<Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Panel.ZIndex="3">
 
             <StackPanel Panel.ZIndex="2" x:Name="VocabDecksPanel" Orientation="Horizontal"  HorizontalAlignment="Right" Margin="0,0,-400,0">
 
@@ -121,6 +119,6 @@
 
                 </Border>
             </StackPanel>
-        </Grid>
+        </Grid>-->
     </Grid>
 </Window>

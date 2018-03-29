@@ -43,7 +43,14 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
                     GreenDotstatus = 6;
                 }
             }
-           
+            var tmpProgress = Application.Current.Properties["CurretProgressbar"];
+            var tmpGreenDot = Application.Current.Properties["CurretGreenDot"];
+            if (tmpProgress != null && tmpGreenDot != null)
+            {
+                TypeOfProgressBar = Convert.ToInt32(tmpProgress);
+                GreenDotstatus = Convert.ToInt32(tmpGreenDot);
+              
+            }
 
 
             ProgressBarUC _cuc = new ProgressBarUC();

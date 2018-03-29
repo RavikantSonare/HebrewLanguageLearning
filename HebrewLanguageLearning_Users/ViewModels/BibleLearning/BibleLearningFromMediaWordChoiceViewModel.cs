@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using HebrewLanguageLearning_Users.GenericClasses;
 using System.Windows.Forms;
 using HebrewLanguageLearning_Users.Views.CommonUserControls;
+using System.Timers;
 
 namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 {
@@ -52,15 +53,29 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         }
         public void GetDataFromDataBase()
         {
-            _objModel = ObjDC.getUserProgress(); LessonId = Convert.ToString(_objModel.completedLesson + 1);
+            _objModel = ObjDC.getUserProgress();
+            switch (CurruntScreenNo)
+            {
+                case 101:
+                    LessonId = Convert.ToString(System.Windows.Application.Current.Properties["LessonId"]);
+                    break;
+                default:
+                    LessonId = Convert.ToString(_objModel.completedLesson + 1);
+                    break;
+            }
             VocabDecksLesson();
         }
-        public void SetDataFromDataBase(string completedLesson, string completed_Screen_Status)
-        {
-            //  var Data = ObjDC.SetUserProgress(completedLesson, completed_Screen_Status);
-            var Data = ObjDC.SetUserProgressScreen(completed_Screen_Status);
-            LessonId = Convert.ToString(_objModel.completedLesson);
-        }
+        //public void GetDataFromDataBase()
+        //{
+        //    _objModel = ObjDC.getUserProgress(); LessonId = Convert.ToString(_objModel.completedLesson + 1);
+        //    VocabDecksLesson();
+        //}
+        //public void SetDataFromDataBase(string completedLesson, string completed_Screen_Status)
+        //{
+        //    //  var Data = ObjDC.SetUserProgress(completedLesson, completed_Screen_Status);
+        //    var Data = ObjDC.SetUserProgressScreen(completed_Screen_Status);
+        //    LessonId = Convert.ToString(_objModel.completedLesson);
+        //}
         protected override void OnActivate()
         {
             base.OnActivate();
@@ -75,6 +90,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public string _bibleTxtEnglish;
         public List<VocabularyModel> _pnlWordChoiceList;
         public string _bibleTxtMediaUrl;
+        public string _borderBoxColor = "#A9A9A9";//#A9CDDA
+        public string _rightAnsShow = "Collapsed";
 
         public string ReviewCounter
         {
@@ -134,6 +151,70 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             }
         }
 
+        public string _showPapUp = "Collapsed";
+
+        public string ShowPapUp
+        {
+            get { return _showPapUp; }
+            set
+            {
+                _showPapUp = value;
+                NotifyOfPropertyChange(() => ShowPapUp);
+            }
+        }
+
+        public string BorderBoxColor
+        {
+            get { return _borderBoxColor; }
+            set
+            {
+                _borderBoxColor = value;
+                NotifyOfPropertyChange(() => _borderBoxColor);
+            }
+        }        
+        public string _bibleWrongSoundMediaUrl;
+        public string BibleWrongSoundMediaUrl
+        {
+            get { return _bibleWrongSoundMediaUrl; }
+            set
+            {
+                _bibleWrongSoundMediaUrl = value;
+                NotifyOfPropertyChange(() => BibleWrongSoundMediaUrl);
+            }
+        }
+
+        public string _bibleSoundMediaUrl;
+        public string BibleSoundMediaUrl
+        {
+            get { return _bibleSoundMediaUrl; }
+            set
+            {
+                _bibleSoundMediaUrl = value;
+                NotifyOfPropertyChange(() => BibleSoundMediaUrl);
+            }
+        }
+
+        public string RightAnsShow
+        {
+            get { return _rightAnsShow; }
+            set
+            {
+                _rightAnsShow = value;
+                NotifyOfPropertyChange(() => RightAnsShow);
+            }
+        }
+
+        private MediaElement _mediaElementObject;
+
+        public MediaElement MediaElementObject
+        {
+            get { return _mediaElementObject; }
+            set
+            {
+                _mediaElementObject = value;
+                NotifyOfPropertyChange(() => MediaElementObject);
+            }
+        }
         #endregion
 
         public void VocabDecksLesson()
@@ -141,10 +222,25 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             //string LessonId = "3"; //Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
             try
             {
+                RightAnsShow = "Collapsed";
                 int TotalValue;
                 Random random = new Random();
                 List<VocabularyModel> tmpVM = new List<VocabularyModel>();
-                VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
+
+                switch (CurruntScreenNo)
+                {
+                    case 101:
+                        VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecks_CustomSecond", LessonId);
+                        break;
+                    case 102:
+                        VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
+                        break;
+                    default:
+                        VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
+                        break;
+                }
+                //VocabularyLesson = _ObjBC.GetVocabDesksLessonData("HLL_VocabDecksLesson", LessonId);
+
                 var CurrentGroup = VocabularyLesson.SelectMany(p => p.vocabularyModel).ToList();
                 TotalValue = CurrentGroup.Count();
 
@@ -155,6 +251,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                         break;
                     case 7:
                         CurrentGroup = CurrentGroup.Where(z => z.IsPassiveKnowledgeGrammar == false).ToList();
+                        break;
+                    case 101:
+                        CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
                         break;
                     default:
                         CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
@@ -179,9 +278,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 }
 
 
-                if (tmpVM.Count() < CurrentGroup.Count() && tmpVM.Count() < 8) { if (totalCheck <= CurrentGroup.Count) { goto _lblCheckAgain; totalCheck++; } }
+                if (tmpVM.Count() < CurrentGroup.Count() && tmpVM.Count() < 8) { if (totalCheck <= CurrentGroup.Count) { totalCheck++;
+                        goto  _lblCheckAgain;  } }
                 PnlWordChoiceList = new List<VocabularyModel>(tmpVM);
-                PnlWordChoiceList.ForEach(z => { var Data = SetWord(z.LessonDecks); z.LessonDecks = Data.Length == 3 ? Data[2] : Data[0]; });
+                // Set 2 for English Level
+                PnlWordChoiceList.ForEach(z => { var Data = SetWord(z.LessonDecks); z.LessonDecks = Data.Length == 3 ? Data[1] : Data[0]; z.Description = "#A9CDDA"; });
 
 
                 // set Rendom Logic
@@ -209,27 +310,35 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             return tempArray;
         }
 
-        //void SetCounter(int value, int Totalvalue)
-        //{
-        //    string completed_Screen_Status = "1";
-        //    ReviewCounter = value + " out of " + Totalvalue;// + "(:=> " + tt;
-        //    if (value != 0 && value == Totalvalue)
-        //    {
-        //        SetDataFromDataBase(LessonId, completed_Screen_Status);
-        //    }
-        //}
+        public void SetDataFromDataBase(string completed_Screen_Status)
+        {
+            switch (CurruntScreenNo)
+            {
+                case 101:
+                    ObjDC.SetSecondUserProgressScreen(completed_Screen_Status, false);
+                    break;
+                default:
+                    ObjDC.SetUserProgressScreen(completed_Screen_Status);
+                    break;
+            }
+        }
         public void SetCounter(int value, int Totalvalue)
         {
             ReviewCounter = value + " out of " + Totalvalue;
             string completed_Screen_Status = "3";
+            
             if (value != 0 && value == Totalvalue)
             {
-                if (CurruntScreenNo == 7)
+                switch (CurruntScreenNo)
                 {
-                    completed_Screen_Status = Convert.ToString(CurruntScreenNo + 1);
+                    case 7:
+                        completed_Screen_Status = "8";
+                        break;
+                    case 101:
+                        completed_Screen_Status = "3";
+                        break;
                 }
-                int tempLessonId = Convert.ToInt32(LessonId) - 1;
-                SetDataFromDataBase(Convert.ToString(tempLessonId), completed_Screen_Status);
+                SetDataFromDataBase(completed_Screen_Status);
                 showPopup();
             }
 
@@ -237,8 +346,16 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
         public void showPopup()
         {
-            navigationService.NavigateToViewModel(typeof(CustomPopupViewModel));
+            ShowPapUp = "Visible";
 
+        }
+        public void btn_Dash()
+        {
+            navigationService.NavigateToViewModel(typeof(Dashboard.DashboardViewModel));
+        }
+        public void btn_Next()
+        {
+            navigationService.NavigateToViewModel(typeof(CustomPopupViewModel));
         }
         void fileData()
         {
@@ -252,25 +369,63 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             if (DicData != null)
             {
                 BibleTxtMediaUrl = EntityConfig.MediaUriPictures + DicData.ListOfPictures.LastOrDefault();
+                BibleSoundMediaUrl = @"" + EntityConfig.MediaUriSounds + DicData.SoundUrl;
             }
         }
         public void MouseDown_WordClick(object sender, MouseEventArgs e)
         {
-
-            string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
-            if (StrongNo == _ObjCurrentImage.StrongNo)
+            if (RightAnsShow == "Visible")
             {
-                if (CurruntScreenNo == 2)
+                return;
+            }
+            string StrongNo = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+            string _currectStrongNo = _ObjCurrentImage.StrongNo;
+            if (StrongNo == _currectStrongNo)
+            {
+                // PnlWordChoiceList.ForEach(z => { z.description = "#008000"; });
+                PnlWordChoiceList.ForEach(z => { var CheckColor = z.StrongNo == StrongNo ? "#008000" : "#A9CDDA"; z.Description = CheckColor; });
+                PnlWordChoiceList = new List<VocabularyModel>(PnlWordChoiceList);
+                PlaySound(BibleSoundMediaUrl);
+                BorderBoxColorLogic(0);
+               
+                switch (CurruntScreenNo)
                 {
-                    _ObjBC.UpdateReviewData("HLL_VocabDecksIsReviewPassive", StrongNo);
-                }else
-                {
-                    _ObjBC.UpdateReviewData("HLL_VocabDecksIsPassiveKnowledgeGrammar", StrongNo);
-                   // IsPassiveKnowledgeGrammar
+                    case 2:
+                        _ObjBC.UpdateReviewData("HLL_VocabDecksIsReviewPassive", StrongNo);
+
+                        break;
+                    case 7:
+                        _ObjBC.UpdateReviewData("HLL_VocabDecksIsPassiveKnowledgeGrammar", StrongNo);
+                        break;
+                    case 101:
+                        _ObjBC.UpdateReviewDataByLesson("HLL_VocabDecksLearnIsReviewPassive", LessonId, StrongNo);
+                        break;
+
                 }
             }
-
-            VocabDecksLesson();
+            else
+            {
+                PnlWordChoiceList.ForEach(z =>
+                {
+                    var CheckColor = z.StrongNo == StrongNo ? "#FF0000" : "#A9CDDA"; z.Description = CheckColor;
+                    var CheckColorWrong = z.StrongNo == _currectStrongNo ? "#008000" : z.Description; z.Description = CheckColorWrong;
+                });
+                var DicData = _dictionaryModellist.FirstOrDefault(x => x.DicStrongNo == StrongNo);
+                BibleWrongSoundMediaUrl = @"" + EntityConfig.MediaUriSounds + DicData.SoundUrl;
+                PnlWordChoiceList = new List<VocabularyModel>(PnlWordChoiceList);
+                BorderBoxColorLogic(1);
+              
+                    if (RightAnsShow != "Visible")
+                    {
+                        RightAnsShow = "Visible";
+                    }
+                    else
+                    {
+                        RightAnsShow = "Collapsed";
+                    }
+               
+            }
+            //  VocabDecksLesson();
             // HLL_VocabDecks
             // System.Windows.Application.Current.Shutdown();
         }
@@ -278,6 +433,72 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public void MouseDown_RightPanel(object sender, MouseEventArgs e)
         {
             navigationService.NavigateToViewModel(typeof(BibleLearning.BibleLearningViewModel));
+        }
+
+        public void MouseDown_LeftArrowImageClick(object sender, MouseEventArgs e)
+        {
+           
+            VocabDecksLesson();
+        }
+        void BorderBoxColorLogic(int isCurrect)
+        {
+            switch (isCurrect)
+            {
+                case 0:
+                    BorderBoxColor = "#008000";
+                    SetTimer(2000);
+                    break;
+                case 1:
+                    BorderBoxColor = "#FF0000";
+                    break;
+                default:
+                    BorderBoxColor = "#A9A9A9";
+                    break;
+            }
+
+
+        }
+        private static System.Timers.Timer aTimer;
+        private void SetTimer(int Tm)
+        {
+            // Create a timer with a two second interval.
+            aTimer = new System.Timers.Timer(Tm);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+        }
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            // RightWorldTextBlock = "";
+            BorderBoxColor = "#A9A9A9";
+            aTimer.Stop();
+            VocabDecksLesson();
+          
+        }
+
+        public void MouseDown_SoundClick(object sender, MouseEventArgs e)
+        {
+            string SoundName = Convert.ToString(((System.Windows.FrameworkElement)sender).Name);
+            if (SoundName == "imageRightSound")
+            {
+                PlaySound(BibleSoundMediaUrl);
+            }
+            else
+            {
+                PlaySound(BibleWrongSoundMediaUrl);
+            }
+
+
+        }
+        void PlaySound(string BibleSoundMediaUrl)
+        {
+            MediaElementObject = new MediaElement()
+            {
+                LoadedBehavior = MediaState.Manual,
+            };
+            MediaElementObject.Source = new Uri(BibleSoundMediaUrl);// "ELL_PART_5_768k.wmv");  //ELL_PART_5_768k.wmv
+            MediaElementObject.Play();
         }
     }
 }

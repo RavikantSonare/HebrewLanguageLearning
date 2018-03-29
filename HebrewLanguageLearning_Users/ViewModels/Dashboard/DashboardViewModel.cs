@@ -18,10 +18,12 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
     {
         DashboardController ObjDC = new DashboardController();
         DashboardModel _objModel = new DashboardModel();
+        BibleLearningController _ObjBLC = new BibleLearningController();
         private readonly INavigationService navigationService;
         public DashboardViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+            VocabDecksMenu();
         }
         //        //private string _bibleTxt = @"בראשית ברא אלוהים את השמים ואת הארץ.
         //והארץ היתה ללא צורה, וריק; ואת החושך על פני המעמקים.ורוח אלוהים נעה על פני המים.
@@ -61,6 +63,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
         }
         public void btn_continue_lesson()
         {
+            Application.Current.Properties["CurretProgressbar"] = null;
+            Application.Current.Properties["CurretGreenDot"] = null;
             var ScreenTemp = Application.Current.Properties["CurretPage"];
             int ScreenNo = 1;
             if (ScreenTemp != null)
@@ -102,6 +106,33 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
                     break;
             }
         }
+        public List<VocabDecksGroupModel> _VocabularyLesson;
+        public List<VocabDecksGroupModel> VocabularyLesson
+        {
+            get { return _VocabularyLesson; }
+            set
+            {
+                _VocabularyLesson = value;
+                NotifyOfPropertyChange(() => VocabularyLesson);
+            }
+        }
+        public List<VocabDecksGroupModel> _VocabularyLesson_Custom;
+        public List<VocabDecksGroupModel> VocabularyLesson_Custom
+        {
+            get { return _VocabularyLesson_Custom; }
+            set
+            {
+                _VocabularyLesson_Custom = value;
+                NotifyOfPropertyChange(() => VocabularyLesson_Custom);
+            }
+        }
 
+        // HLL_VocabDecks_Custom
+
+        public void VocabDecksMenu()
+        {
+            VocabularyLesson = _ObjBLC.GetVocabDesks("HLL_VocabDecks_RightPanel");
+            VocabularyLesson_Custom = _ObjBLC.GetVocabDesks("HLL_VocabDecks_Custom");
+        }
     }
 }

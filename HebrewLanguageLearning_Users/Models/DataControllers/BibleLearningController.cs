@@ -123,7 +123,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
             foreach (DataRow row in dt.Rows)
             {
-                tmplist.Add(new VocabularyModel { LessonId = row.ItemArray[1].ToString(), LessonDecks = row.ItemArray[5].ToString(), IsReviewAssociation = Convert.ToBoolean(row.ItemArray[10].ToString()), IsReviewPassive = Convert.ToBoolean(row.ItemArray[11].ToString()) });
+                tmplist.Add(new VocabularyModel { LessonId = row.ItemArray[1].ToString(), StrongNo = row.ItemArray[2].ToString(), LessonDecks = row.ItemArray[5].ToString(), IsReviewAssociation = Convert.ToBoolean(row.ItemArray[10].ToString()), IsReviewPassive = Convert.ToBoolean(row.ItemArray[11].ToString()) });
 
             }
 
@@ -131,7 +131,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                 Select(y => new
                 {
                     LessonId = y.Key,
-                    LessonDecks = y.Select(x => x.LessonDecks).ToList()
+                    LessonDecks = y.Select(x => new { x.LessonDecks, x.StrongNo }).ToList()
                 }).ToList();
             object objTemp;
             foreach (var item in tmp)
@@ -142,10 +142,10 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
                 foreach (var itemData in item.LessonDecks)
                 {
-                    vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData });
+                    vocabularyModeltmp.Add(new VocabularyModel { LessonDecks = itemData.LessonDecks,StrongNo=itemData.StrongNo });
                 }
 
-                tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = TableName == "HLL_VocabDecks" ? "Lesson " + item.LessonId : "" + item.LessonId, vocabularyModel = vocabularyModeltmp });
+                tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = TableName == "HLL_VocabDecks_RightPanel" ? "Lesson " + item.LessonId : "" + item.LessonId, vocabularyModel = vocabularyModeltmp });
             }
 
             return tmpVocabDecks;
@@ -214,7 +214,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                     tmpVocabDecks.Add(new VocabDecksGroupModel { LessonId = TableName == "HLL_VocabDecks" ? "Lesson " : "" + item.LessonId, vocabularyModel = vocabularyModeltmp });
                 }
             }
-            catch { }
+            catch(Exception ex) { }
             return tmpVocabDecks;
 
         }
@@ -223,7 +223,7 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         public bool SetVocabDesks(VocabularyModel _obj)
         {
             var listOfTable = "[" + JToken.FromObject(_obj).ToString() + "]";
-            obj.InsertData("HLL_VocabDecks", listOfTable);
+            obj.InsertData("HLL_VocabDecks_Custom", listOfTable);
             return true;
 
         }
@@ -233,6 +233,12 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
         {
             DataTable dt = new DataTable();
             obj.UpdateData(TableName, StrongNo);
+
+        }
+        public void UpdateReviewDataByLesson(string TableName, string LessonId, string StrongNo)
+        {
+            DataTable dt = new DataTable();
+            obj.UpdateDataByLesson(TableName, LessonId, StrongNo);
 
         }
 

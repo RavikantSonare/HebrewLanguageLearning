@@ -271,8 +271,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         {
             if (sender != null)
             {
-                var strongNo = ((System.Windows.FrameworkElement)sender).Tag;
-                var BookAndChapterId = ((System.Windows.FrameworkElement)sender).ToolTip;
+
+                var strongNo = ((System.Windows.FrameworkElement)sender).ToolTip;
+                var BookAndChapterId = ((System.Windows.FrameworkElement)sender).Tag;
                 SetRightSideData(Convert.ToString(strongNo));
                 setchapterForUserProgress(Convert.ToString(BookAndChapterId));
             }
@@ -282,16 +283,19 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         {
             StrongNo = strongNo;
             BibileTextList _obj = GetDescription(strongNo);
-            BibleTxtHebrew = _obj.proBibleTxtHebrew;
-            BibleTxtEnglish = _obj.proBibleTxtEnglish;
-            BibleTxtMediaUrl = EntityConfig.MediaUriPictures + _obj.proMediaURl;
-            DescriptionTxt = _obj.proDescriptionTxt;
-            ExampleTxt = _obj.proExampleTxt;
-            SemanticDomainTxt = _obj.proSemanticDomainTxt;
-            DictonaryReference = _obj.proDictonaryReferenceTxt;
+            if (_obj.proBibleTxtHebrew != null)
+            {
 
-            BibleTxtdocks = "Choose a deck to add  " + _obj.proBibleTxtHebrew + " ->";
+                BibleTxtHebrew = _obj.proBibleTxtHebrew;
+                BibleTxtEnglish = _obj.proBibleTxtEnglish;
+                BibleTxtMediaUrl = EntityConfig.MediaUriPictures + _obj.proMediaURl;
+                DescriptionTxt = _obj.proDescriptionTxt;
+                ExampleTxt = _obj.proExampleTxt;
+                SemanticDomainTxt = _obj.proSemanticDomainTxt;
+                DictonaryReference = _obj.proDictonaryReferenceTxt;
 
+                BibleTxtdocks = "Choose a deck to add  " + _obj.proBibleTxtHebrew + " to ->";
+            }
         }
         BibileTextList GetDescription(string strongNo)
         {
@@ -310,17 +314,17 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 _obj.proDictonaryReferenceTxt = string.Join(",", DicData.ListOfDictionaryReference.ToArray()); //  .Select(x => x.Split(',')[0]).ToList();
 
             }
-            else
-            {
-                var tempData = _dictionaryModellist.FirstOrDefault();
-                _obj.proBibleTxtHebrew = tempData.DicHebrew;
-                _obj.proBibleTxtEnglish = tempData.DicEnglish;
-                _obj.proMediaURl += tempData.ListOfPictures.LastOrDefault();
-                _obj.proDescriptionTxt = tempData.ListOfDefinition.FirstOrDefault();
-                _obj.proExampleTxt = tempData.ListOfExample.FirstOrDefault();
-                _obj.proSemanticDomainTxt = tempData.ListOfSemanticDomain.FirstOrDefault();
-                _obj.proDictonaryReferenceTxt = tempData.ListOfDictionaryReference.FirstOrDefault();
-            }
+            //else
+            //{
+            //    var tempData = _dictionaryModellist.FirstOrDefault();
+            //    _obj.proBibleTxtHebrew = tempData.DicHebrew;
+            //    _obj.proBibleTxtEnglish = tempData.DicEnglish;
+            //    _obj.proMediaURl += tempData.ListOfPictures.LastOrDefault();
+            //    _obj.proDescriptionTxt = tempData.ListOfDefinition.FirstOrDefault();
+            //    _obj.proExampleTxt = tempData.ListOfExample.FirstOrDefault();
+            //    _obj.proSemanticDomainTxt = tempData.ListOfSemanticDomain.FirstOrDefault();
+            //    _obj.proDictonaryReferenceTxt = tempData.ListOfDictionaryReference.FirstOrDefault();
+            //}
             return _obj;
         }
 
@@ -349,7 +353,8 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
 
         public void VocabDecksMenu()
         {
-            VocabularyLesson = _ObjBLC.GetVocabDesks("HLL_VocabDecks");
+            // HLL_VocabDecks_RightPanel
+            VocabularyLesson = _ObjBLC.GetVocabDesks("HLL_VocabDecks_RightPanel");
             VocabularyLesson_Custom = _ObjBLC.GetVocabDesks("HLL_VocabDecks_Custom");
         }
 
@@ -359,9 +364,13 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             var ListViewData = String.Empty;
             if (String.IsNullOrEmpty(BibleTxtVocabdocks))
             {
-                ListViewData = Convert.ToString(((HeaderedItemsControl)sender).Header);
+                try
+                {
+                    ListViewData = Convert.ToString(((TextBlock)sender).Text);
+                }
+                catch { }
             }
-            if (!String.IsNullOrWhiteSpace(BibleTxtVocabdocks) || !String.IsNullOrWhiteSpace(ListViewData))
+            if (!String.IsNullOrWhiteSpace(BibleTxtVocabdocks) || !String.IsNullOrWhiteSpace(ListViewData) && ListViewData != "+ Create New Vocab Deck")
             {
                 _obj.StrongNo = StrongNo;
                 _obj.LessonId = String.IsNullOrEmpty(ListViewData) ? BibleTxtVocabdocks : ListViewData;
@@ -370,37 +379,86 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 _obj.ActiveStatus = true;
                 _obj.IsActive = true;
                 _obj.IsDelete = false;
-                _ObjBLC.SetVocabDesks(_obj);
+                if (CheckStrongNo(StrongNo, _obj.LessonId))
+                {
+                    _ObjBLC.SetVocabDesks(_obj);
+                }
             }
+
             VocabDecksMenu();
         }
+
+        private bool CheckStrongNo(string strongNo, string LessonId)
+        {
+
+            var Data = VocabularyLesson_Custom.Where(z => z.LessonId == LessonId).SelectMany(p => p.vocabularyModel).ToList();
+            if (Data.Where(z => z.StrongNo == strongNo).FirstOrDefault() != null)
+                return false;
+            else
+                return true;
+        }
+
 
         public void MouseDown_CustomDecksReview(object sender, MouseEventArgs e)
         {
 
-            // navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
-
-            if (String.IsNullOrEmpty(BibleTxtVocabdocks))
+            System.Windows.Application.Current.Properties["Currentphase"] = 2;
+            var Id = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+            if (Id != null)
             {
-                //System.Windows.Application.Current.Properties["WordName"] = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
-                System.Windows.Application.Current.Properties["CurretRedirection"] = 3;
-                var Id = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
-                if (Id != null)
-                {
-                    Id = Id.Replace("Lesson ", string.Empty);
-                }
-                var GetLessonStatus = GetDataFromDataBase(Id);
-                if (!GetLessonStatus)
-                {
-                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
-                }
-                else
-                {
+                System.Windows.Application.Current.Properties["LessonId"] = Id.Replace("Lesson ", string.Empty);
+                System.Windows.Application.Current.Properties["CurretProgressbar"] = "4";
+            }
+
+            int tmpReviewProg = Convert.ToInt32(System.Windows.Application.Current.Properties["IsReviewProgress"]);
+            System.Windows.Application.Current.Properties["CurretPage"] = 102;
+            switch (tmpReviewProg)
+            {
+                case 1:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 1;
                     navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
-                }
+                    break;
+                case 2:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 2;
+                    navigationService.NavigateToViewModel(typeof(BibleLearningWordTypingViewModel));
+                    break;
+                default:
+                    break;
             }
 
         }
+        public void MouseDown_CustomDecksLearn(object sender, MouseEventArgs e)
+        {
+            System.Windows.Application.Current.Properties["Currentphase"] = 3;
+            var Id = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+            if (Id != null)
+            {
+                System.Windows.Application.Current.Properties["LessonId"] = Id.Replace("Lesson ", string.Empty);
+                System.Windows.Application.Current.Properties["CurretProgressbar"] = "3";
+            }
+
+            int tmpLearnProg = Convert.ToInt32(System.Windows.Application.Current.Properties["IsLearnProgress"]);
+            System.Windows.Application.Current.Properties["CurretPage"] = 101;
+            switch (tmpLearnProg)
+            {
+                case 1:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 1;
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
+                    break;
+                case 2:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 2;
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+                    break;
+                case 3:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 4; //pulse 1 for green lenght
+                    navigationService.NavigateToViewModel(typeof(BibleLearningWordTypingViewModel));
+                    break;
+                default:
+                    break;
+            }
+          
+        }
+
         public void MouseDown_CustomDecksDelete(object sender, MouseEventArgs e)
         {
             VocabularyModel _obj = new VocabularyModel();

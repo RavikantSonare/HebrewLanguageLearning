@@ -28,6 +28,8 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
                         _objModel.currentScreenStatus = Convert.ToInt32(row.ItemArray[3].ToString());
                         _objModel.currentBookAndchapterId = row.ItemArray[4].ToString();
                         _objModel.LeftDate = row.ItemArray[5].ToString();
+                        _objModel.IsReviewProgress = Convert.ToInt32(row.ItemArray[6].ToString());
+                        _objModel.IsLearnProgress = Convert.ToInt32(row.ItemArray[7].ToString());
 
                         //if (row.ItemArray[0].ToString() == _accountModel.UserName && row.ItemArray[1].ToString() == _accountModel.Password)
                         //{
@@ -82,6 +84,22 @@ namespace HebrewLanguageLearning_Users.Models.DataControllers
 
             }
             return true;
+        }
+
+        internal void SetSecondUserProgressScreen(string screenNo, bool IsReview)
+        {
+            try
+            {
+                if (IsReview)
+                    _dbobj.UpdateData("HLL_ProgressOfUserIsReviewProgressCS", screenNo);
+                else
+                    _dbobj.UpdateData("HLL_ProgressOfUserIsLearnProgressCS", screenNo);
+            }
+            catch
+            {
+
+            }
+
         }
     }
 }

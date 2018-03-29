@@ -75,12 +75,12 @@
                                         <div class="col-md-3">
                                             <label>Sound @j:</label>
                                             <div class="controls imgParent">
-                                                @Html.TextBoxFor(p => p.Soundfile[i], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", accept = ".mp3,audio/*" , id = @j})
+                                                @Html.TextBoxFor(p => p.Soundfile[i], null, new { data_val = "false", type = "file", @class = "input-file SoundfileMultiple", name = "Soundfile", accept = ".mp3,.wav,audio/*" , id = @j})
                                                 <span class="fileupload"><span class="icon-upload2"></span>Choose File</span>
                                                 @Html.ValidationMessageFor(n => n.Soundfile[i], null, new { @class = "text_danger", @style = "color: red !important;"})
                                                 @Html.HiddenFor(h => h.SoundUrl[i], new { name = "SoundUrl0", id = "SoundUrl" + i, @class = "sound_url" })
                                                 <div class="col-md-2 output" id="@("outputMultiple" + j)"></div>
-                                                <label id="fileUploaderErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Upload Sound file in MP3 format</label>
+                                                <label id="fileUploaderErrorMessage" class="text-danger" style="display:none;color:red;margin-top: 30px;">Please Upload Sound file in MP3,WAV format</label>
                                             </div>
                                         </div>
                                         <div class="col-md-3">

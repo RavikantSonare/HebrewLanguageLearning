@@ -65,6 +65,7 @@ $(document).ready(function () {
                     $("#fileToUpload").val("");
                     $('#headerdiv').removeClass("btn-success").removeClass("btn-info").addClass("btn-danger");
                     $('#modeltitle').html("Important Message !!")
+                    alert();
                     $('#modelMessage').html("Please Select Only Audio file like MP3")
                     $('.modal-footer').html('<a id="btnYes" href="#" data-dismiss="modal" class="btn btn-primary">Ok</a>');
                     $('#default_modal').modal('show');
@@ -180,6 +181,7 @@ $(document).ready(function () {
 
                     $('#headerdiv').removeClass("btn-success").removeClass("btn-info").addClass("btn-danger");
                     $('#modeltitle').html("Important Message !!")
+                    alert(2);
                     $('#modelMessage').html("Please Select Only Audio file like MP3")
                     $('.modal-footer').html('<a id="btnYes" href="#" data-dismiss="modal" class="btn btn-primary">Ok</a>');
                     $('#default_modal').modal('show');

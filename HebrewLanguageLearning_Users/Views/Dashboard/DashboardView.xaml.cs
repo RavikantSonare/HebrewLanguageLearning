@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace HebrewLanguageLearning_Users.Views.Dashboard
 {
@@ -27,6 +28,7 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
         BibleLearningController _ObjBLC = new BibleLearningController();
         DashboardController ObjDC = new DashboardController();
         DashboardModel _objModel = new DashboardModel();
+        private int toggleValue = 0;
         public DashboardView()
         {
 
@@ -45,7 +47,15 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
             RectingleChildControllerAdd_Loaded_Left(_objModel.completedLesson, _objModel.currentScreenStatus);
             // Set Current Page Session
             System.Windows.Application.Current.Properties["CurretPage"] = _objModel.currentScreenStatus;
+
+            // Set Current IsReviewProgress Session
+            System.Windows.Application.Current.Properties["IsReviewProgress"] = _objModel.IsReviewProgress;
+
+            // Set Current IsLearnProgress Session
+            System.Windows.Application.Current.Properties["IsLearnProgress"] = _objModel.IsLearnProgress;
+
             // Set Last Topic Data
+
             getchapterForUserProgressRight(_objModel.currentBookAndchapterId);
         }
         private void CompleteLesson_level_StatusSeter(int CurrentPossion, int _CurrentLevel, int _PercentOfComplete)
@@ -153,7 +163,7 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
         {
             int SetColomnHeight = 0; int SetRowWidht = 0;
             //int _current_Screen_TopicNo = 5;
-            string _currentTopicName = "Culture";
+            string _currentTopicName = "";//Culture
             //int _completedLesson = 35;
             int tooltip = _completedLesson + 3;
             string _currentLessonNo = Convert.ToString(_completedLesson + 1);
@@ -169,25 +179,25 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
 
                 if (i > _completedLesson)
                 {
-                    if (tooltip == i)
-                    {
-                        _txtBloack.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#9DE8E1"));
-                        var tooltipData = ImageDrawHelper.nextTooltipLocationIndicator(5, "7", "Traditions");
-                        Canvas.SetLeft(tooltipData, SetRowWidht - 10);
-                        Canvas.SetTop(tooltipData, SetColomnHeight - 50);
-                        RectingleController.Children.Add(tooltipData);
-                        Point Point1 = new Point(0, 0);
-                        Point Point2 = new Point(7, 6);
-                        Point Point3 = new Point(14, 0);
-                        var TriangleSet = ImageDrawHelper.createTriangle(Point1, Point2, Point3, "#9DE8E1", "#9DE8E1");
-                        Canvas.SetLeft(TriangleSet, SetRowWidht + 50);
-                        Canvas.SetTop(TriangleSet, SetColomnHeight - 22);
-                        RectingleController.Children.Add(TriangleSet);
-                    }
-                    else
-                    {
+                    //if (tooltip == i)
+                    //{
+                    //    _txtBloack.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#9DE8E1"));
+                    //  //  var tooltipData = ImageDrawHelper.nextTooltipLocationIndicator(5, "7", "Traditions");
+                    //    //Canvas.SetLeft(tooltipData, SetRowWidht - 10);
+                    //    //Canvas.SetTop(tooltipData, SetColomnHeight - 50);
+                    //    //RectingleController.Children.Add(tooltipData);
+                    //    Point Point1 = new Point(0, 0);
+                    //    Point Point2 = new Point(7, 6);
+                    //    Point Point3 = new Point(14, 0);
+                    //    var TriangleSet = ImageDrawHelper.createTriangle(Point1, Point2, Point3, "#9DE8E1", "#9DE8E1");
+                    //    Canvas.SetLeft(TriangleSet, SetRowWidht + 50);
+                    //    Canvas.SetTop(TriangleSet, SetColomnHeight - 22);
+                    //    RectingleController.Children.Add(TriangleSet);
+                    //}
+                    //else
+                    //{
                         _txtBloack.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C0C0C0"));
-                    }
+                    //}
                 }
                 else
                 {
@@ -279,42 +289,45 @@ namespace HebrewLanguageLearning_Users.Views.Dashboard
                 }
 
             }
-
-
-            // BibleTxt.Text = "";
+            
         }
 
+        private void btnAddVocabDecks_Click(object sender, RoutedEventArgs e)
+        {
+            showhide();
+        }
+
+        public void showhide()
+        {
+            if (toggleValue == 0)
+            {
+
+                toggleValue = 1;
+                ShowHideMenu("sbShowRightMenu", VocabDecksPanel);
+            }
+            else
+            {
+
+                toggleValue = 0;
+                ShowHideMenu("sbHideRightMenu", VocabDecksPanel);
+            }
+        }
+
+        private void ShowHideMenu(string Storyboard, StackPanel pnl)
+        {
+            Storyboard sb = Resources[Storyboard] as Storyboard;
+            sb.Begin(pnl);
+
+        }
+        private void _treeView1_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem item = sender as TreeViewItem;
+            if (item != null)
+            {
+                if (item.IsExpanded) { item.IsExpanded = false; } else { item.IsExpanded = true; }
+
+                e.Handled = true;
+            }
+        }
     }
-    //public class rectelgleProp
-    //{
-    //    public string ColorProp { get; set; }
-    //    public string Key { get; set; }
-    //    public string Value { get; set; }
-    //    public string rectType { get; set; }
-    //    public string margin { get; set; }
-    //    public int width { get; set; }
-
-
-    //    public rectelgleProp(string v1, string v2, string v3, string v4, string v5, int v6)
-    //    {
-    //        this.ColorProp = v2 == "5" ? null : v1;
-    //        this.Key = v2;
-    //        this.Value = v3;
-    //        this.rectType = v4;
-    //        this.margin = v5;
-    //        this.width = v2 == "5" ? 100 : v6;
-    //    }
-
-
-    //}
-
-    //UIElement parent = App.Current.MainWindow;
-    //parent.IsEnabled = true;
-
-    //var numberButtons = Enumerable.Range(1, 50).Select(r => new rectelgleProp(r < 5 ? "#00D5B6" : "#C3C3C3", r.ToString(), (r + 9) % 10 == 0 ? r.ToString() : "",
-    //    r == 5 ? null : "", r == 6 ? Convert.ToString(r * 100) + " 0 0 0" : Convert.ToString((r > 10 ? r % 10 : r) * 32 + (r > 6 ? 38 : 0)) + " " + Convert.ToString(r / 10 > 0 ? r / 10 * 50 : 0)
-    //    + " " + "0 0", r == 5 ? 100 : 30)).ToList();
-    //// numberButtonItems.ItemsSource = "";//numberButtons;
-    //var numberButtons = Enumerable.Range(1, 50).Select(r => new KeyValuePair<string, string>(r.ToString(), (r + 9) % 10 == 0 ? r.ToString() : "")).ToList();
-    //numberButtonItems.ItemsSource = numberButtons;
 }

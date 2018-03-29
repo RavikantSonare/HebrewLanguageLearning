@@ -54,16 +54,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="80"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="1"/>
             <RowDefinition Height="80"/>
             <RowDefinition Height="80"/>
             <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80*"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
 
         <!--Grid Column 0 Row 1-->
+        <Grid Panel.ZIndex="4" Grid.Row="0" Grid.Column="1" Background="Transparent" Margin="0,0,0,0" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Top" Width="95" >
+            <Image Panel.ZIndex="5" x:Name="VocabDecksMenu" HorizontalAlignment="Right" Margin="0 20 0 0" Source="/HebrewLanguageLearning_Users;component/Assets/pages.png" MouseDown="btnAddVocabDecks_Click"/>
+        </Grid>
         <WrapPanel  Grid.Column="0" Grid.Row="0"  Background="#EFF4F9" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Grid.RowSpan="9" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_LeftPanel()]">
             <Label FontSize="25" FontWeight="Normal"  Width="23" Margin="0 0 10 0">
                 <TextBlock FontSize="25" FontWeight="Medium" Foreground="Gray" Margin="0 100 0 0" TextWrapping="Wrap">language       learning</TextBlock>
@@ -83,7 +87,7 @@
             <ComboBox Text="Is not open" Width="100" x:Name="_ItemBookVerse" Margin="380 30 0 10" DisplayMemberPath="Text"   SelectedValuePath="Value" SelectionChanged="_ItemBookVerse_SelectionChanged" SelectedIndex="0">
             </ComboBox>
         </Canvas>
-        <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="5" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel  Grid.Column="1" Grid.Row="2" Grid.RowSpan="7" Background="#EFF4F9" Orientation="Horizontal" HorizontalAlignment="Center">
 
             <ListBox x:Name="BibleTxtLesson" Background="White"  Foreground="Black" FontSize="20"  Grid.Row="4" Height="Auto" Width="460" BorderThickness="2"  ItemsSource="{Binding _chepterElementsList}" ItemContainerStyle="{StaticResource RedGlowItemContainer}" ScrollViewer.ScrollChanged="BibleTxtLesson_ScrollChanged">
                 <ListBox.ItemTemplate>
@@ -112,7 +116,7 @@
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate >
                                                             <!--ElementStrogNo-->
-                                                            <TextBlock cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_WordList($source, $eventArgs)]" Text="{Binding Path=ElementValue}" Padding="5 5 5 5" Foreground="Black" Tag="{Binding ElementStrogNo}" ToolTip="{Binding currentBookAndchapterId}" FontSize="18">
+                                                            <TextBlock cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_WordList($source, $eventArgs)]" Text="{Binding Path=ElementValue}" Padding="5 5 5 5" Foreground="Black" ToolTip="{Binding ElementStrogNo}" Tag="{Binding currentBookAndchapterId}" FontSize="18">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="TextBlock">
                                                                         <Setter Property= "Background" Value="Transparent"/>
@@ -139,7 +143,7 @@
 
         </StackPanel>
         <!--Grid Column 1 Row 1-->
-        <Canvas Grid.Column="2" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="9"></Canvas>
+        <Canvas Grid.Column="2" Margin="24 0 0 0" Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="10"></Canvas>
         <Grid Panel.ZIndex="2" Grid.Column="2" Grid.Row="1" Grid.RowSpan="9">
             <Line Y1="1000" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#D9DCDF" StrokeThickness="2" />
         </Grid>
@@ -149,44 +153,44 @@
 
         <!--Grid Column 2 Row 1-->
         <Canvas Grid.Column="3"  Grid.Row="0" Background="#E6EAEE" Grid.RowSpan="10"></Canvas>
-        <Grid Grid.Column="3"  Grid.Row="1"  Background="#E6EAEE" Margin="160,0,160,0"  HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Grid.Column="3"  Grid.Row="1"  Background="#E6EAEE" Margin="1,0,1,0"  HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Foreground="Black" x:Name="BibleTxtHebrew" Grid.Column="0" FontWeight="Bold" TextAlignment="Right" >כִּתבֵי הַקוֹדֶשׁ</TextBlock>
-            <Button x:Name="btnAddVocabDecks" BorderBrush="Transparent" Grid.Column="1" Background="Transparent" Margin="-0 -10 0 0" Foreground="Black" Width="50" Height="40" FontSize="30" Click="btnAddVocabDecks_Click">+</Button>
+            <TextBlock Foreground="Black" x:Name="BibleTxtHebrew" Grid.Column="0" FontWeight="Bold" TextAlignment="Right" FontSize="40">כִּתבֵי הַקוֹדֶשׁ</TextBlock>
+            <Button x:Name="btnAddVocabDecks" BorderBrush="Transparent" Grid.Column="1" Background="Transparent" Margin="0"  Foreground="Black" Width="50" Height="50" FontSize="30" Click="btnAddVocabDecks_Click">+</Button>
         </Grid>
         <StackPanel Grid.Column="3"  Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="39,10,40,22">
             <!--<Line X1="500" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0" Stroke="#00D5B6" StrokeThickness="2" />-->
-            <Border BorderThickness="1" BorderBrush="Black">
+            <!--<Border BorderThickness="1" BorderBrush="Black">-->
                 <!--<Image HorizontalAlignment="Right" Height="150" Width="400" Source="{Binding BibleTxtMediaUrl}"/>-->
                 <Image  HorizontalAlignment="Left" Source="{Binding BibleTxtMediaUrl}"
     Margin="0,0,0,0" Name="BibleImgMedia" Stretch="Fill" VerticalAlignment="Bottom" 
-    Grid.Row="8" Width="400" Height="150"  Grid.ColumnSpan="2" />
+    Grid.Row="8" Width="300" Height="200"  Grid.ColumnSpan="2" />
                 <!--<TextBlock x:Name="BibleTxtMediaUrl"  FontSize="20" Grid.Row="4" Height="150" Width="400"  Background="#D8D8D8" TextWrapping="Wrap"></TextBlock>-->
-            </Border>
+            <!--</Border>-->
         </StackPanel>
         <!--<StackPanel Grid.Column="3"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,35">
             <TextBlock x:Name="LastLeftDate" FontSize="25"  FontWeight="Bold" >Where you left off on December 12,2017</TextBlock>
         </StackPanel>-->
-        <StackPanel Height="170" Width="500" Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Description</TextBlock>
-            <TextBlock x:Name="DescriptionTxt" FontSize="18" Width="400" Height="auto" TextWrapping="Wrap" Grid.Row="4" FontWeight="Bold"  ></TextBlock>
+        <StackPanel Height="100" Width="500" Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock FontSize="25"  Grid.Row="4" FontWeight="Bold"  >Definition</TextBlock>
+            <TextBlock x:Name="DescriptionTxt" FontSize="20" Width="400" Height="auto" TextWrapping="Wrap" Grid.Row="4" FontWeight="Bold"  ></TextBlock>
 
         </StackPanel>
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Example</TextBlock>
-            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold"  x:Name="ExampleTxt" >Genesis 7.2</TextBlock>
+            <TextBlock FontSize="25"  Grid.Row="4" FontWeight="Bold"  >Example</TextBlock>
+            <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  x:Name="ExampleTxt" >Genesis 7.2</TextBlock>
         </StackPanel>
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock FontSize="22"  Grid.Row="4" FontWeight="Bold"  >Semantic Domain
+            <TextBlock FontSize="25"  Grid.Row="4" FontWeight="Bold"  >Semantic Domain
             </TextBlock>
-            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold" x:Name="SemanticDomainTxt" >32.42 xx Data</TextBlock>
+            <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold" x:Name="SemanticDomainTxt" >32.42 xx Data</TextBlock>
         </StackPanel>
         <StackPanel Height="50" Width="500" Grid.Column="3" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold"  >Dictionary Reference</TextBlock>
-            <TextBlock FontSize="18"  Grid.Row="4" FontWeight="Bold" x:Name="DictonaryReference" >CBH v3,432</TextBlock>
+            <TextBlock FontSize="25"  Grid.Row="4" FontWeight="Bold"  >Dictionary Reference</TextBlock>
+            <TextBlock FontSize="20"  Grid.Row="4" FontWeight="Bold" x:Name="DictonaryReference" >CBH v3,432</TextBlock>
         </StackPanel>
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10" Panel.ZIndex="3">
 
@@ -213,10 +217,10 @@
 
                                 <DataTemplate >
 
-                                    <TreeViewItem>
+                                    <TreeViewItem MouseUp="_treeView1_MouseUp">
                                         <TreeViewItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Width="200" FontSize="18" Text="{Binding LessonId}"  cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecks($source, $eventArgs)]"/>
+                                                <TextBlock Width="200" FontSize="18" Text="{Binding LessonId}"/>
                                                 <TextBlock Margin="4"  FontSize="12" HorizontalAlignment="Right" Tag="{Binding LessonId}" Text="Review" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksReview($source, $eventArgs)]"/>
                                                 <!--<TextBlock Margin="4 4 4 0"  FontSize="12" HorizontalAlignment="Right" Text="X" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksDelete($source, $eventArgs)]"/>-->
                                             </StackPanel>
@@ -253,7 +257,7 @@
                                             <TreeViewItem.Header>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Width="200" FontSize="18" Text="{Binding LessonId}"  cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecks($source, $eventArgs)]"/>
-                                                    <TextBlock Margin="4"  FontSize="12" HorizontalAlignment="Right" Tag="{Binding LessonId}" Text="Learn" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksReview($source, $eventArgs)]"/>
+                                                    <TextBlock Margin="4"  FontSize="12" HorizontalAlignment="Right" Tag="{Binding LessonId}" Text="Learn" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksLearn($source, $eventArgs)]"/>
                                                     <TextBlock Margin="4 4 4 0" Tag="{Binding LessonId}" FontSize="12" HorizontalAlignment="Right" Text="X" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_CustomDecksDelete($source, $eventArgs)]"/>
                                                 </StackPanel>
                                             </TreeViewItem.Header>
@@ -280,7 +284,8 @@
                                 <TextBox x:Name="BibleTxtVocabdocks"  Margin="-60 -20 0 10" Height="30" Width="200"></TextBox>
                             </StackPanel>
                         </StackPanel>
-                        <TextBlock Margin="1 20 0 0" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_CustomDecks($source, $eventArgs)]" FontSize="20">+ Create New Vocab Deck</TextBlock>
+                        <!--cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_CustomDecks($source, $eventArgs)]"-->
+                        <TextBlock Margin="1 20 0 0" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_CustomDecks($source, $eventArgs)]" MouseUp="TextBlock_MouseLeftButtonUp"  FontSize="20">+ Create New Vocab Deck</TextBlock>
 
                     </StackPanel>
                 </Border>
