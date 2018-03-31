@@ -108,9 +108,9 @@
 
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Button x:Name="btn_Dash" BorderThickness="1" BorderBrush="#4E5E74" FontSize="12" Background="#788494" 
-                    Style="{DynamicResource MaterialDesignRaisedButton}"  Width="130" Height="45" Margin="0 0 50 0" Content="Go to Dashboard"></Button>
+                    Style="{DynamicResource MaterialDesignRaisedButton}"  Width="130" Height="45" Margin="0 0 0 0" Content="Go to Dashboard"></Button>
 
-                        <Button Visibility="{Binding GoToNextSection}" x:Name="btn_Next" BorderThickness="1" BorderBrush="#4E5E74" FontSize="12" Margin="50 0 0 0" Background="#788494" 
+                        <Button Visibility="{Binding GoToNextSection}" x:Name="btn_Next" BorderThickness="1" BorderBrush="#4E5E74" FontSize="12" Margin="100 0 0 0" Background="#788494" 
                     Style="{DynamicResource MaterialDesignRaisedButton}"  Width="130" Height="45" Content="Go to Next Section"></Button>
 
                         <!--<TextBlock FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="1" Text="Go to Dashboard" Width="149"></TextBlock>-->

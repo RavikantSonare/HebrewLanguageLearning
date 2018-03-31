@@ -52,7 +52,7 @@
         <StackPanel Grid.RowSpan="2" Grid.Column="1" Grid.Row="1"  Orientation="Horizontal"  HorizontalAlignment="Left">
             <Label Margin="120 60 0 0" Name="ReviewCounter" Content="7 out of 20"/>
         </StackPanel>
-        <StackPanel Margin="0 30 0 0" Panel.ZIndex="8" Grid.Row="3"  Grid.Column="1" Visibility="{Binding RightAnsShow}" Background="Transparent"  Height="40" Width="150"   HorizontalAlignment="Center" VerticalAlignment="Top">
+        <StackPanel Margin="0 -10 0 0" Panel.ZIndex="8" Grid.Row="3"  Grid.Column="1" Visibility="{Binding RightAnsShow}" Background="Transparent"  Height="40" Width="150"   HorizontalAlignment="Center" VerticalAlignment="Top">
             <Border CornerRadius="2" Background="#A9CDDA" BorderBrush="#646566"  BorderThickness="2">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Image  Panel.ZIndex="7" Margin="0 0 25 0" Height="32"   Width="32" Tag="{Binding BibleSoundMediaUrl}" x:Name="imageRightSound" HorizontalAlignment="Left"  Source="/HebrewLanguageLearning_Users;component/Assets/speakerGreen.png" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown_SoundClick($source, $eventArgs)]"/>
@@ -129,15 +129,15 @@
                     <ColumnDefinition Width="200"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Border BorderThickness="0" Grid.Row="0" Grid.Column="0" BorderBrush="Black" Margin="50,-2,0,2">
-                    <StackPanel Height="350" Width="350">
+                    <StackPanel Height="300" Width="300">
 
-                        <Image  HorizontalAlignment="Left" Source="{Binding BibleTxtMediaUrl}"
+                        <Image Height="300" Width="300" HorizontalAlignment="Left" Source="{Binding BibleTxtMediaUrl}"
     Margin="0,0,0,0" Name="BibleImgMedia" Stretch="Fill" VerticalAlignment="Bottom"/>
 
                     </StackPanel>
                 </Border>
               
-                <Image Grid.Row="0" Grid.Column="1" Margin="0 -100 0 0" VerticalAlignment="Center"  Width="100" Height="100" Source="/HebrewLanguageLearning_Users;component\Assets\Change_arrow.png" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_LeftArrowImageClick($source, $eventArgs)]"/>
+                <Image Grid.Row="0" Grid.Column="1" Margin="0 0 0 0" VerticalAlignment="Center"  Width="100" Height="100" Source="/HebrewLanguageLearning_Users;component\Assets\Change_arrow.png" cal:Message.Attach="[Event MouseLeftButtonUp] = [Action MouseDown_LeftArrowImageClick($source, $eventArgs)]"/>
             </Grid>
             <WrapPanel HorizontalAlignment="Center">
             </WrapPanel>

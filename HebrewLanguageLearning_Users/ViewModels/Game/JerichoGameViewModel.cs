@@ -191,7 +191,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.Game
                 PnlWordChoiceList.ForEach(z =>
                 {
                     var Data = SetWord(z.LessonDecks); z.LessonDecks =
-                    Convert.ToInt16(WidthList[i]) > 180 || PnlWordChoiceList.Count <= 5 ? Data.Length == 3 ? Data[2] : Data[0] : "";
+                    Convert.ToInt16(WidthList[i]) > 180 || PnlWordChoiceList.Count <= 5 ? Data.Length == 3 ? Data[1] : Data[0] : "";
                     z.DictionaryEntriesId = WidthList[i];
 
                     if ((i + 1) % 5 == 0)

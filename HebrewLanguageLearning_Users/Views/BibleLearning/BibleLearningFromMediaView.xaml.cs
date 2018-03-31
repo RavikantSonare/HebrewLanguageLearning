@@ -49,9 +49,6 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
             {
                 TypeOfProgressBar = Convert.ToInt32(tmpProgress);
                 GreenDotstatus = Convert.ToInt32(tmpGreenDot);
-                Application.Current.Properties["CurretProgressbar"] = null;
-                Application.Current.Properties["CurretGreenDot"] = null;
-              
             }
 
 

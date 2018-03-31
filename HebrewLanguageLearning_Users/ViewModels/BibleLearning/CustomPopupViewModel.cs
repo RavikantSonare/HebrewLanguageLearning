@@ -22,11 +22,11 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 switch (appCurrentphase)
                 {
                     case 2:
-                        Continue_lessonPhase2();
+                        Continue_lessonPhase2_Review();
                         break;
 
                     case 3:
-                        Continue_lessonPhase3();
+                        Continue_lessonPhase3_Learn();
                         break;
 
                     default:
@@ -96,7 +96,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                     break;
             }
         }
-        public void Continue_lessonPhase2()
+        public void Continue_lessonPhase2_Review()
         {
 
 
@@ -110,22 +110,23 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             {
                 ScreenNo = Convert.ToInt32(ScreenTemp);
             }
-
+            System.Windows.Application.Current.Properties["CurretPage"] = 102;
             switch (ScreenNo)
             {
                 case 1:
-                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
-                    break;
-                case 2:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 1;
                     navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
                     break;
-                //case 3:
-                //    navigationService.NavigateToViewModel(typeof(BibleLearningWordTypingViewModel));
-                //    break;
+                case 2:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 2;
+                    navigationService.NavigateToViewModel(typeof(BibleLearningWordTypingViewModel));
+                    break;
                 
             }
+            
+
         }
-        public void Continue_lessonPhase3()
+        public void Continue_lessonPhase3_Learn()
         {
 
 
@@ -139,20 +140,26 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             {
                 ScreenNo = Convert.ToInt32(ScreenTemp);
             }
-
+            System.Windows.Application.Current.Properties["CurretPage"] = 101;
             switch (ScreenNo)
             {
                 case 1:
+
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 1;
                     navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
                     break;
                 case 2:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 2;
                     navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
                     break;
                 case 3:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 4;
                     navigationService.NavigateToViewModel(typeof(BibleLearningWordTypingViewModel));
                     break;
 
             }
+
+           
         }
     }
 }

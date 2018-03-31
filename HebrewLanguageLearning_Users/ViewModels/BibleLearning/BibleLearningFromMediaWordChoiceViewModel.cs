@@ -59,6 +59,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 case 101:
                     LessonId = Convert.ToString(System.Windows.Application.Current.Properties["LessonId"]);
                     break;
+                case 102:
+                    LessonId = Convert.ToString(System.Windows.Application.Current.Properties["LessonId"]);
+                    break;
                 default:
                     LessonId = Convert.ToString(_objModel.completedLesson + 1);
                     break;
@@ -255,6 +258,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                     case 101:
                         CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
                         break;
+                    case 102:
+                        CurrentGroup = CurrentGroup.Where(z => z.IsLessonPassiveKnowledg == false).ToList();
+                        break;
                     default:
                         CurrentGroup = CurrentGroup.Where(z => z.IsReviewPassive == false).ToList();
                         break;
@@ -317,6 +323,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 case 101:
                     ObjDC.SetSecondUserProgressScreen(completed_Screen_Status, false);
                     break;
+                case 102:
+                    ObjDC.SetSecondUserProgressScreen(completed_Screen_Status, true);
+                    break;
                 default:
                     ObjDC.SetUserProgressScreen(completed_Screen_Status);
                     break;
@@ -336,6 +345,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                         break;
                     case 101:
                         completed_Screen_Status = "3";
+                        break;
+                    case 102:
+                        completed_Screen_Status = "2";
                         break;
                 }
                 SetDataFromDataBase(completed_Screen_Status);
@@ -399,6 +411,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                         break;
                     case 101:
                         _ObjBC.UpdateReviewDataByLesson("HLL_VocabDecksLearnIsReviewPassive", LessonId, StrongNo);
+                        break;
+                    case 102:
+                        _ObjBC.UpdateReviewDataByLesson("HLL_VocabDecksIsLessonPassiveKnowledg", LessonId, StrongNo);
                         break;
 
                 }
@@ -488,8 +503,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
             {
                 PlaySound(BibleWrongSoundMediaUrl);
             }
-
-
+            
         }
         void PlaySound(string BibleSoundMediaUrl)
         {

@@ -73,7 +73,8 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                 [IsReviewAssociationGrammar] [bit] NULL,
                 [IsPassiveKnowledgeGrammar] [bit] NULL,
                 [IsActiveKnowledgeGrammar] [bit] NULL,
-                [TheFinalActApplication] [bit] NULL)";
+                [IsLessonPassiveKnowledg] [bit] NULL,
+                [IsLessonActiveKnowledg] [bit] NULL)";
                 ExcecuteTheQuery(_TableString, "I");
                 #endregion
 
@@ -142,28 +143,28 @@ namespace HebrewLanguageLearning_Users.Models.DataProviders
                     case "HLL_VocabDecks":
                         var _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
                         customQuery.Append(@"INSERT OR REPLACE INTO HLL_VocabDecks(VocabDecksId,LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar,TheFinalActApplication) 
+LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar, IsLessonPassiveKnowledg, IsLessonActiveKnowledg) 
 values");
                         int tempValue = 1;
                         foreach (var item in _DictionaryModellist)
                         {
                             customQuery.Append("("+ tempValue +", '" + item.LessonId + "','" + item.StrongNo + "','" + item.DictionaryEntriesId + "', '"
     + item.Description + "','" + item.LessonDecks + "','" + item.IsCustomeDecks + "','" +
-    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False','False','False','False','False','False','False','False'),");
+    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False','False','False','False','False','False','False','False','False'),");
                             tempValue++;
                         }
                         break;
                     case "HLL_VocabDecks_Custom":
                           _DictionaryModellist = JsonConvert.DeserializeObject<List<VocabularyModel>>(tableData);
                         customQuery.Append(@"INSERT INTO HLL_VocabDecks( LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar,TheFinalActApplication) 
+LessonDecks, IsCustomeDecks, ActiveStatus, IsActive, IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar, IsLessonPassiveKnowledg, IsLessonActiveKnowledg) 
 values");
                       
                         foreach (var item in _DictionaryModellist)
                         {
                             customQuery.Append("('" + item.LessonId + "','" + item.StrongNo + "','" + item.DictionaryEntriesId + "', '"
     + item.Description + "','" + item.LessonDecks + "','" + item.IsCustomeDecks + "','" +
-    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False','False','False','False','False','False','False','False'),");
+    item.ActiveStatus + "','" + item.IsActive + "','" + item.IsDelete + "','False','False','False','False','False','False','False','False','False','False'),");
                            
                         }
                         break;
@@ -217,7 +218,7 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                     case "HLL_VocabDecks_CustomSecond":
 
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar, TheFinalActApplication from HLL_VocabDecks where IsCustomeDecks='True'and LessonId='" + dataFilter + "'");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar, IsLessonPassiveKnowledg, IsLessonActiveKnowledg from HLL_VocabDecks where IsCustomeDecks='True'and LessonId='" + dataFilter + "'");
                         break;
 
                     case "HLL_VocabDecks_RightPanel":
@@ -232,7 +233,7 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                     case "HLL_VocabDecksLesson":
                         // IsReview = 'False' and
                         customQuery.Append(@"Select VocabDecksId, LessonId, StrongNo, DictionaryEntriesId, Description,
-LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar,TheFinalActApplication from HLL_VocabDecks where LessonId='" + dataFilter + "'");
+LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation, IsReviewPassive, IsReviewGameA, IsActiveKnowledge, IsReviewGameB, IsReviewAssociationGrammar, IsPassiveKnowledgeGrammar, IsActiveKnowledgeGrammar, IsLessonPassiveKnowledg, IsLessonActiveKnowledg from HLL_VocabDecks where LessonId='" + dataFilter + "'");
                         break;
 
                     case "HLL_AuthenticateUser":
@@ -289,32 +290,32 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                     /*         VocabDecks         */
 
                     case "HLL_VocabDecksIsReviewAssociation":
-                        customQuery.Append(@"update HLL_VocabDecks set IsReviewAssociation='True' where StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewAssociation='True' where StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
                         break;
                     case "HLL_VocabDecksIsReviewPassive":
-                        customQuery.Append(@"update HLL_VocabDecks set IsReviewPassive='True' where StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewPassive='True' where StrongNo='" + tableData.Trim()+ "' And IsCustomeDecks='False'");
                         break;
                    
                     case "HLL_ProgressOfUserIsActiveKnowledge":
-                        customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledge='True' where StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledge='True' where StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
                         break;
                     case "HLL_VocabDecksIsReviewGameA":
-                        customQuery.Append(@"update HLL_VocabDecks set IsReviewGameA='True' where StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewGameA='True' where StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
                         break;
                     case "HLL_VocabDecksIsReviewGameB":
-                        customQuery.Append(@"update HLL_VocabDecks set IsReviewGameB='True' where StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewGameB='True' where StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
                         break;
                     case "HLL_ProgressOfUserIsReviewAssociationGrammar":
-                        customQuery.Append(@"update HLL_VocabDecks set IsReviewAssociationGrammar='True' where StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewAssociationGrammar='True' where StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
                         break;
                     case "HLL_VocabDecksIsPassiveKnowledgeGrammar":
-                        customQuery.Append(@"update HLL_VocabDecks set IsPassiveKnowledgeGrammar='True' where StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsPassiveKnowledgeGrammar='True' where StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
                         break;
                     case "HLL_VocabDecksIsActiveKnowledgeGrammar":
-                        customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledgeGrammar='True' where StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledgeGrammar='True' where StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
                         break;
                     case "HLL_VocabDecksTheFinalActApplication":
-                        customQuery.Append(@"update HLL_VocabDecks set TheFinalActApplication='True' where StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set TheFinalActApplication='True' where StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
                         break;
                         
                 }
@@ -346,15 +347,21 @@ LessonDecks,IsCustomeDecks, ActiveStatus, IsActive,IsDelete, IsReviewAssociation
                 switch (tableName)
                 {
                     case "HLL_VocabDecksLearnIsReviewAssociation":
-                        customQuery.Append(@"update HLL_VocabDecks set IsReviewAssociation='True' where LessonId='" + LessonId.Trim() + "' And StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewAssociation='True' where LessonId='" + LessonId.Trim() + "' And StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='True'");
                         break;
                     case "HLL_VocabDecksLearnIsReviewPassive":
-                        customQuery.Append(@"update HLL_VocabDecks set IsReviewPassive='True' where LessonId='" + LessonId.Trim() + "' And StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsReviewPassive='True' where LessonId='" + LessonId.Trim() + "' And StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='True'");
                         break;
                     case "HLL_VocabDecksLearnIsActiveKnowledge":
-                        customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledge='True' where LessonId='" + LessonId.Trim() + "' And StrongNo='" + tableData.Trim() + "'");
+                        customQuery.Append(@"update HLL_VocabDecks set IsActiveKnowledge='True' where LessonId='" + LessonId.Trim() + "' And StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='True'");
                         break;
-
+                    case "HLL_VocabDecksIsLessonPassiveKnowledg":
+                        customQuery.Append(@"update HLL_VocabDecks set IsLessonPassiveKnowledg='True' where LessonId='" + LessonId.Trim() + "' And StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
+                        break;
+                    case "HLL_VocabDecksIsLessonActiveKnowledg":
+                        customQuery.Append(@"update HLL_VocabDecks set IsLessonActiveKnowledg='True' where LessonId='" + LessonId.Trim() + "' And StrongNo='" + tableData.Trim() + "' And IsCustomeDecks='False'");
+                        break;
+                        
                 }
                 string Qry = Convert.ToString(customQuery);
 

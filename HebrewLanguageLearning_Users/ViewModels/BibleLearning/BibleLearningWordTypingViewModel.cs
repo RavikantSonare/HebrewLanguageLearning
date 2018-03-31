@@ -45,7 +45,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                 CurruntScreenNo = Convert.ToInt32(ScreenTemp);
             }
             GetDataFromDataBase();
-            // Convert.ToString(System.Windows.Application.Current.Properties["WordName"]);
+            // Convert.ToString(System.Windows.Application.`.Properties["WordName"]);
             // string LessonId = Convert.ToString(System.Windows.Application.Current.Properties["WordLessonId"]);
             // if (!string.IsNullOrEmpty(LessonId)) { VocabDecksLesson(); };
         }
@@ -257,10 +257,13 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                         CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledgeGrammar == false).ToList();
                         break;
                     case 9:
-                        CurrentGroup = CurrentGroup.Where(z => z.TheFinalActApplication == false).ToList();
+                       // CurrentGroup = CurrentGroup.Where(z => z.TheFinalActApplication == false).ToList();
                         break;
                     case 101:
                         CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledge == false).ToList();
+                        break;
+                    case 102:
+                        CurrentGroup = CurrentGroup.Where(z => z.IsLessonActiveKnowledg == false).ToList();
                         break;
                     default:
                         CurrentGroup = CurrentGroup.Where(z => z.IsActiveKnowledge == false).ToList();
@@ -362,7 +365,7 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
         public void showPopup()
         {
 
-            if (CurruntScreenNo == 101)
+            if (new[] { 101, 102 }.Contains(CurruntScreenNo))
             {
                 GoToNextSection = "Collapsed";
             }
@@ -438,10 +441,13 @@ namespace HebrewLanguageLearning_Users.ViewModels.BibleLearning
                         _ObjBC.UpdateReviewData("HLL_VocabDecksIsActiveKnowledgeGrammar", _ObjCurrentImage.StrongNo);
                         break;
                     case 9:
-                        _ObjBC.UpdateReviewData("HLL_VocabDecksTheFinalActApplication", _ObjCurrentImage.StrongNo);
+                       // _ObjBC.UpdateReviewData("HLL_VocabDecksTheFinalActApplication", _ObjCurrentImage.StrongNo);
                         break;
                     case 101:
                         _ObjBC.UpdateReviewDataByLesson("HLL_VocabDecksLearnIsActiveKnowledge", LessonId, _ObjCurrentImage.StrongNo);
+                        break;
+                    case 102:
+                        _ObjBC.UpdateReviewDataByLesson("HLL_VocabDecksIsLessonActiveKnowledg", LessonId, _ObjCurrentImage.StrongNo);
                         break;
                     default:
                         _ObjBC.UpdateReviewData("HLL_ProgressOfUserIsActiveKnowledge", _ObjCurrentImage.StrongNo);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HebrewLanguageLearning_Users.Models.DataModels
 {
-  public class VocabularyModel
+    public class VocabularyModel
     {
         //VocabDecksId
         public string VocabularyId { get; set; }
@@ -27,9 +27,7 @@ namespace HebrewLanguageLearning_Users.Models.DataModels
         public bool IsReviewAssociationGrammar { get; set; }
         public bool IsPassiveKnowledgeGrammar { get; set; }
         public bool IsActiveKnowledgeGrammar { get; set; }
-        public bool TheFinalActApplication { get; set; }
-     
-
-
+        public bool IsLessonPassiveKnowledg { get; set; }
+        public bool IsLessonActiveKnowledg { get; set; }
     }
 }

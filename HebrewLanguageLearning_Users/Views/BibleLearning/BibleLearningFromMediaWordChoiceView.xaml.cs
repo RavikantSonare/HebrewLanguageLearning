@@ -42,6 +42,11 @@ namespace HebrewLanguageLearning_Users.Views.BibleLearning
                    // TypeOfProgressBar = 4;
                     GreenDotstatus = 6;
                 }
+                if (ScreenNo == 2)
+                {
+                    TypeOfProgressBar = 4;
+                       GreenDotstatus = 2;
+                }
             }
             var tmpProgress = Application.Current.Properties["CurretProgressbar"];
             var tmpGreenDot = Application.Current.Properties["CurretGreenDot"];

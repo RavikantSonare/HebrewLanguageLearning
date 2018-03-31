@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using HebrewLanguageLearning_Users.Models.DataControllers;
 using HebrewLanguageLearning_Users.Models.DataModels;
+using HebrewLanguageLearning_Users.ViewModels.BibleLearning;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
@@ -63,9 +65,9 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
         }
         public void btn_continue_lesson()
         {
-            Application.Current.Properties["CurretProgressbar"] = null;
-            Application.Current.Properties["CurretGreenDot"] = null;
-            var ScreenTemp = Application.Current.Properties["CurretPage"];
+            System.Windows.Application.Current.Properties["CurretProgressbar"] = null;
+            System.Windows.Application.Current.Properties["CurretGreenDot"] = null;
+            var ScreenTemp = System.Windows.Application.Current.Properties["CurretPage"];
             int ScreenNo = 1;
             if (ScreenTemp != null)
             {
@@ -133,6 +135,66 @@ namespace HebrewLanguageLearning_Users.ViewModels.Dashboard
         {
             VocabularyLesson = _ObjBLC.GetVocabDesks("HLL_VocabDecks_RightPanel");
             VocabularyLesson_Custom = _ObjBLC.GetVocabDesks("HLL_VocabDecks_Custom");
+        }
+
+        public void MouseDown_CustomDecksReview(object sender, MouseEventArgs e)
+        {
+
+            System.Windows.Application.Current.Properties["Currentphase"] = 2;
+            var Id = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+            if (Id != null)
+            {
+                System.Windows.Application.Current.Properties["LessonId"] = Id.Replace("Lesson ", string.Empty);
+                System.Windows.Application.Current.Properties["CurretProgressbar"] = "4";
+            }
+
+            int tmpReviewProg = Convert.ToInt32(System.Windows.Application.Current.Properties["IsReviewProgress"]);
+            System.Windows.Application.Current.Properties["CurretPage"] = 102;
+            switch (tmpReviewProg)
+            {
+                case 1:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 1;
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+                    break;
+                case 2:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 2;
+                    navigationService.NavigateToViewModel(typeof(BibleLearningWordTypingViewModel));
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        public void MouseDown_CustomDecksLearn(object sender, MouseEventArgs e)
+        {
+            System.Windows.Application.Current.Properties["Currentphase"] = 3;
+            var Id = Convert.ToString(((System.Windows.FrameworkElement)sender).Tag);
+            if (Id != null)
+            {
+                System.Windows.Application.Current.Properties["LessonId"] = Id.Replace("Lesson ", string.Empty);
+                System.Windows.Application.Current.Properties["CurretProgressbar"] = "3";
+            }
+
+            int tmpLearnProg = Convert.ToInt32(System.Windows.Application.Current.Properties["IsLearnProgress"]);
+            System.Windows.Application.Current.Properties["CurretPage"] = 101;
+            switch (tmpLearnProg)
+            {
+                case 1:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 1;
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaViewModel));
+                    break;
+                case 2:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 2;
+                    navigationService.NavigateToViewModel(typeof(BibleLearningFromMediaWordChoiceViewModel));
+                    break;
+                case 3:
+                    System.Windows.Application.Current.Properties["CurretGreenDot"] = 4; //pulse 1 for green lenght
+                    navigationService.NavigateToViewModel(typeof(BibleLearningWordTypingViewModel));
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }
